@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Apple Silicon ML Study Guide — Detailed</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    @page { margin: 0.75in; size: letter; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.5;
+      color: #1e293b;
+      max-width: 7in;
+      margin: 0 auto;
+      padding: 0.5in;
+    }
+
+    h1 { font-size: 20pt; color: #0f172a; margin-bottom: 0.15in; border-bottom: 2px solid #0071e3; padding-bottom: 0.1in; }
+    h2 { font-size: 13pt; color: #0071e3; margin-top: 0.35in; margin-bottom: 0.1in; }
+    h3 { font-size: 11pt; color: #334155; margin-top: 0.2in; }
+    p { margin-bottom: 0.12in; }
+    ul, ol { margin: 0.1in 0 0.15in 0.25in; }
+    li { margin-bottom: 0.06in; }
+    table { width: 100%; border-collapse: collapse; margin: 0.15in 0; font-size: 9.5pt; }
+    th, td { border: 1px solid #cbd5e1; padding: 6px 8px; text-align: left; vertical-align: top; }
+    th { background: #f1f5f9; font-weight: 600; }
+    pre, code { font-family: ui-monospace, Menlo, monospace; font-size: 9pt; background: #f8fafc; }
+    pre { padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; }
+    .meta { color: #64748b; font-size: 9pt; margin-bottom: 0.25in; }
+    .box { background: #f0f9ff; border-left: 4px solid #0071e3; padding: 10px 12px; margin: 0.15in 0; border-radius: 0 6px 6px 0; }
+    .page-break { page-break-before: always; }
+    a { color: #0071e3; }
+  </style>
+</head>
+<body>
+
+  <h1>Apple Silicon GPU &amp; ANE — Team Study Guide</h1>
+  <p class="meta"><strong>Upscale AI — Internal · Confidential</strong> · Companion to 7-slide brief · June 2026 · For self-paced learning (~3–4 months, a few hours/week)</p>
+
+  <div class="box">
+    <strong>How to use:</strong> Complete each phase’s <em>exit checkpoint</em> before advancing. Pair every concept block with a 30–60 minute hands-on lab. Keep a one-page lab notebook (question, command, latency/power note).
+  </div>
+
+  <h2>1. Executive summary</h2>
+  <p>Apple Silicon combines CPU, GPU, and Neural Engine (ANE) on one die with <strong>unified memory (UMA)</strong>. Machine learning on this platform is less about “moving data to the GPU” and more about <strong>selecting frameworks and compute engines</strong>, then validating with Xcode Instruments.</p>
+  <p><strong>Research &amp; exploration on Mac:</strong> MLX (Python/Swift), built on Metal, PyTorch-like APIs.<br />
+  <strong>Shipping inference on device:</strong> Core ML + coremltools, compiler routes ops to ANE/GPU/CPU.<br />
+  <strong>Low-level GPU control:</strong> Metal (+ Metal Performance Shaders for common primitives).</p>
+
+  <h2>2. Hardware motivation (Phase 0)</h2>
+  <h3>2.1 SoC components (user-level)</h3>
+  <ul>
+    <li><strong>CPU:</strong> Performance cores for latency-sensitive work; efficiency cores for background orchestration.</li>
+    <li><strong>GPU:</strong> Massively parallel floating-point and matrix work — training, inference (MLX GPU path), graphics, custom kernels.</li>
+    <li><strong>ANE:</strong> Specialized inference accelerator; executes <em>compiler-supported</em> subgraphs, not arbitrary Metal shaders.</li>
+    <li><strong>Unified Memory:</strong> One physical RAM pool. CPU, GPU, and ANE reference the same bytes without PCIe-style copies.</li>
+    <li><strong>Die-to-die (D2D):</strong> On M-series Ultra, two dies are packaged together. Program as one machine; very large models may be sensitive to cross-die bandwidth — rarely something app code configures directly.</li>
+  </ul>
+
+  <h3>2.2 Why the software stack looks different</h3>
+  <ul>
+    <li>“Device placement” is often <strong>scheduling</strong>, not memory migration.</li>
+    <li>Cold-start costs include <strong>Metal shader compile</strong> and <strong>Core ML model compile</strong> (cache afterward).</li>
+    <li><strong>Power</strong> dominates mobile and always-on workloads — ANE can win even when raw GPU FLOPs are available.</li>
+  </ul>
+
+  <h3>2.3 Phase 0 lab &amp; exit</h3>
+  <p><strong>Lab:</strong> Activity Monitor → GPU History; observe idle vs browser vs later MLX/Core ML runs.</p>
+  <p><strong>Exit:</strong> Explain UMA in one paragraph; sketch App → Framework → CPU|GPU|ANE diagram.</p>
+
+  <h2>3. Software stack map (Phase 1)</h2>
+  <table>
+    <thead><tr><th>Layer</th><th>Use case</th><th>When to choose</th></tr></thead>
+    <tbody>
+      <tr><td>Metal</td><td>GPU compute, custom kernels</td><td>Need control; framework gap</td></tr>
+      <tr><td>MPS</td><td>GPU primitives (conv, matmul helpers)</td><td>CV/ML glue without full custom kernel</td></tr>
+      <tr><td>Accelerate / BNNS</td><td>CPU vector math</td><td>Small ops, legacy paths</td></tr>
+      <tr><td>Core ML</td><td>On-device inference</td><td>iOS/macOS shipping, ANE routing</td></tr>
+      <tr><td>MLX</td><td>Research, fine-tune, LLMs</td><td>Mac experimentation like PyTorch</td></tr>
+      <tr><td>coremltools</td><td>Model conversion</td><td>Bridge from PyTorch/TF to .mlpackage</td></tr>
+    </tbody>
+  </table>
+
+  <pre>App (Swift / Python)
+    → MLX | Core ML | Metal (+ MPS)
+        → Compiler / Metal driver
+            → CPU | GPU | ANE  (shared memory)</pre>
+
+  <p><strong>Exit:</strong> For three scenarios — (a) fine-tune LLM on Mac, (b) iOS app inference, (c) custom attention kernel — name the primary tool.</p>
+
+  <div class="page-break"></div>
+
+  <h2>4. Metal — GPU interface (Phase 2, ~2 weeks)</h2>
+  <h3>4.1 Concepts (in order)</h3>
+  <ol>
+    <li>MTLDevice, command queue, command buffer</li>
+    <li>Buffers/textures with <strong>shared</strong> storage on Apple silicon</li>
+    <li>Compute pipelines, threadgroups, occupancy intuition</li>
+    <li>Completion handlers; avoid unnecessary sync</li>
+  </ol>
+  <h3>4.2 Labs</h3>
+  <ul>
+    <li><strong>A:</strong> GPU buffer reduction vs CPU Accelerate; time both.</li>
+    <li><strong>B:</strong> Sweep threadgroup sizes; plot rough throughput.</li>
+    <li><strong>C:</strong> Xcode Metal debugger + GPU counters on Lab A.</li>
+  </ul>
+  <p><strong>Swift:</strong> Use native Metal from Swift for production-shaped code paths.</p>
+  <p><strong>Exit:</strong> Trace Swift → command buffer → compute encoder → GPU; explain why shared buffers avoid copies.</p>
+  <p><strong>Defer:</strong> Ray tracing, mesh shaders, full render pipeline until elective track.</p>
+
+  <h2>5. GPU ML primitives (Phase 3, ~1 week)</h2>
+  <p>Study MPS and Accelerate as layers <em>below</em> MLX/Core ML. Lab: image decode → MPS normalize → small custom Metal kernel → compare with one MLX op after Phase 5.</p>
+
+  <h2>6. Core ML &amp; ANE (Phase 4, ~2 weeks)</h2>
+  <h3>6.1 Topics</h3>
+  <ul>
+    <li>.mlpackage lifecycle; first-run compile latency and disk cache</li>
+    <li>Graph partitioning — unsupported ops fall back to GPU or CPU</li>
+    <li>MLTensor and generated Swift interfaces</li>
+    <li>Compute unit preferences: cpuOnly, cpuAndGpu, all</li>
+  </ul>
+  <h3>6.2 Tools</h3>
+  <ul>
+    <li>coremltools conversion from a small public model</li>
+    <li>Xcode: Core ML performance report, Neural Engine instrument, Metal instrument</li>
+  </ul>
+  <h3>6.3 Labs</h3>
+  <ul>
+    <li>Convert same model with different compute preferences; log latency/power.</li>
+    <li>Identify one op that forces GPU fallback from performance report.</li>
+    <li>Minimal Swift app calling MLModel.</li>
+  </ul>
+  <p><strong>Exit:</strong> Read a performance report and state likely ANE vs GPU placement.</p>
+
+  <h2>7. MLX — explore &amp; train (Phase 5, ~2–3 weeks)</h2>
+  <h3>7.1 Concepts</h3>
+  <ul>
+    <li>Lazy evaluation; materialize with eval/async</li>
+    <li>cpu vs gpu as scheduling targets on UMA</li>
+    <li>mlx.nn, optimizers, automatic differentiation</li>
+    <li>mlx-lm for load/generate/fine-tune</li>
+    <li>Custom Metal kernels when mx.fast is insufficient</li>
+  </ul>
+  <h3>7.2 Resources</h3>
+  <ul>
+    <li><a href="https://ml-explore.github.io/mlx/">MLX documentation</a></li>
+    <li><a href="https://developer.apple.com/videos/play/wwdc2025/315/">WWDC25: Get started with MLX</a></li>
+    <li><a href="https://github.com/ml-explore/mlx-examples">mlx-examples</a></li>
+  </ul>
+  <h3>7.3 Labs</h3>
+  <ul>
+    <li>Train tiny MLP; watch GPU in Activity Monitor.</li>
+    <li>Run small LLM via mlx-lm; note RAM for weights + KV cache.</li>
+    <li>List which parts of that graph would be poor ANE candidates (conceptual).</li>
+  </ul>
+  <p><strong>Exit:</strong> Explain lazy graphs and MLX’s single Metal queue implication for multi-model apps.</p>
+
+  <div class="page-break"></div>
+
+  <h2>8. Swift integration (Phase 6, ~1 week)</h2>
+  <ul>
+    <li>async/await around model load and inference</li>
+    <li>First-launch compile UX and caching</li>
+    <li>mlx-swift vs Core ML in one product architecture</li>
+  </ul>
+  <p><strong>Mini-app options:</strong> (A) SwiftUI + Core ML camera classifier; (B) Mac menu bar MLX chat; (C) Hybrid Core ML VAD (ANE) + MLX ASR (GPU).</p>
+
+  <h2>9. ANE vs GPU — division of labor (Phase 7)</h2>
+  <div class="box">
+    <strong>Critical clarification:</strong> ANE does <em>not</em> make GPU streaming multiprocessors (SMs) faster. It executes different, compiled work — often lowering power and freeing the GPU for parallel-friendly ops.
+  </div>
+  <table>
+    <thead><tr><th></th><th>GPU</th><th>ANE</th></tr></thead>
+    <tbody>
+      <tr><td>Strength</td><td>General parallel compute, training, flexible ops</td><td>Efficient supported inference subgraphs</td></tr>
+      <tr><td>API path</td><td>Metal, MLX-on-GPU</td><td>Core ML compiler (primarily)</td></tr>
+      <tr><td>Overlap</td><td>Can run concurrent with ANE if pipeline designed</td><td>Good for steady low-power inference</td></tr>
+      <tr><td>Not</td><td>A universal ANE replacement</td><td>A faster GPU; does not run your Metal kernels</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Pipeline insight:</strong> Core ML on ANE + MLX on GPU can outperform single-engine MLX for multi-model apps because engines have separate hardware — but watch MLX serialization on one Metal queue vs multi-process tradeoffs.</p>
+  <p><strong>Exit:</strong> Explain when hybrid ANE+GPU pipelines help and when they do not.</p>
+
+  <h2>10. Phased timeline (summary)</h2>
+  <table>
+    <thead><tr><th>Phase</th><th>Duration</th><th>Focus</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>3–5 hrs</td><td>SoC, UMA, D2D motivation</td></tr>
+      <tr><td>1</td><td>4–6 hrs</td><td>Stack map, MLX vs Core ML</td></tr>
+      <tr><td>2</td><td>~2 wks</td><td>Metal compute + Swift</td></tr>
+      <tr><td>3</td><td>~1 wk</td><td>MPS / Accelerate</td></tr>
+      <tr><td>4</td><td>~2 wks</td><td>Core ML, ANE instruments</td></tr>
+      <tr><td>5</td><td>2–3 wks</td><td>MLX train/infer</td></tr>
+      <tr><td>6</td><td>~1 wk</td><td>Swift product integration</td></tr>
+      <tr><td>7</td><td>~1 wk</td><td>ANE vs GPU systems view</td></tr>
+      <tr><td>8</td><td>Ongoing</td><td>Electives: kernels, compression, fine-tune, power</td></tr>
+    </tbody>
+  </table>
+
+  <h2>11. Weekly rhythm</h2>
+  <table>
+    <thead><tr><th>Day</th><th>Activity</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>45 min reading + notes</td></tr>
+      <tr><td>2</td><td>60–90 min lab</td></tr>
+      <tr><td>3</td><td>30 min re-implement lab from scratch</td></tr>
+      <tr><td>4</td><td>Xcode Instruments on last lab (optional)</td></tr>
+      <tr><td>Weekend</td><td>Write exit checkpoint; advance only if passed</td></tr>
+    </tbody>
+  </table>
+
+  <h2>12. Capstone project (after Phase 7)</h2>
+  <p><strong>Local assistant pipeline:</strong></p>
+  <ol>
+    <li>Core ML model tuned for ANE (e.g. VAD or embedding).</li>
+    <li>MLX LLM on GPU for text.</li>
+    <li>Instruments timeline showing ANE + GPU activity (or document serialization).</li>
+    <li>One-page report: memory, cold start, tokens/sec, power observations.</li>
+  </ol>
+
+  <h2>13. Minimal reading / watch list</h2>
+  <ol>
+    <li>One Apple Silicon overview (chip generation + UMA only).</li>
+    <li>One WWDC Metal compute session.</li>
+    <li>One WWDC Core ML performance / Neural Engine session.</li>
+    <li>WWDC25 MLX getting started.</li>
+    <li>MLX docs: lazy evaluation + unified memory sections.</li>
+    <li>coremltools: one end-to-end conversion tutorial.</li>
+  </ol>
+
+  <h2>14. Team tailoring</h2>
+  <p>Adjust phase order if <strong>app shipping</strong> beats research: do Phase 4 before Phase 5. Note target hardware (RAM, M2 vs M4, iOS vs Mac-only) when benchmarking — results do not transfer blindly.</p>
+
+  <p class="meta" style="margin-top: 0.4in;"><strong>Confidential — Upscale AI, Inc.</strong> Do not distribute. Public company context: <a href="https://www.upscaleai.com">upscaleai.com</a> (AI networking, SkyHammer™, open standards). Slide deck: Apple-Silicon-ML-Slides.pdf</p>
+
+</body>
+</html>
