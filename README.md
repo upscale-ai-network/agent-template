@@ -181,13 +181,13 @@ Or open `slides.html` / `study-guide.html` in a browser → Print → Save as PD
 
 ```bash
 git remote -v
-# origin  git@github.com:upscale-ai-network/diwakar-work.git
+# origin  git@github.com:dtundlam/diwakar-work.git
 ```
 
 Clone elsewhere:
 
 ```bash
-git clone git@github.com:upscale-ai-network/diwakar-work.git
+git clone git@github.com:dtundlam/diwakar-work.git
 cd diwakar-work
 uv sync
 ```
