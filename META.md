@@ -106,22 +106,23 @@ Workbench = **egg container**. META + Px = **how you decide what to put in the c
 - [x] Remote policy: no confidential until IT/org repo
 - [x] This file written — **stop tuning the system**
 
-## Hatch status — **closed**
+## Hatch status — **open**
 
 - [x] `META.md` + `README.md` committed on local `main`
-- [x] P0 draft in repo: `manager-arch-vision-draft.md` (local only until manager review; push = P1)
+- [x] Repo at `~/diwakar-work`
+- [x] P0 draft in repo: `manager-arch-vision-draft.md`
+- [ ] **`TASKS.md`** — git source of truth for open work (see [TASKS.md](TASKS.md))
+- [ ] Hatch closed in `TASKS.md` when task list + META pointer are stable
 - [ ] Org remote `upscale-ai-network/diwakar-work` — **P1**, not a hatch gate
 
-**Run phase:** P0 arch vision (Thu EOD) → P1 access → P2 digest/repos.
+**Run phase (after hatch closes):** P0 arch vision (Thu EOD) → P1 access → P2 digest/repos.
 
-**Do not re-open hatch** unless real friction — then treat as **P2** tweak, not P(-1) redo.
+**Do not re-tune Px/WFQ** — treat friction as **P2** tweak only.
 
 ---
 
 ## Agent / chat hygiene
 
-- **Model/context thread** — onboarding, brew, tracker, 1M vs 200K context.
-- **Apple Silicon thread** — slides, MLX demo, study guide.
-- **This META** — paste or point agents at `META.md` when you want **task system** context without re-deriving P(-1).
-
-Optional Week 2: one-page MD export (tracker item) referencing `META.md` + canvas paths for new chats.
+- **Open tasks:** [TASKS.md](TASKS.md) only — not chat history, not canvas.
+- **Rules / Px:** this `META.md` — do not re-derive P(-1) unless asked.
+- **Onboarding infra** — separate chat ok; mirror status into `TASKS.md` when it changes.

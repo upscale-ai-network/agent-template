@@ -2,7 +2,8 @@
 
 **Private workbench** — internal learning materials, demos, and scripts for Upscale AI work.
 
-**Task system (P(-1) hatch):** see **[META.md](META.md)** — Px priorities, triage vs P2, WFQ bandwidth model, and how this repo fits onboarding + P0 work.  
+**Tasks:** **[TASKS.md](TASKS.md)** — open work (git source of truth).  
+**Rules:** **[META.md](META.md)** — Px priorities, triage vs P2, hatch vs run.  
 **Not** a team/product repo: copy code *out* into project repos when something should be shared and maintained.
 
 **Confidential — Upscale AI, Inc. Do not distribute.**
@@ -206,7 +207,8 @@ Branching / merging: your workflow; this repo is a personal workbench.
 ├── .gitignore           # ignores .venv/
 ├── pyproject.toml       # project deps (mlx)
 ├── uv.lock              # lockfile — commit with pyproject.toml
-├── META.md                # P(-1) hatch — Px, triage, WFQ (closed; see Hatch status)
+├── TASKS.md               # open work — source of truth
+├── META.md                # Px rules, hatch vs run
 ├── README.md
 ├── manager-arch-vision-draft.md   # P0 manager slides (draft)
 ├── PRESENTER-NOTES.md
