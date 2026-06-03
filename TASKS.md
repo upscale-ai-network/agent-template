@@ -42,7 +42,8 @@
 
 | Priority | Status | ID | Title | Notes |
 |----------|--------|-----|-------|-------|
-| — | done | done-hatch | Hatch closed | `TASKS.md` + META/README · 2026-05-30 |
+| — | done | done-readme-ops | Deliberate pace + fresh-agent litmus test in README | Big steps = separate commit; human double-check |
+| — | done | done-hatch | Hatch closed | `TASKS.md` + META/README · 2026-05-30 · revisit if litmus fails |
 | — | done | done-hatch-git | Hatch files committed locally | META, README, P0 draft |
 | — | done | done-move | Repo moved to `~/diwakar-work` | |
 | — | done | done-day1-2 | Mac dev setup (brew, uv, gh, zsh, day-2 tools) | |

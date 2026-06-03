@@ -5,7 +5,7 @@
 This file is the **shell** that hatches before P0/P1 work makes sense. It connects:
 
 - **`diwakar-work`** — personal workbench (scripts, learning, drafts; copy *out* to product repos)
-- **Onboarding / dev setup** — brew, `uv`, SSH, corp access, [work-progress-tracker](file:///Users/dtundlam/.cursor/projects/empty-window/canvases/work-progress-tracker.canvas.tsx)
+- **Onboarding / dev setup** — brew, `uv`, SSH, corp access; status in [TASKS.md](TASKS.md)
 - **Task handling** — Px priorities + triage + calendar bandwidth (WFQ analogy)
 
 ---
@@ -122,6 +122,7 @@ Workbench = **egg container**. META + Px = **how you decide what to put in the c
 
 ## Agent / chat hygiene
 
+- **Read first:** [README.md](README.md) — deliberate pace, big-step policy, fresh-agent litmus test.
 - **Open tasks:** [TASKS.md](TASKS.md) only — not chat history, not canvas.
 - **Rules / Px:** this `META.md` — do not re-derive P(-1) unless asked.
 - **Onboarding infra** — separate chat ok; mirror status into `TASKS.md` when it changes.

@@ -1,12 +1,81 @@
 # diwakar-work
 
-**Private workbench** — internal learning materials, demos, and scripts for Upscale AI work.
-
-**Tasks:** **[TASKS.md](TASKS.md)** — open work (git source of truth).  
-**Rules:** **[META.md](META.md)** — Px priorities, triage vs P2, hatch vs run.  
-**Not** a team/product repo: copy code *out* into project repos when something should be shared and maintained.
-
+**Private workbench** for Upscale AI — learning, drafts, and personal scripts.  
 **Confidential — Upscale AI, Inc. Do not distribute.**
+
+**Not** a team/product repo: promote code *out* to org repos when something should be shared.
+
+---
+
+## How this repo is run (read this first)
+
+| File | Role |
+|------|------|
+| **[README.md](README.md)** | Operating discipline + fresh-agent litmus test (this file) |
+| **[TASKS.md](TASKS.md)** | Open work — **source of truth**; edit and commit |
+| **[META.md](META.md)** | Px priorities, triage, hatch vs run — do not re-derive unless asked |
+
+**Offboarded:** Cursor canvas and chat history are **not** authoritative. Git files are.
+
+---
+
+## Deliberate pace — big steps need human intent
+
+Until org remote + PR/review workflow exists, **go slowly**. The human owns merge-worthy decisions.
+
+### What counts as a big step
+
+- Closing or reopening **hatch**
+- Declaring a phase “done” (onboarding, offboard, access)
+- Renaming/moving the repo root
+- Changing **source-of-truth** files (`TASKS.md`, `META.md`, this README)
+- Bulk deletes (e.g. Apple Silicon prune) or large refactors
+- Pushing to any remote with confidential content
+
+### Rules (local git only, for now)
+
+1. **Double-check** with the human before a big step — state what will change and wait for explicit OK.
+2. **One concern per commit** — big steps get their **own** commit message; do not bundle with drive-by edits.
+3. **Small steps** — prefer several small commits over one “cleanup” commit.
+4. **No silent policy changes** — if behavior changes, update `README.md` or `META.md` in the same commit.
+5. **Tasks follow work** — update [TASKS.md](TASKS.md) when status changes (same session or immediate follow-up commit).
+
+### Later (when org remote + PRs exist)
+
+- PR + human review required for big steps
+- Until then: local `main` only; **no push** of confidential material without explicit approval ([TASKS.md](TASKS.md) `p1-remote`, `p1-privacy`)
+
+---
+
+## Fresh checkout — agent litmus test (human-run)
+
+**Only you run this test** — in a new machine or new agent chat, no prior context.
+
+1. `git clone` (or copy) `~/diwakar-work` and `cd` into it.
+2. Open **README.md** (this file) → confirm deliberate-pace rules are visible.
+3. Open **TASKS.md** → list open tasks; confirm **Priority** and **Title** columns; find P0 and P2 prune row.
+4. Open **META.md** → confirm Px order; confirm hatch status matches your expectation.
+5. Ask the agent: *“What is open in P0? Where are rules? Was hatch closed?”*
+6. **Pass:** answers cite only these files, no canvas/chat; agent asks before proposing a big step.  
+7. **Fail:** agent invents tasks, merges big changes without asking, or re-derives Px/WFQ unprompted → fix docs, not the agent.
+
+---
+
+## Repo map
+
+```
+TASKS.md                      # open work (table: Priority | Status | ID | Title | Notes)
+META.md                       # Px, triage, hatch/run
+README.md                     # this file — operating discipline
+manager-arch-vision-draft.md  # P0 draft
+…                             # workbench content below (Apple Silicon — prune planned P2)
+```
+
+---
+
+## Workbench contents (Apple Silicon ML brief — P2 prune planned)
+
+See [TASKS.md](TASKS.md) `p2-prune`. Content below is legacy/workbench until archived.
 
 ---
 
