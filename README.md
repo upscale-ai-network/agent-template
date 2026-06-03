@@ -12,7 +12,8 @@
 | File | Role |
 |------|------|
 | **[README.md](README.md)** | Operating discipline + fresh-agent litmus test (this file) |
-| **[TASKS.md](TASKS.md)** | Open work — **source of truth**; edit and commit |
+| **[TASKS.md](TASKS.md)** | Open work — **source of truth**; labels `DT###`; optional due |
+| **[TASKS-LOG.md](TASKS-LOG.md)** | Task activity log (append-only, loose format) |
 | **[META.md](META.md)** | Px priorities, triage, hatch vs run — do not re-derive unless asked |
 
 **Offboarded:** Cursor canvas and chat history are **not** authoritative. Git files are.
@@ -74,7 +75,8 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 ## Repo map
 
 ```
-TASKS.md                      # open work (table: Priority | Status | ID | Title | Notes)
+TASKS.md                      # open work (DT | Priority | Status | Title | Due | Notes)
+TASKS-LOG.md                  # DT activity log
 META.md                       # Px, triage, hatch/run
 README.md                     # this file — operating discipline
 manager-arch-vision-draft.md  # P0 draft
