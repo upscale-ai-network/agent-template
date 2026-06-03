@@ -16,7 +16,7 @@
 | DT | Priority | Status | Title | Due | Notes |
 |----|----------|--------|-------|-----|-------|
 | DT100 | P0 | doing | 2–3 slide arch vision for manager | 2026-06-05 | `manager-arch-vision-draft.md` · Thu EOD · was `p0-slides` |
-| DT102 | P1 | doing | Cursor/doc use — HR / IT / mgmt OK | | Privacy Mode on; formal OK pending |
+| DT102 | P1 | open | Cursor/doc use — HR / IT / mgmt OK | | Privacy Mode on; formal OK pending |
 | DT103 | P1 | open | Org git remote + push policy | | Local-only for now · `upscale-ai-network/diwakar-work` |
 | DT104 | P1 | open | Corp VPN from home + internal tools | | Browser check; no SSH host yet |
 | DT105 | P1 | open | UNIX login + SSH to build servers | | Blocked — IT/team |
