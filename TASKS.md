@@ -8,13 +8,17 @@ Update `status`: `open` | `doing` | `done` | `drop`
 
 ---
 
-## Hatch (open)
+## TRIAGE (process — short bursts)
 
 | id | task | status | notes |
 |----|------|--------|-------|
-| hatch-tasks | `TASKS.md` is repo source of truth; canvas/chat not | doing | this file |
-| hatch-meta | `META.md` points to `TASKS.md`; hatch gate updated | open | |
-| hatch-close | Close hatch after above committed | open | no Px/WFQ re-tune |
+| triage-offboard | Offboard audit: canvas + chat → git — anything tangible lost? | open | If yes: add rows to P1/P2 here; see checklist below |
+
+**Offboard checklist (verify once):**
+- [ ] Canvas click-state (`.canvas.data.json`) — still on disk under `~/.cursor/projects/.../canvases/`?
+- [ ] `brew-dev-setup.canvas.tsx` / `work-progress-tracker.canvas.tsx` — copy any missing items into `TASKS.md`
+- [ ] Decisions only in chat (VPN partial, privacy, paths) — captured in `TASKS.md`?
+- [ ] Onboarding brew list — needed in repo or stay external?
 
 ---
 
@@ -22,7 +26,7 @@ Update `status`: `open` | `doing` | `done` | `drop`
 
 | id | task | status | notes |
 |----|------|--------|-------|
-| p0-slides | 2–3 slide arch vision for manager | open | `manager-arch-vision-draft.md` · Thu EOD |
+| p0-slides | 2–3 slide arch vision for manager | doing | `manager-arch-vision-draft.md` · Thu EOD |
 
 ---
 
@@ -67,7 +71,8 @@ Update `status`: `open` | `doing` | `done` | `drop`
 
 | id | task | notes |
 |----|------|-------|
-| done-hatch-git | `META.md`, README, P0 draft committed locally | hatch partial |
+| done-hatch | Hatch closed — `TASKS.md` + META/README pointers | 2026-05-30 |
+| done-hatch-git | `META.md`, README, P0 draft committed locally | |
 | done-move | Repo at `~/diwakar-work` | |
 | done-day1-2 | Mac setup, brew, uv, gh SSH, zsh/p10k, day-2 tools | see onboarding thread |
 | done-clone | `sonic-ztp` clone verified | |

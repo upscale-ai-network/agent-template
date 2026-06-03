@@ -106,16 +106,15 @@ Workbench = **egg container**. META + Px = **how you decide what to put in the c
 - [x] Remote policy: no confidential until IT/org repo
 - [x] This file written — **stop tuning the system**
 
-## Hatch status — **open**
+## Hatch status — **closed**
 
-- [x] `META.md` + `README.md` committed on local `main`
+- [x] `META.md` + `README.md` + [`TASKS.md`](TASKS.md) on local `main`
 - [x] Repo at `~/diwakar-work`
-- [x] P0 draft in repo: `manager-arch-vision-draft.md`
-- [ ] **`TASKS.md`** — git source of truth for open work (see [TASKS.md](TASKS.md))
-- [ ] Hatch closed in `TASKS.md` when task list + META pointer are stable
+- [x] Open work in git only — canvas/chat offboarded
 - [ ] Org remote `upscale-ai-network/diwakar-work` — **P1**, not a hatch gate
+- [ ] **TRIAGE:** `triage-offboard` in TASKS.md — audit for anything lost from canvas/chat
 
-**Run phase (after hatch closes):** P0 arch vision (Thu EOD) → P1 access → P2 digest/repos.
+**Run phase:** P0 arch vision (Thu EOD) → P1 access → P2 digest/repos.
 
 **Do not re-tune Px/WFQ** — treat friction as **P2** tweak only.
 
