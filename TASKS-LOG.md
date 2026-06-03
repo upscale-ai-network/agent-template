@@ -14,5 +14,7 @@ Refine format later ([TASKS.md](TASKS.md) DT114).
 | 2026-05-30 | DT100 | status | `doing` |
 | 2026-05-30 | DT101 | created | Offboard audit canvas/chat → git |
 | 2026-05-30 | — | numbering | Open tasks labeled DT100–DT117; done DT090–DT095 |
+| 2026-05-30 | DT118 | created | P0 test-run Gluon + template intent |
+| 2026-05-30 | DT118 | closed | Litmus pass; instance reproducible from git |
 
 **Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`

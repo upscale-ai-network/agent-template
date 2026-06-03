@@ -2,6 +2,8 @@
 
 **Purpose:** Record how Gluon and this repo work **today**, so a fresh session can reload without canvas or chat. Not governance for its own sake — only what helps the workbench grow. Unknown future problems stay unsolved here.
 
+*Template intent:* This tree is **your** instance first. If the pattern works ([TASKS.md](TASKS.md) **DT118**), others may copy it like a pre-made shell rc — optional agent name, optional edits, same stateless-git shape — not a mandated Upscale product.
+
 **Amendments:** No formal process yet. Changes to law, priorities, or litmus rules are **your judgment** only. When you change them, commit; agents should not invent policy.
 
 ---

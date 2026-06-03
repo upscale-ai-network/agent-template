@@ -53,3 +53,18 @@
 | DT093 | — | done | Repo moved to `~/diwakar-work` | | **Lepton** |
 | DT094 | — | done | Mac dev setup (brew, uv, gh, zsh, day-2) | | |
 | DT095 | — | done | `sonic-ztp` clone verified | | |
+| DT118 | P0 | done | Test-run Gluon (fresh boot + litmus) | | Litmus pass · template intent in CONSTITUTION + notes below |
+
+### DT118 (closed — template notes)
+
+First working Gluon instance validated from git (stateless boot, sort litmus, constitution load).
+
+Pattern for others (optional copy, any agent name, any edits) — like a pre-made `/etc/zshrc` plus task-tracking agent:
+
+| Idea | Analog |
+|------|--------|
+| Pre-wired agent + task shell | `/etc/profile` or `/etc/zshrc` — sensible defaults, not mandatory |
+| Stateless agent + git memory | Agent runs when repo opens; law/state in committed files |
+| Personal hatch | Clone/fork; rename agent or skip; amend by owner judgment |
+
+**When publishing a template:** ship minimum (constitution, tasks, log, README); no confidential Upscale content without approval; template export is follow-on work (e.g. DT116), not blocked.
