@@ -122,7 +122,7 @@ Workbench = **egg container**. META + Px = **how you decide what to put in the c
 
 ## Agent / chat hygiene
 
-- **Read first:** [README.md](README.md) — deliberate pace, big-step policy, fresh-agent litmus test.
+- **Read first:** [CONSTITUTION.md](CONSTITUTION.md) (v0 boot + invariants), then [README.md](README.md) — deliberate pace, big-step policy, fresh-agent litmus test.
 - **Open tasks:** [TASKS.md](TASKS.md) (`DT###`) — log changes in [TASKS-LOG.md](TASKS-LOG.md).
 - **Rules / Px:** this `META.md` — do not re-derive P(-1) unless asked.
 - **Onboarding infra** — separate chat ok; mirror status into `TASKS.md` when it changes.

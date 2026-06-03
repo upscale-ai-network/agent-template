@@ -11,6 +11,7 @@
 
 | File | Role |
 |------|------|
+| **[CONSTITUTION.md](CONSTITUTION.md)** | Initial v0 — runtime model, layers, boot order, invariants; amend by your judgment only |
 | **[README.md](README.md)** | Operating discipline + fresh-agent litmus test (this file) |
 | **[TASKS.md](TASKS.md)** | Open work — **source of truth**; labels `DT###`; optional due |
 | **[TASKS-LOG.md](TASKS-LOG.md)** | Task activity log (append-only, loose format) |
@@ -53,12 +54,15 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 **Only you run this test** — in a new machine or new agent chat, no prior context.
 
 1. `git clone` (or copy) `~/diwakar-work` and `cd` into it.
-2. Open **README.md** (this file) → confirm deliberate-pace rules are visible.
-3. Open **TASKS.md** → list open tasks; confirm **Priority** and **Title** columns; find P0 and P2 prune row.
-4. Open **META.md** → confirm Px order; confirm hatch status matches your expectation.
-5. Ask the agent: *“What is open in P0? Where are rules? Was hatch closed?”*
-6. **Pass:** answers cite only these files, no canvas/chat; agent asks before proposing a big step.  
-7. **Fail:** agent invents tasks, merges big changes without asking, or re-derives Px/WFQ unprompted → fix docs, not the agent.
+2. Open **CONSTITUTION.md** → confirm stateless boot, single-writer, three layers.
+3. Open **README.md** (this file) → confirm deliberate-pace rules are visible.
+4. Open **TASKS.md** → list open tasks; confirm **Priority** and **Title** columns; find P0 and P2 prune row.
+5. Open **META.md** → confirm Px order; confirm hatch status matches your expectation.
+6. Ask the agent: *“What is open in P0? Where are rules? Was hatch closed?”*
+7. **Pass:** answers cite only these files, no canvas/chat; agent asks before proposing a big step.  
+8. **Pass:** `TASKS.md` open table sorted `P0 → P1 → TRIAGE → P2 → P3`; within each band `doing` before `open`.  
+9. **Fail:** agent invents tasks, merges big changes without asking, or re-derives Px/WFQ unprompted → fix docs, not the agent.  
+10. **Fail:** any `doing` row appears below an `open` row → sort order broken.
 
 ---
 
