@@ -61,6 +61,16 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 
 ---
 
+## Machines (names)
+
+| Name | Role |
+|------|------|
+| **Lepton** | This MacBook Pro — local dev, clone, commit (`~/diwakar-work`) |
+| **Proton** | Future cloud workstation (GCP/AWS workhorse) — not provisioned yet |
+| **Gluon** | Agent that lives in this repo; context = committed files only |
+
+---
+
 ## Repo map
 
 ```
