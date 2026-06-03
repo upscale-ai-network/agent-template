@@ -23,12 +23,12 @@
 | DT106 | P1 | open | SSH jump hosts + `~/.ssh/config` | | Template from team |
 | DT107 | P1 | open | GCP + AWS VM access | | Office account · **Proton** later |
 | DT108 | P1 | open | `bugatti-model` repo access + clone | | Not in org list yet |
+| DT113 | P1 | open | Prune Apple Silicon GPU / demos from repo | | `archive/` or branch · elevated from P2 |
 | DT101 | TRIAGE | open | Offboard audit: canvas + chat → git | | Anything lost? Add rows + log entry |
 | DT109 | P2 | open | Remote workspace + toolchain on build servers | | After DT105–DT106 |
 | DT110 | P2 | open | Cursor remote agents — policy + setup | | After DT102 |
 | DT111 | P2 | open | Tech arch digest: OCP ESUN + Ultra Ethernet | | Public specs only until DT102 |
 | DT112 | P2 | open | Explore `sonic-ztp` codebase | | `~/Projects/sonic-ztp` |
-| DT113 | P2 | open | Prune Apple Silicon GPU / demos from repo | | `archive/` or branch |
 | DT114 | P2 | open | Evolve `TASKS.md` + `TASKS-LOG.md` format | | After ~1 week use |
 | DT115 | P2 | open | Weekly manager report — format + cadence | | |
 | DT116 | P2 | open | Plan lightweight MD export for new agents | | Optional |
