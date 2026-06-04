@@ -2,6 +2,8 @@
 
 **Purpose:** Record how Gluon and this repo work **today**, so a fresh session can reload without canvas or chat. Not governance for its own sake — only what helps the workbench grow. Unknown future problems stay unsolved here.
 
+**Discipline at speed:** Automation and agents increase velocity — only safely with **strict discipline**, or the result is chaos, rework, and double-guessing. Same rule as riding: wear the helmet every time; when going faster, be **more** careful, not less. Here the helmet is git truth (plan, tasks, checkpoints), human-gated commit/push ([TASKS.md](TASKS.md) DT119), and deliberate pace ([README.md](README.md)) — speed-ups are allowed; rash driving is not.
+
 *Template intent:* This tree is **your** instance first. If the pattern works ([TASKS.md](TASKS.md) **DT118**), others may copy it like a pre-made shell rc — optional agent name, optional edits, same stateless-git shape — not a mandated Upscale product.
 
 **Amendments:** No formal process yet. Changes to law, priorities, or litmus rules are **your judgment** only. When you change them, commit; agents should not invent policy.
@@ -42,6 +44,23 @@ Sessions are **stateless**. Chat and canvas are **not** authoritative. Only comm
 
 ---
 
+## North star — full Gluon recovery (litmus goal)
+
+**Not required today — direction for the workbench.**
+
+The test you intend to pass — and the definition of “Gluon works”:
+
+1. **Kill** the agent session; **erase** chat history (no canvas, no prior thread).  
+2. **Start cold** — new agent (IDE, or future **CLI terminal app**).  
+3. **`git clone`** this repo (or fresh copy); optionally **switch host, LLM, or model**.  
+4. Agent **fully recovers Gluon** from git alone: boot order, Px, open tasks, pace rules, current plan — without re-deriving policy from memory or asking you to reconstruct context.
+
+**Pass:** indistinguishable useful continuity from committed state. **Fail:** invented tasks, wrong priorities, missing DT100 plan, or “what repo?”
+
+**Today:** [README.md](README.md) litmus (steps 1–10) is a **subset** of this bar — run it; tighten docs when it fails. **DT118** validated a first boot; the **full** kill-and-recover test is the long-term goal.
+
+---
+
 ## Invariants (v0)
 
 1. Git files are source of truth; canvas/chat are not.
@@ -58,7 +77,12 @@ Sessions are **stateless**. Chat and canvas are **not** authoritative. Only comm
 |------|------|
 | **Lepton** | This Mac — local clone and commit |
 | **Proton** | Future cloud workstation — same binary, new host; litmus again after clone |
-| **Gluon** | Agent process bound to this repo |
+| **Gluon** | Work agent at **Upscale AI** — bound to this repo; durable memory = git |
+| **Pensieve** | Personal AI — job search, interviews, negotiation, offer, resignation; hatched this pattern; not authoritative in this repo |
+
+**Origin:** Pensieve helped through hiring and transition; **Gluon** is that pattern cloned for **work execution** at Upscale (tasks, arch vision, template).
+
+**Separation (required):** Pensieve and Gluon **must not mix context** — separate repos, chats, and memory. No Pensieve transcripts, job-search notes, or personal negotiation content in this tree. No Upscale confidential material in Pensieve’s home. Shared *pattern* (git-as-memory, discipline at speed); **not** shared files or threads. If unsure which agent owns a topic, ask the human.
 
 ---
 

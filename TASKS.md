@@ -110,7 +110,7 @@
 
 ### DT118 (closed — template notes)
 
-First working Gluon instance validated from git (stateless boot, sort litmus, constitution load).
+First working Gluon instance validated from git (stateless boot, sort litmus, constitution load). **Full bar** (kill agent, erase chat, clone, new model → full recovery): [CONSTITUTION.md](CONSTITUTION.md) *North star* — goal, not required yet.
 
 Pattern for others (optional copy, any agent name, any edits) — like a pre-made `/etc/zshrc` plus task-tracking agent:
 

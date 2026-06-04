@@ -52,6 +52,8 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 
 ## Fresh checkout — agent litmus test (human-run)
 
+**North star (full bar):** kill agent, erase chat, clone repo, new model/host — Gluon recovers **fully** from git. See [CONSTITUTION.md](CONSTITUTION.md) *North star — full Gluon recovery*. **Not there yet; that’s ok** — this section is the test we run today.
+
 **Only you run this test** — in a new machine or new agent chat, no prior context.
 
 1. `git clone` (or copy) `~/diwakar-work` and `cd` into it.
