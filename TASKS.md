@@ -34,6 +34,7 @@
 | DT116 | P2 | open | Plan lightweight MD export for new agents | | Optional |
 | DT119 | P2 | open | Git hooks: pre-commit / pre-push / agent commit gate | | Enforce rules in tooling, not trust · see **DT119** |
 | DT120 | P2 | open | Pensieve → `origin.md` for Gluon constitution | | No PII / past-employer leak · Pensieve/Gluon separate · see **DT120** |
+| DT121 | P3 | open | CLI toolbox — past tools list (loose) | | One task, many tools · see **DT121** |
 | DT117 | P3 | open | Monthly review — tune tasks + log | | ~4 weeks |
 
 ### DT100 — arch vision (open)
@@ -61,6 +62,27 @@
 - [ ] No Pensieve chat/canvas as authority — file in git only after review
 
 **Done when:** `origin.md` in repo, constitution references it, origin story no longer “pending.”
+
+---
+
+### DT121 — CLI toolbox (loose inventory)
+
+**Model:** One ongoing task; **append** tools you’ve used before — no per-tool DT rows. Status stays `open` until you decide it’s “good enough” or fold into README/brew doc.
+
+**Not done when:** every tool is installed — only when the list feels captured for Lepton (and optional one-liner install notes).
+
+| Tool | Role | Install (macOS) | Notes |
+|------|------|-----------------|-------|
+| **glow** | Color markdown in terminal | `brew install glow` | `glow TASKS.md` · `-p` pager · themes via `GLOW_STYLE` — **likely** the one you forgot |
+| **mdcat** | Markdown → terminal (links, code) | `brew install mdcat` | `mdcat file.md` · alternative to glow |
+| **bat** | Syntax-highlighted cat (incl. `.md`) | `brew install bat` | `bat README.md` · not markdown-specific |
+| **mdless** | Markdown pager | `brew install mdless` | `mdless file.md` |
+
+**Add rows as you remember** (git, ssh, jq, ripgrep, `gh`, `uv`, etc.) — loose bullets OK in Notes column.
+
+- [ ] Confirm which MD viewer you used before (glow vs mdcat vs other)
+- [ ] Install chosen viewer on Lepton if missing
+- [ ] Append other “past CLI” tools when they surface (no new DT per tool)
 
 ---
 

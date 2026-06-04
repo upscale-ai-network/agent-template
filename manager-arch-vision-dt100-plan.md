@@ -147,7 +147,12 @@ When Gluon is active, you’re **fused** — don’t pretend parallel P1 work co
 | File | Use |
 |------|-----|
 | [manager-arch-vision-a3.md](manager-arch-vision-a3.md) | Slide copy |
+| [manager-arch-vision-a3.pptx](manager-arch-vision-a3.pptx) | A3 draft deck (regen: `python3 scripts/build-dt100-decks.py`) |
 | [manager-arch-vision-b6.md](manager-arch-vision-b6.md) | Walk track |
+| [manager-arch-vision-b6.pptx](manager-arch-vision-b6.pptx) | B6 draft deck (same script) |
+| [scripts/build-dt100-decks.py](scripts/build-dt100-decks.py) | PPTX generator from md-aligned content |
+| [manager-arch-vision-local.md](manager-arch-vision-local.md) | Mini tasks (no DT id) · empty template → `assets/templates/` |
+| [assets/templates/](assets/templates/README.md) | Gluon exec slide template (masters only; from Shafi deck extract) |
 | [manager-arch-vision-whiteboards.md](manager-arch-vision-whiteboards.md) | Photo annotations |
 | [manager-arch-vision-draft.md](manager-arch-vision-draft.md) | Legacy — do not send |
 | **This file** | DT100 plan (decisions + playbook) |

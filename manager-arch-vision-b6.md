@@ -4,17 +4,17 @@
 **Reader:** Gururaj (Sponsor) — cross-functional names where needed; not a company-wide deck.
 **Confidential — Upscale AI, Inc.**
 
-**Companion:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) (abstract / hook — open first, ~10 s).
-**Plan:** [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md)
-**This file:** Full plan if you say **Yes** to the hook, or if you ask *“where’s the homework?”*
+**Companion:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) (hook — **Yes → How → Asks**; open first).
+**Plan:** [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md) · **Local:** [manager-arch-vision-local.md](manager-arch-vision-local.md)
+**This file:** Walkable plan after **Yes** on A3 slide 1, or if you ask *“where’s the homework?”*
 
 ---
 
-## 1. The question you need answered
+## 1. The question — and my answer (A3 slide 1 expanded)
 
-**How do we ensure SW is done and validated** — aligned with product/customer intent, mgmt-plane deployment (SONiC/FBOSS-class), datapath architecture, and **ASIC/SDK/SAI schedule** — so SDK/SAI are tested against **C-models**, then **emulation/FPGA**, with clear “done” criteria **before HW tape-out**?
+**Your question:** How do we get SW **done and validated** with product intent, mgmt-plane deployment (SONiC/FBOSS-class), datapath/AV, and **SDK/SAI** proof on **C-models → emulation/FPGA → silicon** before tape-out?
 
-**My answer:** I will **drive** a repeatable **2-pager + validation-gate** machine; I am **DRI** on arch-vision framing and **QoS/resource-management (RM)** wedge; peer architects are **DRIs** on their slices.
+**My answer:** I **drive** a repeatable **2-pager + validation-gate** machine. I am **DRI** on arch-vision framing and **QoS/RM** (**QoSMAP**, queue/buffer carve). **Shafi Mohammad** and **Tippanna Hongal** remain **DRIs** on L2/L3/ACL and ECMP/AV; I align the shared story, not their technical ownership.
 
 ---
 
@@ -26,7 +26,7 @@
 | Next artifact | **Cx 2-pager** (decisions, gates, open issues) | ~2 weeks |
 | Not Thu / not 2 weeks | 50-page arch dump, full HW catalog digest | After access + your steer |
 
-Same lesson as peer L2/L3 work: full truth can exist; **exec read = 2-pager**. I will not ask you to read 50 pages.
+Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer L2/L3 already showed the cost of 50-page exec dumps — I won’t repeat that with you.)
 
 ---
 
@@ -162,14 +162,13 @@ Same lesson as peer L2/L3 work: full truth can exist; **exec read = 2-pager**. I
 
 ---
 
-## 11. Asks for Gururaj (Sponsor)
+## 11. Asks for Gururaj (Sponsor) — delta beyond A3 slide 3
 
-1. **Confirm** this framing answers your question — or redirect A3 premise if not.
-2. **Confirm** DRI split: me on arch-vision + QoS RM; **Shafi** / **Tippanna** on their slices.
-3. **Confirm** OCP/external: Rupa + me aligned; **you** approve company messaging.
-4. **Confirm** Thu deliverable: **A3** + walk **B6**; **Cx 2-pager** ~2 weeks.
-5. **Confirm** format: async PDF vs 15 min live vs Fri continuation (expected).
-6. **Step in** if peer alignment on validation gates stalls.
+*Premise, DRI split, OCP voice, format, escalation are on **A3** — only add here if he wants detail.*
+
+1. **Thu package:** **A3** hook + optional **B6** walk now; **Cx 2-pager** ~2 weeks — OK?
+2. **Cx scope v0:** Validation gate definitions + QoS RM **HWv1** sign-off with HW datapath — who must be in the room?
+3. **Step in** if validation-gate consensus across architects stalls (beyond normal peer DRI friction).
 
 ---
 

@@ -4,57 +4,57 @@
 **Reader:** Gururaj only
 **Confidential — Upscale AI, Inc.**
 
-**Flow:** Present this (~10 s on premise) → if **Yes**, open [manager-arch-vision-b6.md](manager-arch-vision-b6.md) and walk the plan.
-If **No**, refine this hook only; keep B6 closed unless you ask.
+**Flow:** ~10 s on **Yes** → if **Yes**, walk [manager-arch-vision-b6.md](manager-arch-vision-b6.md). If **No**, fix this hook only; B6 stays closed unless you ask.
 
-**Full plan:** B6 is the homework behind this abstract.
-**DT100 plan:** [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md)
+**Full plan:** B6 is the homework behind this hook.
+**DT100 plan:** [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md) · **Local:** [manager-arch-vision-local.md](manager-arch-vision-local.md)
 
 ---
 
 ## Slide 1 — Yes: I can do this job
 
-**Title:** Aligning SW validation with product, datapath, and silicon milestones
+**Title:** I can align SW validation to product, datapath, and silicon
 
-**Subtitle:** 2-pager discipline · framework first · QoS/RM is my wedge; I help across lanes
-
-**Bullets:**
-
-- **Your question:** SW **done and validated** with product, mgmt plane, datapath/AV, and **SDK/SAI before tape-out** (C-models → emulation → silicon).
-- **My answer:** I will **drive** that **framework** and be **DRI** on **QoS/resource management**; peer **DRIs** on L2/L3 and AV.
-- **Thu is not** the full architecture — it is **how I will run the job** (you’ve said you won’t read 50 pages — neither will I write one).
-- **Sponsor:** Gururaj · **DRI:** Diwakar Tundlam
-
----
-
-## Slide 2 — What the job is (hook into B6)
-
-**Title:** ~2 weeks to Cx 2-pager; plan is in B6
+**Subtitle:** Framework first · 2-pager discipline · QoS/RM is my wedge
 
 **Bullets:**
 
-- **Machine:** AV ↔ product ↔ datapath → validation gates → **Amazon-style 2-pager** decisions (not 50-page dumps).
-- **Near term:** **Cx 2-pager** with validation gates + QoS RM HWv1 scope (~2 weeks).
-- **Datapath picture:** Gururaj **Logical Pipeline** slide — my **DRI:** **QoSMAP** + **Queue/buffer carve**; peer **DRIs:** Shafi (L2/ACL), Tippanna (ECMP/AV). Detail in **B6 §6**.
-- **Align:** Rupa Budhia (datapath/OCP weekly); program touch via Prasun Sinha.
-- **Next:** Walk **B6** for detail — or Fri if you want to reshape the hook first.
+- **My commitment:** I will **drive** the cross-team **validation framework** and be **DRI** for **QoS / resource management (RM)**.
+- **Your question:** SW **done and validated** with product intent, mgmt plane, datapath/AV, and **SDK/SAI before tape-out** — C-models → emulation → silicon.
+- **Peers:** **Shafi Mohammad** (L2/L3/ACL) and **Tippanna Hongal** (ECMP/AV) stay **DRIs** on their slices; I facilitate alignment, not takeover.
+- **Today:** Premise and operating model — **not** full architecture (exec read stays a **2-pager**, not a 50-page dump).
+- **Roles:** **Sponsor:** Gururaj · **DRI:** Diwakar Tundlam
 
 ---
 
-## Slide 3 — Asks (Sponsor decisions)
+## Slide 2 — How I will run it
 
-**Title:** Alignment asks
+**Title:** Operating model → **Cx** 2-pager in ~2 weeks
 
 **Bullets:**
 
-1. Confirm **premise** — or tell me what to change on slide 1.
-2. Confirm **DRI split** (me: arch vision + QoS RM; Shafi / Tippanna: their domains).
-3. Confirm **OCP voice** — Rupa + me coordinated; **you** own exec/external position.
-4. **Thu / Fri:** PDF async vs live walk vs **Fri** iteration (I expect your fingerprints on the draft).
-5. **Escalation:** You step in if validation alignment across architects stalls.
+- **Cadence:** Product/AV ↔ datapath ↔ validation **gates** → **Amazon-style 2-pager** decisions (issues + owners + dates).
+- **Near term:** **Cx** artifact — validation gate definitions + **QoS RM HWv1** scope (~2 weeks).
+- **On your pipeline slide:** I own **QoSMAP** and **Queue / buffer carve**; **Shafi** (L2/ACL), **Tippanna** (ECMP) on theirs — detail in **B6 §6**.
+- **Stay aligned:** **Rupa Budhia** (datapath / OCP weekly); **Prasun Sinha** (program mesh).
+- **If premise holds:** I walk **B6** next — or we reshape the hook on **Fri**.
 
 ---
 
-## Speaker script (10 s)
+## Slide 3 — What I need from you (Sponsor)
 
-> “Short hook on three slides — **yes, I can run this**, here’s **how** and what I need from you. The actual plan is **B6** behind this. If the premise is wrong, we fix slide 1; if it’s right, I’ll walk B6.”
+**Title:** Sponsor decisions
+
+**Bullets:**
+
+1. **Premise** — Does slide 1 answer your question? If not, what should change?
+2. **DRI split** — Me: arch-vision framework + QoS RM; **Shafi** / **Tippanna**: their domains.
+3. **OCP / external** — **Rupa** and I coordinate technically; **you** own company position.
+4. **Format** — Thu async PDF vs short live walk vs **Fri** iteration (I expect edits).
+5. **Escalation** — You step in if cross-architect validation alignment stalls.
+
+---
+
+## Speaker script (~15 s)
+
+> “Three slides: **yes, I can run this job**, **how** I’ll run it, and **what I need from you**. The walkable plan is **B6** if the premise holds. If slide 1 is wrong, we fix that first — I won’t open the long deck until you’re good with the premise.”

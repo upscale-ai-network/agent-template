@@ -25,6 +25,7 @@ Refine format later ([TASKS.md](TASKS.md) DT114).
 | 2026-06-04 | DT113 | closed | Apple Silicon MLX brief/demos/PDFs removed; pyproject/uv.lock removed |
 | 2026-06-04 | DT100 | note | Added manager-arch-vision-dt100-plan.md |
 | 2026-06-04 | DT120 | created | Pensieve export origin.md → Gluon constitution (redacted) |
+| 2026-05-30 | DT121 | created | CLI toolbox list (loose); seed: glow, mdcat, bat, mdless |
 
 **Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`
 **Status (vocabulary):** `open` | `doing` | `next` | `done` | `drop`
