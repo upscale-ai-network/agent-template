@@ -1,25 +1,36 @@
 # Slide templates (Gluon)
 
-**In git for reuse:** `upscale-exec-empty.pptx` + `template-spec.md`
+## Use this for new decks (validated)
 
-| Artifact | Use |
-|----------|-----|
-| **`upscale-exec-empty.pptx`** | Blank exec deck — theme/masters from company CCC deck; **0 slides**. Start here in PowerPoint for ad-hoc decks. |
-| **`template-spec.md`** | Colors, fonts, slide size (from theme XML). |
-| **`upscale-ccc-style-reference.pptx`** | Local only (gitignored) — full 32-slide CCC source for `build-dt100-decks.py`. |
+**`upscale-company-template.pptx`** — 2 seed slides (cover + content). **Committed. Do not rebuild for routine work.**
 
-## Regenerate empty template
+1. Open in PowerPoint.
+2. Duplicate slide 1 or 2.
+3. Replace `[...]` placeholders.
+4. Logo, footer, navy/gold layout stay.
 
-```bash
-python3 scripts/extract-empty-template.py ~/Downloads/Mirror-Sflow-Bugatti-ASIC-CCC.pptx
-```
+Validation: [TEMPLATE-VALIDATION.md](TEMPLATE-VALIDATION.md) · `python3 scripts/validate-company-template.py`
 
-Source: SharePoint `Mirror-Sflow-Bugatti-ASIC-CCC.pptx` — do **not** commit that file unless IT OK.
+---
 
-## Styled DT100 decks (company chrome)
+## Scripts (DT100 / rare regen only)
 
-```bash
-python3 scripts/build-dt100-decks.py
-```
+| Script | When |
+|--------|------|
+| `validate-company-template.py` | Before every template commit |
+| `build-company-template.py` | Only if CCC source or placeholders change |
+| `build-dt100-decks.py` | Regenerate A3/B6 from markdown |
+| `extract-empty-template.py` | Masters-only extract (not litmus) |
 
-Clones **slide 0 (cover)** and **slide 2 (content)** from the local reference copy — logo, footer, navy/gold layout. Not from the empty template file.
+**Local only (gitignored):** `upscale-ccc-style-reference.pptx` (full CCC download)
+
+---
+
+## Files
+
+| File | In git? | Purpose |
+|------|---------|---------|
+| `upscale-company-template.pptx` | **Yes** | Standard company deck — **your default** |
+| `upscale-exec-empty.pptx` | Yes | 0-slide theme shell — not for new exec decks |
+| `template-spec.md` | Yes | Hex/fonts from theme XML |
+| `TEMPLATE-VALIDATION.md` | Yes | Litmus + validation log |

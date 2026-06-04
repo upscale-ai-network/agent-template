@@ -29,8 +29,8 @@
 |------|------|
 | [x] | Draft PPTX A3 + B6 |
 | [x] | Messaging v2 |
-| [x] | Empty template extracted → `assets/templates/` (commit pending) |
+| [x] | Empty template in Gluon git (`e28ca50` · `assets/templates/upscale-exec-empty.pptx`) |
 | [ ] | Post–11:00 Gururaj → A3 |
 | [ ] | B6 polish ↔ A3 |
-| [ ] | Apply Gluon template to DT100 PPTX |
+| [x] | Apply company chrome to A3/B6 (`build-dt100-decks.py` clones CCC slides) |
 | [ ] | Thu EOD PDF to Gururaj |
