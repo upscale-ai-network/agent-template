@@ -23,9 +23,12 @@ IDX_CONTENT = 2
 
 sys.path.insert(0, str(ROOT / "scripts"))
 from pptx_util import (  # noqa: E402
-    check_zip_duplicates,
+    apply_content_colors,
+    apply_cover_colors,
+    assert_pptx_valid,
     fill_content_slide,
     fill_cover_slide,
+    save_presentation,
     trim_to_slides,
 )
 
@@ -65,16 +68,12 @@ def main() -> int:
         ],
         subtitle="[Subtitle or lead line — optional]",
     )
+    apply_cover_colors(prs.slides[0])
+    apply_content_colors(prs.slides[1])
 
-    prs.save(str(OUT))
-
-    dups = check_zip_duplicates(OUT)
-    if dups:
-        print("WARNING: duplicate zip entries:", dups)
-    else:
-        print("ZIP OK (no duplicate parts)")
-
-    print(f"Wrote {OUT} ({len(prs.slides)} seed slides)")
+    save_presentation(prs, OUT)
+    assert_pptx_valid(OUT)
+    print(f"OK: {OUT} ({len(prs.slides)} slides, zip clean, no repair expected)")
     return 0
 
 

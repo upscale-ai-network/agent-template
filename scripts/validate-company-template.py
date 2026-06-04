@@ -12,15 +12,24 @@ TEMPLATE = ROOT / "assets/templates/upscale-company-template.pptx"
 sys.path.insert(0, str(ROOT / "scripts"))
 from pptx_util import (  # noqa: E402
     COLOR_GOLD,
+    COLOR_HEADLINE,
+    COLOR_META,
     COLOR_NAVY_TITLE,
+    COLOR_TAG,
     RIGHT_PANEL_LEFT,
-    check_zip_duplicates,
+    assert_pptx_valid,
     is_footer,
 )
 
 
 def _run_rgb(shape):
-    return shape.text_frame.paragraphs[0].runs[0].font.color.rgb
+    for para in shape.text_frame.paragraphs:
+        for run in para.runs:
+            try:
+                return run.font.color.rgb
+            except AttributeError:
+                continue
+    return None
 
 
 def main() -> int:
@@ -29,9 +38,10 @@ def main() -> int:
         print(f"MISSING: {TEMPLATE}")
         return 1
 
-    dups = check_zip_duplicates(TEMPLATE)
-    if dups:
-        errors.append(f"corrupt zip duplicates: {dups}")
+    try:
+        assert_pptx_valid(TEMPLATE)
+    except ValueError as e:
+        errors.append(str(e))
 
     prs = Presentation(str(TEMPLATE))
     if len(prs.slides) != 2:
@@ -45,24 +55,35 @@ def main() -> int:
     if not has_footer:
         errors.append("cover missing Upscale footer")
 
-    right_gold = False
-    left_title = False
+    right_gold = left_headline = meta_ok = tag_ok = False
     for sh in cover.shapes:
         if not sh.has_text_frame or is_footer(sh):
             continue
         t = sh.text_frame.text
+        rgb = _run_rgb(sh)
         if sh.left >= RIGHT_PANEL_LEFT and "[Subtitle line 1]" in t:
-            if _run_rgb(sh) == COLOR_GOLD:
+            if rgb == COLOR_GOLD:
                 right_gold = True
             else:
-                errors.append(f"navy panel subtitle not gold: {_run_rgb(sh)}")
-        if sh.left < RIGHT_PANEL_LEFT and "[Presentation title]" in t:
-            left_title = True
+                errors.append(f"navy callout must be #FFE19E, got {rgb}")
+        if "[Presentation title]" in t:
+            if rgb == COLOR_HEADLINE:
+                left_headline = True
+            else:
+                errors.append(f"cover title must be #FEDB8D gold, got {rgb}")
+        if "[Subtitle line 2" in t:
+            meta_ok = rgb == COLOR_META
+        if "[Tag /" in t:
+            tag_ok = rgb == COLOR_TAG
 
     if not right_gold:
-        errors.append("cover: [Subtitle line 1] on navy panel must be gold")
-    if not left_title:
-        errors.append("cover: missing [Presentation title] on white panel")
+        errors.append("cover: navy [Subtitle line 1] must be gold")
+    if not left_headline:
+        errors.append("cover: [Presentation title] must be headline gold #FEDB8D")
+    if not meta_ok:
+        errors.append("cover: meta line must be #AABBCC")
+    if not tag_ok:
+        errors.append("cover: tag line must be #778899")
 
     content = prs.slides[1]
     title_ok = body_ok = False

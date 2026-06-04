@@ -29,7 +29,7 @@ Sessions are **stateless**. Chat and canvas are **not** authoritative. Only comm
 
 | Layer | Files | Changes |
 |-------|-------|---------|
-| **Law** | `CONSTITUTION.md`, `README.md`, `META.md` | Rare; you decide; big steps need your OK ([README](README.md)) |
+| **Law** | `CONSTITUTION.md`, `GLUON.md`, `README.md`, `META.md` | Rare; you decide; big steps need your OK ([README](README.md)) |
 | **State** | `TASKS.md`, `TASKS-LOG.md` | Often; status and log follow real work |
 | **Heap** | Drafts, scripts, notes (e.g. `manager-arch-vision-draft.md`) | Work product — **not** policy unless reflected in a task row |
 
@@ -38,9 +38,10 @@ Sessions are **stateless**. Chat and canvas are **not** authoritative. Only comm
 ## Boot order (load sequence)
 
 1. [README.md](README.md) — pace, big steps, litmus test
-2. [META.md](META.md) — Px order, triage, hatch closed — **do not re-derive** unless asked
-3. [TASKS.md](TASKS.md) — what is open now
-4. [TASKS-LOG.md](TASKS-LOG.md) — optional; why something moved
+2. [GLUON.md](GLUON.md) — identity, challenge, fail-closed — **mutating ops only after challenge**
+3. [META.md](META.md) — Px order, triage, hatch closed — **do not re-derive** unless asked
+4. [TASKS.md](TASKS.md) — what is open now
+5. [TASKS-LOG.md](TASKS-LOG.md) — optional; why something moved
 
 ---
 

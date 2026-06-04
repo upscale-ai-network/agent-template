@@ -18,6 +18,8 @@ from xml.etree import ElementTree as ET
 from pptx import Presentation
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from pptx_util import assert_pptx_valid, save_presentation  # noqa: E402
 OUT_DIR = ROOT / "assets" / "templates"
 OUT_PPTX = OUT_DIR / "upscale-exec-empty.pptx"
 OUT_SPEC = OUT_DIR / "template-spec.md"
@@ -128,7 +130,8 @@ def main() -> int:
     removed = delete_all_slides(prs)
     if len(prs.slides) != 0:
         print("Warning: slides remain after delete")
-    prs.save(str(OUT_PPTX))
+    save_presentation(prs, OUT_PPTX)
+    assert_pptx_valid(OUT_PPTX)
     write_spec(source, removed, hints)
     print(f"Removed {removed} slide(s) from {source.name}")
     print(f"Wrote {OUT_PPTX}")

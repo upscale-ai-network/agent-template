@@ -15,9 +15,10 @@ from pptx.util import Inches
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from pptx_util import (  # noqa: E402
-    check_zip_duplicates,
+    assert_pptx_valid,
     fill_content_slide,
     fill_cover_slide,
+    save_presentation,
     trim_to_slides,
 )
 PIPELINE_IMG = ROOT / "assets" / "logical-pipeline-boss-slide.png"
@@ -77,12 +78,9 @@ class StyledDeck:
         return slide
 
     def save(self):
-        self.prs.save(str(self.path))
-        dups = check_zip_duplicates(self.path)
-        if dups:
-            print(f"WARNING {self.path.name}: duplicate zip parts: {dups}")
-        else:
-            print(f"ZIP OK: {self.path.name}")
+        save_presentation(self.prs, self.path)
+        assert_pptx_valid(self.path)
+        print(f"OK: {self.path.name}")
         return self.path
 
 

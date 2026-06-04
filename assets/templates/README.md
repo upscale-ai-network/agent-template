@@ -9,7 +9,14 @@
 3. Replace `[...]` placeholders.
 4. Logo, footer, navy/gold layout stay.
 
-Validation: [TEMPLATE-VALIDATION.md](TEMPLATE-VALIDATION.md) · `python3 scripts/validate-company-template.py`
+Validation: [TEMPLATE-VALIDATION.md](TEMPLATE-VALIDATION.md)
+
+```bash
+python3 scripts/validate-company-template.py
+python3 scripts/validate-all-pptx.py   # before any git check-in
+```
+
+Builds use atomic save + zip integrity checks — **Repair dialog should not appear** if validation passed.
 
 ---
 

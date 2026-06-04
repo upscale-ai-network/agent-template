@@ -17,11 +17,15 @@
 | **Black/navy text** on white areas | Title, meta, content title `#051830` |
 | **Duplicate slide** → new slide still has chrome | Manual spot-check |
 
-**Automated:**
+**Automated (internal — no Repair dialog before you open):**
 
 ```bash
+python3 scripts/build-company-template.py   # atomic save + zip assert
 python3 scripts/validate-company-template.py
+python3 scripts/validate-all-pptx.py        # all Gluon pptx before check-in
 ```
+
+Build uses **copy-and-trim only** (never clone-into-empty-deck). Saves go to `.pptx.tmp` then replace after `assert_pptx_valid`.
 
 ---
 
