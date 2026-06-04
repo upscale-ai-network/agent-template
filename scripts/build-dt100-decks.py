@@ -13,6 +13,7 @@ from pptx import Presentation
 from pptx.util import Inches
 
 ROOT = Path(__file__).resolve().parents[1]
+DT100 = ROOT / "dt100"
 sys.path.insert(0, str(ROOT / "scripts"))
 from pptx_util import (  # noqa: E402
     assert_pptx_valid,
@@ -85,215 +86,223 @@ class StyledDeck:
 
 
 def build_a3() -> Path:
-    out = ROOT / "manager-arch-vision-a3.pptx"
-    deck = StyledDeck(out, num_content_slides=3)
-    script = (
-        "~15s: Three slides — yes I can run this, how I'll run it, what I need from you. "
-        "B6 if premise holds. Fix slide 1 first; don't open long deck until premise is good."
+    out = DT100 / "manager-arch-vision-a3.pptx"
+    deck = StyledDeck(out, num_content_slides=4)
+
+    notes_before = (
+        "BEFORE SLIDE 1 (~20 s)\n"
+        "Sponsor is you — name not on deck. I am Diwakar. Align: done and validated bar + "
+        "my Dynamic Switch-Buffer Management (DBM) at CSB — ESUN analogy to DLB; not Rupa datapath arch). "
+        "If slides 1-2 wrong, fix before B6. Flow: 1-2 → B6 → 3-4."
     )
+    notes_cover = (
+        "COVER (if asked)\n"
+        "Arch vision review. Four slides + B6 backup. Confidential — Upscale AI."
+    )
+    notes_s1 = (
+        "SLIDE 1 — do not read bullets\n"
+        "His words: no one has looked at CSB + buffer carving — complex, needs datapath depth. "
+        "He trusts I deliver CSB/carve by understanding datapath; Rupa owns datapath arch.\n\n"
+        "DBM (your label, ESUN-world pair to DLB) = dynamic Switch-Buffer management at CSB: carve, queues, "
+        "PFC, WRED/ECN/Pause via SDK/SAI. Rupa owns datapath arch; her pipeline slide in B6 is her seed.\n\n"
+        "Story A on slide: done and validated · product · mgmt · AV · SDK/SAI · C-model→silicon. "
+        "Today: scope only."
+    )
+    notes_s2 = (
+        "SLIDE 2 — do not read bullets\n"
+        "Program: SW done and validated — product, AV, SDK/SAI, path to silicon.\n\n"
+        "Lane: QoS RM — QoSMAP, Queue, buffer carving. Peers: L2/L3 Shafi, ECMP Tippanna, SDK, Rupa.\n\n"
+        "If OK → open B6 (his pipeline slide — Rupa seed; point CSB + carve)."
+    )
+    notes_s3 = (
+        "SLIDE 3 — close after B6\n"
+        "Outcome: Cx 2-pager ~2 weeks — decisions + validation gates, not 50-page dump.\n\n"
+        "Instill closed-loop SW-HW validation (use-case → models → tape-out) — tactical verbal only; "
+        "see dt100/README.md Private prep.\n\n"
+        "Thin read usable upward. Fri edits. CSB/carve HWv1 inside Cx, not headline."
+    )
+    notes_s4 = (
+        "SLIDE 4\n"
+        "1-2 right? Who owns slices (B6 names).\n\n"
+        "Optional spoken: who chairs done-and-validated program — he Sponsor or I drive?\n\n"
+        "OCP: I coordinate datapath; he owns external. Format + escalate on gates."
+    )
+    notes_b6_in = "INTO B6 (~5 s): his pipeline map — CSB + carve; do not own Rupa framing."
+    notes_b6_out = "AFTER B6 (~5 s): slides 3-4 — outcomes and Sponsor asks."
 
     deck.add_cover(
-        "Arch vision hook (A3)",
-        "DT100 · Gururaj",
-        "Draft for review",
+        "Arch vision",
+        "Dynamic Switch-Buffer Management",
+        "Executive review",
         "Confidential — Upscale AI",
+        notes=notes_cover,
     )
 
     deck.add_content(
-        "I can align SW validation to product, datapath, and silicon",
+        "Dynamic Switch-Buffer Management",
         [
-            "My commitment: drive the cross-team validation framework; DRI for QoS / resource management (RM).",
-            "Your question: SW done and validated with product, mgmt plane, datapath/AV, SDK/SAI before tape-out (C-models → emulation → silicon).",
-            "Peers: Shafi Mohammad (L2/L3/ACL) and Tippanna Hongal (ECMP/AV) stay DRIs on their slices; I facilitate alignment.",
-            "Today: premise and operating model — not full architecture (exec read stays 2-pager, not a 50-page dump).",
-            "Sponsor: Gururaj · DRI: Diwakar Tundlam",
+            "done and validated · product · management plane · AV",
+            "SDK/SAI · C-model → emulation → silicon",
+            "CSB buffer carving — not datapath architecture",
+            "Align today",
         ],
-        subtitle="Framework first · 2-pager discipline · QoS/RM is my wedge",
-        notes=script,
+        subtitle="Buffer carving at CSB",
+        notes=notes_before + "\n\n" + notes_s1 + "\n\n" + notes_b6_in,
     )
 
     deck.add_content(
-        "Operating model → Cx 2-pager in ~2 weeks",
+        "SW done and validated before tape-out",
         [
-            "Cadence: Product/AV ↔ datapath ↔ validation gates → Amazon-style 2-pager decisions.",
-            "Near term: Cx — validation gate definitions + QoS RM HWv1 scope (~2 weeks).",
-            "On your pipeline slide: I own QoSMAP and Queue/buffer carve; Shafi (L2/ACL), Tippanna (ECMP) on theirs — B6 §6.",
-            "Stay aligned: Rupa Budhia (datapath/OCP weekly); Prasun Sinha (program mesh).",
-            "If premise holds: walk B6 next — or reshape hook on Fri.",
+            "QoSMAP · Queue · buffer carving",
+            "Layer 2 / Layer 3 · ECMP — peer DRIs",
+            "Backup deck — logical pipeline walk",
         ],
+        notes=notes_s2,
     )
 
     deck.add_content(
-        "Sponsor decisions",
+        "What you get",
         [
-            "Premise — Does slide 1 answer your question? If not, what should change?",
-            "DRI split — Me: arch-vision framework + QoS RM; Shafi / Tippanna: their domains.",
-            "OCP / external — Rupa and I coordinate technically; you own company position.",
-            "Format — Thu async PDF vs short live walk vs Fri iteration (expect edits).",
-            "Escalation — You step in if cross-architect validation alignment stalls.",
+            "Cx two-pager · validation gates (~two weeks)",
+            "done and validated · before tape-out",
+            "AV · milestone decisions",
+            "Friday · your edits",
         ],
+        notes=notes_s3 + "\n\n" + notes_b6_out,
+    )
+
+    deck.add_content(
+        "What I need from you",
+        ["Scope aligned?", "Program chair?", "Backup deck · OCP"],
+        notes=notes_s4,
     )
 
     return deck.save()
 
 
 def build_b6() -> Path:
-    out = ROOT / "manager-arch-vision-b6.pptx"
-    deck = StyledDeck(out, num_content_slides=14)
+    out = DT100 / "manager-arch-vision-b6.pptx"
+    # Walk order: transition → discipline → machine → owners → wedge → pipeline → defer → Cx → boundaries
+    deck = StyledDeck(out, num_content_slides=11)
 
     deck.add_cover(
         "Arch vision plan (B6)",
-        "Companion to A3",
-        "Walk if Yes · Draft",
+        "Walk: machine → owners → pipeline → defer → Cx",
+        "Open after Yes on A3",
         "Confidential — Upscale AI",
     )
 
-    sections = [
+    walk = [
         (
-            "The question — and my answer (A3 slide 1 expanded)",
+            "Define task — after A3 slides 1–2",
             [
-                "Your question: SW done and validated with product, mgmt plane, datapath/AV, SDK/SAI proof before tape-out.",
-                "My answer: drive 2-pager + validation-gate machine; DRI on arch-vision + QoS/RM (QoSMAP, queue/buffer carve).",
-                "Peers: Shafi (L2/L3/ACL) and Tippanna (ECMP/AV) stay DRIs; I align the shared story, not their ownership.",
+                "Assumption: situation and task on A3 slides 1–2 are aligned.",
+                "This walk: define the task — validation machine, owners, QoS wedge on pipeline — deferrals and Cx.",
+                "After walk: A3 slides 3–4 — result and sponsorship (not repeated here).",
             ],
-            None,
+            "Beat 1 · ~1 min",
         ),
         (
-            "Document discipline (AWS-style)",
+            "Document discipline",
             [
-                "Thu: A3 (2–3 slides) + this B6 (walkable).",
+                "Thu: A3 slides 1–2, then this deck (~6 beats).",
                 "Next: Cx 2-pager — decisions, gates, open issues (~2 weeks).",
-                "Not Thu: 50-page arch dump, full HW catalog digest.",
-                "Exec read stays thin; full truth can exist later.",
+                "Not Thu: 50-page dump, full HW catalog.",
             ],
-            None,
+            "Beat 2 · thin",
         ),
         (
-            "End-to-end validation framework (I drive draft; peers align)",
+            "Validation framework (I draft v0; peers align)",
             [
                 "Product / customer use cases",
                 "Arch validation (AV) ↔ datapath arch",
-                "Mgmt plane — deployment-shaped (SONiC / FBOSS lands)",
-                "SW validation ↔ C-models → emulation / FPGA → silicon",
+                "Mgmt plane — SONiC / FBOSS lands",
+                "SW validation: C-models → emulation / FPGA → silicon",
                 "SDK + SAI done with explicit gates before tape-out",
                 "I socialize v0 of done per gate for group review — not unilateral mandate.",
             ],
-            None,
+            "Beat 2 · ~3 min",
         ),
         (
-            "DRI map",
+            "Who owns what (don't read every row)",
             [
-                "Sponsor / exec alignment: Gururaj",
-                "Arch vision + validation program: Diwakar Tundlam",
-                "QoS / buffer / queue / scheduler / RM carve: Diwakar Tundlam",
-                "L2/L3 / ACL pipeline: Shafi Mohammad",
-                "Arch validation / use-case framing: Tippanna Hongal",
-                "SDK / SAI: SDK leads (e.g. Girish, Shravan) — consult, not my R",
-                "Program / sprint mesh: Prasun Sinha",
-                "HW datapath / OCP ESUN: Rupa Budhia — weekly align before Thu OCP calls",
+                "Sponsor (Gururaj): exec alignment — external narrative",
+                "Validation program + QoS RM: Diwakar Tundlam",
+                "L2/L3 / ACL: Shafi Mohammad · ECMP / AV: Tippanna Hongal",
+                "SDK / SAI: SDK leads — consult, not my R",
+                "Program mesh: Prasun Sinha · HW datapath / OCP: Rupa Budhia",
             ],
-            None,
+            "Beat 3 · ~2 min",
         ),
         (
-            "My wedge — QoS resource management (RM)",
+            "My wedge — QoS / RM (HWv1)",
             [
-                "Classification: VLAN-PRI, TOS/DSCP → queues → schedulers",
-                "Buffer management and carving (traffic / resource manager)",
-                "Port speed and queue/port policy coherence",
-                "ESUN — align buffer/TM design with standardization (OCP context)",
-                "HWv1: mapping above; no MPLS EXP, no IPv6 priority mapping yet.",
-                "HWv2: EXP + IPv6 pri — planned extension.",
+                "VLAN-PRI, TOS/DSCP → queues → schedulers",
+                "Buffer management and carving (resource manager)",
+                "Port speed + queue/port policy coherence",
+                "ESUN — align buffer/TM with standardization (OCP)",
+                "HWv1 now: no MPLS EXP, no IPv6 priority mapping yet · HWv2: EXP + IPv6 pri",
             ],
-            None,
+            "Beat 4 · before pipeline",
         ),
     ]
 
-    for title, bullets, sub in sections:
+    for title, bullets, sub in walk:
         deck.add_content(title, bullets, subtitle=sub)
 
     if PIPELINE_IMG.exists():
         deck.add_image_slide(
-            "Logical pipeline (boss slide context)",
+            "Your pipeline slide — my wedge (center of walk)",
             PIPELINE_IMG,
-            "My wedge: QoSMAP + Queue/buffer carve · Peers: Shafi (L2/ACL), Tippanna (ECMP), Rupa (parse/datapath)",
+            "Beat 4 · QoSMAP + Queue/buffer carve (me) · Shafi (L2/ACL) · Tippanna (ECMP) · Rupa (parse/datapath)",
         )
     else:
-        deck.add_content("Logical pipeline (boss slide context)", ["See assets/logical-pipeline-boss-slide.png"])
+        deck.add_content(
+            "Your pipeline slide — my wedge",
+            ["See assets/logical-pipeline-boss-slide.png"],
+        )
 
-    more = [
+    tail = [
         (
-            "Pipeline DRIs on the picture (summary)",
+            "On the picture — blocks and validation tie-in",
             [
-                "Ingress: Port → Parser → MyMAC · VLAN — parse correctness with Rupa",
-                "L2: L2-FBD · UFH — Shafi Mohammad",
-                "L3: VRF · Intf · L3-FIB · ESUN FDB — L3/ESUN peers + Rupa",
-                "Forward + QoS: ECMP (Tippanna) · QoSMAP (me)",
-                "Egress: NH · LAG · IACL · Queue · ports — Queue/carve: me · ACL: Shafi",
-                "Validation: each block needs AV done + SW proof (C-model → emulation) before silicon.",
+                "Ingress / Parser — align parse correctness with Rupa before OCP/BCM calls",
+                "L2 — Shafi · Forward: ECMP (Tippanna), QoSMAP (me) · Egress Queue/carve (me)",
+                "Each block: AV done + SW proof (C-model → emulation) before silicon — I draft cross-block gates",
             ],
+            "Beat 4 · optional detail",
         ),
         (
-            "Whiteboards — RM / SDK context (§6a)",
+            "Defer on Thu (do not merge)",
             [
-                "arch-vision: buffer carving; lossy/lossless→PFC→Queues; WRED/ECN/PFC; ESUN-QoS",
-                "first-1-1: SONiC/FBOSS→SAI→USDK→ASIC; ties validation pyramid to SDK delivery",
-                "Annotations: manager-arch-vision-whiteboards.md · assets/pics/",
+                "Rupa SDK/SAI/datapath layout — related, different plan; weekly sync, not on Thu",
+                "OCP ESUN: coordinate with Rupa before vendor calls; company position through Sponsor",
+                "Prabu execution mesh / bs-2 — round 2 unless you redirect",
             ],
+            "Beat 5 · ~1 min",
         ),
         (
-            "Parallel track (out of Thu scope)",
-            [
-                "This B6: DE role + QoS RM + validation framework (Gururaj 2-pager).",
-                "Rupa thread: SDK/SAI/datapath layout — related, different plan.",
-                "Weekly sync with Rupa; do not merge the two plans on Thu.",
-            ],
-        ),
-        (
-            "External / OCP ESUN",
-            [
-                "Attend OCP ESUN as directed; coordinate with Rupa before Thu 8AM BCM/vendor calls.",
-                "SW architect on QoS/TM/ESUN — not full network-arch owner.",
-                "Company position through Sponsor until redirected.",
-            ],
-        ),
-        (
-            "~2 weeks → Cx 2-pager (draft outline)",
+            "~2 weeks — Cx 2-pager",
             [
                 "Decision: validation gate definitions (C-model / emu / pre-tapeout) v0",
                 "Decision: QoS RM HWv1 scope sign-off with HW datapath DRI",
-                "Open issues: access to models, lab, repos",
-                "Actions: cadence with Shafi, Tippanna, Rupa, Prasun",
-                "Non-goals: full C40-class HW digest in Cx",
+                "Open: access to models, lab, repos · Actions: cadence with Shafi, Tippanna, Rupa, Prasun",
+                "If asked who must be in the room — offer here (not on A3)",
             ],
-        ),
-        (
-            "Execution mesh (hook — detail round 2)",
-            [
-                "Align task intake with SDK/ASIC milestones and SONiC/FBOSS release cadence",
-                "Prasun Sinha — program touchpoint for sprint planning",
-                "Prabu brainstorm — not Thu center unless asked",
-            ],
-        ),
-        (
-            "Asks for Gururaj — delta beyond A3 slide 3",
-            [
-                "Thu package: A3 hook + optional B6 walk; Cx 2-pager ~2 weeks — OK?",
-                "Cx scope v0: validation gates + QoS RM HWv1 — who must be in the room?",
-                "Step in if validation-gate consensus stalls beyond normal peer DRI friction.",
-            ],
+            "Beat 6",
         ),
         (
             "What Thu is not",
             [
-                "Not finished C40 or full HW-doc digest",
-                "Not claiming SDK/SAI program ownership day one",
-                "Not AI tooling / token policy (separate thread)",
-                "Not a 50-page substitute — B6 is walkable backup",
+                "Not C40 / full HW digest · Not SDK program ownership day one",
+                "Not AI/token policy · Not a second 50-pager — walkable backup only",
+                "Whiteboard backup: assets/dt100-whiteboards.md (only if asked)",
             ],
+            "Beat 5–6",
         ),
     ]
-    for title, bullets in more:
-        deck.add_content(title, bullets)
+    for title, bullets, sub in tail:
+        deck.add_content(title, bullets, subtitle=sub)
 
     return deck.save()
 

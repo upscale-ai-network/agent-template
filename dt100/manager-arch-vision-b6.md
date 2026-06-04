@@ -4,17 +4,35 @@
 **Reader:** Gururaj (Sponsor) — cross-functional names where needed; not a company-wide deck.
 **Confidential — Upscale AI, Inc.**
 
-**Companion:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) (hook — **Yes → How → Asks**; open first).
-**Plan:** [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md) · **Local:** [manager-arch-vision-local.md](manager-arch-vision-local.md)
-**This file:** Walkable plan after **Yes** on A3 slide 1, or if you ask *“where’s the homework?”*
+**Companion:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) — **situation + task** (slides 1–2), then this file, then A3 **result + sponsorship** (slides 3–4).
+**Plan:** [plan.md](plan.md)
+
+**Role of B6:** **Define the task** — how, who, wedge, deferrals. Open only after A3 slides **1–2** land — or if you ask *“where’s the plan?”*
 
 ---
 
-## 1. The question — and my answer (A3 slide 1 expanded)
+## Thu walk map (6 beats · ~15–20 min)
 
-**Your question:** How do we get SW **done and validated** with product intent, mgmt-plane deployment (SONiC/FBOSS-class), datapath/AV, and **SDK/SAI** proof on **C-models → emulation/FPGA → silicon** before tape-out?
+| Beat | Sections | Say in one line |
+|------|----------|-----------------|
+| **1. Transition** | Below | “Task framing held — I’ll define how, not another 50-pager.” |
+| **2. Machine** | §2–3 | Thin exec read; I draft validation gates v0 for group review. |
+| **3. Owners** | §4 | Sponsor, my DRI, peer DRIs — don’t read every row aloud. |
+| **4. Wedge + picture** | §5–6 · pipeline PNG | **Center of walk** — QoSMAP + Queue/carve on your slide. |
+| **5. Defer** | §7–8 · §12 | Rupa SDK thread, OCP voice, boundaries — not Thu merge. |
+| **6. Next** | §9 | **Cx** ~2 weeks; **sponsorship** on **A3 slide 4** after this walk — don’t re-litigate. |
 
-**My answer:** I **drive** a repeatable **2-pager + validation-gate** machine. I am **DRI** on arch-vision framing and **QoS/RM** (**QoSMAP**, queue/buffer carve). **Shafi Mohammad** and **Tippanna Hongal** remain **DRIs** on L2/L3/ACL and ECMP/AV; I align the shared story, not their technical ownership.
+**Do not walk on Thu unless asked:** §10 execution mesh · Prabu bs-2 · full DRI table recitation.
+
+---
+
+## 1. Transition (define task — after A3 slides 1–2)
+
+**Assumption:** **Situation** and **task** on A3 slides 1–2 are aligned (no “yes” presumed — we established context first).
+
+**This walk:** **Define** the task — validation machine, **who owns what**, **QoS/RM** on your pipeline slide — deferrals and **Cx** path.
+
+**One line:** Gates + 2-pager discipline; **DRI** on framework + **QoSMAP / queue carve**; peer DRIs on their slices.
 
 ---
 
@@ -85,7 +103,7 @@ Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer
 ## 6. Logical pipeline (boss slide — buffer mgr / carving context)
 
 **Source:** Gururaj kickoff slide (SharePoint **PPTX**) with Rupa, Girish, and team — buffer manager + carving module.
-**Git copy (walk/export):** [assets/logical-pipeline-boss-slide.png](assets/logical-pipeline-boss-slide.png) — export one slide from PPTX if you need pixel parity in PDF backup.
+**Git copy (walk/export):** [../assets/logical-pipeline-boss-slide.png](../assets/logical-pipeline-boss-slide.png) — export one slide from PPTX if you need pixel parity in PDF backup.
 **Do not commit** SharePoint PPTX to `agent-template` unless IT/policy OK — link or export is enough for Thu.
 
 **Ingress → lookup → forward → QoS → egress (logical blocks):**
@@ -110,8 +128,7 @@ Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer
 
 ### 6a. Gururaj whiteboards (annotated)
 
-**Full annotations:** [manager-arch-vision-whiteboards.md](manager-arch-vision-whiteboards.md)
-**Images:** [assets/pics/arch-vision.jpeg](assets/pics/arch-vision.jpeg) · [assets/pics/first-1-1.jpeg](assets/pics/first-1-1.jpeg)
+**Annotations:** [../assets/dt100-whiteboards.md](../assets/dt100-whiteboards.md) · **Images:** [../assets/pics/](../assets/pics/)
 
 | Source | Adds to §6 |
 |--------|------------|
@@ -157,18 +174,19 @@ Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer
 
 - Align task intake with **SDK/ASIC milestones** and **SONiC/FBOSS** release cadence (~15-day lands)
 - **Prasun Sinha** — program touchpoint for sprint planning integration
-- **Prabu Dev** brainstorm (not Thu center): **qos mgr → qos api**; **HW DR/DV** ↔ **SW UR/AV** lockstep → **[chip SW SDK]**; **PM → data plan** — see [assets/pics/bs-1.jpeg](assets/pics/bs-1.jpeg) + [whiteboards](manager-arch-vision-whiteboards.md) §3
-- **Not Thu:** Full PM design or AI-scale GPU diagrams ([bs-2](assets/pics/bs-2.jpeg)) unless you redirect
+- **Prabu Dev** brainstorm (not Thu center): **qos mgr → qos api**; **HW DR/DV** ↔ **SW UR/AV** lockstep → **[chip SW SDK]**; **PM → data plan** — see [../assets/pics/bs-1.jpeg](../assets/pics/bs-1.jpeg) + [whiteboards](../assets/dt100-whiteboards.md) §3
+- **Not Thu:** Full PM design or AI-scale GPU diagrams ([bs-2](../assets/pics/bs-2.jpeg)) unless you redirect
 
 ---
 
-## 11. Asks for Gururaj (Sponsor) — delta beyond A3 slide 3
+## 11. Sponsorship (on A3 slide 4 — after this walk)
 
-*Premise, DRI split, OCP voice, format, escalation are on **A3** — only add here if he wants detail.*
+**Present slides 3–4 after B6** — not during this walk.
 
-1. **Thu package:** **A3** hook + optional **B6** walk now; **Cx 2-pager** ~2 weeks — OK?
-2. **Cx scope v0:** Validation gate definitions + QoS RM **HWv1** sign-off with HW datapath — who must be in the room?
-3. **Step in** if validation-gate consensus across architects stalls (beyond normal peer DRI friction).
+| Topic | Where |
+|-------|--------|
+| Task framing · DRI split · OCP · format · escalation | **A3 slide 4** |
+| **Cx** room / HWv1 sign-off attendees | Offer when closing slide 4 if he asks who must be in the room |
 
 ---
 
@@ -179,12 +197,3 @@ Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer
 - Not AI tooling / token policy (separate thread with Santosh)
 - Not 50-page substitute — **B6 is walkable backup**, not a second 50-pager
 
----
-
-## Materials to merge (your action — unblocks polish)
-
-- [x] Boss **Logical Pipeline** slide → §6 + `assets/logical-pipeline-boss-slide.png`
-- [x] Guru whiteboards → §6a + `assets/pics/` + [manager-arch-vision-whiteboards.md](manager-arch-vision-whiteboards.md)
-- [x] Prabu **bs-1/bs-2** → whiteboards §3–4 (bs-2 optional)
-- [ ] **Your correction pass** on whiteboards doc (checkboxes at bottom)
-- [ ] Export **A3** (+ optional B6 PDF) for Thu send

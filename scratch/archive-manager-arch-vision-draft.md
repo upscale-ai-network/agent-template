@@ -2,8 +2,8 @@
 
 **Superseded for Thu DT100** — use:
 
-- **[manager-arch-vision-a3.md](manager-arch-vision-a3.md)** — hook (2–3 slides)
-- **[manager-arch-vision-b6.md](manager-arch-vision-b6.md)** — plan (walkable backup)
+- **[../dt100/manager-arch-vision-a3.md](../dt100/manager-arch-vision-a3.md)** — hook (2–3 slides)
+- **[../dt100/manager-arch-vision-b6.md](../dt100/manager-arch-vision-b6.md)** — plan (walkable backup)
 
 **Below:** early hatch draft (week-1 table, 30–60d arc) — mine for facts; do not send as-is.
 

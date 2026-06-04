@@ -1,14 +1,14 @@
 # Whiteboard annotations — DT100 source material
 
 **Confidential — Upscale AI, Inc.**
-**Use:** Feed [manager-arch-vision-b6.md](manager-arch-vision-b6.md); **not** all of this belongs on **A3**.
+**Use:** Feed [dt100/manager-arch-vision-b6.md](../dt100/manager-arch-vision-b6.md); not on **A3** slides.
 
 | File | Source | Thu use |
 |------|--------|---------|
-| [assets/pics/first-1-1.jpeg](assets/pics/first-1-1.jpeg) | **Gururaj** — first 1:1 | SDK/SAI stack context → §7 / validation story |
-| [assets/pics/arch-vision.jpeg](assets/pics/arch-vision.jpeg) | **Gururaj** — vision blocks | **Core** — QoS RM, buffer carve, ESUN, HW datapath |
-| [assets/pics/bs-1.jpeg](assets/pics/bs-1.jpeg) | **Prabu Dev** brainstorm | Execution / validation mesh → §10 appendix |
-| [assets/pics/bs-2.jpeg](assets/pics/bs-2.jpeg) | **Prabu** brainstorm (cont.) | AI scale context — **optional**, not Thu center |
+| [pics/first-1-1.jpeg](pics/first-1-1.jpeg) | **Gururaj** — first 1:1 | SDK/SAI stack context → B6 §7 |
+| [pics/arch-vision.jpeg](pics/arch-vision.jpeg) | **Gururaj** — vision blocks | **Core** — QoS RM, buffer carve, ESUN |
+| [pics/bs-1.jpeg](pics/bs-1.jpeg) | **Prabu Dev** brainstorm | Execution mesh → B6 §10 |
+| [pics/bs-2.jpeg](pics/bs-2.jpeg) | **Prabu** brainstorm (cont.) | AI scale — **optional** |
 
 ---
 

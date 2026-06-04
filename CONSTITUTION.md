@@ -31,7 +31,7 @@ Sessions are **stateless**. Chat and canvas are **not** authoritative. Only comm
 |-------|-------|---------|
 | **Law** | `CONSTITUTION.md`, `GLUON.md`, `README.md`, `META.md` | Rare; you decide; big steps need your OK ([README](README.md)) |
 | **State** | `TASKS.md`, `TASKS-LOG.md` | Often; status and log follow real work |
-| **Heap** | Drafts, scripts, notes (e.g. `manager-arch-vision-draft.md`) | Work product — **not** policy unless reflected in a task row |
+| **Heap** | Drafts, archives (e.g. `scratch/`, `assets/dt100-whiteboards.md`) | Work product — **not** policy unless reflected in a task row |
 
 ---
 

@@ -101,11 +101,9 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 | `CONSTITUTION.md` | Gluon runtime contract |
 | `TASKS.md` / `TASKS-LOG.md` | Work queue + log |
 | `META.md` | Px / triage |
-| `manager-arch-vision-dt100-plan.md` | DT100 plan (decisions + meeting playbook) |
-| `manager-arch-vision-a3.md` | P0 hook (DT100) |
-| `manager-arch-vision-b6.md` | P0 plan backup |
-| `manager-arch-vision-whiteboards.md` | Annotations |
-| `assets/` | Pipeline slide + whiteboard photos |
+| `dt100/` | **DT100** deliverables (md + pptx; see `dt100/README.md`) |
+| `scratch/` | Chat scratch / mini tasks (not task-scoped) |
+| `assets/` | Shared pipeline slide, whiteboard photos, templates |
 
 **Removed (2026-06-04):** Apple Silicon MLX brief, demos, PDFs/HTML — history in git; future copy from archive repo if needed.
 
@@ -131,10 +129,8 @@ No Python project in repo after prune — add tooling per task when needed.
 ├── TASKS-LOG.md
 ├── META.md
 ├── README.md
-├── manager-arch-vision-a3.md
-├── manager-arch-vision-b6.md
-├── manager-arch-vision-whiteboards.md
-├── manager-arch-vision-draft.md   # legacy pointer
+├── dt100/                         # DT100 task outputs
+├── scratch/                       # non-task scratch notes
 └── assets/
     ├── logical-pipeline-boss-slide.png
     └── pics/

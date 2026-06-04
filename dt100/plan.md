@@ -9,10 +9,12 @@
 
 ## 1. What Thu is for (meta — both edges in one sitting)
 
-| Question | Answer you lead with |
-|----------|----------------------|
-| **Can I do the job?** | **Yes** — confident, bounded (not “I’ve digested all HW”) |
-| **What is the job?** | Walk **B6** after Yes — framework, QoS RM wedge, gates, asks |
+| Step | What you lead with |
+|------|-------------------|
+| **Situation** | Clean slate — tape-out SW path, 2-pager constraint (A3 slide 1) |
+| **Task** | Clarify the job — definition of done, DRI charter (A3 slide 2) |
+| **Define** | Walk **B6** — how, who, wedge (only if task framing holds) |
+| **Close** | **Result** + **sponsorship** (A3 slides 3–4) |
 
 **Not Thu:** Finished architecture, C40, full HW digest, 50-page doc, AI/token policy deck.
 
@@ -24,33 +26,35 @@
 
 | Artifact | Role | Audience |
 |----------|------|----------|
-| **A3** | **Abstract** / approval hook (~10 s) | Gururaj only |
-| **B6** | **Plan** — “necklace” ready to walk (not a bag of diamonds) | Gururaj if Yes or asks |
+| **A3** | **Bookend** — situation + task → (B6) → result + sponsorship (4 slides) | Gururaj only |
+| **B6** | **Define task** — walkable plan (not a bag of diamonds) | After A3 slides 1–2 |
 | **Cx** (~2 weeks) | First **Amazon-style 2-pager** (decisions, gates, issues) | Gururaj |
-| **whiteboards.md** + **assets/pics/** | Evidence / drill-down | B6 backup |
+| **whiteboards.md** + **`../assets/pics/`** | Evidence / drill-down | B6 backup |
 | **Logical pipeline PNG** | Aligns with boss SharePoint PPTX | B6 §6 |
 
-**A3 is not complete without:** export to 2–3 slides/PDF. **B6 is not complete without:** your pass on whiteboard checkboxes in [manager-arch-vision-whiteboards.md](manager-arch-vision-whiteboards.md).
+**A3 is not complete without:** export 4 slides/PDF (present 1–2 → B6 → 3–4). **B6 is not complete without:** whiteboard pass in [../assets/dt100-whiteboards.md](../assets/dt100-whiteboards.md).
 
 ---
 
 ## 3. Meeting playbook (Thu → Fri)
 
 ```text
-  Open A3 (~10 s script in a3.md)
+  A3 slides 1–2   Situation → clarify task
        ↓
-  Yes? ──→ Walk B6 (15–20 min) · take fingerprints · Fri refine
+  Task OK? ──→ B6 define task (15–20 min)
        ↓
-  No?  ──→ Fix A3 premise only · keep B6 closed unless he asks
+  No?      ──→ Fix slides 1–2 only · B6 closed unless he asks
        ↓
-  Astute check: "where's the plan?" → offer B6 immediately
+  A3 slides 3–4   Result → sponsorship
+       ↓
+  Fri          Expected iteration
 ```
 
 | Do | Don’t |
 |----|--------|
 | Expect **his edits** on A3/B6 — welcome them | Defend draft as final |
-| **No** on slide 1 → listen, redo framing | Open B6 if premise wrong |
-| One-liner: B6 is homework behind A3 | RACI grid, SWOT, EM on slides |
+| **No** on task (slide 2) → listen, redo framing | Open B6 if task wrong |
+| B6 **defines** task after A3 **clarifies** it | RACI grid, SWOT, EM on slides |
 
 **Fri:** Expected iteration — not failure.
 
@@ -71,7 +75,7 @@
 
 ## 5. Names — slides vs B6 only
 
-**On A3 (few):** Gururaj (Sponsor), you (DRI), Shafi + Tippanna as peer DRIs, Rupa + Prasun one line each.
+**On A3 slides:** **Sponsor** only (no name — you say “Sponsor is you” at open). **B6** owner slide names Sponsor (Gururaj) once + peer DRIs.
 
 **B6 only (deeper):** Srihari, Girish/Shravan, coalition cadence, Prabu brainstorm (§10), OCP Thu 8AM.
 
@@ -83,9 +87,9 @@
 
 **Boss question:** SW **done and validated** with product, mgmt plane, datapath/AV, **SDK/SAI before tape-out** (C-model → emulation → silicon).
 
-**Your wedge:** **QoSMAP** + **Queue/buffer carving / RM** — VLAN-PRI, TOS → queues/schedulers; **ESUN** direction; **HWv1** (no MPLS EXP / IPv6 pri yet → HWv2).
+**Your wedge:** **CSB** + **buffer carving** (his words — complex, under-owned); deliver via datapath *understanding*, not **owning** datapath arch (**Rupa**). On the pipe: **QoSMAP** + **Queue** / Switch-Buffer · resource mgmt; **ESUN** direction; **HWv1** (no MPLS EXP / IPv6 pri yet → HWv2).
 
-**Pipeline:** Port → Parser → … → **QoSMAP** → … → **Queue** / egress (see B6 §6 + `assets/logical-pipeline-boss-slide.png`).
+**Pipeline:** Port → Parser → … → **QoSMAP** → … → **Queue** / egress (see B6 §6 + `../assets/logical-pipeline-boss-slide.png`).
 
 **Parallel track (do not merge on Thu):** Rupa’s SDK/SAI/datapath-variant layout — related, different plan (B6 §7).
 
@@ -131,28 +135,16 @@ When Gluon is active, you’re **fused** — don’t pretend parallel P1 work co
 
 ## 10. DT100 done checklist
 
-- [ ] Whiteboard doc corrections applied
-- [ ] A3 exported → 2–3 slides/PDF (or live deck)
-- [ ] B6 readable in one pass (you rehearsed Yes path)
-- [ ] Sent or presented to **Gururaj**; Fri follow-up scheduled if needed
+- [ ] Whiteboard corrections — [../assets/dt100-whiteboards.md](../assets/dt100-whiteboards.md) checkboxes
+- [ ] A3 / B6 reviewed; messaging aligned (md ↔ pptx via regen)
+- [ ] A3 exported → PDF (optional B6 PDF)
+- [ ] Sent or presented to **Gururaj**; Fri follow-up if needed
 - [ ] `TASKS.md`: DT100 → `done` + `TASKS-LOG` entry
-- [ ] Optional: second push after Thu package (not required for “done”)
 
 **Not required for done:** Cx 2-pager, org hooks, peer sign-off on validation v0.
 
 ---
 
-## 11. File index
+## 11. Layout
 
-| File | Use |
-|------|-----|
-| [manager-arch-vision-a3.md](manager-arch-vision-a3.md) | Slide copy |
-| [manager-arch-vision-a3.pptx](manager-arch-vision-a3.pptx) | A3 draft deck (regen: `python3 scripts/build-dt100-decks.py`) |
-| [manager-arch-vision-b6.md](manager-arch-vision-b6.md) | Walk track |
-| [manager-arch-vision-b6.pptx](manager-arch-vision-b6.pptx) | B6 draft deck (same script) |
-| [scripts/build-dt100-decks.py](scripts/build-dt100-decks.py) | PPTX generator from md-aligned content |
-| [manager-arch-vision-local.md](manager-arch-vision-local.md) | Mini tasks (no DT id) · empty template → `assets/templates/` |
-| [assets/templates/](assets/templates/README.md) | Gluon exec slide template (masters only; from Shafi deck extract) |
-| [manager-arch-vision-whiteboards.md](manager-arch-vision-whiteboards.md) | Photo annotations |
-| [manager-arch-vision-draft.md](manager-arch-vision-draft.md) | Legacy — do not send |
-| **This file** | DT100 plan (decisions + playbook) |
+See [README.md](README.md) in this directory.

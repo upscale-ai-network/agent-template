@@ -34,7 +34,7 @@ Build uses **copy-and-trim only** (never clone-into-empty-deck). Saves go to `.p
 | Task | Use |
 |------|-----|
 | **New exec deck (you)** | `upscale-company-template.pptx` only |
-| **DT100 A3/B6 from git md** | `python3 scripts/build-dt100-decks.py` |
+| **DT100 A3/B6** | `python3 scripts/build-dt100-decks.py` → `dt100/manager-arch-vision-*.pptx` |
 | **Regenerate template** (rare) | `build-company-template.py` → **must** run `validate-company-template.py` → commit |
 | **Theme/masters only** | `upscale-exec-empty.pptx` — not for litmus |
 

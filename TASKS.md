@@ -16,7 +16,7 @@
 
 | DT | Priority | Status | Title | Due | Notes |
 |----|----------|--------|-------|-----|-------|
-| DT100 | P0 | doing | 2–3 slide arch vision for manager | 2026-06-05 | **A3** · **B6** · plan [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md) · Thu EOD |
+| DT100 | P0 | doing | 2–3 slide arch vision for manager | 2026-06-05 | **A3** · **B6** · [`dt100/`](dt100/) · Thu EOD |
 | DT102 | P1 | open | Cursor/doc use — HR / IT / mgmt OK | | Privacy Mode on; formal OK pending |
 | DT103 | P1 | open | Org git remote + push policy | | `origin` → `upscale-ai-network/agent-template` · push blocked until write access |
 | DT104 | P1 | open | Corp VPN from home + internal tools | | Browser check; no SSH host yet |
@@ -39,9 +39,10 @@
 
 ### DT100 — arch vision (open)
 
-**Plan:** [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md)
-**Slides:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) → export
-**Walk:** [manager-arch-vision-b6.md](manager-arch-vision-b6.md)
+**Dir:** [`dt100/`](dt100/) — task-scoped deliverables (see `dt100/README.md`)
+**Plan:** [dt100/plan.md](dt100/plan.md)
+**Slides:** [dt100/manager-arch-vision-a3.md](dt100/manager-arch-vision-a3.md) → export
+**Walk:** [dt100/manager-arch-vision-b6.md](dt100/manager-arch-vision-b6.md)
 **Done when:** plan checklist §10 complete — not “perfect arch”
 
 ---
