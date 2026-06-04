@@ -1,8 +1,10 @@
 # Arch vision (A3) — on-slide only
 
-**Slides = support material** (fragments for the room). **Do not read bullets aloud.**
+**Slides = support material** — **diagrams** carry the flow; details in speaker notes.
 
-**Presenter script:** [manager-arch-vision-a3-speaker-notes.md](manager-arch-vision-a3-speaker-notes.md) → PowerPoint Notes pane.
+**Diagrams:** `assets/diagrams/a3/*.mmd` → `render-a3-diagrams.py` → PNG → pptx (on `build-dt100-decks.py`).
+
+**Presenter script:** [manager-arch-vision-a3-speaker-notes.md](manager-arch-vision-a3-speaker-notes.md)
 
 **Terms:** [../assets/guru-terms-sot.md](../assets/guru-terms-sot.md)
 
@@ -11,47 +13,34 @@
 ## Cover
 
 **Title:** Arch vision  
-**Tag:** Dynamic Switch-Buffer Management · Executive review
+**Tag:** Dynamic Switch-Buffer Management · Executive review  
+**Diagram:** slide00-cover — Thu flow 1–2 → B6 → 3–4 → Friday
 
 ---
 
 ## Slide 1
 
 **Title:** Dynamic Switch-Buffer Management  
-**Subtitle:** Buffer carving at CSB
-
-- done and validated · product · management plane · AV  
-- SDK/SAI · C-model → emulation → silicon  
-- CSB buffer carving — not datapath architecture  
-- Align today  
+**Subtitle:** Buffer carving at CSB  
+**Diagram:** slide01-scope — program bar + DRI at CSB
 
 ---
 
 ## Slide 2
 
-**Title:** SW done and validated before tape-out
-
-- QoSMAP · Queue · buffer carving  
-- Layer 2 / Layer 3 · ECMP — peer DRIs  
-- Backup deck — logical pipeline walk  
+**Title:** SW done and validated before tape-out  
+**Diagram:** slide02-validated — program · lane · peers → B6 gate
 
 ---
 
 ## Slide 3
 
-**Title:** What you get
-
-- Cx two-pager · validation gates (~two weeks)  
-- done and validated · before tape-out  
-- AV · milestone decisions  
-- Friday · your edits  
+**Title:** What you get  
+**Diagram:** slide03-outcomes — Cx two-pager · gates · Friday
 
 ---
 
 ## Slide 4
 
-**Title:** What I need from you
-
-- Scope aligned?  
-- Program chair?  
-- Backup deck · OCP  
+**Title:** What I need from you  
+**Diagram:** slide04-sponsor — scope · chair · owners · OCP

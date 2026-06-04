@@ -1,0 +1,8 @@
+{
+  "name": "diwakar-work",
+  "private": true,
+  "description": "DT100 deck tooling — Mermaid CLI for diagram render",
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.4.0"
+  }
+}

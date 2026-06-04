@@ -1,0 +1,16 @@
+[project]
+name = "diwakar-work"
+version = "0.1.0"
+description = "Gluon workspace — DT100 decks and tooling"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "Pillow>=10.0",
+    "pymupdf>=1.24",
+    "python-pptx>=1.0",
+]
+
+[project.optional-dependencies]
+render = [
+    "cairosvg>=2.7",
+]

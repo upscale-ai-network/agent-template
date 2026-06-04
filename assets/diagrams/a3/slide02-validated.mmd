@@ -1,0 +1,32 @@
+flowchart LR
+  subgraph bar["SW done and validated"]
+    direction LR
+    PR[Product] --> AV[AV]
+    AV --> SDK[SDK / SAI]
+    SDK --> TAPE[Tape-out path]
+  end
+
+  subgraph lane["Your lane"]
+    direction LR
+    Q[QoSMAP] --> QU[Queue]
+    QU --> BC[Buffer carving]
+  end
+
+  subgraph peers["Peer DRIs"]
+    direction LR
+    L2[Layer 2 / 3] --> EC[ECMP]
+  end
+
+  TAPE --> GATE{Aligned?}
+  BC --> GATE
+  GATE -->|yes| WALK[Backup deck — pipeline walk]
+  GATE -->|no| FIX[Fix slides 1–2]
+
+  classDef bar fill:#E3F2FD,stroke:#1565C0,color:#051830
+  classDef lane fill:#FFF3E0,stroke:#EF6C00,color:#051830
+  classDef peer fill:#ECEFF1,stroke:#455A64,color:#051830
+  classDef gate fill:#F3E5F5,stroke:#7B1FA2,color:#051830
+  class PR,AV,SDK,TAPE bar
+  class Q,QU,BC lane
+  class L2,EC peer
+  class GATE,WALK,FIX gate

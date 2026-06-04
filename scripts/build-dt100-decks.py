@@ -23,6 +23,8 @@ from pptx_util import (  # noqa: E402
     trim_to_slides,
 )
 PIPELINE_IMG = ROOT / "assets" / "logical-pipeline-boss-slide.png"
+A3_DIAGRAMS = ROOT / "assets" / "diagrams" / "a3"
+RENDER_A3 = ROOT / "scripts" / "render-a3-diagrams.py"
 
 # Company style source (32-slide CCC deck — keep local; optional copy under assets/templates)
 STYLE_DOWNLOAD = Path.home() / "Downloads" / "Mirror-Sflow-Bugatti-ASIC-CCC.pptx"
@@ -65,17 +67,26 @@ class StyledDeck:
         if notes:
             self.prs.slides[0].notes_slide.notes_text_frame.text = notes
 
-    def add_content(self, title, bullets, subtitle=None, notes=None):
+    def add_content(self, title, bullets, subtitle=None, notes=None, diagram: Optional[Path] = None):
         slide = self.prs.slides[self._slide_i]
         self._slide_i += 1
         fill_content_slide(slide, title, bullets, subtitle=subtitle)
+        if diagram and diagram.is_file():
+            slide.shapes.add_picture(
+                str(diagram), Inches(0.45), Inches(1.25), width=Inches(12.2)
+            )
         if notes:
             slide.notes_slide.notes_text_frame.text = notes
         return slide
 
+    def add_cover_diagram(self, image_path: Path) -> None:
+        if image_path.is_file():
+            self.prs.slides[0].shapes.add_picture(
+                str(image_path), Inches(0.55), Inches(2.05), width=Inches(5.8)
+            )
+
     def add_image_slide(self, title, image_path: Path, caption: Optional[str] = None):
-        slide = self.add_content(title, [caption] if caption else [])
-        slide.shapes.add_picture(str(image_path), Inches(0.55), Inches(1.35), width=Inches(12.0))
+        slide = self.add_content(title, [caption] if caption else [], diagram=image_path)
         return slide
 
     def save(self):
@@ -85,7 +96,20 @@ class StyledDeck:
         return self.path
 
 
+def ensure_a3_diagrams() -> None:
+    if not RENDER_A3.is_file():
+        return
+    import subprocess
+
+    subprocess.run([sys.executable, str(RENDER_A3)], check=True, cwd=str(ROOT))
+
+
+def _a3_png(name: str) -> Path:
+    return A3_DIAGRAMS / f"{name}.png"
+
+
 def build_a3() -> Path:
+    ensure_a3_diagrams()
     out = DT100 / "manager-arch-vision-a3.pptx"
     deck = StyledDeck(out, num_content_slides=4)
 
@@ -137,43 +161,34 @@ def build_a3() -> Path:
         "Confidential — Upscale AI",
         notes=notes_cover,
     )
+    deck.add_cover_diagram(_a3_png("slide00-cover"))
 
     deck.add_content(
         "Dynamic Switch-Buffer Management",
-        [
-            "done and validated · product · management plane · AV",
-            "SDK/SAI · C-model → emulation → silicon",
-            "CSB buffer carving — not datapath architecture",
-            "Align today",
-        ],
+        [],
         subtitle="Buffer carving at CSB",
+        diagram=_a3_png("slide01-scope"),
         notes=notes_before + "\n\n" + notes_s1 + "\n\n" + notes_b6_in,
     )
 
     deck.add_content(
         "SW done and validated before tape-out",
-        [
-            "QoSMAP · Queue · buffer carving",
-            "Layer 2 / Layer 3 · ECMP — peer DRIs",
-            "Backup deck — logical pipeline walk",
-        ],
+        [],
+        diagram=_a3_png("slide02-validated"),
         notes=notes_s2,
     )
 
     deck.add_content(
         "What you get",
-        [
-            "Cx two-pager · validation gates (~two weeks)",
-            "done and validated · before tape-out",
-            "AV · milestone decisions",
-            "Friday · your edits",
-        ],
+        [],
+        diagram=_a3_png("slide03-outcomes"),
         notes=notes_s3 + "\n\n" + notes_b6_out,
     )
 
     deck.add_content(
         "What I need from you",
-        ["Scope aligned?", "Program chair?", "Backup deck · OCP"],
+        [],
+        diagram=_a3_png("slide04-sponsor"),
         notes=notes_s4,
     )
 

@@ -24,7 +24,13 @@
 | [../assets/logical-pipeline-boss-slide.png](../assets/logical-pipeline-boss-slide.png) | Pipeline slide for B6 |
 | [../scratch/archive-manager-arch-vision-draft.md](../scratch/archive-manager-arch-vision-draft.md) | Superseded draft (git history) |
 
-**Build:** `scripts/build-dt100-decks.py` · preview (local, gitignored): `scripts/preview-a3-deck.sh` → `assets/previews/a3/`
+**Setup (once):** `uv sync --extra render` · `npm install` (repo root — installs `mmdc`)
+
+**Build:** `./scripts/run-deck-build.sh` or `uv run python scripts/build-dt100-decks.py` (auto-renders diagrams)
+
+**Diagrams:** `assets/diagrams/a3/*.mmd` → `mmdc` → `.png` → embedded on every A3 slide (Pillow fallback if `mmdc` missing)
+
+**Preview (gitignored):** `scripts/preview-a3-deck.sh` → `assets/previews/a3/`
 
 ## You vs Gluon
 
