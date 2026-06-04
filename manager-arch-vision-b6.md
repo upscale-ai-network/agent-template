@@ -5,6 +5,7 @@
 **Confidential — Upscale AI, Inc.**
 
 **Companion:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) (abstract / hook — open first, ~10 s).  
+**Plan:** [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md)  
 **This file:** Full plan if you say **Yes** to the hook, or if you ask *“where’s the homework?”*
 
 ---

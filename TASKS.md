@@ -16,7 +16,7 @@
 
 | DT | Priority | Status | Title | Due | Notes |
 |----|----------|--------|-------|-----|-------|
-| DT100 | P0 | doing | 2–3 slide arch vision for manager | 2026-06-05 | **A3** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) · **B6** [manager-arch-vision-b6.md](manager-arch-vision-b6.md) · Thu EOD |
+| DT100 | P0 | doing | 2–3 slide arch vision for manager | 2026-06-05 | **A3** · **B6** · plan [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md) · Thu EOD |
 | DT102 | P1 | open | Cursor/doc use — HR / IT / mgmt OK | | Privacy Mode on; formal OK pending |
 | DT103 | P1 | open | Org git remote + push policy | | `origin` → `upscale-ai-network/agent-template` · push blocked until write access |
 | DT104 | P1 | open | Corp VPN from home + internal tools | | Browser check; no SSH host yet |
@@ -34,6 +34,15 @@
 | DT116 | P2 | open | Plan lightweight MD export for new agents | | Optional |
 | DT119 | P2 | open | Git hooks: pre-commit / pre-push / agent commit gate | | Enforce rules in tooling, not trust · see **DT119** |
 | DT117 | P3 | open | Monthly review — tune tasks + log | | ~4 weeks |
+
+### DT100 — arch vision (open)
+
+**Plan:** [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md)  
+**Slides:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) → export  
+**Walk:** [manager-arch-vision-b6.md](manager-arch-vision-b6.md)  
+**Done when:** plan checklist §10 complete — not “perfect arch”
+
+---
 
 ### DT119 — git workflow hooks (enforce policy) — **plan only, not started**
 

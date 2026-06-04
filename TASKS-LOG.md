@@ -23,6 +23,7 @@ Refine format later ([TASKS.md](TASKS.md) DT114).
 | 2026-06-04 | — | policy | README: agent must not commit/push without explicit human OK |
 | 2026-06-04 | DT119 | note | Spike impl reverted — execute per TASKS.md DT119 plan later |
 | 2026-06-04 | DT113 | closed | Apple Silicon MLX brief/demos/PDFs removed; pyproject/uv.lock removed |
+| 2026-06-04 | DT100 | note | Added manager-arch-vision-dt100-plan.md |
 
 **Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`  
 **Status (vocabulary):** `open` | `doing` | `next` | `done` | `drop`

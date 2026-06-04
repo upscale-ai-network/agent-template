@@ -96,6 +96,7 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 | `CONSTITUTION.md` | Gluon runtime contract |
 | `TASKS.md` / `TASKS-LOG.md` | Work queue + log |
 | `META.md` | Px / triage |
+| `manager-arch-vision-dt100-plan.md` | DT100 plan (decisions + meeting playbook) |
 | `manager-arch-vision-a3.md` | P0 hook (DT100) |
 | `manager-arch-vision-b6.md` | P0 plan backup |
 | `manager-arch-vision-whiteboards.md` | Annotations |

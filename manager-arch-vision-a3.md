@@ -7,7 +7,8 @@
 **Flow:** Present this (~10 s on premise) → if **Yes**, open [manager-arch-vision-b6.md](manager-arch-vision-b6.md) and walk the plan.  
 If **No**, refine this hook only; keep B6 closed unless you ask.
 
-**Full plan:** B6 is the homework behind this abstract.
+**Full plan:** B6 is the homework behind this abstract.  
+**DT100 plan:** [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md)
 
 ---
 
