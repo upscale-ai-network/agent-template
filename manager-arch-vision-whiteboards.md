@@ -1,6 +1,6 @@
 # Whiteboard annotations — DT100 source material
 
-**Confidential — Upscale AI, Inc.**  
+**Confidential — Upscale AI, Inc.**
 **Use:** Feed [manager-arch-vision-b6.md](manager-arch-vision-b6.md); **not** all of this belongs on **A3**.
 
 | File | Source | Thu use |
@@ -94,7 +94,7 @@
 
 **Appears to be:** PCIe switch → **TPB/HBM**, **GPU** pools, **RDMA/TCP/IP/Eth** stack, **BW vs delay** — AI scale-up networking bottleneck framing.
 
-**Thu:** Omit unless Gururaj ties vision to AI cluster networking.  
+**Thu:** Omit unless Gururaj ties vision to AI cluster networking.
 **Use:** Background for why scale-up networking matters; **not** DT100 proof.
 
 **You correct:** [ ] Confirm this was same session as bs-1 [ ] Any Gururaj-owned content on this board

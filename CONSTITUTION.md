@@ -4,7 +4,7 @@
 
 **Discipline at speed:** Automation and agents increase velocity — only safely with **strict discipline**, or the result is chaos, rework, and double-guessing. Same rule as riding: wear the helmet every time; when going faster, be **more** careful, not less. Here the helmet is git truth (plan, tasks, checkpoints), human-gated commit/push ([TASKS.md](TASKS.md) DT119), and deliberate pace ([README.md](README.md)) — speed-ups are allowed; rash driving is not.
 
-*Template intent:* This tree is **your** instance first. If the pattern works ([TASKS.md](TASKS.md) **DT118**), others may copy it like a pre-made shell rc — optional agent name, optional edits, same stateless-git shape — not a mandated Upscale product.
+*Template intent:* This tree is **your** instance first (`agent-template`). Others may clone and hatch **their own** work agent — optional name, their own origin story, same stateless-git shape. **Pensieve** is the author’s history only; template adopters do not need it (they bring their own seed). Passing on a pattern that worked here — not a product pitch. Adoption may stay narrow; that is ok.
 
 **Amendments:** No formal process yet. Changes to law, priorities, or litmus rules are **your judgment** only. When you change them, commit; agents should not invent policy.
 
@@ -50,9 +50,9 @@ Sessions are **stateless**. Chat and canvas are **not** authoritative. Only comm
 
 The test you intend to pass — and the definition of “Gluon works”:
 
-1. **Kill** the agent session; **erase** chat history (no canvas, no prior thread).  
-2. **Start cold** — new agent (IDE, or future **CLI terminal app**).  
-3. **`git clone`** this repo (or fresh copy); optionally **switch host, LLM, or model**.  
+1. **Kill** the agent session; **erase** chat history (no canvas, no prior thread).
+2. **Start cold** — new agent (IDE, or future **CLI terminal app**).
+3. **`git clone`** this repo (or fresh copy); optionally **switch host, LLM, or model**.
 4. Agent **fully recovers Gluon** from git alone: boot order, Px, open tasks, pace rules, current plan — without re-deriving policy from memory or asking you to reconstruct context.
 
 **Pass:** indistinguishable useful continuity from committed state. **Fail:** invented tasks, wrong priorities, missing DT100 plan, or “what repo?”
@@ -83,6 +83,8 @@ The test you intend to pass — and the definition of “Gluon works”:
 **Origin:** Pensieve helped through hiring and transition; **Gluon** is that pattern cloned for **work execution** at Upscale (tasks, arch vision, template).
 
 **Separation (required):** Pensieve and Gluon **must not mix context** — separate repos, chats, and memory. No Pensieve transcripts, job-search notes, or personal negotiation content in this tree. No Upscale confidential material in Pensieve’s home. Shared *pattern* (git-as-memory, discipline at speed); **not** shared files or threads. If unsure which agent owns a topic, ask the human.
+
+**Pending:** Sanitized **`origin.md`** from Pensieve (human-reviewed, redacted) → import here ([TASKS.md](TASKS.md) **DT120**). Until then, origin above is summary only.
 
 ---
 

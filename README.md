@@ -1,6 +1,6 @@
 # diwakar-work
 
-**Private workbench** for Upscale AI — learning, drafts, and personal scripts.  
+**Private workbench** for Upscale AI — learning, drafts, and personal scripts.
 **Confidential — Upscale AI, Inc. Do not distribute.**
 
 **Not** a team/product repo: promote code *out* to org repos when something should be shared.
@@ -62,9 +62,9 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 4. Open **TASKS.md** → list open tasks; confirm **Priority** and **Title** columns; find P0 row.
 5. Open **META.md** → confirm Px order; confirm hatch status matches your expectation.
 6. Ask the agent: *“What is open in P0? Where are rules? Was hatch closed?”*
-7. **Pass:** answers cite only these files, no canvas/chat; agent asks before proposing a big step.  
-8. **Pass:** `TASKS.md` open table sorted `P0 → P1 → TRIAGE → P2 → P3`; within each band `doing` → `next` → `open`.  
-9. **Fail:** agent invents tasks, merges big changes without asking, or re-derives Px/WFQ unprompted → fix docs, not the agent.  
+7. **Pass:** answers cite only these files, no canvas/chat; agent asks before proposing a big step.
+8. **Pass:** `TASKS.md` open table sorted `P0 → P1 → TRIAGE → P2 → P3`; within each band `doing` → `next` → `open`.
+9. **Fail:** agent invents tasks, merges big changes without asking, or re-derives Px/WFQ unprompted → fix docs, not the agent.
 10. **Fail:** any `doing` or `next` row appears below an `open` row in the same band → sort order broken.
 
 ---

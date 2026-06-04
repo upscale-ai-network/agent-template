@@ -1,7 +1,7 @@
 # DT100 plan
 
-**Task:** DT100 · P0 · `doing` · due **2026-06-05**  
-**Deliverables:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) · [manager-arch-vision-b6.md](manager-arch-vision-b6.md) · slide export for Gururaj  
+**Task:** DT100 · P0 · `doing` · due **2026-06-05**
+**Deliverables:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) · [manager-arch-vision-b6.md](manager-arch-vision-b6.md) · slide export for Gururaj
 
 **This file:** Decisions and meeting playbook only — **save the plan, not how we arrived at it.** Update here when the plan changes.
 
@@ -109,9 +109,9 @@
 
 ## 8. Document discipline (his AWS habit)
 
-- He **will not read 50 pages** — same as Shafi’s pain point.  
-- **Thu:** A3 + walkable B6 (≤~6 sections).  
-- **~2 weeks:** **Cx 2-pager** — decisions + gates + QoS HWv1 scope.  
+- He **will not read 50 pages** — same as Shafi’s pain point.
+- **Thu:** A3 + walkable B6 (≤~6 sections).
+- **~2 weeks:** **Cx 2-pager** — decisions + gates + QoS HWv1 scope.
 - Deep truth can exist later; **exec read stays thin**.
 
 ---
@@ -131,11 +131,11 @@ When Gluon is active, you’re **fused** — don’t pretend parallel P1 work co
 
 ## 10. DT100 done checklist
 
-- [ ] Whiteboard doc corrections applied  
-- [ ] A3 exported → 2–3 slides/PDF (or live deck)  
-- [ ] B6 readable in one pass (you rehearsed Yes path)  
-- [ ] Sent or presented to **Gururaj**; Fri follow-up scheduled if needed  
-- [ ] `TASKS.md`: DT100 → `done` + `TASKS-LOG` entry  
+- [ ] Whiteboard doc corrections applied
+- [ ] A3 exported → 2–3 slides/PDF (or live deck)
+- [ ] B6 readable in one pass (you rehearsed Yes path)
+- [ ] Sent or presented to **Gururaj**; Fri follow-up scheduled if needed
+- [ ] `TASKS.md`: DT100 → `done` + `TASKS-LOG` entry
 - [ ] Optional: second push after Thu package (not required for “done”)
 
 **Not required for done:** Cx 2-pager, org hooks, peer sign-off on validation v0.

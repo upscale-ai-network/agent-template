@@ -1,6 +1,6 @@
 # TASKS-LOG
 
-Loose activity log for **DT###** tasks. Append new rows at the bottom.  
+Loose activity log for **DT###** tasks. Append new rows at the bottom.
 Refine format later ([TASKS.md](TASKS.md) DT114).
 
 | When | DT | Action | Detail |
@@ -24,6 +24,7 @@ Refine format later ([TASKS.md](TASKS.md) DT114).
 | 2026-06-04 | DT119 | note | Spike impl reverted — execute per TASKS.md DT119 plan later |
 | 2026-06-04 | DT113 | closed | Apple Silicon MLX brief/demos/PDFs removed; pyproject/uv.lock removed |
 | 2026-06-04 | DT100 | note | Added manager-arch-vision-dt100-plan.md |
+| 2026-06-04 | DT120 | created | Pensieve export origin.md → Gluon constitution (redacted) |
 
-**Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`  
+**Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`
 **Status (vocabulary):** `open` | `doing` | `next` | `done` | `drop`

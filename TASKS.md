@@ -1,8 +1,8 @@
 # TASKS
 
-**Source of truth** for open work. Edit here; commit to git.  
-**Rules:** [META.md](META.md) · **Activity log:** [TASKS-LOG.md](TASKS-LOG.md)  
-**Status:** `open` | `doing` | `next` | `done` | `drop`  
+**Source of truth** for open work. Edit here; commit to git.
+**Rules:** [META.md](META.md) · **Activity log:** [TASKS-LOG.md](TASKS-LOG.md)
+**Status:** `open` | `doing` | `next` | `done` | `drop`
 **`next`:** one queued follow-on — visible while `doing` is elsewhere; not a second `doing`.
 **Labels:** `DT###` — permanent id; do not reuse after close.
 
@@ -33,14 +33,34 @@
 | DT115 | P2 | open | Weekly manager report — format + cadence | | |
 | DT116 | P2 | open | Plan lightweight MD export for new agents | | Optional |
 | DT119 | P2 | open | Git hooks: pre-commit / pre-push / agent commit gate | | Enforce rules in tooling, not trust · see **DT119** |
+| DT120 | P2 | open | Pensieve → `origin.md` for Gluon constitution | | No PII / past-employer leak · Pensieve/Gluon separate · see **DT120** |
 | DT117 | P3 | open | Monthly review — tune tasks + log | | ~4 weeks |
 
 ### DT100 — arch vision (open)
 
-**Plan:** [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md)  
-**Slides:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) → export  
-**Walk:** [manager-arch-vision-b6.md](manager-arch-vision-b6.md)  
+**Plan:** [manager-arch-vision-dt100-plan.md](manager-arch-vision-dt100-plan.md)
+**Slides:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) → export
+**Walk:** [manager-arch-vision-b6.md](manager-arch-vision-b6.md)
 **Done when:** plan checklist §10 complete — not “perfect arch”
+
+---
+
+### DT120 — Pensieve `origin.md` → Gluon (close origin story)
+
+**Pending closure** for Gluon origin in [CONSTITUTION.md](CONSTITUTION.md) — pattern only, no mixing.
+
+**You (via Pensieve):**
+
+- [ ] Export sanitized **`origin.md`** — how Pensieve hatched Gluon; job-search → work transition
+- [ ] **Redact:** past employer names, compensation, interviews detail, PII, anything not safe for Upscale repo
+- [ ] Review with human eyes before any commit
+
+**Gluon (after import):**
+
+- [ ] Fold into constitution (or `origin.md` + pointer) — keep **separation** rule visible
+- [ ] No Pensieve chat/canvas as authority — file in git only after review
+
+**Done when:** `origin.md` in repo, constitution references it, origin story no longer “pending.”
 
 ---
 
@@ -54,11 +74,11 @@
 
 **Design goals (when executing):**
 
-- Git-tracked hooks under repo (e.g. `hooks/`) + `core.hooksPath` via documented setup  
-- **Human one-shot unlock** before commit vs push (separate tokens)  
-- Agent may `git add` / diff; **cannot** commit/push without human running allow + explicit approval  
-- Optional belt: Cursor `beforeShellExecution` to block `git commit` / `git push` in agent shell  
-- Fail closed; no `--no-verify` in agent docs  
+- Git-tracked hooks under repo (e.g. `hooks/`) + `core.hooksPath` via documented setup
+- **Human one-shot unlock** before commit vs push (separate tokens)
+- Agent may `git add` / diff; **cannot** commit/push without human running allow + explicit approval
+- Optional belt: Cursor `beforeShellExecution` to block `git commit` / `git push` in agent shell
+- Fail closed; no `--no-verify` in agent docs
 
 **Spike notes (reverted — reference only):**
 
@@ -72,13 +92,13 @@
 
 **Execution checklist (all open):**
 
-- [ ] Design review with human (you) — no implementation until OK  
-- [ ] Implement tracked `hooks/` + `scripts/` + `hooks/README.md`  
-- [ ] `.gitignore` unlock token files  
-- [ ] Update README rule #6 with real paths  
-- [ ] Run `./scripts/setup-git-hooks.sh` on Lepton; test commit blocked / allowed  
-- [ ] Test agent cannot commit without allow (manual or Cursor hook)  
-- [ ] Optional: `DT###` in commit-msg; org GitHub rulesets later  
+- [ ] Design review with human (you) — no implementation until OK
+- [ ] Implement tracked `hooks/` + `scripts/` + `hooks/README.md`
+- [ ] `.gitignore` unlock token files
+- [ ] Update README rule #6 with real paths
+- [ ] Run `./scripts/setup-git-hooks.sh` on Lepton; test commit blocked / allowed
+- [ ] Test agent cannot commit without allow (manual or Cursor hook)
+- [ ] Optional: `DT###` in commit-msg; org GitHub rulesets later
 
 **Not in scope (v1):** Org-wide rulesets; teaching agents `--no-verify`.
 
