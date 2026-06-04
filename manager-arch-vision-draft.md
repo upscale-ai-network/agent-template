@@ -73,8 +73,6 @@
 - Slide 2 → timeline or 2-column near/medium term  
 - Slide 3 → bullet asks + one “60-day success” line  
 
-**Do not** reuse Apple Silicon ML `slides.html` — different audience and purpose (Stream **D** in META, not Stream **B**).
-
 ---
 
 ## Open questions for you before Thu

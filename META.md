@@ -69,7 +69,7 @@ Refine weights later as **P2** if needed — arbitrary is fine at hatch time.
 | Stream | Home | Examples |
 |--------|------|----------|
 | **A. Onboarding / infra** | Dev-setup chat + tracker canvas | brew, `uv`, VPN, SSH, IT access, Cursor privacy |
-| **B. Workbench** | `diwakar-work` (local → org when approved) | Apple Silicon brief, demos, personal scripts |
+| **B. Workbench** | `diwakar-work` (local → org when approved) | Gluon template, tasks, arch-vision drafts |
 | **C. Job / product** | Org repos (`bugatti-*`, `sonic-*`, `usdk`, …) | Real engineering; clone when IT grants access |
 | **D. Alignment** | Manager / arch | 2–3 slide vision draft; digest specs over 2–3 weeks |
 
@@ -82,7 +82,7 @@ Refine weights later as **P2** if needed — arbitrary is fine at hatch time.
 | Layer | Role |
 |-------|------|
 | **Git remote** | `origin` = `upscale-ai-network/agent-template` (Gluon org home); work local until push approved · ignore `~/work/agent-template` dummy clone |
-| **`uv` + `uv.lock`** | Clone parity across Mac / Linux VM ([README](README.md)) |
+| **Tooling** | Per-task (e.g. `uv`) when a workbench script needs it — not in repo after DT113 prune |
 | **Content** | Experiments and drafts — **promote out** to org product repos when ready |
 
 Workbench = **egg container**. META + Px = **how you decide what to put in the container and when.**
