@@ -1,7 +1,14 @@
 # Arch vision draft — manager review (P0)
 
+**Superseded for Thu DT100** — use:
+
+- **[manager-arch-vision-a3.md](manager-arch-vision-a3.md)** — hook (2–3 slides)  
+- **[manager-arch-vision-b6.md](manager-arch-vision-b6.md)** — plan (walkable backup)
+
+**Below:** early hatch draft (week-1 table, 30–60d arc) — mine for facts; do not send as-is.
+
 **Target:** 2–3 slides, Thu EOD  
-**Status:** Draft v0 — fill bracketed placeholders after your 1:1  
+**Status:** Legacy v0  
 **Confidential — Upscale AI, Inc.**
 
 ---
