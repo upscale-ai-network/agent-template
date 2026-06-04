@@ -60,9 +60,9 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 5. Open **META.md** → confirm Px order; confirm hatch status matches your expectation.
 6. Ask the agent: *“What is open in P0? Where are rules? Was hatch closed?”*
 7. **Pass:** answers cite only these files, no canvas/chat; agent asks before proposing a big step.  
-8. **Pass:** `TASKS.md` open table sorted `P0 → P1 → TRIAGE → P2 → P3`; within each band `doing` before `open`.  
+8. **Pass:** `TASKS.md` open table sorted `P0 → P1 → TRIAGE → P2 → P3`; within each band `doing` → `next` → `open`.  
 9. **Fail:** agent invents tasks, merges big changes without asking, or re-derives Px/WFQ unprompted → fix docs, not the agent.  
-10. **Fail:** any `doing` row appears below an `open` row → sort order broken.
+10. **Fail:** any `doing` or `next` row appears below an `open` row in the same band → sort order broken.
 
 ---
 
@@ -73,6 +73,18 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 | **Lepton** | This MacBook Pro — local dev, clone, commit (`~/diwakar-work`) |
 | **Proton** | Future cloud workstation (GCP/AWS workhorse) — not provisioned yet |
 | **Gluon** | Agent that lives in this repo; context = committed files only |
+
+---
+
+## Git remote (pipe-clean)
+
+| What | Where |
+|------|--------|
+| **Working copy (Gluon)** | `~/diwakar-work` on **Lepton** — this is the repo |
+| **`origin`** | `git@github.com:upscale-ai-network/agent-template.git` — empty org home for Gluon/template |
+| **Ignore** | `~/work/agent-template` — colleague’s dummy clone only; **not** a second checkout to use |
+
+**Push:** `git push -u origin main` once you have **write** on `agent-template` ([TASKS.md](TASKS.md) DT103). Until then, work local; no `dtundlam/diwakar-work` remote configured.
 
 ---
 

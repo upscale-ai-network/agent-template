@@ -81,7 +81,7 @@ Refine weights later as **P2** if needed — arbitrary is fine at hatch time.
 
 | Layer | Role |
 |-------|------|
-| **Git remote** | Approved company home when `upscale-ai-network/diwakar-work` exists; until then local or `dtundlam/*` for non-confidential pipe-clean only |
+| **Git remote** | `origin` = `upscale-ai-network/agent-template` (Gluon org home); work local until push approved · ignore `~/work/agent-template` dummy clone |
 | **`uv` + `uv.lock`** | Clone parity across Mac / Linux VM ([README](README.md)) |
 | **Content** | Experiments and drafts — **promote out** to org product repos when ready |
 
@@ -111,7 +111,7 @@ Workbench = **egg container**. META + Px = **how you decide what to put in the c
 - [x] `META.md` + `README.md` + [`TASKS.md`](TASKS.md) on local `main`
 - [x] Repo at `~/diwakar-work`
 - [x] Open work in git only — canvas/chat offboarded
-- [ ] Org remote `upscale-ai-network/diwakar-work` — **P1**, not a hatch gate
+- [ ] First push to `upscale-ai-network/agent-template` — **P1** DT103 (write access pending)
 - [ ] **TRIAGE:** `triage-offboard` in TASKS.md — audit for anything lost from canvas/chat
 
 **Run phase:** P0 arch vision (Thu EOD) → P1 access → P2 digest/repos.

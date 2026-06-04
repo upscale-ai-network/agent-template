@@ -46,7 +46,7 @@ Sessions are **stateless**. Chat and canvas are **not** authoritative. Only comm
 
 1. Git files are source of truth; canvas/chat are not.
 2. Px order: `P0 → P1 → TRIAGE → P2 → P3` ([META](META.md)).
-3. Open task table: within each priority band, **`doing` before `open`** ([TASKS](TASKS.md)).
+3. Open task table: within each priority band, **`doing` → `next` → `open`** ([TASKS](TASKS.md)); one `doing` focus when possible.
 4. No confidential push without your explicit approval.
 5. Agent asks before **big steps** ([README](README.md)); you own commits and merge conflicts.
 

@@ -17,5 +17,8 @@ Refine format later ([TASKS.md](TASKS.md) DT114).
 | 2026-05-30 | DT118 | created | P0 test-run Gluon + template intent |
 | 2026-05-30 | DT118 | closed | Litmus pass; instance reproducible from git |
 | 2026-05-30 | DT102 | status | `doing` → `open` — single focus: DT100 only |
+| 2026-06-03 | DT113 | status | `open` → `next` — queued after DT100; template vs Apple Silicon heap |
+| 2026-06-03 | DT103 | note | `origin` → `upscale-ai-network/agent-template`; ignore `~/work/agent-template` dummy clone |
 
-**Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`
+**Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`  
+**Status (vocabulary):** `open` | `doing` | `next` | `done` | `drop`

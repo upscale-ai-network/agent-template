@@ -2,12 +2,13 @@
 
 **Source of truth** for open work. Edit here; commit to git.  
 **Rules:** [META.md](META.md) · **Activity log:** [TASKS-LOG.md](TASKS-LOG.md)  
-**Status:** `open` | `doing` | `done` | `drop`  
+**Status:** `open` | `doing` | `next` | `done` | `drop`  
+**`next`:** one queued follow-on — visible while `doing` is elsewhere; not a second `doing`.
 **Labels:** `DT###` — permanent id; do not reuse after close.
 
 **Due:** optional date `YYYY-MM-DD` (not a hard deadline unless noted).
 
-**Sort (litmus):** `P0 → P1 → TRIAGE → P2 → P3`; within each band **`doing` before `open`** — no `doing` row below any `open` row.
+**Sort (litmus):** `P0 → P1 → TRIAGE → P2 → P3`; within each band **`doing` → `next` → `open`** — no higher-attention status below a lower one (e.g. no `doing`/`next` under `open`).
 
 ---
 
@@ -16,14 +17,14 @@
 | DT | Priority | Status | Title | Due | Notes |
 |----|----------|--------|-------|-----|-------|
 | DT100 | P0 | doing | 2–3 slide arch vision for manager | 2026-06-05 | `manager-arch-vision-draft.md` · Thu EOD · was `p0-slides` |
+| DT113 | P1 | next | Prune Apple Silicon GPU / demos from repo | | Template vs heap clutter · `archive/` or branch |
 | DT102 | P1 | open | Cursor/doc use — HR / IT / mgmt OK | | Privacy Mode on; formal OK pending |
-| DT103 | P1 | open | Org git remote + push policy | | Local-only for now · `upscale-ai-network/diwakar-work` |
+| DT103 | P1 | open | Org git remote + push policy | | `origin` → `upscale-ai-network/agent-template` · push blocked until write access |
 | DT104 | P1 | open | Corp VPN from home + internal tools | | Browser check; no SSH host yet |
 | DT105 | P1 | open | UNIX login + SSH to build servers | | Blocked — IT/team |
 | DT106 | P1 | open | SSH jump hosts + `~/.ssh/config` | | Template from team |
 | DT107 | P1 | open | GCP + AWS VM access | | Office account · **Proton** later |
 | DT108 | P1 | open | `bugatti-model` repo access + clone | | Not in org list yet |
-| DT113 | P1 | open | Prune Apple Silicon GPU / demos from repo | | `archive/` or branch · elevated from P2 |
 | DT101 | TRIAGE | open | Offboard audit: canvas + chat → git | | Anything lost? Add rows + log entry |
 | DT109 | P2 | open | Remote workspace + toolchain on build servers | | After DT105–DT106 |
 | DT110 | P2 | open | Cursor remote agents — policy + setup | | After DT102 |
