@@ -435,7 +435,9 @@ def render_slide02() -> str:
 
     tape_x, _, tape_bot = anchors["bar:Tape-out path"]
     bc_x, _, bc_bot = anchors["lane:Buffer carving"]
-    ec_x, _, ec_bot = anchors["peer:ECMP"]
+    peer_labels = slide.columns[2][2] if len(slide.columns) > 2 else []
+    peer_key = peer_labels[-1] if peer_labels else "ECMP"
+    ec_x, _, ec_bot = anchors[f"peer:{peer_key}"]
 
     out_y = gate_cy + GATE_HALF + 40
     yes_cx = gate_cx - 118

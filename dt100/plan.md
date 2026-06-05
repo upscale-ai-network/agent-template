@@ -71,9 +71,9 @@
 
 | Term | Who |
 |------|-----|
-| **Sponsor** | Gururaj — scope, exec/OCP voice, escalation |
+| **Gururaj** | Scope steer, company/OCP external, escalation |
 | **DRI (you)** | Arch-vision framework + **QoS RM** (QoSMAP, Queue/carve, ESUN align) |
-| **DRI (peers)** | **Shafi Mohammad** — L2/L3/ACL · **Tippanna Hongal** — ECMP/AV |
+| **DRI (peers)** | **Shafi Mohammad** — L2/L3/ACL · **Tippanna Hongal** — ECMP/LAG/Counters/AV |
 | **Contributors** | **Rupa** (datapath/OCP), **Prasun** (program mesh), SDK leads |
 
 **Drop:** RACI, “mental model,” tribe metaphors on slides.
@@ -82,7 +82,7 @@
 
 ## 5. Names — slides vs B6 only
 
-**On A3 slides:** **Sponsor** only (no name — you say “Sponsor is you” at open). **B6** owner slide names Sponsor (Gururaj) once + peer DRIs.
+**On A3 slides:** Gururaj by name only where external/OCP voice applies. **B6** owner slide names Gururaj once + peer DRIs.
 
 **B6 only (deeper):** Srihari, Girish/Shravan, coalition cadence, Prabu brainstorm (§10), OCP Thu 8AM.
 

@@ -160,18 +160,27 @@ def fill_text_frame_lines(
     lines: List[str],
     body_rgb: RGBColor,
     first_line_rgb: Optional[RGBColor] = None,
+    *,
+    lead_line_count: int = 0,
 ) -> None:
     text_frame.clear()
+    lead_n = lead_line_count if lead_line_count else (1 if first_line_rgb else 0)
     for i, line in enumerate(lines):
         p = text_frame.paragraphs[0] if i == 0 else text_frame.add_paragraph()
         p.text = line
         p.level = 0
-        rgb = first_line_rgb if i == 0 and first_line_rgb else body_rgb
+        if not line.strip():
+            rgb = body_rgb
+            size = FONT_BODY
+        elif i < lead_n:
+            rgb = first_line_rgb or COLOR_LEAD
+            size = FONT_LEAD
+        else:
+            rgb = body_rgb
+            size = FONT_BODY
         if line.strip():
-            size = FONT_LEAD if i == 0 and first_line_rgb else FONT_BODY
-            face = FONT_BODY_FACE
             for run in p.runs:
-                _style_run(run, rgb, face, size)
+                _style_run(run, rgb, FONT_BODY_FACE, size)
 
 
 def apply_cover_colors(slide) -> None:
@@ -257,6 +266,7 @@ def fill_content_slide(
     title: str,
     bullets: List[str],
     subtitle: Optional[str] = None,
+    lead: Optional[str] = None,
     title_lines: Optional[List[str]] = None,
 ) -> None:
     title_shape = None
@@ -291,14 +301,22 @@ def fill_content_slide(
                 _style_run(run, COLOR_NAVY_TITLE, FONT_TITLE_FACE, FONT_TITLE_SINGLE)
     if body_shape:
         lines: List[str] = []
+        lead_count = 0
         if subtitle:
-            lines.extend([subtitle, ""])
+            lines.append(subtitle)
+            lead_count += 1
+        if lead:
+            lines.append(lead)
+            lead_count += 1
+        if lead_count:
+            lines.append("")
         lines.extend(bullets)
         fill_text_frame_lines(
             body_shape.text_frame,
             lines,
             COLOR_BODY,
-            first_line_rgb=COLOR_LEAD if subtitle else None,
+            first_line_rgb=COLOR_LEAD if lead_count else None,
+            lead_line_count=lead_count,
         )
     apply_content_colors(slide)
 

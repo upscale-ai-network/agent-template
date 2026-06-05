@@ -92,7 +92,9 @@ Selling: I have a bounded wedge and understand how it sits in the full tape-out 
 
 **Column:** Peer DRIs · peer
 - Layer 2 / 3
-- ECMP
+- ECMP / LAG
+- Port-Mirroring
+- Counters
 
 **Gate:** Task aligned?
 **Branch yes:** B6 pipeline walk

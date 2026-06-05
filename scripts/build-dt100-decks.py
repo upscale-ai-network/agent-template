@@ -77,6 +77,7 @@ class StyledDeck:
         title,
         bullets,
         subtitle=None,
+        lead=None,
         notes=None,
         diagram: Optional[Path] = None,
         title_lines: Optional[List[str]] = None,
@@ -97,7 +98,9 @@ class StyledDeck:
         else:
             from pptx_util import fill_content_slide
 
-            fill_content_slide(slide, title, bullets, subtitle=subtitle, title_lines=title_lines)
+            fill_content_slide(
+                slide, title, bullets, subtitle=subtitle, lead=lead, title_lines=title_lines
+            )
         if notes:
             slide.notes_slide.notes_text_frame.text = notes
         return slide
@@ -186,18 +189,18 @@ def build_b6() -> Path:
     deck = StyledDeck(out, num_content_slides=len(slides))
 
     cov = doc.cover
-    deck.add_cover(cov.title, cov.subtitle, cov.meta, cov.tag, notes=cov.notes or None)
+    deck.add_cover(cov.title, cov.subtitle, cov.meta, cov.tag)
 
     for s in slides:
         if s.image:
             img = PIPELINE_IMG if s.image == "logical-pipeline-boss-slide.png" else ROOT / "assets" / s.image
-            deck.add_image_slide(s.title, img, caption=s.caption or None, notes=s.notes or None)
+            deck.add_image_slide(s.title, img, caption=s.caption or None)
         else:
             deck.add_content(
                 s.title,
                 s.bullets,
                 subtitle=s.subtitle or None,
-                notes=s.notes or None,
+                lead=getattr(s, "lead", None) or None,
             )
 
     return deck.save()

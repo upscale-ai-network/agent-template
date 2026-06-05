@@ -2,7 +2,7 @@
 
 **Deck source of truth:** [manager-arch-vision-b6.md](manager-arch-vision-b6.md) → `manager-arch-vision-b6.pptx`.
 
-**DT100 · P0 · Thu package** · **Reader:** Gururaj (Sponsor) · **Confidential — Upscale AI, Inc.**
+**DT100 · P0 · Thu package** · **Reader:** Gururaj · **Confidential — Upscale AI, Inc.**
 
 **Companion:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) — slides 1–2, then B6, then A3 slides 3–4. **Plan:** [plan.md](plan.md)
 
@@ -15,11 +15,11 @@
 | Beat | Sections | Say in one line |
 |------|----------|-----------------|
 | **1. Transition** | Below | “Task framing held — I’ll define how, not another 50-pager.” |
-| **2. Machine** | §2–3 | Thin exec read; I draft validation gates v0 for group review. |
-| **3. Owners** | §4 | Sponsor, my DRI, peer DRIs — don’t read every row aloud. |
+| **2. Machine** | §2–3 | Thin walk; I draft validation gates v0 for group review. |
+| **3. Owners** | §4 | Gururaj, my DRI, peer DRIs — don’t read every row aloud. |
 | **4. Wedge + picture** | §5–6 · pipeline PNG | **Center of walk** — QoSMAP + Queue/carve on your slide. |
 | **5. Defer** | §7–8 · §12 | Rupa SDK thread, OCP voice, boundaries — not Thu merge. |
-| **6. Next** | §9 | two-pager reference document ~2 weeks; **sponsorship** on **A3 slide 4** after this walk — don’t re-litigate. |
+| **6. Next** | §9 | deeper artifacts ~1–2 weeks if redirected; **A3 slide 4** alignment after this walk — don’t re-litigate. |
 
 **Do not walk on Thu unless asked:** §10 execution mesh · Prabu bs-2 · full DRI table recitation.
 
@@ -43,7 +43,7 @@
 | Next artifact | **two-pager reference document** (decisions, gates, open issues) | ~2 weeks |
 | Not Thu / not 2 weeks | 50-page arch dump, full HW catalog digest | After access + your steer |
 
-Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer L2/L3 already showed the cost of 50-page exec dumps — I won’t repeat that with you.)
+Full depth can live in engineering artifacts; **Thu stays thin**. (Peer L2/L3 already showed the cost of 50-page dumps — I won’t repeat that with you.)
 
 ---
 
@@ -70,11 +70,11 @@ Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer
 
 | Area | DRI | I will |
 |------|-----|--------|
-| **Exec alignment / scope** | **Gururaj** (Sponsor) | Bring 2-pagers; you own external/exec narrative |
+| **Scope / company external** | **Gururaj** | Scope steer; company / OCP external voice |
 | **Arch vision + validation program** | **Diwakar Tundlam** | Draft framework; facilitate consensus |
 | **QoS / buffer / queue / scheduler / RM carve** | **Diwakar Tundlam** | Author 2-pager slice + implementation path |
 | **L2/L3 / ACL pipeline** | **Shafi Mohammad** | Align on shared validation story — his DRI |
-| **Arch validation / use-case framing** | **Tippanna Hongal** | Align on AV methodology — his DRI |
+| **ECMP / LAG / Counters + AV** | **Tippanna Hongal** | Align on forwarding + AV methodology — his DRI |
 | **SDK / SAI implementation** | SDK leads (e.g. Girish Kale, Shravan CS) | Consult on schema/path; not my R |
 | **Program / sprint mesh** | Prasun Sinha (and team) | Align cadence — sneak peek below |
 | **HW datapath / OCP ESUN** | **Rupa Budhia** | Weekly align before Thu OCP calls; SW-arch lane |
@@ -112,7 +112,7 @@ Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer
 | **Ingress** | **Port** → **Parser** → **MyMAC** · **VLAN Membership** | Parse correctness with **Rupa** (per-packet unambiguous parse vs NOS header build) |
 | **L2** | **L2-FBD** · **UFH** | **Shafi Mohammad** |
 | **L3 / overlay** | **VRF** · **Intf** · **L3-FIB** · **ESUN FDB** | L3/ESUN peers + **Rupa** datapath |
-| **Forward + QoS** | **ECMP** · **QoSMAP** | **ECMP:** Tippanna Hongal · **QoSMAP:** **me (QoS RM DRI)** |
+| **Forward + QoS** | **ECMP** · **QoSMAP** | **ECMP / LAG / Counters:** Tippanna Hongal · **QoSMAP:** **me (QoS RM DRI)** |
 | **Egress path** | **NH** · **LAG** · **IACL** · **Queue** · **Egress Port** · **EgrNH** · **EACL** | **Queue / buffer / carve:** **me** · **ACL:** **Shafi** |
 
 **My wedge on this picture (not the whole pipe):**

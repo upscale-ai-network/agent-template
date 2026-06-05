@@ -28,6 +28,7 @@ class DeckSlide:
     number: int
     title: str = ""
     subtitle: str = ""
+    lead: str = ""
     bullets: List[str] = field(default_factory=list)
     notes: str = ""
     diagram: str = ""
@@ -218,6 +219,8 @@ def load_deck_md(
                 current.title = val
             elif key == "Subtitle":
                 current.subtitle = val
+            elif key == "Lead":
+                current.lead = val
             elif key == "Diagram":
                 m = re.search(r"slide\d{2}-[\w-]+", val)
                 current.diagram = m.group(0) if m else val.split()[0]

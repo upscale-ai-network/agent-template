@@ -25,6 +25,7 @@
 
 | File | Role |
 |------|------|
+| [manager-arch-vision-b6-presenter-notes.md](manager-arch-vision-b6-presenter-notes.md) | B6 rehearse script — not in pptx (on-slide Subtitle + Lead cues only) |
 | [manager-arch-vision-b6-reference.md](manager-arch-vision-b6-reference.md) | B6 walk map, DRI tables, whiteboards — not parsed into pptx |
 | [../assets/dt100-whiteboards.md](../assets/dt100-whiteboards.md) | Photo annotations |
 | [../assets/guru-terms-sot.md](../assets/guru-terms-sot.md) | Guru vocabulary |
