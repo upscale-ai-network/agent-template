@@ -2,59 +2,42 @@
 
 **Task:** [TASKS.md](../TASKS.md) · **Playbook:** [plan.md](plan.md)
 
-## Files in this dir
+## Source of truth (decks)
+
+| File | → PPTX |
+|------|--------|
+| [manager-arch-vision-a3.md](manager-arch-vision-a3.md) | `manager-arch-vision-a3.pptx` — on-slide copy + presenter notes |
+| [manager-arch-vision-b6.md](manager-arch-vision-b6.md) | `manager-arch-vision-b6.pptx` — titles, bullets, image slide |
+
+**Build:** `./scripts/run-deck-build.sh` (reads only the two `.md` files above; do not hand-edit pptx)
+
+**Setup (once):** `uv sync --extra render` · `npm install` (repo root)
+
+**Diagrams (A3):** labels from `manager-arch-vision-a3.md` → `scripts/a3_aligned_render.py` → PNG → pptx
+
+**Preview (gitignored):** `scripts/preview-a3-deck.sh` → `assets/previews/a3/`
+
+## Reference (not in decks)
 
 | File | Role |
 |------|------|
-| `manager-arch-vision-a3.md` / `.pptx` | **Deliverable** — A3 on-slide fragments → Guru-facing deck |
-| `manager-arch-vision-a3-speaker-notes.md` | **Deliverable** — presenter script → ppt **Notes** on regen |
-| `manager-arch-vision-b6.md` / `.pptx` | **Deliverable** — B6 walk (after A3 slides 1–2) |
-| `plan.md` | Meeting playbook + done checklist (not slides) |
-| `README.md` | **This file** — dir map + private prep (below); not sent to Sponsor |
-
-**Convention:** `manager-arch-vision-*` = task outputs. `README.md` = how the dir works and what stays off the deck.
-
-## Supporting (not in this dir)
-
-| Path | Role |
-|------|------|
-| [../assets/dt100-whiteboards.md](../assets/dt100-whiteboards.md) | Photo annotations → B6 §6a |
-| [../assets/pics/](../assets/pics/) | Whiteboard JPEGs |
-| [../assets/guru-terms-sot.md](../assets/guru-terms-sot.md) | Guru vocabulary — whiteboards + pipeline |
-| [../assets/logical-pipeline-boss-slide.png](../assets/logical-pipeline-boss-slide.png) | Pipeline slide for B6 |
-| [../scratch/archive-manager-arch-vision-draft.md](../scratch/archive-manager-arch-vision-draft.md) | Superseded draft (git history) |
-
-**Setup (once):** `uv sync --extra render` · `npm install` (repo root — installs `mmdc`)
-
-**Build:** `./scripts/run-deck-build.sh` or `uv run python scripts/build-dt100-decks.py` (auto-renders diagrams)
-
-**Diagrams:** `assets/diagrams/a3/*.mmd` → `mmdc` → `.png` → embedded on every A3 slide (Pillow fallback if `mmdc` missing)
-
-**Preview (gitignored):** `scripts/preview-a3-deck.sh` → `assets/previews/a3/`
+| [manager-arch-vision-b6-reference.md](manager-arch-vision-b6-reference.md) | B6 walk map, DRI tables, whiteboards — not parsed into pptx |
+| [../assets/dt100-whiteboards.md](../assets/dt100-whiteboards.md) | Photo annotations |
+| [../assets/guru-terms-sot.md](../assets/guru-terms-sot.md) | Guru vocabulary |
+| [plan.md](plan.md) | Meeting order + done checklist |
+| **README.md (below)** | Private prep only — never slide copy |
 
 ## You vs Gluon
 
 | You | Gluon |
 |-----|--------|
-| Edit `manager-arch-vision-a3.md` + speaker-notes | Mirror → `build-dt100-decks.py`, regen `.pptx` |
-| Rehearse from ppt **Notes** or speaker-notes md | `python3 scripts/build-dt100-decks.py` |
-
-**Which file to read?**
-
-- **On-wall copy** → `manager-arch-vision-a3.md` · **on screen** → `manager-arch-vision-a3.pptx`
-- **1:1 words** → `manager-arch-vision-a3-speaker-notes.md`
-- **Meeting order / done** → `plan.md`
-- **Strategy, DBM/DLB, instill** → [Private prep](#private-prep) (this README)
-
-Do not hand-edit pptx bullets if md is truth — regen after copy changes.
+| Edit `manager-arch-vision-a3.md` or `manager-arch-vision-b6.md` | `./scripts/run-deck-build.sh` |
 
 ---
 
 ## Private prep
 
 **Not on slides. Not in PowerPoint Notes.** Curate verbally; read the room.
-
-**Published script:** [manager-arch-vision-a3-speaker-notes.md](manager-arch-vision-a3-speaker-notes.md)
 
 ### The hook (internal — do not read aloud as a paragraph)
 
@@ -76,20 +59,14 @@ Hold this vision while your **named DRI** is **Dynamic Switch-Buffer Management 
 
 | He should feel | On-wall / walk support |
 |----------------|------------------------|
-| Product + management in the bar | Slide 1: done and validated · product · management plane · AV |
-| Tape-out discipline | Slide 1–2: SDK/SAI · C-model → emulation → silicon |
-| Not another 50-pager | Slide 3: Cx two-pager; B6 §2 discipline |
-| Gates, not narrative | Slide 3: validation gates; B6 §3 machine |
-| Wedge is real, bounded | Slide 1: CSB buffer carving — not datapath architecture; B6 §6 |
-| Reuse upward | Cover: Executive review — his deck |
+| Product + management in the bar | A3 slide 1 diagram |
+| Tape-out discipline | A3 slides 1–2 |
+| Not another 50-pager | A3 slide 3; B6 slide 2 |
+| Gates, not narrative | A3 slide 3; B6 slide 3 |
+| Wedge is real, bounded | A3 slide 1; B6 slides 5–6 |
+| Reuse upward | A3 cover |
 
-**Tactical drops (if the room opens):**
-
-- “Use-case in, proof out — same milestone plan as SDK delivery.”
-- “I draft gates so every block, including CSB carve, has AV before tape-out.”
-- “Closed loop is the program; CSB carve is where I start proving I can run it.”
-
-**Do not merge on Thu unless he pulls:** Rupa SDK layout (B6 §7), Prabu execution mesh, AI/token thread.
+**Do not merge on Thu unless he pulls:** Rupa SDK layout (B6 slide 8), Prabu execution mesh, AI/token thread.
 
 ### Title and terms
 
@@ -98,7 +75,3 @@ Hold this vision while your **named DRI** is **Dynamic Switch-Buffer Management 
 - **Switch-Buffer** — one compound term (hyphenated)
 - **at CSB** — location in block; not **for** whole datapath (**Rupa**)
 - **Not your brand:** Logical Pipeline (his/Rupa seed slide in B6)
-
-### After B6 — slide 3 close
-
-Land **outcome**: Cx two-pager, validation gates (~two weeks), **Friday** edits. Carve HWv1 scope lives **inside** Cx, not as a separate on-wall promise.

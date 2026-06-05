@@ -2,7 +2,7 @@
 
 | Source | PNG | Slide |
 |--------|-----|-------|
-| `slide00-cover.mmd` | `.png` | Cover — Thu flow |
+| `slide00-cover.mmd` | `.png` | Optional / unused — cover stays text-only |
 | `slide01-scope.mmd` | `.png` | 1 — DSBM + program bar |
 | `slide02-validated.mmd` | `.png` | 2 — done and validated |
 | `slide03-outcomes.mmd` | `.png` | 3 — What you get |

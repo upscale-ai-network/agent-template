@@ -1,7 +1,6 @@
-flowchart LR
-  SCOPE[Scope aligned?] --> CHAIR[Program chair?]
-  CHAIR --> OWN[Backup deck · owners]
-  OWN --> OCP[OCP · external voice]
+flowchart TB
+  SCOPE[Scope OK on 1–2?] --> CHAIR[Program chair?]
+  CHAIR --> OWN[Owners · B6]
+  OWN --> OCP[OCP voice]
 
-  classDef ask fill:#FFF3E0,stroke:#EF6C00,color:#051830
   class SCOPE,CHAIR,OWN,OCP ask

@@ -5,6 +5,8 @@ from typing import List, Optional
 
 from pptx import Presentation
 from pptx.dml.color import RGBColor
+from pptx.enum.text import PP_ALIGN
+from pptx.util import Inches, Pt
 
 # Upscale CCC palette (from slide XML — do not use plain black on cover)
 COLOR_GOLD = RGBColor(0xFF, 0xE1, 0x9E)  # logo, navy callout, footer logo
@@ -20,6 +22,21 @@ COLOR_FOOTER_CONTENT = RGBColor(0x88, 0x88, 0x88)  # © line on content slides
 RIGHT_PANEL_LEFT = 5_000_000  # EMU — shapes on navy background
 FOOTER_TOP = 4_800_000
 TITLE_TOP_MAX = 700_000
+
+# Fonts — match CCC template (Calibri title, Arial body)
+FONT_TITLE_FACE = "Calibri"
+FONT_BODY_FACE = "Arial"
+FONT_TITLE_SINGLE = Pt(26)
+FONT_TITLE_MULTI = Pt(19)
+FONT_LEAD = Pt(13)
+FONT_BODY = Pt(13)
+FONT_COVER_DSBM = Pt(22)
+
+# Content slide layout — fixed bands on slides 1–4
+CONTENT_TITLE_BAND_BOTTOM = Inches(2.08)
+CONTENT_DIAGRAM_TOP = Inches(2.1)
+CONTENT_DIAGRAM_MAX_W = Inches(11.5)
+CONTENT_DIAGRAM_MAX_H = Inches(4.35)
 
 
 def delete_slide(prs: Presentation, index: int) -> None:
@@ -42,6 +59,12 @@ def is_footer(shape) -> bool:
     return shape.top > FOOTER_TOP
 
 
+def _style_run(run, rgb: RGBColor, face: str, size: Pt) -> None:
+    run.font.name = face
+    run.font.size = size
+    run.font.color.rgb = rgb
+
+
 def _apply_run_color(paragraph, rgb: RGBColor) -> None:
     for run in paragraph.runs:
         run.font.color.rgb = rgb
@@ -50,6 +73,64 @@ def _apply_run_color(paragraph, rgb: RGBColor) -> None:
 def color_all_paragraphs(text_frame, rgb: RGBColor) -> None:
     for para in text_frame.paragraphs:
         _apply_run_color(para, rgb)
+
+
+DSBM_TITLE_LINES = ["Dynamic", "Switch-Buffer", "Management"]
+
+
+def set_shape_lines(
+    shape,
+    lines: List[str],
+    rgb: RGBColor,
+    center: bool = False,
+    *,
+    face: str = FONT_TITLE_FACE,
+    size: Pt = FONT_TITLE_MULTI,
+) -> None:
+    """Replace text with multiple paragraphs (e.g. Switch-Buffer centered on line 2)."""
+    tf = shape.text_frame
+    tf.clear()
+    for i, line in enumerate(lines):
+        p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+        p.text = line
+        p.level = 0
+        p.space_after = Pt(2)
+        if center:
+            p.alignment = PP_ALIGN.CENTER
+        if line.strip():
+            for run in p.runs:
+                _style_run(run, rgb, face, size)
+
+
+def _title_font_size(lines: List[str]) -> Pt:
+    return FONT_TITLE_SINGLE if len(lines) == 1 else FONT_TITLE_MULTI
+
+
+def set_content_title_block(
+    shape,
+    *,
+    title: Optional[str] = None,
+    title_lines: Optional[List[str]] = None,
+    lead_line: Optional[str] = None,
+) -> None:
+    """Fixed title band: navy title + optional lead (slide 1)."""
+    tf = shape.text_frame
+    tf.clear()
+    entries: List[tuple[str, RGBColor, Pt, str]] = []
+    if title_lines:
+        for line in title_lines:
+            entries.append((line, COLOR_NAVY_TITLE, FONT_TITLE_MULTI, FONT_TITLE_FACE))
+    elif title:
+        entries.append((title, COLOR_NAVY_TITLE, FONT_TITLE_SINGLE, FONT_TITLE_FACE))
+    if lead_line:
+        entries.append((lead_line, COLOR_LEAD, FONT_LEAD, FONT_BODY_FACE))
+    for i, (text, rgb, size, face) in enumerate(entries):
+        p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+        p.text = text
+        p.level = 0
+        p.space_after = Pt(3)
+        for run in p.runs:
+            _style_run(run, rgb, face, size)
 
 
 def set_shape_single_line(shape, text: str, rgb: Optional[RGBColor] = None) -> None:
@@ -85,7 +166,10 @@ def fill_text_frame_lines(
         p.level = 0
         rgb = first_line_rgb if i == 0 and first_line_rgb else body_rgb
         if line.strip():
-            _apply_run_color(p, rgb)
+            size = FONT_LEAD if i == 0 and first_line_rgb else FONT_BODY
+            face = FONT_BODY_FACE
+            for run in p.runs:
+                _style_run(run, rgb, face, size)
 
 
 def apply_cover_colors(slide) -> None:
@@ -112,9 +196,11 @@ def apply_cover_colors(slide) -> None:
             color_all_paragraphs(shape.text_frame, COLOR_GOLD)
 
 
-def apply_content_colors(slide) -> None:
+def apply_content_colors(slide, *, skip_title_band: bool = False) -> None:
     for shape in slide.shapes:
         if not shape.has_text_frame:
+            continue
+        if skip_title_band and shape.top < TITLE_TOP_MAX:
             continue
         if is_footer(shape):
             if shape.left < 5_000_000 and "Upscale AI" in shape.text_frame.text:
@@ -144,7 +230,19 @@ def fill_cover_slide(slide, headline: str, subline: str, meta: str, tag: str) ->
         if "Mirror CCC" in raw or "[Presentation title]" in raw:
             set_shape_single_line(shape, headline, COLOR_HEADLINE)
         elif "Bugatti" in raw or "[Subtitle line 1]" in raw:
-            set_shape_single_line(shape, subline, COLOR_GOLD)
+            if "\n" in subline:
+                set_shape_lines(shape, subline.split("\n"), COLOR_GOLD, center=True)
+            elif subline == " ".join(DSBM_TITLE_LINES):
+                set_shape_lines(
+                    shape,
+                    DSBM_TITLE_LINES,
+                    COLOR_GOLD,
+                    center=True,
+                    face=FONT_TITLE_FACE,
+                    size=FONT_COVER_DSBM,
+                )
+            else:
+                set_shape_lines(shape, [subline], COLOR_GOLD, center=True)
         elif raw.strip().startswith("Authors:") or "[Subtitle line 2" in raw:
             set_shape_single_line(shape, meta, COLOR_META)
         elif "Hardware/Architecture" in raw or "[Tag /" in raw:
@@ -157,6 +255,7 @@ def fill_content_slide(
     title: str,
     bullets: List[str],
     subtitle: Optional[str] = None,
+    title_lines: Optional[List[str]] = None,
 ) -> None:
     title_shape = None
     body_shape = None
@@ -168,7 +267,26 @@ def fill_content_slide(
         else:
             body_shape = shape
     if title_shape:
-        set_shape_single_line(title_shape, title, COLOR_NAVY_TITLE)
+        if title_lines:
+            set_shape_lines(
+                title_shape,
+                title_lines,
+                COLOR_NAVY_TITLE,
+                center=False,
+                size=_title_font_size(title_lines),
+            )
+        elif "\n" in title:
+            parts = title.split("\n")
+            set_shape_lines(
+                title_shape,
+                parts,
+                COLOR_NAVY_TITLE,
+                size=_title_font_size(parts),
+            )
+        else:
+            set_shape_single_line(title_shape, title, COLOR_NAVY_TITLE)
+            for run in title_shape.text_frame.paragraphs[0].runs:
+                _style_run(run, COLOR_NAVY_TITLE, FONT_TITLE_FACE, FONT_TITLE_SINGLE)
     if body_shape:
         lines: List[str] = []
         if subtitle:
@@ -181,6 +299,66 @@ def fill_content_slide(
             first_line_rgb=COLOR_LEAD if subtitle else None,
         )
     apply_content_colors(slide)
+
+
+def hide_body_placeholder(slide) -> None:
+    """Hide bullet placeholder so only diagram shows in content area."""
+    for shape in slide.shapes:
+        if not shape.has_text_frame or is_footer(shape):
+            continue
+        if shape.top >= TITLE_TOP_MAX:
+            shape.text_frame.clear()
+            shape.width = 0
+            shape.height = 0
+
+
+def place_diagram(slide, image_path: Path, slide_width: Optional[int] = None) -> None:
+    """Fit diagram in fixed box — same visual size on every slide."""
+    slide_w = slide_width or int(Inches(13.333))
+    box_top = int(CONTENT_DIAGRAM_TOP)
+    box_h = int(CONTENT_DIAGRAM_MAX_H)
+    max_w = int(CONTENT_DIAGRAM_MAX_W)
+    pic = slide.shapes.add_picture(str(image_path), 0, box_top)
+    scale = min(max_w / pic.width, box_h / pic.height)
+    pic.width = int(pic.width * scale)
+    pic.height = int(pic.height * scale)
+    pic.left = int((slide_w - pic.width) / 2)
+    # Top-align so tall flows stay in the content band and off the footer.
+    pic.top = box_top
+
+
+def fill_content_diagram_slide(
+    slide,
+    title: str,
+    image_path: Path,
+    *,
+    title_lines: Optional[List[str]] = None,
+    lead_line: Optional[str] = None,
+    slide_width: Optional[int] = None,
+) -> None:
+    """Title band + optional lead + diagram in aligned box; no bullet body."""
+    title_shape = None
+    for shape in slide.shapes:
+        if not shape.has_text_frame or is_footer(shape):
+            continue
+        if shape.top < TITLE_TOP_MAX:
+            title_shape = shape
+            break
+    if title_shape:
+        set_content_title_block(
+            title_shape,
+            title=title,
+            title_lines=title_lines,
+            lead_line=lead_line,
+        )
+    hide_body_placeholder(slide)
+    if image_path.is_file():
+        place_diagram(slide, image_path, slide_width=slide_width)
+    apply_content_colors(slide, skip_title_band=True)
+    if lead_line and title_shape and title_shape.text_frame.paragraphs:
+        p = title_shape.text_frame.paragraphs[-1]
+        for run in p.runs:
+            _style_run(run, COLOR_LEAD, FONT_BODY_FACE, FONT_LEAD)
 
 
 def check_zip_duplicates(path) -> list:

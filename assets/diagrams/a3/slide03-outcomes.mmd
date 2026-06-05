@@ -1,11 +1,8 @@
-flowchart LR
-  B6[B6 walk] --> A12[Align slides 1–2]
-  A12 --> CX[Cx two-pager\n~two weeks]
-  CX --> GATES[Validation gates]
-  GATES --> AV[AV milestone decisions]
-  AV --> FRI[Friday · your edits]
+%% Mirror of dt100/manager-arch-vision-a3.md slide 3 — build uses a3_aligned_render + md
+flowchart TB
+  CX[Cx 2-pager] --> GATES[Validation gates]
+  GATES --> AV[AV decisions]
+  AV --> FRI[Friday edits]
 
-  classDef step fill:#E8F5E9,stroke:#2E7D32,color:#051830
-  classDef doc fill:#E3F2FD,stroke:#1565C0,color:#051830
-  class B6,A12,FRI step
   class CX,GATES,AV doc
+  class FRI step

@@ -17,6 +17,14 @@ from typing import Dict, List, Optional, Tuple
 
 ROOT = Path(__file__).resolve().parents[1]
 MMD_DIR = ROOT / "assets" / "diagrams" / "a3"
+MMD_CONFIG = MMD_DIR / "mermaid-config.json"
+# Render tall charts (avoid LR-in-subgraph flattening); trim + letterbox for pptx box
+MMD_RENDER_W = 1400
+MMD_RENDER_H = 900
+MMD_RENDER_SCALE = 1.2
+MMD_CANVAS_TALL = (1200, 720)
+MMD_CANVAS_WIDE = (1600, 520)
+MMD_CLASSES = MMD_DIR / "_classes.mmd"
 NODE = Path("/Applications/Cursor.app/Contents/Resources/app/resources/helpers/node")
 
 # Upscale-adjacent palette (readable on white slides)
@@ -178,10 +186,11 @@ def layout(diagram: Diagram) -> Dict[str, Tuple[float, float, float, float]]:
     subgraph_ids = list(dict.fromkeys(n.subgraph for n in diagram.nodes.values() if n.subgraph))
     loose = [n.nid for n in diagram.nodes.values() if not n.subgraph]
     positions: Dict[str, Tuple[float, float, float, float]] = {}
-    row_y = 40.0
-    box_w, box_h, gap_x, gap_y = 200.0, 72.0, 36.0, 120.0
+    row_y = 48.0
+    box_w, box_h, gap_x, gap_y = 200.0, 72.0, 40.0, 100.0
+    x0 = 48.0
 
-    def place_row(nids: List[str], y: float, x0: float = 40.0) -> float:
+    def place_row(nids: List[str], y: float) -> float:
         x = x0
         max_h = box_h
         for nid in nids:
@@ -197,7 +206,7 @@ def layout(diagram: Diagram) -> Dict[str, Tuple[float, float, float, float]]:
         nids = [n.nid for n in diagram.nodes.values() if n.subgraph == sg]
         if not nids:
             continue
-        row_y = place_row(nids, row_y + 28)
+        row_y = place_row(nids, row_y + 36)
     if loose:
         row_y = place_row(loose, row_y)
     # nodes only on edges
@@ -289,10 +298,26 @@ def _mmdc_candidates() -> List[Path]:
 
 
 def try_mmdc(mmd: Path, png: Path) -> bool:
+    cfg_args = ["-c", str(MMD_CONFIG)] if MMD_CONFIG.is_file() else []
     for mmdc in _mmdc_candidates():
         try:
             subprocess.run(
-                [str(mmdc), "-i", str(mmd), "-o", str(png), "-b", "white", "-w", "2400"],
+                [
+                    str(mmdc),
+                    "-i",
+                    str(mmd),
+                    "-o",
+                    str(png),
+                    "-b",
+                    "white",
+                    "-w",
+                    str(MMD_RENDER_W),
+                    "-H",
+                    str(MMD_RENDER_H),
+                    "-s",
+                    str(MMD_RENDER_SCALE),
+                    *cfg_args,
+                ],
                 check=True,
                 timeout=120,
             )
@@ -350,10 +375,89 @@ def render_png_pillow(diagram: Diagram, png: Path, scale: float = 3.0) -> None:
     img.save(png, "PNG")
 
 
+def compose_mmd_source(mmd: Path) -> str:
+    """Inject shared classDefs immediately after the flowchart header (mmdc requires that order)."""
+    body = mmd.read_text(encoding="utf-8")
+    if not MMD_CLASSES.is_file() or "classDef program" in body:
+        return body
+    shared_lines = [
+        ln
+        for ln in MMD_CLASSES.read_text(encoding="utf-8").splitlines()
+        if ln.strip() and not ln.strip().startswith("%%")
+    ]
+    out: List[str] = []
+    inserted = False
+    for line in body.splitlines():
+        out.append(line)
+        if not inserted and line.strip().startswith("flowchart"):
+            out.append("")
+            out.extend(shared_lines)
+            out.append("")
+            inserted = True
+    if not inserted:
+        out = shared_lines + [""] + out
+    return "\n".join(out)
+
+
+def trim_diagram_png(img: "Image.Image", pad: int = 16):
+    """Crop white margins so letterboxing uses the full pptx diagram area."""
+    from PIL import Image, ImageChops
+
+    bg = Image.new("RGB", img.size, (255, 255, 255))
+    bbox = ImageChops.difference(img, bg).getbbox()
+    if not bbox:
+        return img
+    x0, y0, x1, y1 = bbox
+    x0 = max(0, x0 - pad)
+    y0 = max(0, y0 - pad)
+    x1 = min(img.width, x1 + pad)
+    y1 = min(img.height, y1 + pad)
+    return img.crop((x0, y0, x1, y1))
+
+
+def normalize_diagram_png(png: Path) -> None:
+    """Trim, then letterbox on a canvas sized to content (avoids tiny centered slivers)."""
+    from PIL import Image
+
+    img = trim_diagram_png(Image.open(png).convert("RGB"))
+    aspect = img.width / max(img.height, 1)
+    pad = 28
+    if aspect > 2.2:
+        canvas_w, canvas_h = MMD_CANVAS_WIDE
+    else:
+        canvas_h = MMD_CANVAS_TALL[1]
+        canvas_w = min(max(img.width + pad * 2, 520), MMD_CANVAS_TALL[0])
+    canvas = Image.new("RGB", (canvas_w, canvas_h), (255, 255, 255))
+    scale = min(canvas_w / img.width, canvas_h / img.height)
+    nw, nh = max(1, int(img.width * scale)), max(1, int(img.height * scale))
+    img = img.resize((nw, nh), Image.Resampling.LANCZOS)
+    x = (canvas_w - nw) // 2
+    y = (canvas_h - nh) // 2
+    canvas.paste(img, (x, y))
+    canvas.save(png, "PNG")
+
+
 def render_png(mmd: Path, png: Path) -> None:
-    if try_mmdc(mmd, png):
+    from a3_aligned_render import RENDERERS, render_aligned_png
+
+    if mmd.stem in RENDERERS:
+        render_aligned_png(mmd.stem, png)
+        normalize_diagram_png(png)
         return
-    text = mmd.read_text(encoding="utf-8")
+
+    import tempfile
+
+    src = compose_mmd_source(mmd)
+    with tempfile.NamedTemporaryFile("w", suffix=".mmd", delete=False) as tmp:
+        tmp.write(src)
+        tmp_path = Path(tmp.name)
+    try:
+        if try_mmdc(tmp_path, png):
+            normalize_diagram_png(png)
+            return
+    finally:
+        tmp_path.unlink(missing_ok=True)
+    text = src
     diagram = parse_mermaid(text)
     try:
         import cairosvg
@@ -363,13 +467,14 @@ def render_png(mmd: Path, png: Path) -> None:
         cairosvg.svg2png(bytestring=svg.encode("utf-8"), write_to=str(png), output_width=2400)
     except (ImportError, OSError):
         render_png_pillow(diagram, png)
+    normalize_diagram_png(png)
 
 
 def main() -> int:
     if not MMD_DIR.is_dir():
         print(f"Missing {MMD_DIR}", file=sys.stderr)
         return 1
-    mmds = sorted(MMD_DIR.glob("*.mmd"))
+    mmds = sorted(p for p in MMD_DIR.glob("*.mmd") if not p.name.startswith("_"))
     if not mmds:
         print("No .mmd files", file=sys.stderr)
         return 1

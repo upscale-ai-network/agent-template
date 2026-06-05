@@ -1,24 +1,18 @@
-flowchart LR
-  subgraph program["Program bar"]
-    direction LR
+flowchart TB
+  subgraph program["Program — done and validated"]
     P[Product] --> M[Management plane]
     M --> AV[Arch validation]
     AV --> SDK[SDK / SAI]
-    SDK --> SIL[C-model → emulation → silicon]
+    SDK --> SIL[C-model → silicon]
   end
 
-  subgraph dri["Your DRI"]
-    direction LR
-    DBM[Dynamic Switch-Buffer Management] --> CSB[CSB]
-    CSB --> CARVE[Buffer carving at CSB]
+  subgraph dri["Your DRI — Dynamic Switch-Buffer Management"]
+    CSB[CSB] --> CARVE[Buffer carving]
+    CARVE --> ALIGN[Align today]
   end
 
-  SIL --> CARVE
-  CARVE --> ALIGN[Align today]
+  SIL --> CSB
 
-  classDef program fill:#E3F2FD,stroke:#1565C0,color:#051830
-  classDef dri fill:#FFF3E0,stroke:#EF6C00,color:#051830
-  classDef act fill:#F3E5F5,stroke:#7B1FA2,color:#051830
   class P,M,AV,SDK,SIL program
-  class DBM,CSB,CARVE dri
+  class CSB,CARVE lane
   class ALIGN act
