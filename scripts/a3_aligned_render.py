@@ -67,6 +67,14 @@ def _arrow_v(x: float, y1: float, y2: float, dashed: bool = False) -> str:
     )
 
 
+def _arrow_h(x1: float, x2: float, y: float, dashed: bool = False) -> str:
+    dash = " stroke-dasharray='6,4'" if dashed else ""
+    return (
+        f"<line x1='{x1:.1f}' y1='{y:.1f}' x2='{x2:.1f}' y2='{y:.1f}' "
+        f"stroke='{ARROW}' stroke-width='2' marker-end='url(#arrow)'{dash}/>"
+    )
+
+
 def _arrow_diag(x1: float, y1: float, x2: float, y2: float, dashed: bool = False) -> str:
     dash = " stroke-dasharray='6,4'" if dashed else ""
     return (
@@ -105,6 +113,25 @@ def _wrap_svg(inner: str, w: float, h: float) -> str:
     )
 
 
+# Content band on the slide is 11.5in x 4.35in (aspect 2.64). Pre-frame every
+# diagram to that aspect so place_diagram fits it exactly with no clip / no re-letterbox.
+FRAME_W = 1320.0
+FRAME_H = 500.0
+FRAME_PAD = 40.0
+
+
+def _frame(parts: List[str], content_w: float, content_h: float) -> str:
+    """Center + scale content within a fixed band-aspect canvas."""
+    avail_w = FRAME_W - 2 * FRAME_PAD
+    avail_h = FRAME_H - 2 * FRAME_PAD
+    s = min(avail_w / content_w, avail_h / content_h)
+    tx = (FRAME_W - content_w * s) / 2
+    ty = (FRAME_H - content_h * s) / 2
+    body = "\n".join(parts)
+    inner = f"<g transform='translate({tx:.1f},{ty:.1f}) scale({s:.4f})'>{body}</g>"
+    return _wrap_svg(inner, FRAME_W, FRAME_H)
+
+
 def _column_layout(
     columns: Sequence[Tuple[str, str, str, Sequence[str]]],
 ) -> Tuple[str, float, float, Dict[str, Tuple[float, float]]]:
@@ -134,42 +161,56 @@ def _column_layout(
     return "\n".join(parts), total_w + 16, col_h + y0 + 16, centers
 
 
+H_GAP = 46  # horizontal gap between boxes (room for connector arrows)
+
+
+def _hrow(nodes: Sequence[Tuple[str, str]], x0: float, y: float, parts: List[str]) -> float:
+    """Lay nodes left→right at row top y; append svg to parts; return right edge x."""
+    x = x0
+    prev_right: Optional[float] = None
+    for label, style in nodes:
+        parts.append(_box_svg(x, y, label, style))
+        if prev_right is not None:
+            parts.append(_arrow_h(prev_right, x, y + BOX_H / 2))
+        prev_right = x + BOX_W
+        x += BOX_W + H_GAP
+    return x - H_GAP
+
+
+def _hband(nodes: Sequence[Tuple[str, str]], x0: float, y: float, title: str, parts: List[str]) -> Tuple[float, float]:
+    """Horizontal flow inside a titled band. Return (band_right, band_bottom)."""
+    inner_w = len(nodes) * BOX_W + (len(nodes) - 1) * H_GAP
+    band_w = inner_w + SG_PAD * 2
+    band_h = SG_TITLE_H + SG_PAD + BOX_H + SG_PAD
+    parts.append(_sg_band(x0, y, band_w, band_h, title))
+    _hrow(nodes, x0 + SG_PAD, y + SG_TITLE_H + SG_PAD, parts)
+    return x0 + band_w, y + band_h
+
+
 def render_slide01() -> str:
     slide = _a3().slide(1)
     groups = slide.stack_groups
     if not groups:
         raise ValueError("Slide 1 needs *group* blocks in manager-arch-vision-a3.md")
-    w = BOX_W + 48
-    x = 24.0
-    y = 16.0
+    margin = 20.0
+    band_gap = 40.0
     parts: List[str] = []
-    sg_h = lambda n: SG_TITLE_H + SG_PAD + n * BOX_H + (n - 1) * ROW_GAP + SG_PAD
-    h1 = sg_h(len(groups[0][1]))
-    h2 = sg_h(len(groups[1][1])) if len(groups) > 1 else 0
-    parts.append(_sg_band(x - SG_PAD, y, BOX_W + SG_PAD * 2, h1, groups[0][0]))
-    if len(groups) > 1:
-        parts.append(_sg_band(x - SG_PAD, y + h1 + 24, BOX_W + SG_PAD * 2, h2, groups[1][0]))
     program = groups[0][1]
     dri = groups[1][1] if len(groups) > 1 else []
-    cy = y + SG_TITLE_H + SG_PAD
-    prev = None
-    for label, style in program:
-        parts.append(_box_svg(x, cy, label, style))
-        if prev is not None:
-            parts.append(_arrow_v(x + BOX_W / 2, prev, cy))
-        prev = cy + BOX_H
-        cy += BOX_H + ROW_GAP
-    cy2 = y + h1 + 24 + SG_TITLE_H + SG_PAD
-    parts.append(_arrow_v(x + BOX_W / 2, prev, cy2))
-    prev2 = None
-    for label, style in dri:
-        parts.append(_box_svg(x, cy2, label, style))
-        if prev2 is not None:
-            parts.append(_arrow_v(x + BOX_W / 2, prev2, cy2))
-        prev2 = cy2 + BOX_H
-        cy2 += BOX_H + ROW_GAP
-    total_h = y + h1 + 24 + h2 + 24
-    return _wrap_svg("\n".join(parts), w, total_h)
+
+    p_right, p_bottom = _hband(program, margin, margin, groups[0][0], parts)
+    total_right = p_right
+    if dri:
+        d_right, d_bottom = _hband(dri, margin, p_bottom + band_gap, groups[1][0], parts)
+        # connector: program band ↓ into DRI band (centered over DRI lane)
+        dri_inner_w = len(dri) * BOX_W + (len(dri) - 1) * H_GAP
+        conn_x = margin + SG_PAD + dri_inner_w / 2
+        parts.append(_arrow_v(conn_x, p_bottom, p_bottom + band_gap))
+        total_right = max(p_right, d_right)
+        total_bottom = d_bottom
+    else:
+        total_bottom = p_bottom
+    return _frame(parts, total_right + margin, total_bottom + margin)
 
 
 def _col_keys(n: int) -> List[str]:
@@ -220,61 +261,65 @@ def render_slide02() -> str:
 
     total_h = out_y + BOX_H + 24
     total_w = w + 80
-    return _wrap_svg("\n".join(parts), total_w, total_h)
+    return _frame(parts, total_w, total_h)
 
 
 def render_slide03() -> str:
-    return _stack(_a3().slide(3).stack, 24)
+    return _hstack(_a3().slide(3).stack, 24)
 
 
 def render_slide04() -> str:
-    return _stack(_a3().slide(4).stack, 24)
+    return _hstack(_a3().slide(4).stack, 24)
 
 
-def _stack(nodes: Sequence[Tuple[str, str]], margin: float) -> str:
-    x = margin
-    y = margin
+def _hstack(nodes: Sequence[Tuple[str, str]], margin: float) -> str:
+    """Single horizontal flow, left→right — fills the wide content band."""
     parts: List[str] = []
-    prev = None
-    for label, style in nodes:
-        parts.append(_box_svg(x, y, label, style))
-        if prev is not None:
-            parts.append(_arrow_v(x + BOX_W / 2, prev, y))
-        prev = y + BOX_H
-        y += BOX_H + ROW_GAP
-    return _wrap_svg("\n".join(parts), BOX_W + margin * 2, y + margin)
+    right = _hrow(nodes, margin, margin, parts)
+    return _frame(parts, right + margin, margin * 2 + BOX_H)
 
 
-RENDERERS = {
-    "slide01-scope": render_slide01,
-    "slide02-validated": render_slide02,
-    "slide03-outcomes": render_slide03,
-    "slide04-sponsor": render_slide04,
+# Diagram stem (from **Diagram:** in md) → render function keyed by slide number.
+_SLIDE_RENDERERS = {
+    1: render_slide01,
+    2: render_slide02,
+    3: render_slide03,
+    4: render_slide04,
 }
 
 
-def _svg_to_png(svg: str, png: Path, scale: float = 2.5) -> None:
-    """Rasterize SVG via PyMuPDF (repo dep) or cairosvg when available."""
-    png.parent.mkdir(parents=True, exist_ok=True)
-    try:
-        import fitz
+def diagram_stems_for_doc(doc=None) -> List[str]:
+    doc = doc or _a3()
+    return [s.diagram for s in doc.ordered_slides() if s.diagram]
 
-        doc = fitz.open(stream=svg.encode("utf-8"), filetype="svg")
+
+def _render_for_stem(stem: str, doc=None) -> str:
+    doc = doc or _a3()
+    for s in doc.ordered_slides():
+        if s.diagram == stem:
+            fn = _SLIDE_RENDERERS.get(s.number)
+            if not fn:
+                raise ValueError(f"No renderer for slide {s.number} (diagram {stem!r})")
+            return fn()
+    raise ValueError(f"Diagram {stem!r} not declared in {A3_MD.name}")
+
+
+def _svg_to_png(svg: str, png: Path, scale: float = 2.5) -> None:
+    """Rasterize SVG via PyMuPDF (required dependency)."""
+    import fitz
+
+    png.parent.mkdir(parents=True, exist_ok=True)
+    doc = fitz.open(stream=svg.encode("utf-8"), filetype="svg")
+    try:
         page = doc[0]
         pix = page.get_pixmap(matrix=fitz.Matrix(scale, scale), alpha=False)
         pix.save(str(png))
+    finally:
         doc.close()
-        return
-    except Exception:
-        pass
-    import cairosvg
-
-    cairosvg.svg2png(bytestring=svg.encode("utf-8"), write_to=str(png), output_width=2400)
 
 
-def render_aligned_png(stem: str, png: Path) -> bool:
-    fn = RENDERERS.get(stem)
-    if not fn:
-        return False
-    _svg_to_png(fn(), png)
-    return True
+def render_diagram(stem: str, png: Path, doc=None) -> None:
+    svg = _render_for_stem(stem, doc=doc)
+    _svg_to_png(svg, png)
+    if not png.is_file() or png.stat().st_size < 100:
+        raise RuntimeError(f"Diagram render produced no output: {png}")

@@ -1,15 +1,18 @@
 # A3 diagrams
 
-| Source | PNG | Slide |
-|--------|-----|-------|
-| `slide00-cover.mmd` | `.png` | Optional / unused — cover stays text-only |
-| `slide01-scope.mmd` | `.png` | 1 — DSBM + program bar |
-| `slide02-validated.mmd` | `.png` | 2 — done and validated |
-| `slide03-outcomes.mmd` | `.png` | 3 — What you get |
-| `slide04-sponsor.mmd` | `.png` | 4 — Sponsor asks |
+Diagrams are **not** built from Mermaid. Labels and layout come from `dt100/manager-arch-vision-a3.md`; PNGs are rendered by `scripts/a3_aligned_render.py` (PyMuPDF).
 
-**Render:** `uv run python scripts/render-a3-diagrams.py` (also runs at start of `build-dt100-decks.py`).
+| PNG | Slide | Md section |
+|-----|-------|------------|
+| `slide01-scope.png` | 1 | DSBM + program bar |
+| `slide02-validated.png` | 2 | done and validated |
+| `slide03-outcomes.png` | 3 | What you get |
+| `slide04-sponsor.png` | 4 | Sponsor asks |
 
-**Tooling:** `./node_modules/.bin/mmdc` (after `npm install`) → best quality; else Pillow parser fallback.
+**Build:** `./scripts/run-deck-build.sh` — validates md, renders PNGs, builds pptx, validates output. Fails on any missing field, renderer, or corrupt file.
 
-Edit `.mmd` → regen PNG → regen pptx.
+**Diagram-only render:** `uv run python scripts/render_a3_diagrams.py`
+
+**Legacy:** `legacy-mermaid/` holds old `.mmd` sources — not used by the build.
+
+Edit `manager-arch-vision-a3.md` → rebuild.

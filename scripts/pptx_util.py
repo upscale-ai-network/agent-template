@@ -32,11 +32,12 @@ FONT_LEAD = Pt(13)
 FONT_BODY = Pt(13)
 FONT_COVER_DSBM = Pt(22)
 
-# Content slide layout — fixed bands on slides 1–4
-CONTENT_TITLE_BAND_BOTTOM = Inches(2.08)
-CONTENT_DIAGRAM_TOP = Inches(2.1)
-CONTENT_DIAGRAM_MAX_W = Inches(11.5)
-CONTENT_DIAGRAM_MAX_H = Inches(4.35)
+# Content slide layout — fixed bands on slides 1–4.
+# Slide is 10in x 5.625in (16:9); title ~top 0.22, footer top ~5.34.
+CONTENT_TITLE_BAND_BOTTOM = Inches(1.6)
+CONTENT_DIAGRAM_TOP = Inches(1.65)
+CONTENT_DIAGRAM_MAX_W = Inches(9.2)
+CONTENT_DIAGRAM_MAX_H = Inches(3.55)
 
 
 def delete_slide(prs: Presentation, index: int) -> None:
@@ -116,6 +117,7 @@ def set_content_title_block(
     """Fixed title band: navy title + optional lead (slide 1)."""
     tf = shape.text_frame
     tf.clear()
+    tf.word_wrap = False  # keep title on one line (box is wider than text)
     entries: List[tuple[str, RGBColor, Pt, str]] = []
     if title_lines:
         for line in title_lines:
@@ -323,8 +325,8 @@ def place_diagram(slide, image_path: Path, slide_width: Optional[int] = None) ->
     pic.width = int(pic.width * scale)
     pic.height = int(pic.height * scale)
     pic.left = int((slide_w - pic.width) / 2)
-    # Top-align so tall flows stay in the content band and off the footer.
-    pic.top = box_top
+    # Diagrams always scale to fit, so center vertically in the band for balance.
+    pic.top = box_top + (box_h - pic.height) // 2
 
 
 def fill_content_diagram_slide(
@@ -352,8 +354,9 @@ def fill_content_diagram_slide(
             lead_line=lead_line,
         )
     hide_body_placeholder(slide)
-    if image_path.is_file():
-        place_diagram(slide, image_path, slide_width=slide_width)
+    if not image_path.is_file():
+        raise FileNotFoundError(f"Diagram slide requires image: {image_path}")
+    place_diagram(slide, image_path, slide_width=slide_width)
     apply_content_colors(slide, skip_title_band=True)
     if lead_line and title_shape and title_shape.text_frame.paragraphs:
         p = title_shape.text_frame.paragraphs[-1]

@@ -11,9 +11,11 @@
 
 **Build:** `./scripts/run-deck-build.sh` (reads only the two `.md` files above; do not hand-edit pptx)
 
-**Setup (once):** `uv sync --extra render` · `npm install` (repo root)
+**Check only (no writes):** `./scripts/check-decks.sh` — fails on any missing field, PNG, or corrupt pptx
 
-**Diagrams (A3):** labels from `manager-arch-vision-a3.md` → `scripts/a3_aligned_render.py` → PNG → pptx
+**Setup (once):** `uv sync` (PyMuPDF + python-pptx; no npm/Chrome)
+
+**Diagrams (A3):** labels from `manager-arch-vision-a3.md` → `scripts/a3_aligned_render.py` → PNG → pptx (no Mermaid; build validates every step)
 
 **Preview (gitignored):** `scripts/preview-a3-deck.sh` → `assets/previews/a3/`
 

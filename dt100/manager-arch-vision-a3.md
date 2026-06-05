@@ -36,7 +36,7 @@ Flow: slides 1–2 → B6 (his pipeline slide — you point carve, don’t refra
 ## Slide 1
 
 **Title:** Dynamic Switch-Buffer Management  
-**Subtitle:** Buffer carving at CSB  
+**Subtitle:** Buffer carving at Central Scheduler Block  
 **Diagram:** slide01-scope
 
 **On-slide (stack):**

@@ -16,8 +16,15 @@ DT100 = ROOT / "dt100"
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from deck_from_md import A3_MD, B6_MD, load_b6_md, load_deck_md  # noqa: E402
+from deck_validate import (  # noqa: E402
+    DeckBuildError,
+    fail_on_errors,
+    validate_a3_build,
+    validate_a3_diagram_pngs,
+    validate_b6_build,
+    validate_built_pptx,
+)
 from pptx_util import (  # noqa: E402
-    DSBM_TITLE_LINES,
     assert_pptx_valid,
     fill_content_diagram_slide,
     fill_cover_slide,
@@ -25,10 +32,8 @@ from pptx_util import (  # noqa: E402
     trim_to_slides,
 )
 
-DSBM_SUBLINE = "\n".join(DSBM_TITLE_LINES)
 PIPELINE_IMG = ROOT / "assets" / "logical-pipeline-boss-slide.png"
 A3_DIAGRAMS = ROOT / "assets" / "diagrams" / "a3"
-RENDER_A3 = ROOT / "scripts" / "render-a3-diagrams.py"
 
 STYLE_DOWNLOAD = Path.home() / "Downloads" / "Mirror-Sflow-Bugatti-ASIC-CCC.pptx"
 STYLE_REF = ROOT / "assets/templates/upscale-ccc-style-reference.pptx"
@@ -78,7 +83,9 @@ class StyledDeck:
     ):
         slide = self.prs.slides[self._slide_i]
         self._slide_i += 1
-        if diagram and diagram.is_file():
+        if diagram is not None:
+            if not diagram.is_file():
+                raise FileNotFoundError(f"Slide {title!r} requires diagram PNG: {diagram}")
             fill_content_diagram_slide(
                 slide,
                 title,
@@ -96,10 +103,12 @@ class StyledDeck:
         return slide
 
     def add_image_slide(self, title, image_path: Path, caption: Optional[str] = None, notes=None):
+        if not image_path.is_file():
+            raise FileNotFoundError(f"Slide {title!r} requires image: {image_path}")
         slide = self.add_content(
             title,
             [caption] if caption else [],
-            diagram=image_path if image_path.is_file() else None,
+            diagram=image_path,
             notes=notes,
         )
         return slide
@@ -111,11 +120,14 @@ class StyledDeck:
         return self.path
 
 
-def ensure_a3_diagrams() -> None:
-    if RENDER_A3.is_file():
-        import subprocess
+def ensure_a3_diagrams(doc) -> None:
+    from render_a3_diagrams import render_all_a3_diagrams
 
-        subprocess.run([sys.executable, str(RENDER_A3)], check=True, cwd=str(ROOT))
+    stems = render_all_a3_diagrams(doc)
+    print(f"Rendered {len(stems)} A3 diagrams from {A3_MD.name} (PyMuPDF)")
+    for stem in stems:
+        print(f"OK: {_a3_png(stem).relative_to(ROOT)}")
+    fail_on_errors(validate_a3_diagram_pngs(doc))
 
 
 def _a3_png(name: str) -> Path:
@@ -128,16 +140,16 @@ def _join_notes(*parts: str) -> Optional[str]:
 
 
 def build_a3() -> Path:
-    ensure_a3_diagrams()
     doc = load_deck_md(A3_MD, a3_cover_fields=True)
+    fail_on_errors(validate_a3_build(doc))
+    ensure_a3_diagrams(doc)
     out = DT100 / "manager-arch-vision-a3.pptx"
     deck = StyledDeck(out, num_content_slides=len(doc.slides))
 
     cov = doc.cover
-    right = cov.right_lines if cov.right_lines else DSBM_TITLE_LINES
     deck.add_cover(
         cov.left_title,
-        "\n".join(right),
+        "\n".join(cov.right_lines),
         cov.left_subtitle,
         cov.tag,
         notes=cov.notes or None,
@@ -161,8 +173,6 @@ def build_a3() -> Path:
         )
         if s.diagram:
             kwargs["diagram"] = _a3_png(s.diagram)
-        if s.number == 1:
-            kwargs["title_lines"] = DSBM_TITLE_LINES
         deck.add_content(**kwargs)
 
     return deck.save()
@@ -170,6 +180,7 @@ def build_a3() -> Path:
 
 def build_b6() -> Path:
     doc = load_b6_md()
+    fail_on_errors(validate_b6_build(doc))
     slides = doc.ordered_slides()
     out = DT100 / "manager-arch-vision-b6.pptx"
     deck = StyledDeck(out, num_content_slides=len(slides))
@@ -193,12 +204,31 @@ def build_b6() -> Path:
 
 
 def main():
-    ref = ensure_style_reference()
-    print(f"Style reference: {ref}")
-    a3 = build_a3()
-    b6 = build_b6()
-    print(f"Wrote {a3} ({len(Presentation(a3).slides)} slides, company chrome)")
-    print(f"Wrote {b6} ({len(Presentation(b6).slides)} slides, company chrome)")
+    try:
+        ref = ensure_style_reference()
+        print(f"Style reference: {ref}")
+
+        a3_doc = load_deck_md(A3_MD, a3_cover_fields=True)
+        b6_doc = load_b6_md()
+        fail_on_errors(validate_a3_build(a3_doc) + validate_b6_build(b6_doc))
+        print("Pre-build checks: OK")
+
+        a3 = build_a3()
+        b6 = build_b6()
+
+        a3_slides = 1 + len(a3_doc.slides)
+        b6_slides = 1 + len(b6_doc.ordered_slides())
+        fail_on_errors(
+            validate_built_pptx(a3, expected_slides=a3_slides)
+            + validate_built_pptx(b6, expected_slides=b6_slides)
+        )
+
+        print(f"Wrote {a3} ({a3_slides} slides, company chrome)")
+        print(f"Wrote {b6} ({b6_slides} slides, company chrome)")
+        print("Post-build checks: OK")
+    except DeckBuildError as exc:
+        print(exc, file=sys.stderr)
+        raise SystemExit(1) from exc
 
 
 if __name__ == "__main__":
