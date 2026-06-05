@@ -321,11 +321,12 @@ def place_diagram(slide, image_path: Path, slide_width: Optional[int] = None) ->
     box_h = int(CONTENT_DIAGRAM_MAX_H)
     max_w = int(CONTENT_DIAGRAM_MAX_W)
     pic = slide.shapes.add_picture(str(image_path), 0, box_top)
-    scale = min(max_w / pic.width, box_h / pic.height)
+    scale_w = max_w / pic.width
+    scale_h = box_h / pic.height
+    scale = scale_w if pic.height * scale_w <= box_h else min(scale_w, scale_h)
     pic.width = int(pic.width * scale)
     pic.height = int(pic.height * scale)
     pic.left = int((slide_w - pic.width) / 2)
-    # Diagrams always scale to fit, so center vertically in the band for balance.
     pic.top = box_top + (box_h - pic.height) // 2
 
 

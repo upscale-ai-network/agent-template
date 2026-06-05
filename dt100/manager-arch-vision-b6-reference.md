@@ -19,7 +19,7 @@
 | **3. Owners** | §4 | Sponsor, my DRI, peer DRIs — don’t read every row aloud. |
 | **4. Wedge + picture** | §5–6 · pipeline PNG | **Center of walk** — QoSMAP + Queue/carve on your slide. |
 | **5. Defer** | §7–8 · §12 | Rupa SDK thread, OCP voice, boundaries — not Thu merge. |
-| **6. Next** | §9 | **Cx** ~2 weeks; **sponsorship** on **A3 slide 4** after this walk — don’t re-litigate. |
+| **6. Next** | §9 | two-pager reference document ~2 weeks; **sponsorship** on **A3 slide 4** after this walk — don’t re-litigate. |
 
 **Do not walk on Thu unless asked:** §10 execution mesh · Prabu bs-2 · full DRI table recitation.
 
@@ -29,7 +29,7 @@
 
 **Assumption:** **Situation** and **task** on A3 slides 1–2 are aligned (no “yes” presumed — we established context first).
 
-**This walk:** **Define** the task — validation machine, **who owns what**, **QoS/RM** on your pipeline slide — deferrals and **Cx** path.
+**This walk:** **Define** the task — validation machine, **who owns what**, **QoS/RM** on your pipeline slide — deferrals and two-pager reference document path.
 
 **One line:** Gates + 2-pager discipline; **DRI** on framework + **QoSMAP / queue carve**; peer DRIs on their slices.
 
@@ -40,7 +40,7 @@
 | Deliverable | Format | When |
 |-------------|--------|------|
 | Thu discussion | **A3** (2–3 slides) + this **B6** (≤6 sections, walkable) | Now |
-| Next artifact | **Cx 2-pager** (decisions, gates, open issues) | ~2 weeks |
+| Next artifact | **two-pager reference document** (decisions, gates, open issues) | ~2 weeks |
 | Not Thu / not 2 weeks | 50-page arch dump, full HW catalog digest | After access + your steer |
 
 Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer L2/L3 already showed the cost of 50-page exec dumps — I won’t repeat that with you.)
@@ -72,7 +72,7 @@ Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer
 |------|-----|--------|
 | **Exec alignment / scope** | **Gururaj** (Sponsor) | Bring 2-pagers; you own external/exec narrative |
 | **Arch vision + validation program** | **Diwakar Tundlam** | Draft framework; facilitate consensus |
-| **QoS / buffer / queue / scheduler / RM carve** | **Diwakar Tundlam** | Author Cx slice + implementation path |
+| **QoS / buffer / queue / scheduler / RM carve** | **Diwakar Tundlam** | Author 2-pager slice + implementation path |
 | **L2/L3 / ACL pipeline** | **Shafi Mohammad** | Align on shared validation story — his DRI |
 | **Arch validation / use-case framing** | **Tippanna Hongal** | Align on AV methodology — his DRI |
 | **SDK / SAI implementation** | SDK leads (e.g. Girish Kale, Shravan CS) | Consult on schema/path; not my R |
@@ -145,7 +145,7 @@ Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer
 | This B6 (Thu) | Rupa / SDK thread |
 |---------------|-------------------|
 | How **I** run **DE** role + QoS RM + validation **framework** | How **SDK/SAI** binds to datapath variants |
-| 2-pager arch vision for **Gururaj** | Engineering execution with HW/SDK leads |
+| two-pager reference document for **Gururaj** | Engineering execution with HW/SDK leads |
 
 **I will** stay aligned with Rupa (weekly sync) without merging the two plans on Thu.
 
@@ -159,13 +159,13 @@ Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer
 
 ---
 
-## 9. ~2 weeks → **Cx 2-pager** (draft outline)
+## 9. ~2 weeks → **two-pager reference document** (draft outline)
 
 1. **Decision:** Validation gate definitions (C-model / emu / pre-tapeout) v0
 2. **Decision:** QoS RM HWv1 scope sign-off with HW datapath DRI
 3. **Open issues:** Access to models, lab, repos
 4. **Actions:** Cadence with Shafi, Tippanna, Rupa, Prasun
-5. **Non-goals:** Full C40-class HW digest in Cx
+5. **Non-goals:** Full C40-class HW digest in the two-pager reference document
 
 ---
 
@@ -185,7 +185,7 @@ Full depth can live in engineering artifacts; **your read stays 2-pager**. (Peer
 | Topic | Where |
 |-------|--------|
 | Task framing · DRI split · OCP · format · escalation | **A3 slide 4** |
-| **Cx** room / HWv1 sign-off attendees | Offer when closing slide 4 if he asks who must be in the room |
+| two-pager reference document room / HWv1 sign-off attendees | Offer when closing slide 4 if he asks who must be in the room |
 
 ---
 

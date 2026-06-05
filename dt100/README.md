@@ -6,8 +6,10 @@
 
 | File | → PPTX |
 |------|--------|
-| [manager-arch-vision-a3.md](manager-arch-vision-a3.md) | `manager-arch-vision-a3.pptx` — on-slide copy + presenter notes |
-| [manager-arch-vision-b6.md](manager-arch-vision-b6.md) | `manager-arch-vision-b6.pptx` — titles, bullets, image slide |
+| [manager-arch-vision-a3.md](manager-arch-vision-a3.md) | `manager-arch-vision-a3.pptx` — **DT100 input** · Fri meeting |
+| [manager-arch-vision-b6.md](manager-arch-vision-b6.md) | `manager-arch-vision-b6.pptx` — **DT100 input** · walk deck |
+
+**DT100 = the decks (files). Fri outcome = mandate (not a doc).** See [plan.md](plan.md) §1.
 
 **Build:** `./scripts/run-deck-build.sh` (reads only the two `.md` files above; do not hand-edit pptx)
 

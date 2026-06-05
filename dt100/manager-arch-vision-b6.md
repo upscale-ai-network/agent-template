@@ -9,8 +9,8 @@
 ## Cover
 
 **Title:** Arch vision plan (B6)  
-**Subtitle (navy):** Walk: machine → owners → pipeline → defer → Cx  
-**Meta:** Open after Yes on A3  
+**Subtitle (navy):** Walk: vision → draft plan → owners → pipeline  
+**Meta:** Open after Yes on A3 — role-play, not a handoff  
 **Tag:** Confidential — Upscale AI
 
 ---
@@ -22,8 +22,8 @@
 
 **Bullets:**
 - Assumption: situation and task on A3 slides 1–2 are aligned.
-- This walk: define the task — validation machine, owners, QoS wedge on pipeline — deferrals and Cx.
-- After walk: A3 slides 3–4 — result and sponsorship (not repeated here).
+- This walk: show vision and draft plan — validation machine, owners, QoS wedge on pipeline; co-evolve execution live (I am the deliverable, not a PDF).
+- After walk: A3 slides 3–4 — mandate and sponsor trust (not repeated here).
 
 ---
 
@@ -34,7 +34,7 @@
 
 **Bullets:**
 - Thu: A3 slides 1–2, then this deck (~6 beats).
-- Next: Cx 2-pager — decisions, gates, open issues (~2 weeks).
+- Next: only if Sponsor directs — expand B6, swimlanes, integrated validation plans (depth and format your steer).
 - Not Thu: 50-page dump, full HW catalog.
 
 ---
@@ -116,14 +116,14 @@
 
 ## Slide 9
 
-**Title:** ~2 weeks — Cx 2-pager  
-**Subtitle:** Beat 6
+**Title:** If you want me to drive — next beats  
+**Subtitle:** Beat 6 · not committed Thu
 
 **Bullets:**
-- Decision: validation gate definitions (C-model / emu / pre-tapeout) v0
-- Decision: QoS RM HWv1 scope sign-off with HW datapath DRI
-- Open: access to models, lab, repos · Actions: cadence with Shafi, Tippanna, Rupa, Prasun
-- If asked who must be in the room — offer here (not on A3)
+- Expand B6: swimlanes, DRI depth, integrated AV / C-model / datapath / SDK / SAI validation
+- QoS RM HWv1 scope with HW datapath DRI (Rupa lane) — gates as we agree
+- Cadence: Shafi, Tippanna, Rupa, Prasun — only if Sponsor redirects execution to me
+- Who must be in the room — offer here if you ask (not on A3)
 
 ---
 

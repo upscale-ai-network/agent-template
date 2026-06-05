@@ -7,18 +7,25 @@
 
 ---
 
-## 1. What Thu is for (meta — both edges in one sitting)
+## 1. DT100 — input vs outcome (do not conflate)
 
-| Step | What you lead with |
-|------|-------------------|
-| **Situation** | Clean slate — tape-out SW path, 2-pager constraint (A3 slide 1) |
-| **Task** | Clarify the job — definition of done, DRI charter (A3 slide 2) |
-| **Define** | Walk **B6** — how, who, wedge (only if task framing holds) |
-| **Close** | **Result** + **sponsorship** (A3 slides 3–4) |
+| | What | Type |
+|---|------|------|
+| **DT100 deliverable (your work)** | **A3 + B6** slide decks — built, exported, ready | **Files / artifacts** (INPUT) |
+| **Friday 11am meeting outcome** | **Mandate + marching orders** for 2–3 month sprint | **Not a document** — lived alignment |
+| **Wrong fork (nix)** | Cx, two-pager reference doc, post-meeting PDF as “deliverable” | Misread of thin-read *discipline* |
 
-**Not Thu:** Finished architecture, C40, full HW digest, 50-page doc, AI/token policy deck.
+**Decks sell:** trust in you in the role — vision, draft plan, drive with light steer to tape-out (SDK/SAI/mgmt, AV/co-dev).
 
-**True goal:** Gururaj trusts you can **build vision under ambiguity** — **2-pager machine**, not arch sign-off.
+**Meeting flow:**
+
+| Step | Deck |
+|------|------|
+| Situation + task | A3 slides 1–2 |
+| Vision + draft plan walk | B6 (if gate yes) |
+| Mandate + sponsor alignment | A3 slides 3–4 |
+
+**Not the meeting:** Finished architecture sign-off, C40 digest, 50-page doc, AI/token deck.
 
 ---
 
@@ -26,13 +33,13 @@
 
 | Artifact | Role | Audience |
 |----------|------|----------|
-| **A3** | **Bookend** — situation + task → (B6) → result + sponsorship (4 slides) | Gururaj only |
-| **B6** | **Define task** — walkable plan (not a bag of diamonds) | After A3 slides 1–2 |
-| **Cx** (~2 weeks) | First **Amazon-style 2-pager** (decisions, gates, issues) | Gururaj |
-| **whiteboards.md** + **`../assets/pics/`** | Evidence / drill-down | B6 backup |
-| **Logical pipeline PNG** | Aligns with boss SharePoint PPTX | B6 §6 |
+| **A3** (.pptx / PDF) | **INPUT** — bookend: situation → task → mandate ask → sponsor (4 slides) | Gururaj · Fri 11am |
+| **B6** (.pptx) | **INPUT** — walk: vision, owners, pipeline, draft execution | After A3 1–2 if aligned |
+| **Mandate** (Fri close) | **OUTCOME** — permission to drive 2–3 month sprint | Gururaj → you |
+| **whiteboards.md** + **`../assets/pics/`** | Drill-down backup | If asked |
+| **Logical pipeline PNG** | B6 §6 — boss slide | B6 walk |
 
-**A3 is not complete without:** export 4 slides/PDF (present 1–2 → B6 → 3–4). **B6 is not complete without:** whiteboard pass in [../assets/dt100-whiteboards.md](../assets/dt100-whiteboards.md).
+**DT100 done when:** A3 + B6 reviewed, exported, presented (or sent) — see §10. **Mandate is not DT100** — it is what Fri produces if trust lands.
 
 ---
 
@@ -115,7 +122,7 @@
 
 - He **will not read 50 pages** — same as Shafi’s pain point.
 - **Thu:** A3 + walkable B6 (≤~6 sections).
-- **~2 weeks:** **Cx 2-pager** — decisions + gates + QoS HWv1 scope.
+- **~2 weeks:** **Two-pager reference document** — decisions + gates + QoS HWv1 scope.
 - Deep truth can exist later; **exec read stays thin**.
 
 ---
@@ -141,7 +148,7 @@ When Gluon is active, you’re **fused** — don’t pretend parallel P1 work co
 - [ ] Sent or presented to **Gururaj**; Fri follow-up if needed
 - [ ] `TASKS.md`: DT100 → `done` + `TASKS-LOG` entry
 
-**Not required for done:** Cx 2-pager, org hooks, peer sign-off on validation v0.
+**Not required for done:** Two-pager reference document, org hooks, peer sign-off on validation v0.
 
 ---
 

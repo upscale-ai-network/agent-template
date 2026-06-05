@@ -21,7 +21,7 @@
 | **SONiC** + **PB** (FBOSS-class) | Mgmt/NOS lands on **SAI** | §3 mgmt plane |
 | **SAI** → **SAI ADAPTER** → **USDK API** → **ASIC** | Vertical “SW done” stack | §7 Rupa thread (SDK validate SAI) — **adjacent**, not Thu merge |
 | **L3** → **PKT** | Packet path from L3 | Logical pipeline §6 |
-| **sai-router-crm** (circled) | Router CRM / resource model in SAI | QoS RM ↔ SAI objects (Cx topic) |
+| **sai-router-crm** (circled) | Router CRM / resource model in SAI | QoS RM ↔ SAI objects (reference-document topic) |
 | **ESUN4**, row/row_ok notes | ESUN + table/row semantics | §5 ESUN align |
 | **CRM / L3** (right circle) | Control/resource plane with L3 | Cross-check **Tippanna** AV |
 
@@ -55,7 +55,7 @@
 | Label | Note |
 |-------|------|
 | **D0 — UCIE D2D — D1**, **PCIe** | Multi-die; align **Rupa** |
-| **Shaping / Policer** | Adjacent to QoS; scope boundary for Cx |
+| **Shaping / Policer** | Adjacent to QoS; scope boundary for reference document |
 
 **Right — HW datapath (context, not full ownership)**
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import re
+import math
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Tuple
 
@@ -12,7 +12,6 @@ from deck_from_md import A3_MD, load_deck_md
 def _a3():
     return load_deck_md(A3_MD, a3_cover_fields=True)
 
-# Upscale palette (match assets/diagrams/a3/_classes.mmd)
 STYLES: Dict[str, Dict[str, str]] = {
     "program": {"fill": "#E3F2FD", "stroke": "#1565C0", "color": "#051830"},
     "lane": {"fill": "#FFF3E0", "stroke": "#EF6C00", "color": "#051830"},
@@ -24,18 +23,50 @@ STYLES: Dict[str, Dict[str, str]] = {
     "act": {"fill": "#F3E5F5", "stroke": "#7B1FA2", "color": "#051830"},
 }
 
-BOX_W = 200
-BOX_H = 46
-ROW_GAP = 30
-COL_GAP = 52
-SG_PAD = 14
-SG_TITLE_H = 22
+# Unified box/font — TARGET_SCALE maps BOX_W to on-slide pixels across slides.
+BOX_W = 192
+BOX_H = 50
 FONT = "Arial, Helvetica, sans-serif"
-FONT_SIZE = 13
-ARROW = "#455A64"
+FONT_SIZE = 12
+FONT_SIZE_SG = 11
+FONT_SIZE_NOTE = 10
+LINE_H = 13
+LABEL_MAX_CHARS = 22
+
+MARGIN = 20.0
+H_GAP = 30.0
+H_GAP_SLIDE1 = 10.0
+ROW_GAP = 26.0
+ROW_GAP_SLIDE2 = 18.0
+COL_GAP = 44.0
+BAND_GAP = 32.0
+LINE_STUB = 4.0
+
+SG_PAD = 12
+SG_TITLE_H = 20
+SG_RX = 8
+BOX_RX = 6
+
+ARROW = "#78909C"
+ARROW_WIDTH = 1.5
+
 SG_BORDER = "#B0BEC5"
 SG_FILL = "#FAFAFA"
 SG_TITLE_COLOR = "#556677"
+
+GATE_HALF = 44
+
+FRAME_W = 1320.0
+FRAME_H = 500.0
+FRAME_PAD = 16.0
+TARGET_SCALE = 1.35
+BOX_W_SPREAD = 242.0
+BOX_H_SPREAD = 72.0
+FONT_SIZE_SPREAD = 13
+SPREAD_V_PAD = 52.0
+MIN_SPREAD_GAP = 32.0
+# Match box pixel size on slide 1 (widest) across all slides.
+UNIFIED_SCALE: Optional[float] = None
 
 
 def _xml(text: str) -> str:
@@ -47,144 +78,265 @@ def _xml(text: str) -> str:
     )
 
 
-def _box_svg(x: float, y: float, label: str, style: str) -> str:
+def _wrap_box_label(label: str) -> List[str]:
+    if len(label) <= LABEL_MAX_CHARS:
+        return [label]
+    if " document" in label:
+        head, tail = label.split(" document", 1)
+        return [head.rstrip(), f"document{tail}"]
+    words = label.split()
+    lines: List[str] = []
+    cur: List[str] = []
+    for w in words:
+        trial = " ".join(cur + [w])
+        if len(trial) > LABEL_MAX_CHARS and cur:
+            lines.append(" ".join(cur))
+            cur = [w]
+        else:
+            cur.append(w)
+    if cur:
+        lines.append(" ".join(cur))
+    return lines[:2]
+
+
+def _box_svg(
+    x: float,
+    y: float,
+    label: str,
+    style: str,
+    *,
+    box_w: Optional[float] = None,
+    box_h: Optional[float] = None,
+    font_size: Optional[int] = None,
+) -> str:
+    w = box_w if box_w is not None else BOX_W
+    h = box_h if box_h is not None else BOX_H
+    fs = font_size if font_size is not None else FONT_SIZE
     st = STYLES[style]
-    parts = [
-        f"<rect x='{x:.1f}' y='{y:.1f}' width='{BOX_W}' height='{BOX_H}' rx='6' "
-        f"fill='{st['fill']}' stroke='{st['stroke']}' stroke-width='2'/>",
-        f"<text x='{x + BOX_W / 2:.1f}' y='{y + BOX_H / 2 + 5:.1f}' text-anchor='middle' "
-        f"font-family='{FONT}' font-size='{FONT_SIZE}' fill='{st['color']}'>"
-        f"{_xml(label)}</text>",
-    ]
-    return "\n".join(parts)
-
-
-def _arrow_v(x: float, y1: float, y2: float, dashed: bool = False) -> str:
-    dash = " stroke-dasharray='6,4'" if dashed else ""
-    return (
-        f"<line x1='{x:.1f}' y1='{y1:.1f}' x2='{x:.1f}' y2='{y2:.1f}' "
-        f"stroke='{ARROW}' stroke-width='2' marker-end='url(#arrow)'{dash}/>"
+    cx = x + w / 2
+    lines = _wrap_box_label(label)
+    ty0 = y + (h - len(lines) * LINE_H) / 2 + LINE_H - 3
+    text_lines = []
+    for i, line in enumerate(lines):
+        text_lines.append(
+            f"<text x='{cx:.1f}' y='{ty0 + i * LINE_H:.1f}' text-anchor='middle' "
+            f"font-family='{FONT}' font-size='{fs}' fill='{st['color']}'>"
+            f"{_xml(line)}</text>"
+        )
+    return "\n".join(
+        [
+            f"<rect x='{x:.1f}' y='{y:.1f}' width='{w:.1f}' height='{h:.1f}' rx='{BOX_RX}' "
+            f"fill='{st['fill']}' stroke='{st['stroke']}' stroke-width='1.75'/>",
+            *text_lines,
+        ]
     )
 
 
-def _arrow_h(x1: float, x2: float, y: float, dashed: bool = False) -> str:
-    dash = " stroke-dasharray='6,4'" if dashed else ""
-    return (
-        f"<line x1='{x1:.1f}' y1='{y:.1f}' x2='{x2:.1f}' y2='{y:.1f}' "
-        f"stroke='{ARROW}' stroke-width='2' marker-end='url(#arrow)'{dash}/>"
-    )
-
-
-def _arrow_diag(x1: float, y1: float, x2: float, y2: float, dashed: bool = False) -> str:
-    dash = " stroke-dasharray='6,4'" if dashed else ""
+def _connector(x1: float, y1: float, x2: float, y2: float, *, dashed: bool = False) -> str:
+    """Thin line only — no arrowheads (exec-diagram style)."""
+    dash = " stroke-dasharray='4,4'" if dashed else ""
     return (
         f"<line x1='{x1:.1f}' y1='{y1:.1f}' x2='{x2:.1f}' y2='{y2:.1f}' "
-        f"stroke='{ARROW}' stroke-width='2' marker-end='url(#arrow)'{dash}/>"
+        f"stroke='{ARROW}' stroke-width='{ARROW_WIDTH}' stroke-linecap='round'{dash}/>"
     )
 
 
-def _diamond(cx: float, cy: float, label: str, half: float = 52) -> Tuple[str, float, float, float, float]:
-    pts = f"{cx},{cy - half} {cx + half},{cy} {cx},{cy + half} {cx - half},{cy}"
-    st = STYLES["gate"]
-    svg = (
-        f"<polygon points='{pts}' fill='{st['fill']}' stroke='{st['stroke']}' stroke-width='2'/>"
-        f"<text x='{cx:.1f}' y='{cy + 5:.1f}' text-anchor='middle' font-family='{FONT}' "
-        f"font-size='{FONT_SIZE}' fill='{st['color']}'>{_xml(label)}</text>"
-    )
-    return svg, cx - half, cy - half, half * 2, half * 2
+def _h_connector(x_left_end: float, x_right_start: float, y: float) -> str:
+    x1 = x_left_end + LINE_STUB
+    x2 = x_right_start - LINE_STUB
+    if x2 <= x1 + 2:
+        return ""
+    return _connector(x1, y, x2, y)
+
+
+def _v_connector(y_top_end: float, y_bottom_start: float, x: float, *, dashed: bool = False) -> str:
+    y1 = y_top_end + LINE_STUB
+    y2 = y_bottom_start - LINE_STUB
+    if y2 <= y1 + 2:
+        return ""
+    return _connector(x, y1, x, y2, dashed=dashed)
 
 
 def _sg_band(x: float, y: float, w: float, h: float, title: str) -> str:
     return (
-        f"<rect x='{x:.1f}' y='{y:.1f}' width='{w:.1f}' height='{h:.1f}' rx='8' "
+        f"<rect x='{x:.1f}' y='{y:.1f}' width='{w:.1f}' height='{h:.1f}' rx='{SG_RX}' "
         f"fill='{SG_FILL}' stroke='{SG_BORDER}' stroke-width='1'/>"
-        f"<text x='{x + 12:.1f}' y='{y + 18:.1f}' font-family='{FONT}' font-size='12' "
+        f"<text x='{x + 12:.1f}' y='{y + 16:.1f}' font-family='{FONT}' font-size='{FONT_SIZE_SG}' "
         f"fill='{SG_TITLE_COLOR}'>{_xml(title)}</text>"
     )
 
 
-def _wrap_svg(inner: str, w: float, h: float) -> str:
+def _wrap_svg(inner: str) -> str:
     return (
-        f"<svg xmlns='http://www.w3.org/2000/svg' width='{w:.0f}' height='{h:.0f}' "
-        f"viewBox='0 0 {w:.0f} {h:.0f}'>"
-        "<defs><marker id='arrow' markerWidth='10' markerHeight='8' refX='9' refY='4' "
-        "orient='auto'><path d='M0,0 L10,4 L0,8 z' fill='#455A64'/></marker></defs>"
-        f"{inner}</svg>"
+        f"<svg xmlns='http://www.w3.org/2000/svg' width='{FRAME_W:.0f}' height='{FRAME_H:.0f}' "
+        f"viewBox='0 0 {FRAME_W:.0f} {FRAME_H:.0f}'>{inner}</svg>"
     )
 
 
-# Content band on the slide is 11.5in x 4.35in (aspect 2.64). Pre-frame every
-# diagram to that aspect so place_diagram fits it exactly with no clip / no re-letterbox.
-FRAME_W = 1320.0
-FRAME_H = 500.0
-FRAME_PAD = 40.0
+def _compose(
+    arrows: List[str],
+    shapes: List[str],
+    backgrounds: Optional[List[str]] = None,
+    foreground: Optional[List[str]] = None,
+) -> str:
+    bg = backgrounds or []
+    fg = foreground or []
+    return "\n".join([*bg, *shapes, *arrows, *fg])
 
 
-def _frame(parts: List[str], content_w: float, content_h: float) -> str:
-    """Center + scale content within a fixed band-aspect canvas."""
+def _slide01_content_size() -> Tuple[float, float]:
+    slide = _a3().slide(1)
+    groups = slide.stack_groups
+    if not groups:
+        raise ValueError("Slide 1 needs *group* blocks in manager-arch-vision-a3.md")
+    program = groups[0][1]
+    dri = groups[1][1] if len(groups) > 1 else []
+
+    def band_size(nodes: Sequence[Tuple[str, str]]) -> Tuple[float, float]:
+        inner_w = len(nodes) * BOX_W + max(0, len(nodes) - 1) * H_GAP_SLIDE1
+        return inner_w + SG_PAD * 2, SG_TITLE_H + SG_PAD + BOX_H + SG_PAD
+
+    p_w, p_h = band_size(program)
+    total_right = MARGIN + p_w
+    total_bottom = MARGIN + p_h
+    if dri:
+        d_w, d_h = band_size(dri)
+        total_right = max(total_right, MARGIN + d_w)
+        total_bottom = MARGIN + p_h + BAND_GAP + d_h
+    return total_right + MARGIN, total_bottom + MARGIN
+
+
+def _ensure_unified_scale() -> float:
+    global UNIFIED_SCALE
+    if UNIFIED_SCALE is not None:
+        return UNIFIED_SCALE
+    cw, ch = _slide01_content_size()
     avail_w = FRAME_W - 2 * FRAME_PAD
     avail_h = FRAME_H - 2 * FRAME_PAD
-    s = min(avail_w / content_w, avail_h / content_h)
-    tx = (FRAME_W - content_w * s) / 2
-    ty = (FRAME_H - content_h * s) / 2
-    body = "\n".join(parts)
-    inner = f"<g transform='translate({tx:.1f},{ty:.1f}) scale({s:.4f})'>{body}</g>"
-    return _wrap_svg(inner, FRAME_W, FRAME_H)
+    UNIFIED_SCALE = min(TARGET_SCALE, avail_w / cw, avail_h / ch)
+    return UNIFIED_SCALE
+
+
+def _resolve_scale(content_w: float, content_h: float, *, fill_height: bool = False) -> float:
+    avail_w = FRAME_W - 2 * FRAME_PAD
+    avail_h = FRAME_H - 2 * FRAME_PAD
+    if fill_height:
+        return min(avail_h / max(content_h, 1), avail_w / max(content_w, 1))
+    return _ensure_unified_scale()
+
+
+def _frame(parts: str, content_w: float, content_h: float, *, fill_height: bool = False) -> str:
+    """Unified scale keeps box size consistent across slides."""
+    s = _resolve_scale(content_w, content_h, fill_height=fill_height)
+    sw, sh = content_w * s, content_h * s
+    tx = (FRAME_W - sw) / 2
+    ty = (FRAME_H - sh) / 2
+    inner = f"<g transform='translate({tx:.1f},{ty:.1f}) scale({s:.4f})'>{parts}</g>"
+    return _wrap_svg(inner)
+
+
+def _hrow(
+    nodes: Sequence[Tuple[str, str]],
+    x0: float,
+    y: float,
+    arrows: List[str],
+    shapes: List[str],
+    h_gap: float = H_GAP,
+    *,
+    box_w: float = BOX_W,
+    box_h: float = BOX_H,
+    font_size: int = FONT_SIZE,
+) -> float:
+    x = x0
+    prev_right: Optional[float] = None
+    cy = y + box_h / 2
+    for label, style in nodes:
+        shapes.append(
+            _box_svg(x, y, label, style, box_w=box_w, box_h=box_h, font_size=font_size)
+        )
+        if prev_right is not None:
+            a = _h_connector(prev_right, x, cy)
+            if a:
+                arrows.append(a)
+        prev_right = x + box_w
+        x += box_w + h_gap
+    return x - h_gap
+
+
+def _hband(
+    nodes: Sequence[Tuple[str, str]],
+    x0: float,
+    y: float,
+    title: str,
+    arrows: List[str],
+    shapes: List[str],
+    backgrounds: List[str],
+    h_gap: float = H_GAP,
+) -> Tuple[float, float]:
+    inner_w = len(nodes) * BOX_W + max(0, len(nodes) - 1) * h_gap
+    band_w = inner_w + SG_PAD * 2
+    band_h = SG_TITLE_H + SG_PAD + BOX_H + SG_PAD
+    backgrounds.append(_sg_band(x0, y, band_w, band_h, title))
+    row_y = y + SG_TITLE_H + SG_PAD
+    _hrow(nodes, x0 + SG_PAD, row_y, arrows, shapes, h_gap=h_gap)
+    return x0 + band_w, y + band_h
 
 
 def _column_layout(
     columns: Sequence[Tuple[str, str, str, Sequence[str]]],
-) -> Tuple[str, float, float, Dict[str, Tuple[float, float]]]:
-    """Top-aligned columns; returns svg, width, height, node centers."""
+    *,
+    row_gap: float = ROW_GAP,
+) -> Tuple[List[str], List[str], List[str], float, float, Dict[str, Tuple[float, float, float]]]:
     col_inner_w = BOX_W + SG_PAD * 2
-    max_rows = max(len(nodes) for _, _, _, nodes in columns)
-    col_h = SG_TITLE_H + SG_PAD + max_rows * BOX_H + (max_rows - 1) * ROW_GAP + SG_PAD
-    total_w = len(columns) * col_inner_w + (len(columns) - 1) * COL_GAP
-    parts: List[str] = []
-    centers: Dict[str, Tuple[float, float]] = {}
-    y0 = 8.0
+    row_unit = BOX_H + row_gap
+    col_heights = [
+        SG_TITLE_H + SG_PAD + len(labels) * BOX_H + max(0, len(labels) - 1) * row_gap + SG_PAD
+        for _, _, _, labels in columns
+    ]
+    total_w = len(columns) * col_inner_w + max(0, len(columns) - 1) * COL_GAP
+    backgrounds: List[str] = []
+    arrows: List[str] = []
+    shapes: List[str] = []
+    anchors: Dict[str, Tuple[float, float, float]] = {}
+    y0 = MARGIN
+    col_bottoms: List[float] = []
 
     for ci, (key, title, style, labels) in enumerate(columns):
-        cx = 8 + ci * (col_inner_w + COL_GAP) + SG_PAD
+        col_h = col_heights[ci]
+        cx = MARGIN + ci * (col_inner_w + COL_GAP) + SG_PAD
         band_x = cx - SG_PAD
-        parts.append(_sg_band(band_x, y0, col_inner_w, col_h, title))
+        backgrounds.append(_sg_band(band_x, y0, col_inner_w, col_h, title))
         node_y = y0 + SG_TITLE_H + SG_PAD
-        prev_bottom = None
+        prev_bottom: Optional[float] = None
+        mid_x = cx + BOX_W / 2
         for label in labels:
-            parts.append(_box_svg(cx, node_y, label, style))
-            centers[f"{key}:{label}"] = (cx + BOX_W / 2, node_y + BOX_H / 2)
+            shapes.append(_box_svg(cx, node_y, label, style))
+            anchors[f"{key}:{label}"] = (mid_x, node_y, node_y + BOX_H)
             if prev_bottom is not None:
-                parts.append(_arrow_v(cx + BOX_W / 2, prev_bottom, node_y))
+                a = _v_connector(prev_bottom, node_y, mid_x)
+                if a:
+                    arrows.append(a)
             prev_bottom = node_y + BOX_H
-            node_y += BOX_H + ROW_GAP
+            node_y += row_unit
+        col_bottoms.append(y0 + col_h)
 
-    return "\n".join(parts), total_w + 16, col_h + y0 + 16, centers
-
-
-H_GAP = 46  # horizontal gap between boxes (room for connector arrows)
-
-
-def _hrow(nodes: Sequence[Tuple[str, str]], x0: float, y: float, parts: List[str]) -> float:
-    """Lay nodes left→right at row top y; append svg to parts; return right edge x."""
-    x = x0
-    prev_right: Optional[float] = None
-    for label, style in nodes:
-        parts.append(_box_svg(x, y, label, style))
-        if prev_right is not None:
-            parts.append(_arrow_h(prev_right, x, y + BOX_H / 2))
-        prev_right = x + BOX_W
-        x += BOX_W + H_GAP
-    return x - H_GAP
+    layout_bottom = max(col_bottoms)
+    return backgrounds, arrows, shapes, total_w + MARGIN, layout_bottom, anchors
 
 
-def _hband(nodes: Sequence[Tuple[str, str]], x0: float, y: float, title: str, parts: List[str]) -> Tuple[float, float]:
-    """Horizontal flow inside a titled band. Return (band_right, band_bottom)."""
-    inner_w = len(nodes) * BOX_W + (len(nodes) - 1) * H_GAP
-    band_w = inner_w + SG_PAD * 2
-    band_h = SG_TITLE_H + SG_PAD + BOX_H + SG_PAD
-    parts.append(_sg_band(x0, y, band_w, band_h, title))
-    _hrow(nodes, x0 + SG_PAD, y + SG_TITLE_H + SG_PAD, parts)
-    return x0 + band_w, y + band_h
+def _diamond_parts(cx: float, cy: float, label: str) -> Tuple[str, List[str]]:
+    h = GATE_HALF
+    st = STYLES["gate"]
+    side = h * math.sqrt(2)
+    half = side / 2
+    fill = (
+        f"<rect x='{cx - half:.1f}' y='{cy - half:.1f}' width='{side:.1f}' height='{side:.1f}' "
+        f"transform='rotate(45 {cx:.1f} {cy:.1f})' fill='{st['fill']}' stroke='{st['stroke']}' "
+        f"stroke-width='2' stroke-linejoin='round'/>"
+        f"<text x='{cx:.1f}' y='{cy + 4:.1f}' text-anchor='middle' font-family='{FONT}' "
+        f"font-size='{FONT_SIZE}' fill='{st['color']}'>{_xml(label)}</text>"
+    )
+    return fill, []
 
 
 def render_slide01() -> str:
@@ -192,30 +344,78 @@ def render_slide01() -> str:
     groups = slide.stack_groups
     if not groups:
         raise ValueError("Slide 1 needs *group* blocks in manager-arch-vision-a3.md")
-    margin = 20.0
-    band_gap = 40.0
-    parts: List[str] = []
+    backgrounds: List[str] = []
+    arrows: List[str] = []
+    shapes: List[str] = []
     program = groups[0][1]
     dri = groups[1][1] if len(groups) > 1 else []
 
-    p_right, p_bottom = _hband(program, margin, margin, groups[0][0], parts)
+    p_right, p_bottom = _hband(
+        program, MARGIN, MARGIN, groups[0][0], arrows, shapes, backgrounds, h_gap=H_GAP_SLIDE1
+    )
     total_right = p_right
+    total_bottom = p_bottom
     if dri:
-        d_right, d_bottom = _hband(dri, margin, p_bottom + band_gap, groups[1][0], parts)
-        # connector: program band ↓ into DRI band (centered over DRI lane)
-        dri_inner_w = len(dri) * BOX_W + (len(dri) - 1) * H_GAP
-        conn_x = margin + SG_PAD + dri_inner_w / 2
-        parts.append(_arrow_v(conn_x, p_bottom, p_bottom + band_gap))
+        d_right, d_bottom = _hband(
+            dri,
+            MARGIN,
+            p_bottom + BAND_GAP,
+            groups[1][0],
+            arrows,
+            shapes,
+            backgrounds,
+            h_gap=H_GAP_SLIDE1,
+        )
         total_right = max(p_right, d_right)
         total_bottom = d_bottom
-    else:
-        total_bottom = p_bottom
-    return _frame(parts, total_right + margin, total_bottom + margin)
+
+    return _frame(
+        _compose(arrows, shapes, backgrounds),
+        total_right + MARGIN,
+        total_bottom + MARGIN,
+    )
 
 
 def _col_keys(n: int) -> List[str]:
-    defaults = ["bar", "lane", "peer", "col4"]
-    return defaults[:n]
+    return (["bar", "lane", "peer", "col4"])[:n]
+
+
+def _gate_tree(
+    gate_cx: float,
+    gate_cy: float,
+    gate_h: float,
+    sources: Sequence[Tuple[float, float, bool]],
+    yes_cx: float,
+    no_cx: float,
+    out_y: float,
+    arrows: List[str],
+) -> None:
+    """Orthogonal connectors — never diagonals across diamond corners."""
+    top_y = gate_cy - gate_h
+    left_x = gate_cx - gate_h
+    right_x = gate_cx + gate_h
+    bus_y = top_y - 16
+    join_pad = 6.0
+
+    for sx, sy, dashed in sources:
+        if abs(sx - gate_cx) < 3:
+            arrows.append(_v_connector(sy, top_y - join_pad, gate_cx, dashed=dashed))
+        elif sx < gate_cx:
+            arrows.append(_v_connector(sy, bus_y, sx, dashed=dashed))
+            arrows.append(_connector(sx, bus_y, left_x - join_pad, bus_y, dashed=dashed))
+            arrows.append(_connector(left_x - join_pad, bus_y, left_x - join_pad, gate_cy, dashed=dashed))
+        else:
+            arrows.append(_v_connector(sy, bus_y, sx, dashed=dashed))
+            arrows.append(_connector(sx, bus_y, right_x + join_pad, bus_y, dashed=dashed))
+            arrows.append(_connector(right_x + join_pad, bus_y, right_x + join_pad, gate_cy, dashed=dashed))
+
+    bot_y = gate_cy + gate_h
+    split_y = bot_y + 14
+    arrows.append(_v_connector(bot_y, split_y, gate_cx))
+    arrows.append(_connector(gate_cx, split_y, yes_cx, split_y))
+    arrows.append(_connector(gate_cx, split_y, no_cx, split_y))
+    arrows.append(_v_connector(split_y, out_y, yes_cx))
+    arrows.append(_v_connector(split_y, out_y, no_cx))
 
 
 def render_slide02() -> str:
@@ -224,62 +424,97 @@ def render_slide02() -> str:
         (_col_keys(len(slide.columns))[i], title, style, labels)
         for i, (title, style, labels) in enumerate(slide.columns)
     ]
-    inner, w, h_top, centers = _column_layout(cols)
-    parts = [inner]
-    gate_y = h_top + 20
-    gate_cx = 8 + (BOX_W + SG_PAD * 2) + COL_GAP + SG_PAD + BOX_W / 2  # center column
-    dia, _, _, _, _ = _diamond(gate_cx, gate_y + 52, slide.gate or "Aligned?")
-    parts.append(dia)
-
-    def bottom(key: str, label: str) -> Tuple[float, float]:
-        cx, cy = centers[f"{key}:{label}"]
-        return cx, cy + BOX_H / 2
-
-    tape_x, tape_y = bottom("bar", "Tape-out path")
-    bc_x, bc_y = bottom("lane", "Buffer carving")
-    ec_x, ec_y = bottom("peer", "ECMP")
-    gate_top = gate_y
-    parts.append(_arrow_diag(tape_x, tape_y, gate_cx - 20, gate_top))
-    parts.append(_arrow_v(bc_x, bc_y, gate_top))
-    parts.append(_arrow_diag(ec_x, ec_y, gate_cx + 20, gate_top, dashed=True))
-
-    out_y = gate_y + 110
-    yes_x, no_x = gate_cx - 150, gate_cx + 70
-    parts.append(_box_svg(yes_x - BOX_W / 2, out_y, slide.branch_yes or "Pipeline walk", "gate"))
-    parts.append(_box_svg(no_x - BOX_W / 2, out_y, slide.branch_no or "Fix slides 1–2", "gate"))
-    parts.append(
-        f"<text x='{gate_cx - 70:.0f}' y='{out_y - 8:.0f}' font-family='{FONT}' font-size='11' "
-        f"fill='#556677'>yes</text>"
+    backgrounds, arrows, shapes, w, col_bottom, anchors = _column_layout(
+        cols, row_gap=ROW_GAP_SLIDE2
     )
-    parts.append(
-        f"<text x='{gate_cx + 55:.0f}' y='{out_y - 8:.0f}' font-family='{FONT}' font-size='11' "
-        f"fill='#556677'>no</text>"
-    )
-    gate_bot = gate_y + 104
-    parts.append(_arrow_diag(gate_cx - 15, gate_bot, yes_x, out_y))
-    parts.append(_arrow_diag(gate_cx + 15, gate_bot, no_x, out_y))
 
-    total_h = out_y + BOX_H + 24
-    total_w = w + 80
-    return _frame(parts, total_w, total_h)
+    gate_cx = MARGIN + (BOX_W + SG_PAD * 2) + COL_GAP + SG_PAD + BOX_W / 2
+    gate_cy = col_bottom + GATE_HALF + 16
+    diamond_fill, _ = _diamond_parts(gate_cx, gate_cy, slide.gate or "Task aligned?")
+    foreground: List[str] = [diamond_fill]
+
+    tape_x, _, tape_bot = anchors["bar:Tape-out path"]
+    bc_x, _, bc_bot = anchors["lane:Buffer carving"]
+    ec_x, _, ec_bot = anchors["peer:ECMP"]
+
+    out_y = gate_cy + GATE_HALF + 40
+    yes_cx = gate_cx - 118
+    no_cx = gate_cx + 98
+    foreground.append(_box_svg(yes_cx - BOX_W / 2, out_y, slide.branch_yes or "B6 pipeline walk", "gate"))
+    foreground.append(_box_svg(no_cx - BOX_W / 2, out_y, slide.branch_no or "Reframe task", "gate"))
+    foreground.append(
+        f"<text x='{yes_cx - 36:.0f}' y='{out_y - 6:.0f}' font-family='{FONT}' "
+        f"font-size='{FONT_SIZE_NOTE}' fill='#556677'>yes</text>"
+    )
+    foreground.append(
+        f"<text x='{no_cx + 32:.0f}' y='{out_y - 6:.0f}' font-family='{FONT}' "
+        f"font-size='{FONT_SIZE_NOTE}' fill='#556677'>no</text>"
+    )
+
+    _gate_tree(
+        gate_cx,
+        gate_cy,
+        GATE_HALF,
+        [(tape_x, tape_bot, False), (bc_x, bc_bot, False), (ec_x, ec_bot, True)],
+        yes_cx,
+        no_cx,
+        out_y,
+        arrows,
+    )
+
+    total_h = out_y + BOX_H + MARGIN
+    return _frame(
+        _compose(arrows, shapes, backgrounds, foreground),
+        w,
+        total_h,
+        fill_height=True,
+    )
+
+
+def _spread_gap(n: int, box_w: float) -> Tuple[float, float]:
+    """Size boxes and gap to span the diagram frame width."""
+    pad = FRAME_PAD
+    avail_w = FRAME_W - 2 * pad
+    if n <= 1:
+        return box_w, 0.0
+    gap = (avail_w - n * box_w) / (n - 1)
+    if gap >= MIN_SPREAD_GAP:
+        return box_w, gap
+    box_w = (avail_w - (n - 1) * MIN_SPREAD_GAP) / n
+    return box_w, MIN_SPREAD_GAP
+
+
+def _hstack_spread(nodes: Sequence[Tuple[str, str]]) -> str:
+    """Slides 3–4: larger boxes, gaps computed to fill width and vertical band."""
+    n = len(nodes)
+    box_w, gap = _spread_gap(n, BOX_W_SPREAD)
+    box_h = BOX_H_SPREAD
+    content_h = box_h + 2 * SPREAD_V_PAD
+    y = SPREAD_V_PAD
+    arrows: List[str] = []
+    shapes: List[str] = []
+    _hrow(
+        nodes,
+        FRAME_PAD,
+        y,
+        arrows,
+        shapes,
+        gap,
+        box_w=box_w,
+        box_h=box_h,
+        font_size=FONT_SIZE_SPREAD,
+    )
+    return _frame(_compose(arrows, shapes), FRAME_W, content_h, fill_height=True)
 
 
 def render_slide03() -> str:
-    return _hstack(_a3().slide(3).stack, 24)
+    return _hstack_spread(_a3().slide(3).stack)
 
 
 def render_slide04() -> str:
-    return _hstack(_a3().slide(4).stack, 24)
+    return _hstack_spread(_a3().slide(4).stack)
 
 
-def _hstack(nodes: Sequence[Tuple[str, str]], margin: float) -> str:
-    """Single horizontal flow, left→right — fills the wide content band."""
-    parts: List[str] = []
-    right = _hrow(nodes, margin, margin, parts)
-    return _frame(parts, right + margin, margin * 2 + BOX_H)
-
-
-# Diagram stem (from **Diagram:** in md) → render function keyed by slide number.
 _SLIDE_RENDERERS = {
     1: render_slide01,
     2: render_slide02,
@@ -305,7 +540,6 @@ def _render_for_stem(stem: str, doc=None) -> str:
 
 
 def _svg_to_png(svg: str, png: Path, scale: float = 2.5) -> None:
-    """Rasterize SVG via PyMuPDF (required dependency)."""
     import fitz
 
     png.parent.mkdir(parents=True, exist_ok=True)
@@ -318,7 +552,19 @@ def _svg_to_png(svg: str, png: Path, scale: float = 2.5) -> None:
         doc.close()
 
 
-def render_diagram(stem: str, png: Path, doc=None) -> None:
+def render_all_diagrams(png_dir: Path, doc=None) -> None:
+    """Render in slide order so slide 1 sets UNIFIED_SCALE for every diagram."""
+    global UNIFIED_SCALE
+    UNIFIED_SCALE = None
+    doc = doc or _a3()
+    for stem in diagram_stems_for_doc(doc):
+        render_diagram(stem, png_dir / f"{stem}.png", doc=doc, _skip_scale_reset=True)
+
+
+def render_diagram(stem: str, png: Path, doc=None, *, _skip_scale_reset: bool = False) -> None:
+    if not _skip_scale_reset:
+        global UNIFIED_SCALE
+        UNIFIED_SCALE = None
     svg = _render_for_stem(stem, doc=doc)
     _svg_to_png(svg, png)
     if not png.is_file() or png.stat().st_size < 100:

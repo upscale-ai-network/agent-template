@@ -4,6 +4,8 @@
 
 **Terms:** [../assets/guru-terms-sot.md](../assets/guru-terms-sot.md) · **Meeting playbook:** [plan.md](plan.md)
 
+**Frame (not on slides):** **DT100 deliverable** = these slide decks (A3 + B6) — files you build and bring. **Friday meeting input** = walk them. **Friday outcome** = mandate + marching orders (not another document; Cx/two-pager was a wrong fork). Decks sell **trust in the role** — vision, draft plan, how I drive with light steer.
+
 ---
 
 ## Cover
@@ -11,10 +13,12 @@
 **Left title:** Architecture Vision  
 **Left subtitle:** End-to-end datapath hardware–software validation  
 **Right (navy, 3 lines):** Dynamic / Switch-Buffer / Management  
-**Tag:** For Executive Review · Confidential — Upscale AI
+**Tag:** Architecture review · Confidential — Upscale AI
 
 ```notes
-Arch vision review. Upscale confidential. Main deck is four slides plus B6 backup.
+This deck sells me in the role — vision, draft plan, how I drive — not a document handoff.
+
+Left = your program bar (done and validated to tape-out). Right = my DRI wedge (DBM). Fri 11am close = mandate and marching orders for a 2–3 month sprint, if trust is there.
 ```
 
 ---
@@ -24,11 +28,13 @@ Arch vision review. Upscale confidential. Main deck is four slides plus B6 backu
 ```notes
 Sponsor is you — your name is not on this deck.
 
-I am Diwakar. I am here to align on two things: your done and validated bar before tape-out (product, mgmt, datapath AV, SDK/SAI), and my scope: Dynamic Switch-Buffer Management (DBM — same ESUN-world idea as DLB, but at Switch-Buffer / CSB, not fabric load balancing). Buffer carving at CSB; queues, PFC, WRED/ECN/Pause via SDK/SAI — Rupa owns datapath architecture.
+I am Diwakar. You need someone you can trust to drive with little supervision — not get lost or stuck — while you guide at critical junctures. These slides show what I will do in that role: vision, plans, draft execution path.
 
-If slide one or two is off, tell me now; we fix that before B6, not after.
+Two alignments: (1) your done-and-validated bar — product, mgmt plane, architecture validation, SDK/SAI, C-model → emulation → silicon; (2) my wedge — Dynamic Switch-Buffer Management (DBM) at CSB (QoSMAP, Queue, buffer carving).
 
-Flow: slides 1–2 → B6 (his pipeline slide — you point carve, don’t reframe Rupa’s map) → slides 3–4.
+DBM (say once): ESUN-world pair to DLB — buffers/CSB layer, not ECMP/fabric. Rupa owns datapath architecture; I drive by understanding the pipe. Peers on B6: Shafi (L2/ACL), Tippanna (ECMP/AV), SDK leads, Rupa (datapath/OCP).
+
+Flow: slides 1–2 (situation + task) → B6 (vision + draft plan walk) → slides 3–4 (mandate + sponsor alignment).
 ```
 
 ---
@@ -36,33 +42,31 @@ Flow: slides 1–2 → B6 (his pipeline slide — you point carve, don’t refra
 ## Slide 1
 
 **Title:** Dynamic Switch-Buffer Management  
-**Subtitle:** Buffer carving at Central Scheduler Block  
+**Subtitle:** Buffer carving at Central Scheduler Block (CSB)  
 **Diagram:** slide01-scope
 
 **On-slide (stack):**
 
 *Program — done and validated*
 - Product | program
-- Management plane | program
-- Arch validation | program
+- Management plane (FBOSS / SONiC) | program
+- Architecture validation | program
 - SDK / SAI | program
-- C-model → silicon | program
+- C-model → emulation → silicon | program
 
-*Your DRI — switch-buffer at CSB*
+*DRI — QoS RM at CSB*
 - CSB | lane
+- QoSMAP | lane
+- Queue | lane
 - Buffer carving | lane
-- Align today | act
+- Scope align · Fri | act
 
 ```notes
-Point at slide: Title is DBM; subtitle is his ink — buffer carving at CSB (at = in that block, not owning full datapath).
+What I will drive in your program bar — not owning product, mgmt, full AV, or SDK programs, but contributing with a clear wedge.
 
-DBM (spoken once): Pairs with DLB in ESUN scale-up vocabulary — equivalent branding, different layer (buffers/CSB, not ECMP/fabric).
+Bottom band = my lane: QoS RM on QoSMAP, Queue, buffer carving at CSB. This is the draft scope I execute under your steer.
 
-His words: no one has looked at CSB and buffer carving. You have confidence I can deliver by understanding datapath; Rupa owns datapath architecture. Her pipeline slide in B6 is a seed for her work — you walk it; you don’t own pkt-format / L2-L3 path framing.
-
-Story A on the slide: done and validated · product · mgmt · AV · SDK/SAI · C-model → emulation → silicon. I contribute; I do not own the full bar.
-
-Today: align on scope, not full HW sign-off or fifty-page packs.
+Selling: I have a bounded wedge and understand how it sits in the full tape-out path.
 ```
 
 ---
@@ -76,11 +80,12 @@ Today: align on scope, not full HW sign-off or fifty-page packs.
 
 **Column:** SW done and validated · program
 - Product
-- Arch validation
+- Management plane
+- Architecture validation
 - SDK / SAI
 - Tape-out path
 
-**Column:** Your lane · lane
+**Column:** My lane (QoS RM) · lane
 - QoSMAP
 - Queue
 - Buffer carving
@@ -89,18 +94,16 @@ Today: align on scope, not full HW sign-off or fifty-page packs.
 - Layer 2 / 3
 - ECMP
 
-**Gate:** Aligned?
-**Branch yes:** Pipeline walk
-**Branch no:** Fix slides 1–2
+**Gate:** Task aligned?
+**Branch yes:** B6 pipeline walk
+**Branch no:** Reframe task
 
 ```notes
-Program (his language): SW done and validated before tape-out — product, mgmt plane, datapath AV, SDK/SAI, milestones on the path to silicon.
+Can you trust this split? Column 1 = your org-level question. Column 2 = what I own and drive. Column 3 = peers I align with, not compete with.
 
-My lane: QoS RM — QoSMAP, Queue, buffer carving. Not L2/L3, ECMP, or SDK programs.
+Yes → B6 shows my vision and draft plan on the pipeline. No → we fix framing before any mandate.
 
-Peers: Shafi on L2-FBD / ACL, Tippanna on ECMP / AV, SDK leads, Rupa on datapath / ESUN — names on B6.
-
-If this matches your expectation, we open B6 — his pipeline slide; you anchor CSB, QoSMAP, Queue, carve.
+This slide is the trust checkpoint before you invest guidance in a 2–3 month sprint.
 ```
 
 ---
@@ -108,30 +111,28 @@ If this matches your expectation, we open B6 — his pipeline slide; you anchor 
 ## Into B6
 
 ```notes
-B6 is the how — whole pipe, owners, my wedge on QoSMAP and Queue. I will not read every row unless you want detail.
+B6 is not a deliverable — it is how I show vision, draft plans, and execution instinct. Walk it; steer me at junctures. Role-play the arch execution plan.
 ```
 
 ---
 
 ## Slide 3
 
-**Title:** What you get  
+**Title:** Sprint scope · Fri close  
 **Diagram:** slide03-outcomes
 
 **On-slide (stack):**
-- Cx 2-pager | doc
-- Validation gates | doc
-- AV decisions | doc
-- Friday edits | step
+- 2–3 month window | step
+- SW ↔ HW · validated | step
+- AV · C-model / co-dev | step
+- SDK / SAI / mgmt → tape-out | step
 
 ```notes
-Outcome: You get a 2-pager machine — Cx in ~two weeks: decisions, validation gates, open issues — not a fifty-page arch dump.
+Fri 11am — if aligned, mandate for this sprint scope (not another deck).
 
-For him: done and validated clarity at milestones; AV at gates; thin read he can use upward (Executive review on cover is intentional).
+Window: 2–3 months on the tape-out path. SW ↔ HW: validation gates before silicon. AV · C-model / co-dev: architecture validation and HW–SW co-development cadence. Exit: SDK, SAI, mgmt plane working on silicon.
 
-~two weeks: First Cx drop — gates v0 + CSB / carve HWv1 scope inside the 2-pager, not as a separate QoS-only promise.
-
-This week: 1–2, B6, Friday on his edits.
+Gururaj touch-in at gates; I drive day-to-day technical work. Depth follows redirect after mandate.
 ```
 
 ---
@@ -139,32 +140,26 @@ This week: 1–2, B6, Friday on his edits.
 ## After B6
 
 ```notes
-Last two slides — outcomes and what I need from you as Sponsor.
+Slide 4: four engineering checkpoints before Fri close. Mandate = permission to drive the sprint. Pipeline plan co-evolved on B6 — alignment, not a doc handoff.
 ```
 
 ---
 
 ## Slide 4
 
-**Title:** What I need from you  
+**Title:** Alignment · Fri close  
 **Diagram:** slide04-sponsor
 
 **On-slide (stack):**
-- Scope OK on 1–2? | ask
-- Program chair? | ask
-- Owners · B6 | ask
-- OCP voice | ask
+- Scope · slides 1–2 | ask
+- QoS RM · lane boundary | ask
+- Pipeline · B6 walk-through | act
+- OCP · Rupa datapath | ask
 
 ```notes
-Are slides 1–2 right? If not, we fix before treating B6 as agreed.
+Four checkpoints — technical, not a sign-off deck.
 
-Confirm who owns which slice — B6 owner slide has names.
+Scope: slides 1–2 — program bar + DBM at CSB framed correctly? Lane: QoSMAP, Queue, buffer carving vs peer DRIs. B6: logical pipeline and draft validation path. OCP: I align with Rupa on datapath standards; Gururaj carries company position externally (standards body, customer-facing).
 
-Program chair (spoken, optional): Are you comfortable with me driving the done and validated program with you as Sponsor, or do you want to chair that yourself?
-
-OCP / vendors: I coordinate with datapath; you own company position externally.
-
-Format: PDF async, live, or Friday follow-up — your call.
-
-Escalation: Step in if architects stall on validation gates.
+If aligned: Fri mandate for the 2–3 month sprint — AV/C-model, SDK/SAI/mgmt integration to tape-out.
 ```

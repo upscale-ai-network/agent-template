@@ -59,7 +59,7 @@ SONiC · PB (FBOSS-class) → **SAI** → **SAI ADAPTER** → **USDK API** → *
 
 | Term | Where |
 |------|--------|
-| **AV** | arch validation (plan, bs-1) |
+| **AV** | **Architecture validation** (plan, bs-1) — spell out on A3 slides; say “AV” in notes after first use |
 | **done and validated** | plan §6 boss question |
 | **validation gates** | whiteboards §1 Thu line (spoken program) |
 
@@ -72,8 +72,10 @@ Avoid on slides: “validation bar”, “end-to-end HW-SW co-design” (not on 
 | Slide | Title / lines |
 |-------|----------------|
 | **1** | **Dynamic Switch-Buffer Management** · sub: **Buffer carving at CSB** (internal **DBM**; **at** = location, not **for** datapath ownership) |
-| **1** bullets | **done and validated** · product · mgmt · **AV** · **SDK/SAI** · **C-model → silicon** · carve ≠ datapath arch (**Rupa**) — spoken in notes |
+| **1** bullets | **done and validated** · product · mgmt · **Architecture validation** · **SDK/SAI** · **C-model → emulation → silicon** · **QoSMAP** · **Queue** · carve at **CSB** — **Rupa** owns datapath arch (notes) |
 | **2** | **SW done and validated** before tape-out |
-| **2** bullets | **QoSMAP** · **Queue** · buffer carving · peers · **B6** = pipeline walk (Rupa seed — don’t rebrand as your title) |
+| **2** bullets | **My lane (QoS RM)** · **QoSMAP** · **Queue** · buffer carving · peers · **B6 pipeline walk** (Rupa seed — don’t rebrand as your title) |
+| **3** | **Sprint scope · Fri close** — **2–3 month window** · SW↔HW validated · **AV · C-model / co-dev** · **SDK/SAI/mgmt → tape-out** |
+| **4** | **Alignment · Fri close** — scope · slides 1–2 · **QoS RM lane boundary** · **Pipeline B6 walk-through** · **OCP · Rupa datapath** (Gururaj: company/OCP external — notes only) |
 
-**Cover tagline:** **Dynamic Switch-Buffer Management** — not **Logical Pipeline** as DRI label. **Switch-Buffer** is one compound term (hyphenated). On-wall: full words; deliberate acronyms only (**CSB**, **SDK/SAI**, **AV**, **QoSMAP**, **ECMP**, **OCP**).
+**Cover tagline:** **Dynamic Switch-Buffer Management** — not **Logical Pipeline** as DRI label. **Switch-Buffer** is one compound term (hyphenated). On-wall: full words; deliberate acronyms only (**CSB**, **SDK/SAI**, **QoSMAP**, **ECMP**, **OCP**). **AV** = architecture validation — spell out on slides.

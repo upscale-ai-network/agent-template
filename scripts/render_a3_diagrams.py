@@ -16,7 +16,7 @@ A3_DIR = ROOT / "assets" / "diagrams" / "a3"
 
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from a3_aligned_render import render_diagram  # noqa: E402
+from a3_aligned_render import render_all_diagrams  # noqa: E402
 from deck_from_md import A3_MD, load_deck_md  # noqa: E402
 from deck_validate import (  # noqa: E402
     fail_on_errors,
@@ -43,10 +43,9 @@ def render_all_a3_diagrams(doc=None) -> list[str]:
         raise RuntimeError(f"No diagrams declared in {A3_MD.name}")
 
     A3_DIR.mkdir(parents=True, exist_ok=True)
+    render_all_diagrams(A3_DIR, doc=doc)
     for stem in stems:
-        png = A3_DIR / f"{stem}.png"
-        render_diagram(stem, png, doc=doc)
-        fail_on_errors(validate_png(png))
+        fail_on_errors(validate_png(A3_DIR / f"{stem}.png"))
 
     return stems
 
