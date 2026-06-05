@@ -16,7 +16,6 @@
 
 | DT | Priority | Status | Title | Due | Notes |
 |----|----------|--------|-------|-----|-------|
-| DT100 | P0 | doing | 2–3 slide arch vision for manager | 2026-06-05 | **A3** · **B6** · [`dt100/`](dt100/) · Thu EOD |
 | DT102 | P1 | open | Cursor/doc use — HR / IT / mgmt OK | | Privacy Mode on; formal OK pending |
 | DT103 | P1 | open | Org git remote + push policy | | `origin` → `upscale-ai-network/agent-template` · push blocked until write access |
 | DT104 | P1 | open | Corp VPN from home + internal tools | | Browser check; no SSH host yet |
@@ -36,16 +35,6 @@
 | DT120 | P2 | open | Pensieve → `origin.md` for Gluon constitution | | No PII / past-employer leak · Pensieve/Gluon separate · see **DT120** |
 | DT121 | P3 | open | CLI toolbox — past tools list (loose) | | One task, many tools · see **DT121** |
 | DT117 | P3 | open | Monthly review — tune tasks + log | | ~4 weeks |
-
-### DT100 — arch vision (open)
-
-**Dir:** [`dt100/`](dt100/) — task-scoped deliverables (see `dt100/README.md`)
-**Plan:** [dt100/plan.md](dt100/plan.md)
-**Slides:** [dt100/manager-arch-vision-a3.md](dt100/manager-arch-vision-a3.md) → export
-**Walk:** [dt100/manager-arch-vision-b6.md](dt100/manager-arch-vision-b6.md)
-**Done when:** plan checklist §10 complete — not “perfect arch”
-
----
 
 ### DT120 — Pensieve `origin.md` → Gluon (close origin story)
 
@@ -150,6 +139,7 @@
 | DT095 | — | done | `sonic-ztp` clone verified | | |
 | DT118 | P0 | done | Test-run Gluon (fresh boot + litmus) | | Litmus pass · template intent in CONSTITUTION + notes below |
 | DT113 | P1 | done | Prune Apple Silicon GPU / demos from repo | | Deleted from tree; recover from git history if needed |
+| DT100 | P0 | done | 2–3 slide arch vision for manager | 2026-06-05 | **A3** · **B6** · SharePoint → Gururaj · Fri meeting TBD |
 
 ### DT118 (closed — template notes)
 

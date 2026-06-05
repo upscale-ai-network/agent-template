@@ -1,6 +1,6 @@
 # DT100 plan
 
-**Task:** DT100 · P0 · `doing` · due **2026-06-05**
+**Task:** DT100 · P0 · `done` · due **2026-06-05** · delivered SharePoint → Gururaj
 **Deliverables:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) · [manager-arch-vision-b6.md](manager-arch-vision-b6.md) · slide export for Gururaj
 
 **This file:** Decisions and meeting playbook only — **save the plan, not how we arrived at it.** Update here when the plan changes.
@@ -129,10 +129,10 @@
 
 ## 9. Two-core execution (you + Gluon)
 
-| Core | While DT100 `doing` |
-|------|---------------------|
-| **Human** | Notes, photos, slide export, meeting, Fri edits |
-| **Gluon** | One hat per session: DT100 merge/polish **or** nothing else |
+| Core | DT100 `done` — Fri meeting + mandate out of band |
+|------|-----------------------------------------------------|
+| **Human** | Walk A3/B6; Fri edits if Guru redirects |
+| **Gluon** | On request only — not default P0 |
 
 When Gluon is active, you’re **fused** — don’t pretend parallel P1 work counts.
 
@@ -143,10 +143,10 @@ When Gluon is active, you’re **fused** — don’t pretend parallel P1 work co
 ## 10. DT100 done checklist
 
 - [ ] Whiteboard corrections — [../assets/dt100-whiteboards.md](../assets/dt100-whiteboards.md) checkboxes
-- [ ] A3 / B6 reviewed; messaging aligned (md ↔ pptx via regen)
+- [x] A3 / B6 reviewed; messaging aligned (md ↔ pptx via regen)
 - [ ] A3 exported → PDF (optional B6 PDF)
-- [ ] Sent or presented to **Gururaj**; Fri follow-up if needed
-- [ ] `TASKS.md`: DT100 → `done` + `TASKS-LOG` entry
+- [x] **Gururaj** — pptx on SharePoint, link shared
+- [x] `TASKS.md`: DT100 → `done` + `TASKS-LOG` entry
 
 **Not required for done:** Two-pager reference document, org hooks, peer sign-off on validation v0.
 
