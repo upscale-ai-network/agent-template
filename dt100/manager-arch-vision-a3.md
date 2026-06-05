@@ -18,7 +18,7 @@
 ```notes
 This deck sells me in the role — vision, draft plan, how I drive — not a document handoff.
 
-Left = your program bar (done and validated to tape-out). Right = my DRI wedge (DBM). Fri 11am close = mandate and marching orders for a 2–3 month sprint, if trust is there.
+Left = your program bar (done and validated to tape-out). Right = my DRI wedge (DBM). Close = mandate + **concrete draft in next few days** (Guru steer post-meeting).
 ```
 
 ---
@@ -32,9 +32,9 @@ I am Diwakar. You need someone you can trust to drive with little supervision �
 
 Two alignments: (1) your done-and-validated bar — product, mgmt plane, architecture validation, SDK/SAI, C-model → emulation → silicon; (2) my wedge — Dynamic Switch-Buffer Management (DBM) at CSB (QoSMAP, Queue, buffer carving).
 
-DBM (say once): ESUN-world pair to DLB — buffers/CSB layer, not ECMP/fabric. Rupa owns datapath architecture; I drive by understanding the pipe. Peers on B6: Shafi (L2/ACL), Tippanna (ECMP/AV), SDK leads, Rupa (datapath/OCP).
+DBM (say once): ESUN-world pair to DLB — buffers/CSB layer, not ECMP/fabric. Rupa owns datapath architecture; I drive by understanding the pipe. Peer intersects: Shafi (L2/ACL), Tippanna (ECMP/AV), SDK leads, Rupa (datapath/OCP).
 
-Flow: slides 1–2 (situation + task) → B6 (vision + draft plan walk) → slides 3–4 (mandate + sponsor alignment).
+Flow: slides 1–2 (situation + task) → QoS buffer carving arch walk → slides 3–4 (mandate + alignment).
 ```
 
 ---
@@ -73,12 +73,20 @@ Selling: I have a bounded wedge and understand how it sits in the full tape-out 
 
 ## Slide 2
 
-**Title:** SW done and validated before tape-out  
+**Title:** Done and validated before tape-out  
 **Diagram:** slide02-validated
+
+**Deliverable band:** My deliverable
+
+**On-slide (compass):**
+- Gururaj · scope | north
+- Shafi · Tippanna | east
+- Rupa · datapath | west
+- QoS carve · pipeline walk | south
 
 **On-slide (columns):**
 
-**Column:** SW done and validated · program
+**Column:** Done and validated · program
 - Product
 - Management plane
 - Architecture validation
@@ -96,53 +104,54 @@ Selling: I have a bounded wedge and understand how it sits in the full tape-out 
 - Port-Mirroring
 - Counters
 
-**Gate:** Task aligned?
-**Branch yes:** B6 pipeline walk
+**Gate:** Aligned
+**Branch yes:** QoS buffer carving arch
 **Branch no:** Reframe task
+**Read guide:** 1 columns left→right · 2 down to aligned · 3 yes walk
 
 ```notes
-Can you trust this split? Column 1 = your org-level question. Column 2 = what I own and drive. Column 3 = peers I align with, not compete with.
+Walk order: three columns **left → right**, then **down** to Aligned → QoS buffer carving arch. **Read order** on-slide: numbered arrows 1 → 2 → 3 (Guru: visual learner — how to read).
 
-Yes → B6 shows my vision and draft plan on the pipeline. No → we fix framing before any mandate.
+**Aligned · Wed 1:1** — not a re-ask. Middle column = my lane (QoS buffer carve). Bottom band = **My deliverable** — compass prefetch for org framing (no N-E-W-S label on wall).
 
-This slide is the trust checkpoint before you invest guidance in a 2–3 month sprint.
+Yes → QoS buffer carving arch walk. No path grayed — closed at 1:1.
 ```
 
 ---
 
-## Into B6
+## Into pipeline walk
 
 ```notes
-B6 is not a deliverable — it is how I show vision, draft plans, and execution instinct. Walk it; steer me at junctures. Role-play the arch execution plan.
+Pipeline walk is not a deliverable — it is how I show vision, draft plans, and execution instinct. Walk it; steer me at junctures. Role-play the arch execution plan.
 ```
 
 ---
 
 ## Slide 3
 
-**Title:** Sprint scope · Fri close  
+**Title:** Near-term scope  
 **Diagram:** slide03-outcomes
 
 **On-slide (stack):**
-- 2–3 month window | step
-- SW ↔ HW · validated | step
+- Next few days · draft plan | step
+- Software ↔ hardware · validated | step
 - AV · C-model / co-dev | step
 - SDK / SAI / mgmt → tape-out | step
 
 ```notes
-Fri 11am — if aligned, mandate for this sprint scope (not another deck).
+Guru redirect: 2–3 month window was too slow — he wants something concrete in the **next few days**.
 
-Window: 2–3 months on the tape-out path. SW ↔ HW: validation gates before silicon. AV · C-model / co-dev: architecture validation and HW–SW co-development cadence. Exit: SDK, SAI, mgmt plane working on silicon.
+Say: draft plan / validation gates v0 (format per his steer) — not another 50-pager. North star unchanged: tape-out with SDK, SAI, mgmt on silicon.
 
-Gururaj touch-in at gates; I drive day-to-day technical work. Depth follows redirect after mandate.
+Gururaj touch-in at gates; I drive day-to-day technical work.
 ```
 
 ---
 
-## After B6
+## After pipeline walk
 
 ```notes
-Slide 4: four engineering checkpoints before Fri close. Mandate = permission to drive the sprint. Pipeline plan co-evolved on B6 — alignment, not a doc handoff.
+Slide 4: four engineering checkpoints before Fri close. Mandate = permission to drive the sprint. Pipeline plan co-evolved on the walk — alignment, not a doc handoff.
 ```
 
 ---
@@ -153,15 +162,15 @@ Slide 4: four engineering checkpoints before Fri close. Mandate = permission to 
 **Diagram:** slide04-sponsor
 
 **On-slide (stack):**
-- Scope · slides 1–2 | ask
+- Scope · draft QoS slides | ask
 - QoS RM · lane boundary | ask
-- Pipeline · B6 walk-through | act
+- QoS buffer carving arch | act
 - OCP · Rupa datapath | ask
 
 ```notes
 Four checkpoints — technical, not a sign-off deck.
 
-Scope: slides 1–2 — program bar + DBM at CSB framed correctly? Lane: QoSMAP, Queue, buffer carving vs peer DRIs. B6: logical pipeline and draft validation path. OCP: I align with Rupa on datapath standards; Gururaj carries company position externally (standards body, customer-facing).
+Scope: slides 1–2 — program bar + DBM at CSB framed correctly? Lane: QoSMAP, Queue, buffer carving vs peer DRIs. Pipeline walk: logical pipeline and draft validation path. OCP: I align with Rupa on datapath standards; Gururaj carries company position externally (standards body, customer-facing).
 
-If aligned: Fri mandate for the 2–3 month sprint — AV/C-model, SDK/SAI/mgmt integration to tape-out.
+If aligned: mandate to ship **draft plan in next few days** — then iterate toward tape-out (AV/C-model, SDK/SAI/mgmt).
 ```

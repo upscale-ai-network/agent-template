@@ -159,15 +159,15 @@ def build_a3() -> Path:
     )
 
     before = doc.extra_notes.get("before-1", "")
-    into_b6 = doc.extra_notes.get("into-b6", "")
-    after_b6 = doc.extra_notes.get("after-b6", "")
+    into_pipeline = doc.extra_notes.get("into-pipeline", "")
+    after_pipeline = doc.extra_notes.get("after-pipeline", "")
 
     for s in doc.ordered_slides():
         notes = s.notes
         if s.number == 1:
-            notes = _join_notes(before, notes, into_b6)
+            notes = _join_notes(before, notes, into_pipeline)
         elif s.number == 3:
-            notes = _join_notes(notes, after_b6)
+            notes = _join_notes(notes, after_pipeline)
         kwargs = dict(
             title=s.title,
             bullets=[],
@@ -207,27 +207,35 @@ def build_b6() -> Path:
 
 
 def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Build DT100 deck PPTX from markdown.")
+    parser.add_argument("--a3-only", action="store_true", help="Build draft QoS slides only")
+    args = parser.parse_args()
+
     try:
         ref = ensure_style_reference()
         print(f"Style reference: {ref}")
 
         a3_doc = load_deck_md(A3_MD, a3_cover_fields=True)
-        b6_doc = load_b6_md()
-        fail_on_errors(validate_a3_build(a3_doc) + validate_b6_build(b6_doc))
+        fail_on_errors(validate_a3_build(a3_doc))
+        if not args.a3_only:
+            b6_doc = load_b6_md()
+            fail_on_errors(validate_b6_build(b6_doc))
         print("Pre-build checks: OK")
 
         a3 = build_a3()
-        b6 = build_b6()
-
         a3_slides = 1 + len(a3_doc.slides)
-        b6_slides = 1 + len(b6_doc.ordered_slides())
-        fail_on_errors(
-            validate_built_pptx(a3, expected_slides=a3_slides)
-            + validate_built_pptx(b6, expected_slides=b6_slides)
-        )
-
+        checks = validate_built_pptx(a3, expected_slides=a3_slides)
         print(f"Wrote {a3} ({a3_slides} slides, company chrome)")
-        print(f"Wrote {b6} ({b6_slides} slides, company chrome)")
+
+        if not args.a3_only:
+            b6 = build_b6()
+            b6_slides = 1 + len(b6_doc.ordered_slides())
+            checks += validate_built_pptx(b6, expected_slides=b6_slides)
+            print(f"Wrote {b6} ({b6_slides} slides, company chrome)")
+
+        fail_on_errors(checks)
         print("Post-build checks: OK")
     except DeckBuildError as exc:
         print(exc, file=sys.stderr)

@@ -59,7 +59,7 @@ SONiC · PB (FBOSS-class) → **SAI** → **SAI ADAPTER** → **USDK API** → *
 
 | Term | Where |
 |------|--------|
-| **AV** | **Architecture validation** (plan, bs-1) — spell out on A3 slides; say “AV” in notes after first use |
+| **AV** | **Architecture validation** (plan, bs-1) — label **AV** on stacks/owner rows; spell out in titles/key messages if needed |
 | **done and validated** | plan §6 boss question |
 | **validation gates** | whiteboards §1 Thu line (spoken program) |
 
@@ -73,9 +73,9 @@ Avoid on slides: “validation bar”, “end-to-end HW-SW co-design” (not on 
 |-------|----------------|
 | **1** | **Dynamic Switch-Buffer Management** · sub: **Buffer carving at CSB** (internal **DBM**; **at** = location, not **for** datapath ownership) |
 | **1** bullets | **done and validated** · product · mgmt · **Architecture validation** · **SDK/SAI** · **C-model → emulation → silicon** · **QoSMAP** · **Queue** · carve at **CSB** — **Rupa** owns datapath arch (notes) |
-| **2** | **SW done and validated** before tape-out |
-| **2** bullets | **My lane (QoS RM)** · **QoSMAP** · **Queue** · buffer carving · peers · **B6 pipeline walk** (Rupa seed — don’t rebrand as your title) |
-| **3** | **Sprint scope · Fri close** — **2–3 month window** · SW↔HW validated · **AV · C-model / co-dev** · **SDK/SAI/mgmt → tape-out** |
-| **4** | **Alignment · Fri close** — scope · slides 1–2 · **QoS RM lane boundary** · **Pipeline B6 walk-through** · **OCP · Rupa datapath** (Gururaj: company/OCP external — notes only) |
+| **2** | **Done and validated** before tape-out (software↔hardware message on slide 3) |
+| **2** bullets | **My lane (QoS RM)** · bottom band **My deliverable** (compass prefetch → B6 org) · **QoS buffer carving arch** on yes branch |
+| **3** | **Near-term scope** — **next few days · draft plan** · **software↔hardware** validated · **AV · C-model / co-dev** · **SDK/SAI/mgmt → tape-out** (north star) |
+| **4** | **Alignment · Fri close** — scope · **draft QoS slides** · **QoS RM lane boundary** · **QoS buffer carving arch** · **OCP · Rupa datapath** (Gururaj: company/OCP external — notes only) |
 
-**Cover tagline:** **Dynamic Switch-Buffer Management** — not **Logical Pipeline** as DRI label. **Switch-Buffer** is one compound term (hyphenated). On-wall: full words; deliberate acronyms only (**CSB**, **SDK/SAI**, **QoSMAP**, **ECMP**, **OCP**). **AV** = architecture validation — spell out on slides.
+**Cover tagline:** **Dynamic Switch-Buffer Management** — not **Logical Pipeline** as DRI label. **Switch-Buffer** is one compound term (hyphenated). **Selective acronyms:** expand **SW/HW** in titles and headline messages (**Software done and validated**, **software↔hardware**, **Software validation**); keep **QoS RM**, **DRI**, **AV**, **mgmt**, **CSB**, **SDK/SAI**, **QoSMAP**, **ECMP**, **OCP**, pipeline block names as on-wall labels.

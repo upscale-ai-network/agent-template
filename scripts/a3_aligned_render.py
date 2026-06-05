@@ -21,11 +21,22 @@ STYLES: Dict[str, Dict[str, str]] = {
     "doc": {"fill": "#E3F2FD", "stroke": "#1565C0", "color": "#051830"},
     "ask": {"fill": "#FFF3E0", "stroke": "#EF6C00", "color": "#051830"},
     "act": {"fill": "#F3E5F5", "stroke": "#7B1FA2", "color": "#051830"},
+    "muted": {"fill": "#F5F5F5", "stroke": "#BDBDBD", "color": "#9E9E9E"},
 }
+
+FLOW_ARROW = "#B0BEC5"
+FLOW_ARROW_WIDTH = 1.25
+
+# On-slide read path — Guru asked how to read; must be visible in PPTX (not hairlines).
+GUIDE_COLOR = "#455A64"
+GUIDE_WIDTH = 2.5
+GUIDE_MARKER = "read-guide-head"
 
 # Unified box/font — TARGET_SCALE maps BOX_W to on-slide pixels across slides.
 BOX_W = 192
 BOX_H = 50
+YES_BOX_W = BOX_W * 1.12
+YES_BOX_H = BOX_H * 1.08
 FONT = "Arial, Helvetica, sans-serif"
 FONT_SIZE = 12
 FONT_SIZE_SG = 11
@@ -55,6 +66,19 @@ SG_FILL = "#FAFAFA"
 SG_TITLE_COLOR = "#556677"
 
 GATE_HALF = 44
+
+COMPASS_BOX_W = 156.0
+COMPASS_BOX_H = 46.0
+COMPASS_ARM = 52.0
+COMPASS_BAND_PAD = 14.0
+COMPASS_BELOW_GATE = 28.0
+
+QUADRANT_STYLE = {
+    "north": "program",
+    "east": "peer",
+    "west": "peer",
+    "south": "lane",
+}
 
 FRAME_W = 1320.0
 FRAME_H = 500.0
@@ -132,12 +156,63 @@ def _box_svg(
     )
 
 
-def _connector(x1: float, y1: float, x2: float, y2: float, *, dashed: bool = False) -> str:
+def _connector(
+    x1: float,
+    y1: float,
+    x2: float,
+    y2: float,
+    *,
+    dashed: bool = False,
+    stroke: Optional[str] = None,
+    width: Optional[float] = None,
+) -> str:
     """Thin line only — no arrowheads (exec-diagram style)."""
     dash = " stroke-dasharray='4,4'" if dashed else ""
+    s = stroke or ARROW
+    w = width if width is not None else ARROW_WIDTH
     return (
         f"<line x1='{x1:.1f}' y1='{y1:.1f}' x2='{x2:.1f}' y2='{y2:.1f}' "
-        f"stroke='{ARROW}' stroke-width='{ARROW_WIDTH}' stroke-linecap='round'{dash}/>"
+        f"stroke='{s}' stroke-width='{w}' stroke-linecap='round'{dash}/>"
+    )
+
+
+def _svg_defs() -> str:
+    return (
+        f"<defs><marker id='{GUIDE_MARKER}' viewBox='0 0 10 10' refX='9' refY='5' "
+        f"markerWidth='8' markerHeight='8' orient='auto'>"
+        f"<path d='M 0 0 L 10 5 L 0 10 z' fill='{GUIDE_COLOR}'/></marker></defs>"
+    )
+
+
+def _flow_arrow(x1: float, y1: float, x2: float, y2: float) -> str:
+    return _connector(x1, y1, x2, y2, stroke=FLOW_ARROW, width=FLOW_ARROW_WIDTH)
+
+
+def _guided_arrow(x1: float, y1: float, x2: float, y2: float) -> str:
+    return (
+        f"<line x1='{x1:.1f}' y1='{y1:.1f}' x2='{x2:.1f}' y2='{y2:.1f}' "
+        f"stroke='{GUIDE_COLOR}' stroke-width='{GUIDE_WIDTH}' stroke-linecap='round' "
+        f"marker-end='url(#{GUIDE_MARKER})'/>"
+    )
+
+
+def _step_badge(cx: float, cy: float, label: str) -> str:
+    r = 12.0
+    return (
+        f"<circle cx='{cx:.1f}' cy='{cy:.1f}' r='{r:.1f}' fill='#FFFFFF' "
+        f"stroke='{GUIDE_COLOR}' stroke-width='2'/>"
+        f"<text x='{cx:.1f}' y='{cy + 4.5:.1f}' text-anchor='middle' font-family='{FONT}' "
+        f"font-size='12' font-weight='bold' fill='{GUIDE_COLOR}'>{_xml(label)}</text>"
+    )
+
+
+def _lane_outline(band_x: float, y0: float, band_w: float, band_h: float) -> str:
+    """Orange bounding box on my-lane column — no duplicate label (band below owns title)."""
+    pad = 5.0
+    return (
+        f"<rect x='{band_x - pad:.1f}' y='{y0 - pad:.1f}' "
+        f"width='{band_w + 2 * pad:.1f}' height='{band_h + 2 * pad:.1f}' rx='10' "
+        f"fill='none' stroke='#EF6C00' stroke-width='2'/>"
     )
 
 
@@ -169,7 +244,7 @@ def _sg_band(x: float, y: float, w: float, h: float, title: str) -> str:
 def _wrap_svg(inner: str) -> str:
     return (
         f"<svg xmlns='http://www.w3.org/2000/svg' width='{FRAME_W:.0f}' height='{FRAME_H:.0f}' "
-        f"viewBox='0 0 {FRAME_W:.0f} {FRAME_H:.0f}'>{inner}</svg>"
+        f"viewBox='0 0 {FRAME_W:.0f} {FRAME_H:.0f}'>{_svg_defs()}{inner}</svg>"
     )
 
 
@@ -286,6 +361,7 @@ def _column_layout(
     columns: Sequence[Tuple[str, str, str, Sequence[str]]],
     *,
     row_gap: float = ROW_GAP,
+    deliverable_ci: Optional[int] = None,
 ) -> Tuple[List[str], List[str], List[str], float, float, Dict[str, Tuple[float, float, float]]]:
     col_inner_w = BOX_W + SG_PAD * 2
     row_unit = BOX_H + row_gap
@@ -319,6 +395,8 @@ def _column_layout(
             prev_bottom = node_y + BOX_H
             node_y += row_unit
         col_bottoms.append(y0 + col_h)
+        if deliverable_ci is not None and ci == deliverable_ci:
+            shapes.append(_lane_outline(band_x, y0, col_inner_w, col_h))
 
     layout_bottom = max(col_bottoms)
     return backgrounds, arrows, shapes, total_w + MARGIN, layout_bottom, anchors
@@ -380,6 +458,100 @@ def _col_keys(n: int) -> List[str]:
     return (["bar", "lane", "peer", "col4"])[:n]
 
 
+def _compass_band(
+    band_title: str,
+    nodes: Sequence[Tuple[str, str]],
+    band_x: float,
+    band_y: float,
+    shapes: List[str],
+    backgrounds: List[str],
+) -> Tuple[float, float]:
+    """Four quadrant boxes inside one band — prefetch org framing (no N/E/W/S labels)."""
+    inner_w = COMPASS_BOX_W * 3 + COMPASS_ARM * 2
+    inner_h = COMPASS_BOX_H * 3 + COMPASS_ARM * 2
+    band_w = inner_w + COMPASS_BAND_PAD * 2
+    band_h = inner_h + SG_TITLE_H + COMPASS_BAND_PAD * 2
+    backgrounds.append(_sg_band(band_x, band_y, band_w, band_h, band_title))
+
+    cx = band_x + band_w / 2
+    cy = band_y + SG_TITLE_H + COMPASS_BAND_PAD + inner_h / 2
+    positions = {
+        "north": (cx - COMPASS_BOX_W / 2, cy - COMPASS_BOX_H - COMPASS_ARM),
+        "south": (cx - COMPASS_BOX_W / 2, cy + COMPASS_ARM),
+        "west": (cx - COMPASS_BOX_W - COMPASS_ARM, cy - COMPASS_BOX_H / 2),
+        "east": (cx + COMPASS_ARM, cy - COMPASS_BOX_H / 2),
+    }
+    for label, quadrant in nodes:
+        q = quadrant.strip().lower()
+        pos = positions.get(q)
+        if not pos:
+            continue
+        style = QUADRANT_STYLE.get(q, "program")
+        shapes.append(
+            _box_svg(
+                pos[0],
+                pos[1],
+                label,
+                style,
+                box_w=COMPASS_BOX_W,
+                box_h=COMPASS_BOX_H,
+                font_size=FONT_SIZE_SG,
+            )
+        )
+        if q == "south":
+            pad = 4.0
+            shapes.append(
+                f"<rect x='{pos[0] - pad:.1f}' y='{pos[1] - pad:.1f}' "
+                f"width='{COMPASS_BOX_W + 2 * pad:.1f}' height='{COMPASS_BOX_H + 2 * pad:.1f}' "
+                f"rx='8' fill='none' stroke='#EF6C00' stroke-width='2'/>"
+            )
+    return band_w, band_h
+
+
+def _slide02_read_guides(
+    n_cols: int,
+    y0: float,
+    col_bottom: float,
+    gate_cx: float,
+    gate_top: float,
+    yes_cx: float,
+    split_y: float,
+    out_y: float,
+    total_w: float,
+) -> List[str]:
+    """Numbered arrows — columns L→R (1), down to Aligned (2), yes walk (3)."""
+    col_inner_w = BOX_W + SG_PAD * 2
+    guides: List[str] = []
+
+    guides.append(
+        f"<text x='{MARGIN:.1f}' y='{y0 + 11:.1f}' font-family='{FONT}' font-size='{FONT_SIZE_NOTE}' "
+        f"fill='{GUIDE_COLOR}' font-weight='bold'>Read order</text>"
+    )
+    guides.append(
+        f"<text x='{total_w - MARGIN - 168:.1f}' y='{y0 + 11:.1f}' font-family='{FONT}' "
+        f"font-size='{FONT_SIZE_NOTE}' fill='{GUIDE_COLOR}'>1 columns · 2 aligned · 3 walk</text>"
+    )
+
+    flow_y = y0 + SG_TITLE_H + 6
+    first_col_right = MARGIN + col_inner_w
+    guides.append(_step_badge(MARGIN + col_inner_w / 2, flow_y - 22, "1"))
+    for i in range(n_cols - 1):
+        x_left = MARGIN + i * (col_inner_w + COL_GAP) + col_inner_w - 10
+        x_right = MARGIN + (i + 1) * (col_inner_w + COL_GAP) + 10
+        guides.append(_guided_arrow(x_left, flow_y, x_right, flow_y))
+
+    step2_mid = (col_bottom + gate_top) / 2
+    guides.append(_step_badge(gate_cx - 24, step2_mid, "2"))
+    guides.append(_guided_arrow(gate_cx, col_bottom + 4, gate_cx, gate_top - 4))
+
+    step3_mid_y = (split_y + out_y) / 2
+    step3_mid_x = (gate_cx + yes_cx) / 2
+    guides.append(_step_badge(step3_mid_x, step3_mid_y - 14, "3"))
+    guides.append(_guided_arrow(gate_cx, split_y + 8, yes_cx, out_y - 10))
+
+    return guides
+
+
 def _gate_tree(
     gate_cx: float,
     gate_cy: float,
@@ -389,6 +561,8 @@ def _gate_tree(
     no_cx: float,
     out_y: float,
     arrows: List[str],
+    *,
+    deemphasize_no: bool = False,
 ) -> None:
     """Orthogonal connectors — never diagonals across diamond corners."""
     top_y = gate_cy - gate_h
@@ -413,9 +587,13 @@ def _gate_tree(
     split_y = bot_y + 14
     arrows.append(_v_connector(bot_y, split_y, gate_cx))
     arrows.append(_connector(gate_cx, split_y, yes_cx, split_y))
-    arrows.append(_connector(gate_cx, split_y, no_cx, split_y))
     arrows.append(_v_connector(split_y, out_y, yes_cx))
-    arrows.append(_v_connector(split_y, out_y, no_cx))
+    if not deemphasize_no:
+        arrows.append(_connector(gate_cx, split_y, no_cx, split_y))
+        arrows.append(_v_connector(split_y, out_y, no_cx))
+    else:
+        arrows.append(_connector(gate_cx, split_y, no_cx, split_y, dashed=True, stroke=FLOW_ARROW))
+        arrows.append(_v_connector(split_y, out_y, no_cx, dashed=True))
 
 
 def render_slide02() -> str:
@@ -424,13 +602,15 @@ def render_slide02() -> str:
         (_col_keys(len(slide.columns))[i], title, style, labels)
         for i, (title, style, labels) in enumerate(slide.columns)
     ]
+    y0 = MARGIN
     backgrounds, arrows, shapes, w, col_bottom, anchors = _column_layout(
-        cols, row_gap=ROW_GAP_SLIDE2
+        cols, row_gap=ROW_GAP_SLIDE2, deliverable_ci=1
     )
 
     gate_cx = MARGIN + (BOX_W + SG_PAD * 2) + COL_GAP + SG_PAD + BOX_W / 2
     gate_cy = col_bottom + GATE_HALF + 16
-    diamond_fill, _ = _diamond_parts(gate_cx, gate_cy, slide.gate or "Task aligned?")
+    gate_top = gate_cy - GATE_HALF
+    diamond_fill, _ = _diamond_parts(gate_cx, gate_cy, slide.gate or "Aligned")
     foreground: List[str] = [diamond_fill]
 
     tape_x, _, tape_bot = anchors["bar:Tape-out path"]
@@ -442,15 +622,33 @@ def render_slide02() -> str:
     out_y = gate_cy + GATE_HALF + 40
     yes_cx = gate_cx - 118
     no_cx = gate_cx + 98
-    foreground.append(_box_svg(yes_cx - BOX_W / 2, out_y, slide.branch_yes or "B6 pipeline walk", "gate"))
-    foreground.append(_box_svg(no_cx - BOX_W / 2, out_y, slide.branch_no or "Reframe task", "gate"))
+    split_y = gate_cy + GATE_HALF + 14
+    read_guides = _slide02_read_guides(
+        len(cols), y0, col_bottom, gate_cx, gate_top, yes_cx, split_y, out_y, w
+    )
+
+    foreground.append(
+        _box_svg(
+            yes_cx - YES_BOX_W / 2,
+            out_y,
+            slide.branch_yes or "QoS buffer carving arch",
+            "act",
+            box_w=YES_BOX_W,
+            box_h=YES_BOX_H,
+            font_size=FONT_SIZE,
+        )
+    )
+    foreground.append(
+        _box_svg(
+            no_cx - BOX_W / 2,
+            out_y,
+            slide.branch_no or "Reframe task",
+            "muted",
+        )
+    )
     foreground.append(
         f"<text x='{yes_cx - 36:.0f}' y='{out_y - 6:.0f}' font-family='{FONT}' "
         f"font-size='{FONT_SIZE_NOTE}' fill='#556677'>yes</text>"
-    )
-    foreground.append(
-        f"<text x='{no_cx + 32:.0f}' y='{out_y - 6:.0f}' font-family='{FONT}' "
-        f"font-size='{FONT_SIZE_NOTE}' fill='#556677'>no</text>"
     )
 
     _gate_tree(
@@ -462,12 +660,24 @@ def render_slide02() -> str:
         no_cx,
         out_y,
         arrows,
+        deemphasize_no=True,
     )
 
-    total_h = out_y + BOX_H + MARGIN
+    total_h = out_y + YES_BOX_H + MARGIN
+    total_w = w
+    if slide.compass and slide.deliverable_band:
+        inner_w = COMPASS_BOX_W * 3 + COMPASS_ARM * 2
+        band_w = inner_w + COMPASS_BAND_PAD * 2
+        band_h = inner_w + SG_TITLE_H + COMPASS_BAND_PAD * 2
+        band_x = max(MARGIN, (max(w, band_w + 2 * MARGIN) - band_w) / 2)
+        band_y = out_y + YES_BOX_H + COMPASS_BELOW_GATE
+        _compass_band(slide.deliverable_band, slide.compass, band_x, band_y, shapes, backgrounds)
+        total_h = band_y + band_h + MARGIN
+        total_w = max(w, band_w + 2 * MARGIN)
+
     return _frame(
-        _compose(arrows, shapes, backgrounds, foreground),
-        w,
+        _compose(arrows, shapes, backgrounds, [*foreground, *read_guides]),
+        total_w,
         total_h,
         fill_height=True,
     )

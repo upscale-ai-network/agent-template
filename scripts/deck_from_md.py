@@ -41,6 +41,8 @@ class DeckSlide:
     gate: str = ""
     branch_yes: str = ""
     branch_no: str = ""
+    deliverable_band: str = ""
+    compass: List[Tuple[str, str]] = field(default_factory=list)
 
 
 @dataclass
@@ -76,10 +78,10 @@ def _section_kind(title: str) -> Optional[str | int]:
     m = re.match(r"before\s+slide\s*(\d+)", t, re.I)
     if m:
         return f"before-{m.group(1)}"
-    if "into" in t and "b6" in t:
-        return "into-b6"
-    if "after" in t and "b6" in t:
-        return "after-b6"
+    if "into" in t and ("pipeline" in t or "walk" in t):
+        return "into-pipeline"
+    if "after" in t and ("pipeline" in t or "walk" in t):
+        return "after-pipeline"
     return None
 
 
@@ -234,12 +236,18 @@ def load_deck_md(
                 current.branch_yes = val
             elif key == "Branch no":
                 current.branch_no = val
+            elif key == "Deliverable band":
+                current.deliverable_band = val
             elif key == "On-slide (stack)":
                 mode = "stack"
                 flush_group()
                 flush_column()
             elif key == "On-slide (columns)":
                 mode = "columns"
+                flush_group()
+                flush_column()
+            elif key == "On-slide (compass)":
+                mode = "compass"
                 flush_group()
                 flush_column()
             elif key == "Bullets":
@@ -271,6 +279,8 @@ def load_deck_md(
                 col_labels.append(node[0])
             elif mode == "bullets":
                 current.bullets.append(node[0])
+            elif mode == "compass":
+                current.compass.append(node)
             continue
 
     flush_notes(current if isinstance(section_key, int) else None, section_key if isinstance(section_key, str) else None)
