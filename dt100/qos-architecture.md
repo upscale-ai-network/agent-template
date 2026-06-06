@@ -1,6 +1,6 @@
 # Arch vision (A3) — source of truth
 
-**Single file for this deck:** on-slide copy + presenter notes → `qos-architecture-diwakar-tundlam.pptx` via `./scripts/run-deck-build.sh`.
+**Single file for this deck:** on-slide copy + presenter notes → `qos-architecture.pptx` via `./scripts/run-deck-build.sh`.
 
 **Terms:** [../assets/guru-terms-sot.md](../assets/guru-terms-sot.md) · **Meeting playbook:** [plan.md](plan.md)
 

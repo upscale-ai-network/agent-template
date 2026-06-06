@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Render A3 diagram PNGs from qos-architecture-diwakar-tundlam.md via a3_aligned_render.py.
+Render A3 diagram PNGs from qos-architecture.md via a3_aligned_render.py.
 
 Source of truth: the .md file (labels, layout). Rasterizer: PyMuPDF only.
 No Mermaid, mmdc, Chrome, or Puppeteer.

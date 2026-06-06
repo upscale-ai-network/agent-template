@@ -4,7 +4,7 @@
 
 **DT100 · P0 · Thu package** · **Reader:** Gururaj · **Confidential — Upscale AI, Inc.**
 
-**Companion:** [qos-architecture-diwakar-tundlam.md](qos-architecture-diwakar-tundlam.md) — slides 1–2, then B6, then A3 slides 3–4. **Plan:** [plan.md](plan.md)
+**Companion:** [qos-architecture.md](qos-architecture.md) — slides 1–2, then B6, then A3 slides 3–4. **Plan:** [plan.md](plan.md)
 
 **Role of B6:** **Define the task** — how, who, wedge, deferrals. Open only after A3 slides **1–2** land — or if you ask *“where’s the plan?”*
 

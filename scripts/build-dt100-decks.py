@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Build DT100 A3/B6 PPTX from qos-architecture-diwakar-tundlam.md and manager-arch-vision-b6.md.
+Build DT100 A3/B6 PPTX from qos-architecture.md and manager-arch-vision-b6.md.
 """
 
 import shutil
@@ -146,7 +146,7 @@ def build_a3() -> Path:
     doc = load_deck_md(A3_MD, a3_cover_fields=True)
     fail_on_errors(validate_a3_build(doc))
     ensure_a3_diagrams(doc)
-    out = DT100 / "qos-architecture-diwakar-tundlam.pptx"
+    out = DT100 / "qos-architecture.pptx"
     deck = StyledDeck(out, num_content_slides=len(doc.slides))
 
     cov = doc.cover
