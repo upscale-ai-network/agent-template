@@ -114,11 +114,19 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 ## Clone
 
 ```bash
-git clone git@github.com:upscale-ai-network/agent-template.git diwakar-work
+git clone https://github.com/upscale-ai-network/agent-template.git diwakar-work
 cd diwakar-work
 ```
 
-No Python project in repo after prune — add tooling per task when needed.
+**Primary (Mac):** write Gluon · **`./scripts/run-deck-build.sh`** after `uv sync`
+
+**Zombie standby (Linux vm):** read-only · hatch once:
+
+```bash
+./scripts/bootstrap-gluon-zombie.sh --full
+```
+
+Installs **uv**, `uv sync`, zsh dotfiles, `check-decks.sh` litmus. No parallel writes — see [CHECKPOINT.md](CHECKPOINT.md).
 
 ---
 

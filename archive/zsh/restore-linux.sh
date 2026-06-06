@@ -49,10 +49,18 @@ done
 
 # Dotfiles use optional brew detection (macOS + Linuxbrew); no sed patch needed.
 
-# History (optional)
+# History (optional; skipped in GLUON_ZOMBIE_BOOTSTRAP unless GLUON_ZOMBIE_ZSH_HISTORY=1)
 if [[ -f "$SRC/zsh_history" ]]; then
-  read -r -p "Merge zsh_history from archive? [y/N] " ans
-  if [[ "${ans,,}" == "y" ]]; then
+  do_history=0
+  if [[ "${GLUON_ZOMBIE_ZSH_HISTORY:-0}" == "1" ]]; then
+    do_history=1
+  elif [[ "${GLUON_ZOMBIE_BOOTSTRAP:-0}" != "1" ]]; then
+    read -r -p "Merge zsh_history from archive? [y/N] " ans
+    if [[ "${ans,,}" == "y" ]]; then
+      do_history=1
+    fi
+  fi
+  if [[ "$do_history" -eq 1 ]]; then
     if [[ -f "$HOME/.zsh_history" ]]; then
       cp -a "$HOME/.zsh_history" "$HOME/.zsh_history.bak.$stamp"
       cat "$SRC/zsh_history" "$HOME/.zsh_history" | sort -u > "$HOME/.zsh_history.merged"
