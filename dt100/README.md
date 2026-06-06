@@ -41,6 +41,7 @@
 | [../assets/dt100-whiteboards.md](../assets/dt100-whiteboards.md) | Photo annotations |
 | [../assets/guru-terms-sot.md](../assets/guru-terms-sot.md) | Guru vocabulary |
 | [plan.md](plan.md) | Meeting order + done checklist |
+| [ccc-strategy.md](ccc-strategy.md) | B6 delivery, peer W, Guru interface — internal strategy record |
 | **README.md (below)** | Private prep only — never slide copy |
 
 ## You vs Gluon

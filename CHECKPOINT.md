@@ -19,7 +19,8 @@
 | **B6** | `bugatti-qos-ccc.md` → `.pptx` | Polish pass done; **slide refinement next** (tonight / Sat AM) |
 | Share name | `bugatti-qos-ccc` | No `draft-` prefix — doc for review when complete |
 
-**Build:** `./scripts/run-deck-build.sh` · edit md only
+**Build:** `./scripts/run-deck-build.sh` · edit md only  
+**Strategy:** [dt100/ccc-strategy.md](dt100/ccc-strategy.md) — 2A → informal peer → gated formal
 
 ## Git
 
