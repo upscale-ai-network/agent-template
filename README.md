@@ -104,6 +104,7 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 | `dt100/` | **DT100** done — A3 md + pptx ([`dt100/README.md`](dt100/README.md)) |
 | `dt122/` | **DT122** doing — ccc / B6 md + pptx ([`dt122/README.md`](dt122/README.md)) |
 | `scratch/` | Chat scratch / mini tasks (not task-scoped) |
+| `archive/` | Portable snapshots (e.g. [zsh dotfiles](archive/zsh/)) |
 | `assets/` | Shared pipeline slide, whiteboard photos, templates |
 
 **Removed (2026-06-04):** Apple Silicon MLX brief, demos, PDFs/HTML — history in git; future copy from archive repo if needed.

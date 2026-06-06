@@ -1,0 +1,811 @@
+: 1780180685:0;ls -al
+: 1780180685:0;id -a
+: 1780180685:0;df -k 
+: 1780180685:0;df -k .
+: 1780180685:0;pwd
+: 1780180685:0;ls -al
+: 1780180685:0;ls -al
+: 1780180685:0;ls -al
+: 1780180685:0;ls -
+: 1780180685:0;ls -al
+: 1780180685:0;sudo id
+: 1780180685:0;sudo id
+: 1780180685:0;grep dtundlam /etc/*
+: 1780180685:0;sudo grep dtundlam /etc/*
+: 1780180685:0;id
+: 1780180685:0;id -a
+: 1780180685:0;cd /etc
+: 1780180685:0;ls
+: 1780180685:0;grep -i tundlam .
+: 1780180685:0;grep -i tundlam *
+: 1780180685:0;sudo grep -i tundlam *
+: 1780180685:0;id
+: 1780180685:0;pwd
+: 1780180685:0;cd
+: 1780180685:0;ls -al
+: 1780180685:0;id -a
+: 1780180685:0;cd 
+: 1780180685:0;cd Downloads
+: 1780180685:0;ls -altr
+: 1780180685:0;open UTM.dmg
+: 1780180685:0;open /Applications/UTM.app
+: 1780180685:0;cd
+: 1780180685:0;cd -
+: 1780180685:0;ls -altr
+: 1780180685:0;rm UTM.dmg
+: 1780180685:0;ls -l
+: 1780180685:0;cd
+: 1780180685:0; cd /Applications
+: 1780180685:0;ls -altr
+: 1780180685:0;mv UTM.app UTM4x.app
+: 1780180685:0;ls -altr
+: 1780180685:0;ls -altr UTM*
+: 1780180685:0;ls -altri UTM*
+: 1780180685:0;ls -ltr UTM*
+: 1780180685:0;open UTM.app
+: 1780180685:0;cd
+: 1780180685:0;free
+: 1780180685:0;uname -a
+: 1780180685:0;df -k .
+: 1780180685:0;free
+: 1780180685:0;cd
+: 1780180685:0;cd Downloads
+: 1780180685:0;ls -altr
+: 1780180685:0;s -altr
+: 1780180685:0;ls -latr
+: 1780180685:0;rm ubuntu-22.04.5-live-server-amd64.iso
+: 1780180685:0;ls -latr
+: 1780180685:0;ls -latr
+: 1780180685:0;ls -latr
+: 1780180685:0;rm UTM.dmg
+: 1780180685:0;ls -altr
+: 1780180685:0;ls -altr
+: 1780180685:0;ssh vm1
+: 1780180685:0;ssh diwakar@vm1
+: 1780180685:0;ssh 192.168.64.3
+: 1780180685:0;ssh diwakar@192.168.64.3
+: 1780180685:0;ssh diwakar@192.168.64.3
+: 1780180685:0;ls -al
+: 1780180685:0;ls -al
+: 1780180685:0;ssh diwakar@192.168.64.3
+: 1780180685:0;source /Applications/Cursor.app/Contents/Resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh
+: 1780180685:0;pwd
+: 1780180685:0;ls -al
+: 1780180685:0;ls -al /Applications/Claude.app
+: 1780180685:0;open /Applications/Claude.app
+: 1780180685:0;ls -al
+: 1780180685:0;cd
+: 1780180685:0;zsh
+: 1780180685:0;/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+: 1780180685:0;sudo id
+: 1780180685:0;sudo id
+: 1780180685:0;/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+: 1780180685:0;sudo visudo
+: 1780180685:0;sudo id
+: 1780180685:0;/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+: 1780180685:0;brew
+: 1780180685:0;echo >> /Users/dtundlam/.zprofile
+: 1780180685:0;    echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> /Users/dtundlam/.zprofile\
+    eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+: 1780180685:0;brew help
+: 1780180685:0;brew update
+: 1780180685:0;brew upgrade
+: 1780180685:0;xcode-select --install
+: 1780180685:0;brew install cmake uv git gh ripgrep jq htop tmux mosh\
+brew install --cask docker 1password raycast
+: 1780180685:0;clang --version\
+make --version
+: 1780180685:0;cd Desktop
+: 1780180685:0;ls a-
+: 1780180685:0;l
+: 1780180685:0;mkdir work
+: 1780180685:0;cd work
+: 1780180685:0;l
+: 1780180685:0;git clone git@github.com:upscale-ai-network/bugatti-model.git
+: 1780180685:0;zsh
+: 1780180685:0;exec zsh
+: 1780180685:0;ls -al
+: 1780180685:0;cd bugatti-model
+: 1780180685:0;l
+: 1780180685:0;cd 
+: 1780180685:0;cd .
+: 1780180685:0;l
+: 1780180685:0;cd ..
+: 1780180685:0;l
+: 1780180685:0;cd
+: 1780180685:0;cd D
+: 1780180685:0;l
+: 1780180685:0;cd Desktop
+: 1780180685:0;l
+: 1780180685:0;cd work
+: 1780180685:0;l
+: 1780180685:0;rm -rf bugatti-model
+: 1780180685:0;l
+: 1780180685:0;p10k configure
+: 1780180685:0;ssh diwakar@192.168.64.3
+: 1780180685:0;ssh diwakar@192.168.64.3
+: 1780180685:0;ssh diwakar@192.168.64.3
+: 1780180685:0;ping 192.168.64.3
+: 1780180685:0;ssh diwakar@192.168.64.3
+: 1780180685:0;arp -an
+: 1780180685:0;ssh diwakar@192.168.64.3
+: 1780180685:0;ssh diwakar@192.168.64.1
+: 1780180685:0;ssh diwakar@192.168.64.3
+: 1780180685:0;ssh diwakar@192.168.64.0
+: 1780180685:0;ssh diwakar@192.168.64.3
+: 1780180685:0;sl -la
+: 1780180685:0;ls -al
+: 1780180685:0;ssh diwakar@192.168.64.3
+: 1780180685:0;id -a
+: 1780180685:0;ssh diwakar@192.168.65.2
+: 1780180685:0;ssh diwakar@192.168.65.2
+: 1780180685:0;ssh diwakar@192.168.65.2
+: 1780184799:0;p10k configure
+: 1780184863:0;ls -al
+: 1780184870:0;ssh diwakar@192.168.65.2
+: 1780184874:0;ls -al
+: 1780184876:0;pwd
+: 1780184878:0;ls -al
+: 1780184900:0;git
+: 1780184903:0;gh
+: 1780184932:0;top
+: 1780184939:0;ptop
+: 1780185000:0;gh auth login
+: 1780185194:0;gh auth status\
+ssh -T git@github.com
+: 1780185249:0;uv python install 3.12
+: 1780185523:0;lazygit
+: 1780185528:0;pwd
+: 1780185529:0;ls -la
+: 1780185532:0;cd Desktop
+: 1780185532:0;l
+: 1780185535:0;cd work
+: 1780185535:0;l
+: 1780185540:0;git clone git@github.com:upscale-ai-network/bugatti-model.git
+: 1780185543:0;l
+: 1780185679:0;cd
+: 1780185684:0;cd ~/Projects
+: 1780185685:0;pwd
+: 1780185686:0;ls -al
+: 1780185687:0;cd sonic-ztp
+: 1780185688:0;l
+: 1780185690:0;git status
+: 1780185693:0;pwd
+: 1780185694:0;cd ..
+: 1780185694:0;ll
+: 1780185696:0;l
+: 1780185698:0;..
+: 1780185698:0;l
+: 1780185700:0;cd wo
+: 1780185703:0;l
+: 1780185705:0;cd Projects
+: 1780185705:0;l
+: 1780185708:0;cd ..
+: 1780185708:0;l
+: 1780185711:0;cd Desktop
+: 1780185711:0;l
+: 1780185717:0;mv work ../Projects
+: 1780185718:0;l
+: 1780185719:0;cd
+: 1780185722:0;cd Projects
+: 1780185722:0;l
+: 1780185723:0;ls -al
+: 1780185724:0;cd work
+: 1780185724:0;l
+: 1780185727:0;cd bugatti-model
+: 1780185728:0;ls -al
+: 1780185731:0;rm -rf .git
+: 1780185733:0;cd ..
+: 1780185735:0;rmdir bugatti-model
+: 1780185736:0;ls -al
+: 1780185738:0;cd ..
+: 1780185739:0;ls -al
+: 1780185896:0;lazygit
+: 1780185899:0;l
+: 1780185900:0;cd sonic-ztp
+: 1780185902:0;lazygit
+: 1780186058:0;nc -vz google.com 443
+: 1780186290:0;brew uninstall --cask tailscale
+: 1780347035:0;brew update
+: 1780352598:0;ls -la
+: 1780352599:0;cd
+: 1780352600:0;ls -altr
+: 1780352602:0;cd Documents
+: 1780352608:0;ls -altr
+: 1780352611:0;cd apple-silicon-ml-study
+: 1780352612:0;l
+: 1780352615:0;./generate-pdfs.sh
+: 1780352641:0;open /Users/dtundlam/Documents/apple-silicon-ml-study/Apple-Silicon-ML-Slides.pdf
+: 1780352690:0;open /Users/dtundlam/Documents/apple-silicon-ml-study/Apple-Silicon-ML-Study-Guide.pdf
+: 1780352901:0;open /Users/dtundlam/Documents/apple-silicon-ml-study/Apple-Silicon-ML-Slides.pdf
+: 1780354087:0;ls -la
+: 1780354093:0;open Apple-Silicon-ML-Slides.pdf
+: 1780354411:0;l
+: 1780354413:0;uv sync
+: 1780354415:0;l
+: 1780354421:0;./demo.sh
+: 1780354533:0;more ./demo.sh
+: 1780354692:0;./demo.sh
+: 1780354968:0;l
+: 1780355523:0;./demo.sh
+: 1780356280:0;pwd
+: 1780356284:0;cd /Users/dtundlam/Documents/apple-silicon-ml-study\
+git init\
+git add .\
+git commit -m "Add Apple Silicon ML internal brief, study guide, and MLX demo"\
+\
+gh repo create upscale-ai-network/<REPO_NAME> \\
+  --private \\
+  --source=. \\
+  --remote=origin \\
+  --description "Internal: Apple Silicon ML learning materials (slides, demo, study guide)" \\
+  --push
+: 1780356380:0;git config --global user.email "dtundlam@upscaleai.com"; git config --global user.name "Diwakar Tundlam"
+: 1780356386:0;cd /Users/dtundlam/Documents/apple-silicon-ml-study\
+git init\
+git add .\
+git commit -m "Add Apple Silicon ML internal brief, study guide, and MLX demo"\
+\
+gh repo create upscale-ai-network/<REPO_NAME> \\
+  --private \\
+  --source=. \\
+  --remote=origin \\
+  --description "Internal: Apple Silicon ML learning materials (slides, demo, study guide)" \\
+  --push
+: 1780356448:0;git og
+: 1780356451:0;git log
+: 1780356453:0;git status
+: 1780356454:0;git log
+: 1780356458:0;git status
+: 1780356460:0;git log
+: 1780357125:0;pwd
+: 1780357130:0;cd /Users/dtundlam/Documents/apple-silicon-ml-study\
+git add README.md .python-version\
+git commit -m "Document uv setup and clone parity for Mac and Linux VMs"\
+git push origin main
+: 1780357145:0;git log
+: 1780357212:0;git push origin main
+: 1780357262:0;gh repo create upscale-ai-network/diwakar-work \\
+  --private \\
+  --description "Private workbench: internal learning, demos, scripts"
+: 1780357495:0;git log
+: 1780357498:0;git status
+: 1780361684:0;ls -al
+: 1780446935:0;l
+: 1780450787:0;pwd
+: 1780450787:0;cd
+: 1780450788:0;cd 
+: 1780450790:0;cd .ssh
+: 1780450791:0;ls -altr
+: 1780450796:0;more id_ed25519.pub
+: 1780450803:0;more id_ed25519
+: 1780520774:0;p-wd
+: 1780520775:0;pwd
+: 1780520776:0;ls -altr
+: 1780521410:0;cat id_ed25519.pub
+: 1780524144:0;pwd
+: 1780524145:0;ls -al
+: 1780524146:0;cd ..
+: 1780524147:0;ls
+: 1780524148:0;ls -altr
+: 1780524150:0;cd
+: 1780524151:0;cd Desktop
+: 1780524152:0;l
+: 1780524157:0;..
+: 1780524157:0;l
+: 1780524161:0;cd Downloads
+: 1780524161:0;l
+: 1780524162:0;..
+: 1780524164:0;cd Projects
+: 1780524164:0;l
+: 1780524167:0;cd work
+: 1780524167:0;l
+: 1780524169:0;..
+: 1780524169:0;l
+: 1780524170:0;pwd
+: 1780524171:0;..
+: 1780524171:0;l
+: 1780524191:0;ls -altr
+: 1780524193:0;cd Do
+: 1780524195:0;cd Documents
+: 1780524195:0;l
+: 1780524198:0;cd apple-silicon-ml-study
+: 1780524198:0;l
+: 1780524205:0;pwd
+: 1780524287:0;cd ..
+: 1780524287:0;l
+: 1780524289:0;..
+: 1780524289:0;l
+: 1780524290:0;cd
+: 1780524292:0;ls -latr
+: 1780524300:0;cd d
+: 1780524301:0;cd diwakar-work
+: 1780524301:0;l
+: 1780524902:0;git status
+: 1780524904:0;git log
+: 1780524909:0;l
+: 1780525048:0;more TASKS.md
+: 1780525056:0;l
+: 1780525847:0;git status
+: 1780525849:0;git log
+: 1780525895:0;git status
+: 1780525914:0;more TASKS.md
+: 1780526165:0;l
+: 1780526177:0;git status
+: 1780526389:0;more TASKS.md
+: 1780527030:0;l
+: 1780527033:0;git status
+: 1780527042:0;git add CONSTITUTION.md
+: 1780527044:0;git status
+: 1780527052:0;git add META.md README.md TASKS.md
+: 1780527053:0;git status
+: 1780527057:0;git diff --staged
+: 1780527070:0;git status
+: 1780527115:0;git commit -m "$(cat <<'EOF'\
+Add constitution v0 and align task/docs hygiene.\
+\
+CONSTITUTION.md records stateless boot, law/state/heap, single-writer,\
+and invariants; README/META point agents there. TASKS.md sorts TRIAGE\
+below P1 with doing before open within each band.\
+EOF\
+)"
+: 1780527118:0;git status
+: 1780527278:0;git commit -m "$(cat <<'EOF'\
+Elevate DT113 to P1 (Apple Silicon prune).\
+\
+Move prune task ahead of TRIAGE/P2; note elevation in task row.\
+EOF\
+)"
+: 1780527286:0;git status
+: 1780527289:0;git log
+: 1780527290:0;l
+: 1780527622:0;git log
+: 1780527626:0;git status
+: 1780527630:0;git diff
+: 1780527844:0;git status
+: 1780527893:0;cd ~/diwakar-work\
+git add CONSTITUTION.md TASKS.md TASKS-LOG.md\
+git commit -m "$(cat <<'EOF'\
+Seal workbench: close DT118 and record template intent.\
+\
+Layer-A Gluon litmus validated; archive template notes under Done.\
+Clean tree so P0 DT100 (arch slides) proceeds on committed state.\
+EOF\
+)"\
+git status
+: 1780527896:0;git status
+: 1780527898:0;git log
+: 1780527900:0;l
+: 1780527994:0;cd ~/diwakar-work\
+git add TASKS.md TASKS-LOG.md\
+git commit -m "$(cat <<'EOF'\
+DT102: move to open; single doing task is DT100.\
+EOF\
+)"
+: 1780527996:0;l
+: 1780528000:0;git status
+: 1780528032:0;more TASKS.md
+: 1780533194:0;pwd
+: 1780533195:0;cd ..
+: 1780533195:0;l;
+: 1780533198:0;cd Projects
+: 1780533198:0;l
+: 1780533202:0;cd 
+: 1780533202:0;l
+: 1780533204:0;ls -altr
+: 1780533211:0;mkdir work
+: 1780533212:0;cd work
+: 1780533213:0;l
+: 1780533217:0;git clone git@github.com:upscale-ai-network/agent-template.git
+: 1780533220:0;l
+: 1780533222:0;cd agent-template
+: 1780533222:0;l
+: 1780533225:0;pwd
+: 1780533287:0;l
+: 1780533288:0;..
+: 1780533288:0;l
+: 1780533290:0;..
+: 1780533290:0;l
+: 1780533295:0;cd diwakar-work
+: 1780533296:0;l
+: 1780533297:0;pwd
+: 1780533598:0;l
+: 1780533600:0;pwd
+: 1780533600:0;l
+: 1780533616:0;git remote -v
+: 1780533627:0;pwd
+: 1780533642:0;ls -al /Users/dtundlam/work
+: 1780533644:0;ls -al /Users/dtundlam/work/agent-template
+: 1780533700:0;l
+: 1780533702:0;git status
+: 1780533707:0;git diff
+: 1780533713:0;git status
+: 1780534043:0;cd ~/diwakar-work\
+git status\
+git add CONSTITUTION.md META.md README.md TASKS.md TASKS-LOG.md\
+git commit -m "$(cat <<'EOF'\
+Pipe-clean remote docs; add next status; queue DT113.\
+\
+origin is upscale-ai-network/agent-template; ignore ~/work/agent-template\
+dummy clone. doing âƒ¦ƒ² next âƒ¦ƒ² open sort; DT103 notes write-access path.\
+EOF\
+)"\
+git push -u origin main
+: 1780534048:0;git status
+: 1780548758:0;l
+: 1780548760:0;git status
+: 1780548909:0;l
+: 1780548910:0;git status
+: 1780548915:0;cd ~/diwakar-work\
+git add -A\
+git status   # review deletions\
+git commit -m "$(cat <<'EOF'\
+DT113: remove Apple Silicon MLX brief and demo stack.\
+\
+Delete slides, PDFs, demos, pyproject/uv.lock; trim README/META.\
+Recover from git history if needed later.\
+EOF\
+)"
+: 1780548917:0;git status
+: 1780548922:0;git log
+: 1780548929:0;l
+: 1780548993:0;git status
+: 1780548994:0;git diff
+: 1780549002:0;git status
+: 1780549109:0;git add TASKS.md\
+git commit -m "DT100: point task row at A3 and B6 deliverables."\
+\
+
+: 1780549111:0;git status
+: 1780549321:0;cd ~/diwakar-work\
+git push origin main
+: 1780549737:0;cd ~/diwakar-work\
+git add manager-arch-vision-dt100-plan.md TASKS.md TASKS-LOG.md README.md manager-arch-vision-a3.md manager-arch-vision-b6.md\
+git commit -m "DT100: add compressed plan doc (chat context âƒ¦ƒ² playbook)."\
+git push origin main
+: 1780549741:0;git status
+: 1780549773:0;git add manager-arch-vision-dt100-plan.md TASKS.md TASKS-LOG.md README.md manager-arch-vision-a3.md manager-arch-vision-b6.md\
+git commit -m "DT100: add plan doc (decisions and playbook only)."
+: 1780549775:0;git status
+: 1780550003:0;git branch
+: 1780550007:0;git status
+: 1780550018:0;git pull 
+: 1780550021:0;git status
+: 1780550024:0;git pull --rebase
+: 1780550028:0;git status
+: 1780550031:0;git log
+: 1780550043:0;git push origin main
+: 1780550080:0;git fetch origin\
+git log origin/main -1 --oneline\
+git show origin/main:manager-arch-vision-dt100-plan.md | head -6\
+
+: 1780551341:0;git status
+: 1780551443:0;cd ~/diwakar-work\
+git add CONSTITUTION.md README.md TASKS.md\
+git commit -m "$(cat <<'EOF'\
+Constitution: discipline at speed, Gluon north-star litmus, Pensieve lineage.\
+\
+Record full kill-and-recover goal; Pensieve/Gluon separation; README litmus pointer.\
+EOF\
+)"\
+git status -sb
+: 1780551452:0;git push origin main
+: 1780551455:0;git status
+: 1780552930:0;git diff
+: 1780552973:0;git status
+: 1780552975:0;git diff
+: 1780552990:0;git status
+: 1780552992:0;git diff
+: 1780553000:0;git status
+: 1780553001:0;git diff
+: 1780553040:0;git status
+: 1780553047:0;git log
+: 1780553093:0;git status
+: 1780594769:0;l
+: 1780594787:0;brew info md-reader
+: 1780594795:0;brew list | grep read
+: 1780594797:0;brew list | grep reader
+: 1780594805:0;brew update
+: 1780595035:0;brew install glow
+: 1780595042:0;l
+: 1780595050:0;glod README.md
+: 1780595057:0;glod TASKS.md
+: 1780595063:0;glod TASKS-LOG.md
+: 1780596502:0;l
+: 1780596505:0;git status
+: 1780596509:0;l
+: 1780596515:0;open manager-arch-vision-a3.pptx
+: 1780596586:0;open manager-arch-vision-b6.pptx
+: 1780597973:0;l
+: 1780597974:0;pwd
+: 1780598365:0;cd Downloads
+: 1780598367:0;ls -altr
+: 1780598398:0;python3 ~/diwakar-work/scripts/extract-empty-template.py \\
+  ~/Downloads/Mirror-Sflow-Bugatti-ASIC-CCC.pptx
+: 1780598459:0;l
+: 1780598461:0;git status
+: 1780598466:0;open manager-arch-vision-b6.pptx
+: 1780598479:0;open manager-arch-vision-a3.pptx
+: 1780598624:0;open assets/templates/upscale-exec-empty.pptx
+: 1780598666:0;git status
+: 1780599075:0;l
+: 1780599560:0;git status
+: 1780599873:0;l
+: 1780599874:0;git status
+: 1780599948:0;l
+: 1780599952:0;git log
+: 1780599956:0;l
+: 1780599961:0;ls -la assets
+: 1780599964:0;ls -la assets/templates
+: 1780599971:0;pwd
+: 1780599983:0;ls -la assets/templates/upscale-company-template.pptx
+: 1780600031:0;open assets/templates/upscale-company-template.pptx
+: 1780600119:0;l
+: 1780600124:0;git status
+: 1780600720:0;l
+: 1780600723:0;git status
+: 1780602751:0;glod /tmp/GLUON-REQUIREMENTS-SPEC.md
+: 1780602761:0;glow
+: 1780602770:0;glow /tmp/GLUON-REQUIREMENTS-SPEC.md
+: 1780602863:0;git status
+: 1780602908:0;git diff --staged
+: 1780602923:0;git status
+: 1780603108:0;git push origin main
+: 1780603112:0;git status
+: 1780603615:0;glow manager-arch-vision-a3.md
+: 1780603621:0;ls -latr
+: 1780603783:0;cd
+: 1780603788:0;ls -latr
+: 1780603792:0;l dt100
+: 1780603861:0;git status
+: 1780603878:0;more dt100/README.md
+: 1780603893:0;glow dt100/manager-arch-vision-local.md
+: 1780603949:0;git status
+: 1780604048:0;l
+: 1780604069:0;git status
+: 1780604094:0;l dt100
+: 1780604239:0;l
+: 1780604241:0;l dt100
+: 1780604254:0;cat
+: 1780604262:0;ls a
+: 1780604282:0;glow dt100/manager-arch-vision-a3.md
+: 1780604285:0;glow dt100/manager-arch-vision-a3.md | less
+: 1780604288:0;glow dt100/manager-arch-vision-a3.md
+: 1780609223:0;git status
+: 1780611712:0;#open dt100/manager-arch-vision-a3.pptx
+: 1780611714:0;ls -al dt100
+: 1780611901:0;l
+: 1780611904:0;git status
+: 1780611908:0;l dt100
+: 1780612106:0;git status
+: 1780612287:0;l
+: 1780612289:0;git status
+: 1780612293:0;git pull --rebase
+: 1780612311:0;open dt100/manager-arch-vision-a3.pptx
+: 1780613120:0;ls -l
+: 1780613126:0;open dt100/manager-arch-vision-b6.pptx
+: 1780614055:0;open dt100/manager-arch-vision-a3.pptx
+: 1780614265:0;open dt100/manager-arch-vision-b6.pptx
+: 1780615460:0;l
+: 1780615465:0;git status
+: 1780615956:0;open dt100/manager-arch-vision-a3.pptx
+: 1780616019:0;cd
+: 1780616021:0;cd work
+: 1780616022:0;l
+: 1780616023:0;cd agent-template
+: 1780616024:0;l
+: 1780616028:0;..
+: 1780616028:0;l
+: 1780616029:0;..
+: 1780616029:0;l
+: 1780616032:0;cd work
+: 1780616033:0;l
+: 1780616033:0;..
+: 1780616034:0;l
+: 1780616035:0;cd Projects
+: 1780616036:0;l
+: 1780616037:0;cd work
+: 1780616037:0;l
+: 1780616039:0;cd
+: 1780616039:0;pwd
+: 1780616046:0;cd diwakar-work
+: 1780616046:0;l
+: 1780616050:0;git status
+: 1780616054:0;open dt100/manager-arch-vision-a3.pptx
+: 1780616796:0;emacs
+: 1780616804:0;brew install emacs
+: 1780616868:0;pwd
+: 1780616883:0;emacs dt100/manager-arch-vision-a3.md
+: 1780616904:0;l
+: 1780616908:0;cd dt100
+: 1780616908:0;l
+: 1780617153:0;ls -
+: 1780617154:0;l
+: 1780617156:0;pwd
+: 1780619157:0;ls -latr
+: 1780619162:0;open dt100/manager-arch-vision-a3.pptx
+: 1780619187:0;l
+: 1780619192:0;open dt100/manager-arch-vision-b6.pptx
+: 1780622149:0;open dt100/manager-arch-vision-a3.pptx
+: 1780622414:0;emacs dt100/manager-arch-vision-a3.md
+: 1780622451:0;grep -i walk *
+: 1780622480:0;l
+: 1780622483:0;cd dt100
+: 1780622483:0;l
+: 1780622486:0;grep -i walk *
+: 1780622763:0;l
+: 1780622772:0;open manager-arch-vision-a3.pptx
+: 1780622789:0;l
+: 1780622790:0;fg
+: 1780622802:0;emacs manager-arch-vision-a3.md
+: 1780622812:0;l
+: 1780622825:0;open manager-arch-vision-a3.pptx
+: 1780622855:0;git status
+: 1780622858:0;pwd
+: 1780622859:0;cd ..
+: 1780622859:0;l
+: 1780622862:0;git status
+: 1780622946:0;l
+: 1780622949:0;open manager-arch-vision-a3.pptx
+: 1780623911:0;l
+: 1780623912:0;open manager-arch-vision-a3.pptx
+: 1780625648:0;l
+: 1780625651:0;git status
+: 1780625653:0;pwd
+: 1780625654:0;cd ..
+: 1780625654:0;l;
+: 1780625656:0;git status
+: 1780625845:0;open manager-arch-vision-a3.pptx
+: 1780625847:0;l
+: 1780625855:0;open dt100/manager-arch-vision-a3.pptx
+: 1780625997:0;emacs dt100/manager-arch-vision-a3.md
+: 1780626238:0;./scripts/run-deck-build.sh
+: 1780626242:0;pwd
+: 1780626265:0;./scripts/run-deck-build.sh 
+: 1780626288:0;uv run python scripts/build-dt100-decks.py
+: 1780626679:0;git status
+: 1780626693:0;./scripts/check-decks.sh
+: 1780626698:0;./scripts/run-deck-build.sh
+: 1780626701:0;l
+: 1780626703:0;open dt100/manager-arch-vision-a3.pptx
+: 1780626761:0;open dt100/manager-arch-vision-b6.pptx
+: 1780627325:0;open dt100/manager-arch-vision-a3.pptx
+: 1780629468:0;open dt100/manager-arch-vision-b6.pptx
+: 1780630142:0;l
+: 1780630146:0;l dt100
+: 1780630161:0;ls -la dt100/manager-arch-vision-*
+: 1780630188:0;open dt100/manager-arch-vision-a3.pptx
+: 1780630430:0;git status
+: 1780630488:0;open dt100/manager-arch-vision-a3.pptx
+: 1780630518:0;git status
+: 1780630538:0;open dt100/manager-arch-vision-a3.pptx
+: 1780633564:0;git status
+: 1780634139:0;open dt100/manager-arch-vision-a3.pptx
+: 1780634198:0;git status
+: 1780634217:0;open dt100/manager-arch-vision-a3.pptx
+: 1780634527:0;git status
+: 1780634534:0;open dt100/manager-arch-vision-b6.pptx
+: 1780634628:0;open dt100/manager-arch-vision-a3.pptx
+: 1780634743:0;git status
+: 1780634759:0;open dt100/manager-arch-vision-a3.pptx
+: 1780634772:0;git status
+: 1780634829:0;open dt100/manager-arch-vision-b6.pptx
+: 1780635510:0;open dt100/manager-arch-vision-a3.pptx
+: 1780635601:0;ls -al dt100/manager-arch-vision-a3.pptx
+: 1780635611:0;ls -al dt100/manager-arch-vision-a3.md
+: 1780635619:0;git status
+: 1780635627:0;git restore dt100/manager-arch-vision-a3.pptx
+: 1780635628:0;git status
+: 1780635631:0;open dt100/manager-arch-vision-a3.pptx
+: 1780635802:0;ls -la
+: 1780635804:0;git status
+: 1780635813:0;git push origin main
+: 1780635817:0;sync
+: 1780635820:0;git status
+: 1780635823:0;git pull --rebase
+: 1780635826:0;ls -l
+: 1780689461:0;open dt100/manager-arch-vision-a3.pptx
+: 1780689519:0;git status
+: 1780689523:0;git log
+: 1780689559:0;open dt100/manager-arch-vision-b6.pptx
+: 1780689619:0;open dt100/manager-arch-vision-a3.pptx
+: 1780689637:0;open dt100/manager-arch-vision-b6.pptx
+: 1780689660:0;ls -al
+: 1780689662:0;git status
+: 1780689666:0;git diff
+: 1780689673:0;pwd
+: 1780689678:0;git diff --staged
+: 1780689685:0;git status
+: 1780689691:0;git diff
+: 1780691132:0;open dt100/manager-arch-vision-b6.pptx
+: 1780691992:0;git status
+: 1780692157:0;l
+: 1780693428:0;pwd
+: 1780693431:0;emacs dt100/manager-arch-vision-a3.md
+: 1780693444:0;emacs dt100/manager-arch-vision-b6.md
+: 1780693453:0;emacs dt100/manager-arch-vision-a3.md
+: 1780693629:0;open dt100/manager-arch-vision-a3.pptx
+: 1780699676:0;l
+: 1780699680:0;open dt100/manager-arch-vision-a3.pptx
+: 1780700353:0;git status
+: 1780700645:0;l dt100
+: 1780700763:0;git status
+: 1780700769:0;open dt100/manager-arch-vision-a3.pptx
+: 1780702410:0;git status
+: 1780702411:0;open dt100/manager-arch-vision-a3.pptx
+: 1780708102:0;git status
+: 1780708133:0;open dt100/manager-arch-vision-a3.pptx
+: 1780708329:0;git status
+: 1780708330:0;open dt100/manager-arch-vision-a3.pptx
+: 1780708501:0;git status
+: 1780708662:0;open dt100/manager-arch-vision-a3.pptx
+: 1780709391:0;git status
+: 1780709407:0;git diff
+: 1780709416:0;git status
+: 1780709480:0;#python3 ~/diwakar-work/scripts/extract-empty-template.py ~/Downloads/Mirror-Sflow-Bugatti-ASIC-CCC.pptx 
+: 1780709481:0;git status
+: 1780709640:0;open dt100/manager-arch-vision-a3.pptx
+: 1780710117:0;git status
+: 1780710314:0;open dt100/manager-arch-vision-a3.pptx
+: 1780710370:0;git status
+: 1780710863:0;git log
+: 1780710866:0;git show
+: 1780710874:0;open dt100/manager-arch-vision-a3.pptx
+: 1780711035:0;l
+: 1780711040:0;git status
+: 1780711042:0;l
+: 1780711047:0;l dt100
+: 1780711051:0;l
+: 1780711053:0;l dt100
+: 1780711091:0;l
+: 1780711093:0;l dt100
+: 1780711096:0;git status
+: 1780711098:0;l dt100
+: 1780711120:0;git status
+: 1780711123:0;l dt100
+: 1780711132:0;open dt100/qos-architecture.pptx
+: 1780711203:0;l dt100
+: 1780711251:0;open dt100/bugatti-qos-architecture.pptx
+: 1780712425:0;git status
+: 1780712904:0;lk
+: 1780712904:0;l
+: 1780712907:0;l dt100
+: 1780713575:0;git status
+: 1780714516:0;l dt100
+: 1780714529:0;open dt100/bugatti-qos-ccc.pptx
+: 1780716678:0;l dt100
+: 1780716678:0;l
+: 1780716680:0;git status
+: 1780716810:0;l
+: 1780716815:0;l dt100
+: 1780716817:0;l
+: 1780717584:0;git status
+: 1780723704:0;ls -al
+: 1780723968:0;ls -altr
+: 1780723972:0;ls -ltr
+: 1780724047:0;\
+
+: 1780724049:0;ls -al
+: 1780724052:0;sl -altr
+: 1780724053:0;ls -l
+: 1780724067:0;ls -la
+: 1780724070:0;pwd
+: 1780724116:0;sl -al
+: 1780724179:0;la -lr
+: 1780724181:0;ls m-lare
+: 1780724183:0;ls -latr
+: 1780724509:0;pwd
+: 1780724510:0;ls -ltr
+: 1780724512:0;cd .ssh
+: 1780724514:0;ls -altr
+: 1780724526:0;ls -ltr
+: 1780724528:0;ssh vm1
+: 1780724532:0;ssh diwakar@192.168.65.2
+: 1780724552:0;cat id_ed25519.pub
+: 1780724559:0;ssh diwakar@192.168.65.2
+: 1780724589:0;cd
+: 1780724590:0;ls -altr
+: 1780724709:0;pwd
+: 1780724716:0;ls -latr
+: 1780724718:0;git status
+: 1780724723:0;pwd
