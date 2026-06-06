@@ -10,9 +10,11 @@
 
 **B6** = shorthand · share as **`bugatti-qos-ccc`** — no `draft-` prefix unless draft-board.
 
-**Build:** `./scripts/run-deck-build.sh` (A3 from `dt100/` + B6 from here; do not hand-edit pptx)
+**Build:** `uv run build-decks` (A3 from `dt100/` + B6 from here; do not hand-edit pptx)
 
-**Check:** `./scripts/check-decks.sh`
+**Check:** `uv run check-decks`
+
+**Delivery:** SharePoint pptx upload — not auto-published to any team channel.
 
 ## Reference (not in deck)
 
@@ -28,4 +30,4 @@
 
 | You | Gluon |
 |-----|--------|
-| Edit `bugatti-qos-ccc.md` | `./scripts/run-deck-build.sh` |
+| Edit `bugatti-qos-ccc.md` | `uv run build-decks` |

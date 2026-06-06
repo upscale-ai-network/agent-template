@@ -9,13 +9,13 @@
 |------|--------|
 | [bugatti-qos-architecture.md](bugatti-qos-architecture.md) | `bugatti-qos-architecture.pptx` — **final** · Guru SharePoint 2026-06-05 |
 
-**Regen anytime:** edit md → `./scripts/run-deck-build.sh` (do not hand-edit pptx)
+**Regen anytime:** edit md → `uv run build-decks-a3` (do not hand-edit pptx)
 
-**Check:** `./scripts/check-decks.sh`
+**Check:** `uv run check-decks`
 
 **Diagrams:** `bugatti-qos-architecture.md` → `scripts/a3_aligned_render.py` → PNG → pptx (PyMuPDF; no Mermaid)
 
-**Preview (gitignored):** `scripts/preview-a3-deck.sh` → `assets/previews/a3/`
+**Delivery:** SharePoint pptx upload — not auto-published to any team channel.
 
 ## Reference
 
@@ -29,7 +29,7 @@
 
 | You | Gluon |
 |-----|--------|
-| Edit `bugatti-qos-architecture.md` | `./scripts/run-deck-build.sh` |
+| Edit `bugatti-qos-architecture.md` | `uv run build-decks-a3` |
 
 ---
 

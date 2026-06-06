@@ -58,7 +58,7 @@
 - [ ] Render hook shared with DT122 B6 path (mermaid → PNG)
 - [ ] Minimal build to `tests/output/canary.pptx` (not `dt100/` / `dt122/`)
 - [ ] `tests/test_canary_build.py` — pytest; `uv add --dev pytest`
-- [ ] `scripts/test-pipeline.sh` → `uv run pytest tests/ -q`
+- [ ] `uv run pytest tests/ -q`
 - [ ] README note: canary before touching production md
 
 **Done when:** `uv run pytest` green after intentional break/fix on mermaid and pptx stages; documented vs DT124 in [scripts/DECK-ACCEPTANCE.md](scripts/DECK-ACCEPTANCE.md).
@@ -111,7 +111,7 @@
 - [ ] Mermaid diagram blocks in `bugatti-qos-ccc.md` (pipeline annotate · CSB/buffer-carve inset · validation stack)
 - [ ] B6 render path: `assets/diagrams/b6/` + script (Mermaid → PNG); wire into `build-dt100-decks.py` / validate
 - [ ] Visual-first slide reorder in md (diagrams early; owners on picture)
-- [ ] `./scripts/run-deck-build.sh` — post-build checks pass
+- [ ] `uv run build-decks` — post-build checks pass
 - [ ] Human cold read — no “performed better” than peer CCC decks
 
 **Out of scope (abeyance):** swimlanes · template churn · HWv2 depth · informal peer huddle (follow-on after 2A ships)

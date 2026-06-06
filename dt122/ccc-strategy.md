@@ -17,7 +17,7 @@
 
 - Share as **`bugatti-qos-ccc`** — no `draft-` filename prefix unless back on literal draft-board.
 - **No Guru “review”** language — docs for walk / consensus, not homework grading.
-- md → `./scripts/run-deck-build.sh` → pptx; do not hand-edit pptx.
+- md → `uv run build-decks` → pptx; do not hand-edit pptx.
 
 ---
 

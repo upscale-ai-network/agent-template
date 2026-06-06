@@ -2,7 +2,7 @@
 
 **B6** = shorthand for this deck · share as **`bugatti-qos-ccc.pptx`** (ccc doc) — no `draft-` prefix unless back on draft-board.
 
-**Single file for this deck:** slide titles, bullets, on-slide walk cues → `bugatti-qos-ccc.pptx` via `./scripts/run-deck-build.sh`.
+**Single file for this deck:** slide titles, bullets, on-slide walk cues → `bugatti-qos-ccc.pptx` via `uv run build-decks`.
 
 **Presenter script (not in PPTX):** [bugatti-qos-ccc-presenter-notes.md](bugatti-qos-ccc-presenter-notes.md)
 

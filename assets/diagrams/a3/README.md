@@ -9,10 +9,8 @@ Diagrams are **not** built from Mermaid. Labels and layout come from `dt100/buga
 | `slide03-outcomes.png` | 3 | What you get |
 | `slide04-sponsor.png` | 4 | Sponsor asks |
 
-**Build:** `./scripts/run-deck-build.sh` — validates md, renders PNGs, builds pptx, validates output. Fails on any missing field, renderer, or corrupt file.
+**Build:** `uv run build-decks-a3` — validates md, renders PNGs, builds pptx, validates output. Fails on any missing field, renderer, or corrupt file.
 
 **Diagram-only render:** `uv run python scripts/render_a3_diagrams.py`
-
-**Legacy:** `legacy-mermaid/` holds old `.mmd` sources — not used by the build.
 
 Edit `bugatti-qos-architecture.md` → rebuild.

@@ -131,7 +131,7 @@ uv run check-decks          # litmus (md, PNGs, pptx)
 uv sync --group dev && uv run pytest tests/ -q
 ```
 
-Entry points live in `src/gluon_cli/` (`[project.scripts]` in `pyproject.toml`). Legacy `scripts/*.sh` wrappers only `exec uv run …`.
+Entry points live in `src/gluon_cli/` (`[project.scripts]` in `pyproject.toml`).
 
 **Zombie standby (Linux vm):** read-only · hatch once:
 

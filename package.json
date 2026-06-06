@@ -1,5 +1,0 @@
-{
-  "name": "diwakar-work",
-  "private": true,
-  "description": "Legacy npm metadata — DT100 deck build uses uv/Python only (see scripts/run-deck-build.sh)"
-}

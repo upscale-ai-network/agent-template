@@ -1,33 +1,28 @@
 # Slide templates (Gluon)
 
-## Use this for new decks (validated)
+## Deck build (DT100 / DT122)
 
-**`upscale-company-template.pptx`** — 2 seed slides (cover + content). **Committed. Do not rebuild for routine work.**
+**`upscale-ccc-style-reference.pptx`** — full CCC company chrome. **Committed.** Used by `uv run build-decks` (`scripts/build-dt100-decks.py`).
 
-1. Open in PowerPoint.
-2. Duplicate slide 1 or 2.
-3. Replace `[...]` placeholders.
-4. Logo, footer, navy/gold layout stay.
-
-Validation: [TEMPLATE-VALIDATION.md](TEMPLATE-VALIDATION.md)
+Do not hand-edit built decks in `dt100/` or `dt122/` — edit md and regen.
 
 ```bash
-python3 scripts/validate-company-template.py
-python3 scripts/validate-all-pptx.py   # before any git check-in
+uv run build-decks       # A3 + B6
+uv run build-decks-a3    # A3 only
+uv run check-decks       # litmus
 ```
-
-Builds use atomic save + zip integrity checks — **Repair dialog should not appear** if validation passed.
 
 ---
 
-## Scripts (DT100 / rare regen only)
+## Hand-edit template (optional)
 
-| Script | When |
-|--------|------|
-| `validate-company-template.py` | Before every template commit |
-| `build-company-template.py` | Only if CCC source or placeholders change |
-| `build-dt100-decks.py` | Regenerate A3 → `dt100/` · B6 → `dt122/` |
-| `extract-empty-template.py` | Masters-only extract (not litmus) |
+**`upscale-company-template.pptx`** — 2 seed slides (cover + content). Duplicate slide 1 or 2 in PowerPoint; replace `[...]` placeholders.
+
+**`upscale-exec-empty.pptx`** — theme/masters shell only — not for routine exec decks.
+
+Manual checks before commit: open without Repair dialog; logo + footer on both slides; gold on navy cover panel.
+
+Spec: [template-spec.md](template-spec.md) · [COMPANY-COLORS.md](COMPANY-COLORS.md)
 
 ---
 
@@ -35,8 +30,6 @@ Builds use atomic save + zip integrity checks — **Repair dialog should not app
 
 | File | In git? | Purpose |
 |------|---------|---------|
-| `upscale-ccc-style-reference.pptx` | **Yes** | Full CCC company chrome — **deck build source** (`build-dt100-decks.py`) · portable Gluon template · future: JFrog/Artifactory |
-| `upscale-company-template.pptx` | **Yes** | 2-slide seed template — hand-edit / duplicate |
-| `upscale-exec-empty.pptx` | Yes | 0-slide theme shell — not for new exec decks |
-| `template-spec.md` | Yes | Hex/fonts from theme XML |
-| `TEMPLATE-VALIDATION.md` | Yes | Litmus + validation log |
+| `upscale-ccc-style-reference.pptx` | **Yes** | **Deck build source** |
+| `upscale-company-template.pptx` | Yes | 2-slide seed — hand duplicate |
+| `upscale-exec-empty.pptx` | Yes | Masters-only shell |

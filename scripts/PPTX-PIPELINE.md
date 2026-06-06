@@ -16,7 +16,7 @@
 
 **Rule of thumb:** edit deck behavior under `scripts/`. Invoke via `uv run …`, not shell wrappers.
 
-Legacy `scripts/*.sh` files only `exec uv run …` and exist for muscle memory / zombie bootstrap.
+Bootstrap shell only: `bootstrap-gluon-zombie.sh`, `zombie-pull-build.sh`.
 
 ---
 
