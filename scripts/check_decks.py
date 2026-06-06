@@ -20,7 +20,7 @@ from deck_validate import (  # noqa: E402
 )
 
 A3_PPTX = ROOT / "dt100" / "bugatti-qos-architecture.pptx"
-B6_PPTX = ROOT / "dt100" / "bugatti-qos-ccc.pptx"
+B6_PPTX = ROOT / "dt122" / "bugatti-qos-ccc.pptx"
 
 
 def main() -> int:

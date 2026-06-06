@@ -3,7 +3,7 @@
 **Superseded for Thu DT100** — use:
 
 - **[../dt100/manager-arch-vision-a3.md](../dt100/manager-arch-vision-a3.md)** — hook (2–3 slides)
-- **[../dt100/bugatti-qos-ccc.md](../dt100/bugatti-qos-ccc.md)** — plan (walkable backup)
+- **[../dt122/bugatti-qos-ccc.md](../dt122/bugatti-qos-ccc.md)** — plan (walkable backup)
 
 **Below:** early hatch draft (week-1 table, 30–60d arc) — mine for facts; do not send as-is.
 

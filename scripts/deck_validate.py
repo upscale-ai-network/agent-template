@@ -9,7 +9,7 @@ from deck_from_md import DeckDocument, DeckSlide, load_b6_md, load_deck_md
 
 ROOT = Path(__file__).resolve().parents[1]
 A3_MD = ROOT / "dt100" / "bugatti-qos-architecture.md"
-B6_MD = ROOT / "dt100" / "bugatti-qos-ccc.md"
+B6_MD = ROOT / "dt122" / "bugatti-qos-ccc.md"
 A3_DIAGRAMS = ROOT / "assets" / "diagrams" / "a3"
 PIPELINE_IMG = ROOT / "assets" / "logical-pipeline-boss-slide.png"
 STYLE_REF = ROOT / "assets/templates/upscale-ccc-style-reference.pptx"

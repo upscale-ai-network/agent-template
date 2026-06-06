@@ -1,7 +1,7 @@
 # Whiteboard annotations — DT100 source material
 
 **Confidential — Upscale AI, Inc.**
-**Use:** Feed [dt100/bugatti-qos-ccc.md](../dt100/bugatti-qos-ccc.md); not on **A3** slides.
+**Use:** Feed [dt122/bugatti-qos-ccc.md](../dt122/bugatti-qos-ccc.md); not on **A3** slides.
 
 | File | Source | Thu use |
 |------|--------|---------|

@@ -2,9 +2,9 @@
 
 **Deck source of truth:** [bugatti-qos-ccc.md](bugatti-qos-ccc.md) → `bugatti-qos-ccc.pptx`.
 
-**DT100 · P0 · Thu package** · **Reader:** Gururaj · **Confidential — Upscale AI, Inc.**
+**DT122 · P0** · **Reader:** Gururaj (walk) · **Confidential — Upscale AI, Inc.**
 
-**Companion:** [bugatti-qos-architecture.md](bugatti-qos-architecture.md) — slides 1–2, then B6, then A3 slides 3–4. **Plan:** [plan.md](plan.md)
+**Companion:** [../dt100/bugatti-qos-architecture.md](../dt100/bugatti-qos-architecture.md) — slides 1–2, then B6, then A3 slides 3–4. **Plan:** [../dt100/plan.md](../dt100/plan.md)
 
 **Role of B6:** **Define the task** — how, who, wedge, deferrals. Open only after A3 slides **1–2** land — or if you ask *“where’s the plan?”*
 
@@ -27,7 +27,7 @@
 
 ## Thippanna feedback backlog (B6 — spirit, not A3)
 
-Captured **directive**; refined for **B6** and share-forward to sponsor W / N·E. **A3 stays tactical** — see [plan.md](plan.md) §12.
+Captured **directive**; refined for **B6** and share-forward to sponsor W / N·E. **A3 stays tactical** — see [../dt100/plan.md](../dt100/plan.md) §12.
 
 | Item | Spirit for B6 | Status |
 |------|----------------|--------|

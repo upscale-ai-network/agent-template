@@ -13,7 +13,7 @@ PATHS = [
     ROOT / "assets/templates/upscale-company-template.pptx",
     ROOT / "assets/templates/upscale-exec-empty.pptx",
     ROOT / "dt100/bugatti-qos-architecture.pptx",
-    ROOT / "dt100/bugatti-qos-ccc.pptx",
+    ROOT / "dt122/bugatti-qos-ccc.pptx",
 ]
 
 

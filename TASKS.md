@@ -16,7 +16,7 @@
 
 | DT | Priority | Status | Title | Due | Notes |
 |----|----------|--------|-------|-----|-------|
-| DT122 | P0 | doing | CCC 2A — Mermaid-aware B6 slide upgrade | 2026-06-06 | `bugatti-qos-ccc` · [ccc-strategy.md](dt100/ccc-strategy.md) §2–5 · A3 stays PyMuPDF |
+| DT122 | P0 | doing | CCC 2A — Mermaid-aware B6 slide upgrade | 2026-06-06 | `dt122/` · [ccc-strategy.md](dt122/ccc-strategy.md) §2–5 · A3 stays PyMuPDF in `dt100/` |
 | DT102 | P1 | open | Cursor/doc use — HR / IT / mgmt OK | | Privacy Mode on; formal OK pending |
 | DT103 | P1 | open | Org git remote + push policy | | `origin` → `upscale-ai-network/agent-template` · push blocked until write access |
 | DT104 | P1 | open | Corp VPN from home + internal tools | | Browser check; no SSH host yet |
@@ -39,7 +39,7 @@
 
 ### DT122 — CCC 2A — Mermaid-aware B6 slide upgrade
 
-**Strategy:** [dt100/ccc-strategy.md](dt100/ccc-strategy.md) · **Source:** [dt100/bugatti-qos-ccc.md](dt100/bugatti-qos-ccc.md) → `bugatti-qos-ccc.pptx`
+**Strategy:** [dt122/ccc-strategy.md](dt122/ccc-strategy.md) · **Source:** [dt122/bugatti-qos-ccc.md](dt122/bugatti-qos-ccc.md) → `bugatti-qos-ccc.pptx`
 
 **2A scope (restrained — Guru scans for blocks, not bullets):**
 

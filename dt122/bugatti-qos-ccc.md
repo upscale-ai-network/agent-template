@@ -6,7 +6,7 @@
 
 **Presenter script (not in PPTX):** [bugatti-qos-ccc-presenter-notes.md](bugatti-qos-ccc-presenter-notes.md)
 
-**Companion:** [bugatti-qos-architecture.md](bugatti-qos-architecture.md) (slides 1–2, then 3–4 after this walk). **Depth / walk map:** [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md).
+**Companion:** [../dt100/bugatti-qos-architecture.md](../dt100/bugatti-qos-architecture.md) (slides 1–2, then 3–4 after this walk). **Depth / walk map:** [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md).
 
 ---
 

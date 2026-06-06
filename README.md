@@ -101,7 +101,8 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 | `CONSTITUTION.md` | Gluon runtime contract |
 | `TASKS.md` / `TASKS-LOG.md` | Work queue + log |
 | `META.md` | Px / triage |
-| `dt100/` | **DT100** deliverables (md + pptx; see `dt100/README.md`) |
+| `dt100/` | **DT100** done — A3 md + pptx ([`dt100/README.md`](dt100/README.md)) |
+| `dt122/` | **DT122** doing — ccc / B6 md + pptx ([`dt122/README.md`](dt122/README.md)) |
 | `scratch/` | Chat scratch / mini tasks (not task-scoped) |
 | `assets/` | Shared pipeline slide, whiteboard photos, templates |
 
@@ -129,7 +130,8 @@ No Python project in repo after prune — add tooling per task when needed.
 ├── TASKS-LOG.md
 ├── META.md
 ├── README.md
-├── dt100/                         # DT100 task outputs
+├── dt100/                         # DT100 done — A3
+├── dt122/                         # DT122 — ccc / B6
 ├── scratch/                       # non-task scratch notes
 └── assets/
     ├── logical-pipeline-boss-slide.png

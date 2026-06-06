@@ -26,7 +26,7 @@ Builds use atomic save + zip integrity checks — **Repair dialog should not app
 |--------|------|
 | `validate-company-template.py` | Before every template commit |
 | `build-company-template.py` | Only if CCC source or placeholders change |
-| `build-dt100-decks.py` | Regenerate A3/B6 → `dt100/*.pptx` |
+| `build-dt100-decks.py` | Regenerate A3 → `dt100/` · B6 → `dt122/` |
 | `extract-empty-template.py` | Masters-only extract (not litmus) |
 
 **Local only (gitignored):** `upscale-ccc-style-reference.pptx` (full CCC download)

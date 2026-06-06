@@ -13,6 +13,7 @@ from pptx.util import Inches
 
 ROOT = Path(__file__).resolve().parents[1]
 DT100 = ROOT / "dt100"
+DT122 = ROOT / "dt122"
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from deck_from_md import A3_MD, B6_MD, load_b6_md, load_deck_md  # noqa: E402
@@ -185,7 +186,7 @@ def build_b6() -> Path:
     doc = load_b6_md()
     fail_on_errors(validate_b6_build(doc))
     slides = doc.ordered_slides()
-    out = DT100 / "bugatti-qos-ccc.pptx"
+    out = DT122 / "bugatti-qos-ccc.pptx"
     deck = StyledDeck(out, num_content_slides=len(slides))
 
     cov = doc.cover

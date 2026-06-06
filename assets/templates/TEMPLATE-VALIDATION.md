@@ -34,7 +34,7 @@ Build uses **copy-and-trim only** (never clone-into-empty-deck). Saves go to `.p
 | Task | Use |
 |------|-----|
 | **New exec deck (you)** | `upscale-company-template.pptx` only |
-| **DT100 A3/B6** | `python3 scripts/build-dt100-decks.py` → `dt100/bugatti-qos-architecture.pptx` · `dt100/bugatti-qos-ccc.pptx` |
+| **DT100 A3 / DT122 B6** | `python3 scripts/build-dt100-decks.py` → `dt100/bugatti-qos-architecture.pptx` · `dt122/bugatti-qos-ccc.pptx` |
 | **Regenerate template** (rare) | `build-company-template.py` → **must** run `validate-company-template.py` → commit |
 | **Theme/masters only** | `upscale-exec-empty.pptx` — not for litmus |
 

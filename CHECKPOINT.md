@@ -16,16 +16,21 @@
 
 | Shorthand | Files | Status |
 |-----------|-------|--------|
-| **B6** | `bugatti-qos-ccc.md` → `.pptx` | Polish pass done; **slide refinement next** (tonight / Sat AM) |
+| **B6 / DT122** | `dt122/bugatti-qos-ccc.md` → `.pptx` | **DT122** `doing` — Mermaid 2A next |
 | Share name | `bugatti-qos-ccc` | No `draft-` prefix — doc for review when complete |
 
 **Build:** `./scripts/run-deck-build.sh` · edit md only  
-**Strategy:** [dt100/ccc-strategy.md](dt100/ccc-strategy.md) — 2A → informal peer → gated formal
+**Strategy:** [dt122/ccc-strategy.md](dt122/ccc-strategy.md) — 2A → informal peer → gated formal
+
+## Layout
+
+- **`dt100/`** — DT100 **done** · A3 sources + regen
+- **`dt122/`** — DT122 **doing** · B6 / ccc sources
 
 ## Git
 
-- **A3:** on `origin/main` (`6c139bd`+)
-- **B6:** local commit `1a21b3b` — rename + polish (push pending human approval if blocked)
+- **A3:** `dt100/` on `origin/main`
+- **B6:** `dt122/` — task-scoped dir (git tracks moves)
 
 ## Human — do not ask Gluon to
 
@@ -35,6 +40,6 @@
 
 ## Next autonomous queue (Gluon)
 
-1. **DT122** — 2A Mermaid-aware slide upgrade · `bugatti-qos-ccc.md` → regen pptx ([ccc-strategy.md](dt100/ccc-strategy.md) §5)
+1. **DT122** — 2A Mermaid-aware slide upgrade · `dt122/bugatti-qos-ccc.md` → regen ([ccc-strategy.md](dt122/ccc-strategy.md) §5)
 2. Human cold read → informal peer DRI huddle → SharePoint when ready
 3. Friday: A3 1–2 → B6 walk → A3 3–4

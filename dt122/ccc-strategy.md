@@ -4,7 +4,7 @@
 **Scope:** `bugatti-qos-ccc` (B6), peer W collaboration, Guru interface  
 **Not on slides.** Internal operating record.
 
-**Related:** [plan.md](plan.md) · [bugatti-qos-ccc.md](bugatti-qos-ccc.md) · [CHECKPOINT.md](../CHECKPOINT.md) · [GLUON.md](../GLUON.md)
+**Related:** [../dt100/plan.md](../dt100/plan.md) · [bugatti-qos-ccc.md](bugatti-qos-ccc.md) · [CHECKPOINT.md](../CHECKPOINT.md) · [GLUON.md](../GLUON.md) · **Task:** [../TASKS.md](../TASKS.md) DT122
 
 ---
 
@@ -133,3 +133,4 @@ Heat loss = chat archaeology, lost pptx, performative email, unbounded polish. S
 | 2026-06-05 | No Guru ccc review email; W-first SharePoint; formal Guru oversee gated on informal |
 | 2026-06-05 | Strategy record → this file |
 | 2026-06-06 | **DT122** P0 `doing` — Mermaid-aware 2A on `bugatti-qos-ccc` |
+| 2026-06-06 | B6 sources → `dt122/`; `dt100/` retains A3 only (DT100 done) |
