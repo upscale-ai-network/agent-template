@@ -18,6 +18,7 @@
 |----|----------|--------|-------|-----|-------|
 | DT122 | P0 | doing | CCC 2A — Mermaid-aware B6 slide upgrade | 2026-06-06 | `dt122/` · [ccc-strategy.md](dt122/ccc-strategy.md) §2–5 · A3 stays PyMuPDF in `dt100/` |
 | DT123 | P2 | open | Task time ledger — per-DT visibility | | After DT122 · see **DT123** |
+| DT124 | P2 | open | Deck acceptance test framework | | After DT122 · [DECK-ACCEPTANCE.md](scripts/DECK-ACCEPTANCE.md) |
 | DT102 | P1 | open | Cursor/doc use — HR / IT / mgmt OK | | Privacy Mode on; formal OK pending |
 | DT103 | P1 | open | Org git remote + push policy | | `origin` → `upscale-ai-network/agent-template` · push blocked until write access |
 | DT104 | P1 | open | Corp VPN from home + internal tools | | Browser check; no SSH host yet |
@@ -37,6 +38,20 @@
 | DT120 | P2 | open | Pensieve → `origin.md` for Gluon constitution | | No PII / past-employer leak · Pensieve/Gluon separate · see **DT120** |
 | DT121 | P3 | open | CLI toolbox — past tools list (loose) | | One task, many tools · see **DT121** |
 | DT117 | P3 | open | Monthly review — tune tasks + log | | ~4 weeks |
+
+### DT124 — Deck acceptance test framework
+
+**When:** After **DT122** · build litmus ≠ stakeholder delivery proof.
+
+**Feature (3 lines):**
+
+1. **Extract on-slide text** from built pptx and **assert against md** source — titles, bullets, captions; fail on placeholders and known-bad strings.
+2. **Deck-specific gates** — A3 diagram embeds + cover terms; B6 pipeline slide + W DRI labels; optional [guru-terms-sot.md](assets/guru-terms-sot.md) forbidden-invented-terms check.
+3. **`scripts/accept-decks.sh`** — runs after build; non-zero exit blocks delivery/SharePoint; zombie read-only OK; spec: [scripts/DECK-ACCEPTANCE.md](scripts/DECK-ACCEPTANCE.md).
+
+**Done when:** `accept-decks.py` green on primary-built pptx before any stakeholder share; documented as delivery gate in deck READMEs.
+
+---
 
 ### DT123 — Task time ledger (per-DT visibility)
 

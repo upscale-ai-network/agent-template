@@ -34,6 +34,7 @@ Refine format later ([TASKS.md](TASKS.md) DT114).
 | 2026-06-06 | — | note | B6 sources `git mv` dt100 → dt122; dt100 = A3 only (DT100 done) |
 | 2026-06-06 | DT123 | created | P2 task time ledger — per-DT visibility; after DT122 |
 | 2026-06-06 | DT123 | note | Requirements from DT100 recovery gaps: thinking · prompt/review/meeting · Gluon vs human · idle |
+| 2026-06-06 | DT124 | created | P2 deck acceptance framework — build litmus ≠ deliverable; after DT122 |
 
 **Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`
 **Status (vocabulary):** `open` | `doing` | `next` | `done` | `drop`
