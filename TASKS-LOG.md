@@ -32,6 +32,7 @@ Refine format later ([TASKS.md](TASKS.md) DT114).
 | 2026-06-06 | DT122 | created | P0 CCC 2A — Mermaid-aware B6 slide upgrade; due 2026-06-06 |
 | 2026-06-06 | DT122 | status | `doing` |
 | 2026-06-06 | — | note | B6 sources `git mv` dt100 → dt122; dt100 = A3 only (DT100 done) |
+| 2026-06-06 | DT123 | created | P2 task time ledger — per-DT visibility; after DT122 |
 
 **Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`
 **Status (vocabulary):** `open` | `doing` | `next` | `done` | `drop`

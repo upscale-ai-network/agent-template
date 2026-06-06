@@ -17,6 +17,7 @@
 | DT | Priority | Status | Title | Due | Notes |
 |----|----------|--------|-------|-----|-------|
 | DT122 | P0 | doing | CCC 2A — Mermaid-aware B6 slide upgrade | 2026-06-06 | `dt122/` · [ccc-strategy.md](dt122/ccc-strategy.md) §2–5 · A3 stays PyMuPDF in `dt100/` |
+| DT123 | P2 | open | Task time ledger — per-DT visibility | | After DT122 · see **DT123** |
 | DT102 | P1 | open | Cursor/doc use — HR / IT / mgmt OK | | Privacy Mode on; formal OK pending |
 | DT103 | P1 | open | Org git remote + push policy | | `origin` → `upscale-ai-network/agent-template` · push blocked until write access |
 | DT104 | P1 | open | Corp VPN from home + internal tools | | Browser check; no SSH host yet |
@@ -36,6 +37,20 @@
 | DT120 | P2 | open | Pensieve → `origin.md` for Gluon constitution | | No PII / past-employer leak · Pensieve/Gluon separate · see **DT120** |
 | DT121 | P3 | open | CLI toolbox — past tools list (loose) | | One task, many tools · see **DT121** |
 | DT117 | P3 | open | Monthly review — tune tasks + log | | ~4 weeks |
+
+### DT123 — Task time ledger (per-DT visibility)
+
+**When:** After **DT122** ccc slides ship · **not** credit-card — proper task.
+
+**Feature (3 lines):**
+
+1. **Roll up hours per DT###** from git commit spans, `TASKS-LOG` status transitions, and optional agent-session timestamps — retroactive for closed tasks (e.g. DT100) where data exists.
+2. **Activity bands:** human prompting/work · Gluon autonomous (commit/build) · task `doing`/`open` wall time · idle/unattributed — best-effort from artifacts, not a stopwatch.
+3. **Output:** per-task summary (md or script report) + lightweight log convention for new tasks so billing and retros don’t depend on chat memory.
+
+**Done when:** `./scripts/task-time-report.py DT100` (or equivalent) produces defensible hour bands; documented hook for future DT rows.
+
+---
 
 ### DT122 — CCC 2A — Mermaid-aware B6 slide upgrade
 
