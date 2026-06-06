@@ -105,6 +105,8 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 | `dt122/` | **DT122** doing — ccc / B6 md + pptx ([`dt122/README.md`](dt122/README.md)) |
 | `scratch/` | Chat scratch / mini tasks (not task-scoped) |
 | `archive/` | Portable snapshots (e.g. [zsh dotfiles](archive/zsh/)) |
+| `src/py/` | Sample programs (pytest wiring smoke) |
+| `tests/` | `uv run pytest` · `./scripts/test-py.sh` |
 | `assets/` | Shared pipeline slide, whiteboard photos, templates |
 
 **Removed (2026-06-04):** Apple Silicon MLX brief, demos, PDFs/HTML — history in git; future copy from archive repo if needed.
