@@ -19,6 +19,7 @@
 | DT122 | P0 | doing | CCC 2A — Mermaid-aware B6 slide upgrade | 2026-06-06 | `dt122/` · [ccc-strategy.md](dt122/ccc-strategy.md) §2–5 · A3 stays PyMuPDF in `dt100/` |
 | DT123 | P2 | open | Task time ledger — per-DT visibility | | After DT122 · see **DT123** |
 | DT124 | P2 | open | Deck acceptance test framework | | After DT122 · [DECK-ACCEPTANCE.md](scripts/DECK-ACCEPTANCE.md) |
+| DT125 | P2 | open | Canary deck — md/mermaid/pptx pipeline regression | | With DT122 mermaid · see **DT125** |
 | DT102 | P1 | open | Cursor/doc use — HR / IT / mgmt OK | | Privacy Mode on; formal OK pending |
 | DT103 | P1 | open | Org git remote + push policy | | `origin` → `upscale-ai-network/agent-template` · push blocked until write access |
 | DT104 | P1 | open | Corp VPN from home + internal tools | | Browser check; no SSH host yet |
@@ -38,6 +39,29 @@
 | DT120 | P2 | open | Pensieve → `origin.md` for Gluon constitution | | No PII / past-employer leak · Pensieve/Gluon separate · see **DT120** |
 | DT121 | P3 | open | CLI toolbox — past tools list (loose) | | One task, many tools · see **DT121** |
 | DT117 | P3 | open | Monthly review — tune tasks + log | | ~4 weeks |
+
+### DT125 — Canary deck — md / mermaid / pptx pipeline regression
+
+**When:** With **DT122** mermaid path landing · **not** week-2 delivery gate · complements **DT124** (canary = pipeline; DT124 = real deck stakeholder acceptance).
+
+**Feature (3 lines):**
+
+1. **`tests/fixtures/canary-deck.md`** — falsifiable mini deck (marker strings, one mermaid diagram, one text slide); never shipped to Guru.
+2. **`uv run pytest`** — render → PNG → pptx → extract text; fail loud per stage (mermaid, embed, python-pptx); seconds-level regen loop.
+3. **Regression for PPT pics** — PNG size/dims + marker on-slide; optional golden PNG later; canary pptx gitignored · zombie/primary both run tests.
+
+**Scope:**
+
+- [ ] `tests/fixtures/canary-deck.md` + `canary-flow.mmd` (or B6 diagram stub)
+- [ ] Render hook shared with DT122 B6 path (mermaid → PNG)
+- [ ] Minimal build to `tests/output/canary.pptx` (not `dt100/` / `dt122/`)
+- [ ] `tests/test_canary_build.py` — pytest; `uv add --dev pytest`
+- [ ] `scripts/test-pipeline.sh` → `uv run pytest tests/ -q`
+- [ ] README note: canary before touching production md
+
+**Done when:** `uv run pytest` green after intentional break/fix on mermaid and pptx stages; documented vs DT124 in [scripts/DECK-ACCEPTANCE.md](scripts/DECK-ACCEPTANCE.md).
+
+---
 
 ### DT124 — Deck acceptance test framework
 

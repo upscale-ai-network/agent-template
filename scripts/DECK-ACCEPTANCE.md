@@ -20,6 +20,12 @@ Build success ≠ correct on-slide copy, layout, or delivery readiness.
 4. **Report** — `scripts/accept-decks.sh` → pass/fail + diff of missing/extra strings; exit non-zero blocks delivery tag.
 5. **Human optional** — checklist row in [dt122/ccc-strategy.md](../dt122/ccc-strategy.md) §2A cold-read; automation does not replace sponsor judgment.
 
+## Related: DT125 canary pipeline
+
+Fast **falsifiable** `tests/fixtures/canary-deck.md` — md → mermaid → png → pptx regression (`pytest`). Catches renderer/build breaks in seconds. **Not** stakeholder acceptance (DT124).
+
+---
+
 ## Done when (DT124)
 
 - `accept-decks.py` runs after `run-deck-build.sh`
