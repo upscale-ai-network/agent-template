@@ -1,6 +1,6 @@
 # A3 diagrams
 
-Diagrams are **not** built from Mermaid. Labels and layout come from `dt100/manager-arch-vision-a3.md`; PNGs are rendered by `scripts/a3_aligned_render.py` (PyMuPDF).
+Diagrams are **not** built from Mermaid. Labels and layout come from `dt100/qos-architecture-diwakar-tundlam.md`; PNGs are rendered by `scripts/a3_aligned_render.py` (PyMuPDF).
 
 | PNG | Slide | Md section |
 |-----|-------|------------|
@@ -15,4 +15,4 @@ Diagrams are **not** built from Mermaid. Labels and layout come from `dt100/mana
 
 **Legacy:** `legacy-mermaid/` holds old `.mmd` sources — not used by the build.
 
-Edit `manager-arch-vision-a3.md` → rebuild.
+Edit `qos-architecture-diwakar-tundlam.md` → rebuild.

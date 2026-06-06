@@ -19,7 +19,7 @@ from deck_validate import (  # noqa: E402
     validate_built_pptx,
 )
 
-A3_PPTX = ROOT / "dt100" / "manager-arch-vision-a3.pptx"
+A3_PPTX = ROOT / "dt100" / "qos-architecture-diwakar-tundlam.pptx"
 B6_PPTX = ROOT / "dt100" / "manager-arch-vision-b6.pptx"
 
 

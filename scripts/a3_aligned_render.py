@@ -1,4 +1,4 @@
-"""Aligned A3 diagram renderer — reads labels from manager-arch-vision-a3.md."""
+"""Aligned A3 diagram renderer — reads labels from qos-architecture-diwakar-tundlam.md."""
 
 from __future__ import annotations
 
@@ -315,7 +315,7 @@ def _slide01_content_size() -> Tuple[float, float]:
     slide = _a3().slide(1)
     groups = slide.stack_groups
     if not groups:
-        raise ValueError("Slide 1 needs *group* blocks in manager-arch-vision-a3.md")
+        raise ValueError("Slide 1 needs *group* blocks in qos-architecture-diwakar-tundlam.md")
     program = groups[0][1]
     dri = groups[1][1] if len(groups) > 1 else []
 
@@ -622,7 +622,7 @@ def render_slide01() -> str:
     slide = _a3().slide(1)
     groups = slide.stack_groups
     if not groups:
-        raise ValueError("Slide 1 needs *group* blocks in manager-arch-vision-a3.md")
+        raise ValueError("Slide 1 needs *group* blocks in qos-architecture-diwakar-tundlam.md")
     backgrounds: List[str] = []
     arrows: List[str] = []
     shapes: List[str] = []

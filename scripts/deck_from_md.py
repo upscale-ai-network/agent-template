@@ -291,7 +291,7 @@ def load_deck_md(
     return doc
 
 
-A3_MD = ROOT / "dt100" / "manager-arch-vision-a3.md"
+A3_MD = ROOT / "dt100" / "qos-architecture-diwakar-tundlam.md"
 B6_MD = ROOT / "dt100" / "manager-arch-vision-b6.md"
 
 

@@ -1,7 +1,7 @@
 # DT100 plan
 
 **Task:** DT100 · P0 · **`done`** · due **2026-06-05** · SharePoint → Gururaj · git `445afec` pushed
-**Deliverables:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) · [manager-arch-vision-b6.md](manager-arch-vision-b6.md) · slide export for Gururaj
+**Deliverables:** [qos-architecture-diwakar-tundlam.md](qos-architecture-diwakar-tundlam.md) · [manager-arch-vision-b6.md](manager-arch-vision-b6.md) · slide export for Gururaj
 
 **This file:** Decisions and meeting playbook only — **save the plan, not how we arrived at it.** Update here when the plan changes.
 

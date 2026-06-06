@@ -2,7 +2,7 @@
 # Export dt100 A3 pptx → PDF (PowerPoint) → PNGs (PyMuPDF). Run from repo root.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-PPTX="$ROOT/dt100/manager-arch-vision-a3.pptx"
+PPTX="$ROOT/dt100/qos-architecture-diwakar-tundlam.pptx"
 PDF="$ROOT/assets/previews/a3-deck.pdf"
 OUT="$ROOT/assets/previews/a3"
 mkdir -p "$OUT"

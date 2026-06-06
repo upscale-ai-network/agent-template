@@ -4,7 +4,7 @@
 
 **Presenter script (not in PPTX):** [manager-arch-vision-b6-presenter-notes.md](manager-arch-vision-b6-presenter-notes.md)
 
-**Companion:** [manager-arch-vision-a3.md](manager-arch-vision-a3.md) (slides 1–2, then 3–4 after this walk). **Depth / walk map:** [manager-arch-vision-b6-reference.md](manager-arch-vision-b6-reference.md).
+**Companion:** [qos-architecture-diwakar-tundlam.md](qos-architecture-diwakar-tundlam.md) (slides 1–2, then 3–4 after this walk). **Depth / walk map:** [manager-arch-vision-b6-reference.md](manager-arch-vision-b6-reference.md).
 
 ---
 

@@ -6,7 +6,7 @@
 
 | File | → PPTX |
 |------|--------|
-| [manager-arch-vision-a3.md](manager-arch-vision-a3.md) | `manager-arch-vision-a3.pptx` — **DT100 input** · Fri meeting |
+| [qos-architecture-diwakar-tundlam.md](qos-architecture-diwakar-tundlam.md) | `qos-architecture-diwakar-tundlam.pptx` — **DT100 input** · Fri meeting |
 | [manager-arch-vision-b6.md](manager-arch-vision-b6.md) | `manager-arch-vision-b6.pptx` — **DT100 input** · walk deck |
 
 **DT100 = the decks (files). Fri outcome = mandate (not a doc).** See [plan.md](plan.md) §1.
@@ -19,7 +19,7 @@
 
 **Setup (once):** `uv sync` (PyMuPDF + python-pptx; no npm/Chrome)
 
-**Diagrams (A3):** labels from `manager-arch-vision-a3.md` → `scripts/a3_aligned_render.py` → PNG → pptx (no Mermaid; build validates every step)
+**Diagrams (A3):** labels from `qos-architecture-diwakar-tundlam.md` → `scripts/a3_aligned_render.py` → PNG → pptx (no Mermaid; build validates every step)
 
 **Preview (gitignored):** `scripts/preview-a3-deck.sh` → `assets/previews/a3/`
 
@@ -38,7 +38,7 @@
 
 | You | Gluon |
 |-----|--------|
-| Edit `manager-arch-vision-a3.md` or `manager-arch-vision-b6.md` | `./scripts/run-deck-build.sh` |
+| Edit `qos-architecture-diwakar-tundlam.md` or `manager-arch-vision-b6.md` | `./scripts/run-deck-build.sh` |
 
 ---
 

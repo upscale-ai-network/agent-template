@@ -12,7 +12,7 @@ from pptx_util import assert_pptx_valid  # noqa: E402
 PATHS = [
     ROOT / "assets/templates/upscale-company-template.pptx",
     ROOT / "assets/templates/upscale-exec-empty.pptx",
-    ROOT / "dt100/manager-arch-vision-a3.pptx",
+    ROOT / "dt100/qos-architecture-diwakar-tundlam.pptx",
     ROOT / "dt100/manager-arch-vision-b6.pptx",
 ]
 
