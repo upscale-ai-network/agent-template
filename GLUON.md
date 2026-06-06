@@ -152,6 +152,7 @@ Stop writes → §6.3 → §6.2 → proper challenge.
 | AG-06 | Git vs context | §6.2 vs §6.3 |
 | AG-07 | Confidential remote | Challenge remote field |
 | AG-08 | Destructive git | G-033 |
+| AG-09 | Clone host writes | Linux vm1 = read-only zombie; primary Mac only · [CHECKPOINT.md](CHECKPOINT.md) |
 | AG-09 | Parallel Gluon tabs | **One active Gluon** (owner) |
 | AG-10 | Stale P0 | P0 in every challenge |
 | AG-11 | Env drift | G-023 · `uv sync` |

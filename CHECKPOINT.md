@@ -1,7 +1,18 @@
 # CHECKPOINT — session handoff
 
-**When:** 2026-06-05 evening · post-dinner  
+**When:** 2026-06-06 · Linux vm1 hatched  
 **Authority:** git HEAD + this file · chat/canvas not authoritative
+
+---
+
+## Multi-host Gluon
+
+| Host | Path | Role |
+|------|------|------|
+| **Mac Lepton** | `/Users/dtundlam/diwakar-work` | **Primary** — read/write Gluon |
+| **Linux vm1** | `/home/diwakar/diwakar-work` | **Read-only zombie** — `git pull` · boot/read · **no** commit/push/edits |
+
+No multi-agent sync protocol yet. vm1 is warm standby; human declares takeover if primary is lost. Multi-host sync → fix later (not tasked).
 
 ---
 
