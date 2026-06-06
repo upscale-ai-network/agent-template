@@ -4,7 +4,7 @@
 
 **Presenter script (not in PPTX):** [manager-arch-vision-b6-presenter-notes.md](manager-arch-vision-b6-presenter-notes.md)
 
-**Companion:** [qos-architecture.md](qos-architecture.md) (slides 1–2, then 3–4 after this walk). **Depth / walk map:** [manager-arch-vision-b6-reference.md](manager-arch-vision-b6-reference.md).
+**Companion:** [bugatti-qos-architecture.md](bugatti-qos-architecture.md) (slides 1–2, then 3–4 after this walk). **Depth / walk map:** [manager-arch-vision-b6-reference.md](manager-arch-vision-b6-reference.md).
 
 ---
 
