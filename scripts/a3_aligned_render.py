@@ -12,12 +12,16 @@ from deck_from_md import A3_MD, load_deck_md
 def _a3():
     return load_deck_md(A3_MD, a3_cover_fields=True)
 
+DRI_ORANGE = "#EF6C00"
+DRI_STROKE_W = 2.5
+
 STYLES: Dict[str, Dict[str, str]] = {
     "program": {"fill": "#E3F2FD", "stroke": "#1565C0", "color": "#051830"},
-    "lane": {"fill": "#FFF3E0", "stroke": "#EF6C00", "color": "#051830"},
+    "lane": {"fill": "#FFF3E0", "stroke": DRI_ORANGE, "color": "#051830"},
     "peer": {"fill": "#ECEFF1", "stroke": "#455A64", "color": "#051830"},
     "gate": {"fill": "#F3E5F5", "stroke": "#7B1FA2", "color": "#051830"},
     "step": {"fill": "#E8F5E9", "stroke": "#2E7D32", "color": "#051830"},
+    "highlight": {"fill": "#FFF9C4", "stroke": "#F9A825", "color": "#051830"},
     "doc": {"fill": "#E3F2FD", "stroke": "#1565C0", "color": "#051830"},
     "ask": {"fill": "#FFF3E0", "stroke": "#EF6C00", "color": "#051830"},
     "act": {"fill": "#F3E5F5", "stroke": "#7B1FA2", "color": "#051830"},
@@ -67,26 +71,51 @@ SG_TITLE_COLOR = "#556677"
 
 GATE_HALF = 44
 
-COMPASS_BOX_W = 156.0
-COMPASS_BOX_H = 46.0
-COMPASS_ARM = 52.0
-COMPASS_BAND_PAD = 14.0
-COMPASS_BELOW_GATE = 28.0
+DELIV_ROW_BOX_W = 204.0
+DELIV_ROW_BOX_H = 58.0
+DELIV_ROW_GAP = 14.0
+DELIV_BAND_PAD = 16.0
+DELIV_TITLE_H = 24.0
+DELIV_BELOW_GATE = 22.0
+DELIV_BAND_STROKE = 4.0
+DELIV_FONT_SIZE = 14
+SLIDE02_BOTTOM_STRIP_GAP = 10.0
 
-QUADRANT_STYLE = {
+# PPTX slide 3 — top column boxes (+40%)
+SLIDE02_TOP_SCALE = 1.4
+S02_BOX_W = BOX_W * SLIDE02_TOP_SCALE
+S02_BOX_H = BOX_H * SLIDE02_TOP_SCALE
+S02_FONT = round(FONT_SIZE * SLIDE02_TOP_SCALE)
+S02_SG_FONT = round(FONT_SIZE_SG * SLIDE02_TOP_SCALE)
+S02_ROW_GAP = ROW_GAP_SLIDE2 * SLIDE02_TOP_SCALE
+S02_COL_GAP = COL_GAP * SLIDE02_TOP_SCALE
+S02_SG_PAD = SG_PAD * SLIDE02_TOP_SCALE
+S02_SG_TITLE_H = SG_TITLE_H * SLIDE02_TOP_SCALE
+
+_LEGACY_QUADRANT_STYLE = {
     "north": "program",
     "east": "peer",
     "west": "peer",
     "south": "lane",
 }
 
+
+def _node_style(token: str) -> str:
+    """On-slide style token — peer/lane/act directly; legacy compass aliases optional."""
+    q = token.strip().lower()
+    if q in STYLES:
+        return q
+    return _LEGACY_QUADRANT_STYLE.get(q, "peer")
+
 FRAME_W = 1320.0
 FRAME_H = 500.0
 FRAME_PAD = 16.0
 TARGET_SCALE = 1.35
-BOX_W_SPREAD = 242.0
-BOX_H_SPREAD = 72.0
-FONT_SIZE_SPREAD = 13
+BOX_W_SPREAD = 268.0
+BOX_H_SPREAD = 96.0
+FONT_SIZE_SPREAD = 16
+SLIDE03_FONT_SIZE = 20
+SLIDE03_BOX_H = 108.0
 SPREAD_V_PAD = 52.0
 MIN_SPREAD_GAP = 32.0
 # Match box pixel size on slide 1 (widest) across all slides.
@@ -102,8 +131,8 @@ def _xml(text: str) -> str:
     )
 
 
-def _wrap_box_label(label: str) -> List[str]:
-    if len(label) <= LABEL_MAX_CHARS:
+def _wrap_box_label(label: str, max_chars: int = LABEL_MAX_CHARS) -> List[str]:
+    if len(label) <= max_chars:
         return [label]
     if " document" in label:
         head, tail = label.split(" document", 1)
@@ -113,7 +142,7 @@ def _wrap_box_label(label: str) -> List[str]:
     cur: List[str] = []
     for w in words:
         trial = " ".join(cur + [w])
-        if len(trial) > LABEL_MAX_CHARS and cur:
+        if len(trial) > max_chars and cur:
             lines.append(" ".join(cur))
             cur = [w]
         else:
@@ -138,19 +167,24 @@ def _box_svg(
     fs = font_size if font_size is not None else FONT_SIZE
     st = STYLES[style]
     cx = x + w / 2
-    lines = _wrap_box_label(label)
-    ty0 = y + (h - len(lines) * LINE_H) / 2 + LINE_H - 3
+    max_chars = LABEL_MAX_CHARS if w <= BOX_W * 1.5 else max(LABEL_MAX_CHARS, int(w / 15))
+    lines = _wrap_box_label(label, max_chars)
+    lh = max(LINE_H, int(fs * 1.05))
+    ty0 = y + (h - len(lines) * lh) / 2 + lh - 3
+    bold = style in ("lane", "ask", "highlight")
+    stroke_w = DRI_STROKE_W if style in ("lane", "ask") else ("2.25" if style == "highlight" else "1.75")
     text_lines = []
     for i, line in enumerate(lines):
+        weight = " font-weight='bold'" if bold else ""
         text_lines.append(
-            f"<text x='{cx:.1f}' y='{ty0 + i * LINE_H:.1f}' text-anchor='middle' "
-            f"font-family='{FONT}' font-size='{fs}' fill='{st['color']}'>"
+            f"<text x='{cx:.1f}' y='{ty0 + i * lh:.1f}' text-anchor='middle' "
+            f"font-family='{FONT}' font-size='{fs}' fill='{st['color']}'{weight}>"
             f"{_xml(line)}</text>"
         )
     return "\n".join(
         [
             f"<rect x='{x:.1f}' y='{y:.1f}' width='{w:.1f}' height='{h:.1f}' rx='{BOX_RX}' "
-            f"fill='{st['fill']}' stroke='{st['stroke']}' stroke-width='1.75'/>",
+            f"fill='{st['fill']}' stroke='{st['stroke']}' stroke-width='{stroke_w}'/>",
             *text_lines,
         ]
     )
@@ -232,13 +266,31 @@ def _v_connector(y_top_end: float, y_bottom_start: float, x: float, *, dashed: b
     return _connector(x, y1, x, y2, dashed=dashed)
 
 
-def _sg_band(x: float, y: float, w: float, h: float, title: str) -> str:
+def _sg_band(
+    x: float,
+    y: float,
+    w: float,
+    h: float,
+    title: str,
+    *,
+    accent: bool = False,
+    title_font: int = FONT_SIZE_SG,
+    title_band_h: float = SG_TITLE_H,
+) -> str:
+    title_color = DRI_ORANGE if accent else SG_TITLE_COLOR
+    weight = " font-weight='bold'" if accent else ""
+    stroke = DRI_ORANGE if accent else SG_BORDER
+    stroke_w = "2" if accent else "1"
     return (
         f"<rect x='{x:.1f}' y='{y:.1f}' width='{w:.1f}' height='{h:.1f}' rx='{SG_RX}' "
-        f"fill='{SG_FILL}' stroke='{SG_BORDER}' stroke-width='1'/>"
-        f"<text x='{x + 12:.1f}' y='{y + 16:.1f}' font-family='{FONT}' font-size='{FONT_SIZE_SG}' "
-        f"fill='{SG_TITLE_COLOR}'>{_xml(title)}</text>"
+        f"fill='{SG_FILL}' stroke='{stroke}' stroke-width='{stroke_w}'/>"
+        f"<text x='{x + 12:.1f}' y='{y + title_band_h * 0.78:.1f}' font-family='{FONT}' "
+        f"font-size='{title_font}' fill='{title_color}'{weight}>{_xml(title)}</text>"
     )
+
+
+def _dri_accent_title(title: str) -> bool:
+    return "Diwakar" in title
 
 
 def _wrap_svg(inner: str) -> str:
@@ -300,6 +352,16 @@ def _resolve_scale(content_w: float, content_h: float, *, fill_height: bool = Fa
     return _ensure_unified_scale()
 
 
+def _resolve_scale_width_first(content_w: float, content_h: float) -> float:
+    """Prefer readable box size — width-bound; only shrink if height truly overflows."""
+    avail_w = FRAME_W - 2 * FRAME_PAD
+    avail_h = FRAME_H - 2 * FRAME_PAD
+    s = min(TARGET_SCALE, avail_w / max(content_w, 1))
+    if content_h * s > avail_h:
+        s = min(s, avail_h / content_h)
+    return s
+
+
 def _frame(parts: str, content_w: float, content_h: float, *, fill_height: bool = False) -> str:
     """Unified scale keeps box size consistent across slides."""
     s = _resolve_scale(content_w, content_h, fill_height=fill_height)
@@ -307,6 +369,44 @@ def _frame(parts: str, content_w: float, content_h: float, *, fill_height: bool 
     tx = (FRAME_W - sw) / 2
     ty = (FRAME_H - sh) / 2
     inner = f"<g transform='translate({tx:.1f},{ty:.1f}) scale({s:.4f})'>{parts}</g>"
+    return _wrap_svg(inner)
+
+
+def _frame_width_first(parts: str, content_w: float, content_h: float) -> str:
+    """Slide 2/3 — avoid crushing layout when extra bottom band is added."""
+    s = _resolve_scale_width_first(content_w, content_h)
+    sw, sh = content_w * s, content_h * s
+    tx = (FRAME_W - sw) / 2
+    ty = (FRAME_H - sh) / 2
+    inner = f"<g transform='translate({tx:.1f},{ty:.1f}) scale({s:.4f})'>{parts}</g>"
+    return _wrap_svg(inner)
+
+
+def _frame_main_plus_bottom_strip(
+    main_parts: str,
+    main_w: float,
+    main_h: float,
+    bottom_parts: str,
+    bottom_w: float,
+    bottom_h: float,
+    *,
+    strip_gap: float = SLIDE02_BOTTOM_STRIP_GAP,
+) -> str:
+    """Slide 2 — scale flow diagram; bottom deliverable band stays 1:1 (visible in PPTX)."""
+    avail_w = FRAME_W - 2 * FRAME_PAD
+    avail_main_h = FRAME_H - 2 * FRAME_PAD - bottom_h - strip_gap
+    s = min(TARGET_SCALE, avail_w / max(main_w, 1))
+    if main_h * s > avail_main_h:
+        s = min(s, avail_main_h / max(main_h, 1))
+    sw, sh = main_w * s, main_h * s
+    tx = (FRAME_W - sw) / 2
+    ty = FRAME_PAD + max(0.0, (avail_main_h - sh) / 2)
+    bottom_tx = (FRAME_W - bottom_w) / 2
+    bottom_ty = FRAME_H - FRAME_PAD - bottom_h
+    inner = (
+        f"<g transform='translate({tx:.1f},{ty:.1f}) scale({s:.4f})'>{main_parts}</g>"
+        f"<g transform='translate({bottom_tx:.1f},{bottom_ty:.1f})'>{bottom_parts}</g>"
+    )
     return _wrap_svg(inner)
 
 
@@ -347,13 +447,41 @@ def _hband(
     shapes: List[str],
     backgrounds: List[str],
     h_gap: float = H_GAP,
+    *,
+    box_w: float = BOX_W,
+    box_h: float = BOX_H,
+    font_size: int = FONT_SIZE,
+    sg_pad: float = SG_PAD,
+    sg_title_h: float = SG_TITLE_H,
+    title_font: int = FONT_SIZE_SG,
 ) -> Tuple[float, float]:
-    inner_w = len(nodes) * BOX_W + max(0, len(nodes) - 1) * h_gap
-    band_w = inner_w + SG_PAD * 2
-    band_h = SG_TITLE_H + SG_PAD + BOX_H + SG_PAD
-    backgrounds.append(_sg_band(x0, y, band_w, band_h, title))
-    row_y = y + SG_TITLE_H + SG_PAD
-    _hrow(nodes, x0 + SG_PAD, row_y, arrows, shapes, h_gap=h_gap)
+    inner_w = len(nodes) * box_w + max(0, len(nodes) - 1) * h_gap
+    band_w = inner_w + sg_pad * 2
+    band_h = sg_title_h + sg_pad + box_h + sg_pad
+    backgrounds.append(
+        _sg_band(
+            x0,
+            y,
+            band_w,
+            band_h,
+            title,
+            accent=_dri_accent_title(title),
+            title_font=title_font,
+            title_band_h=sg_title_h,
+        )
+    )
+    row_y = y + sg_title_h + sg_pad
+    _hrow(
+        nodes,
+        x0 + sg_pad,
+        row_y,
+        arrows,
+        shapes,
+        h_gap=h_gap,
+        box_w=box_w,
+        box_h=box_h,
+        font_size=font_size,
+    )
     return x0 + band_w, y + band_h
 
 
@@ -362,14 +490,21 @@ def _column_layout(
     *,
     row_gap: float = ROW_GAP,
     deliverable_ci: Optional[int] = None,
+    box_w: float = BOX_W,
+    box_h: float = BOX_H,
+    font_size: int = FONT_SIZE,
+    col_gap: float = COL_GAP,
+    sg_pad: float = SG_PAD,
+    sg_title_h: float = SG_TITLE_H,
+    title_font: int = FONT_SIZE_SG,
 ) -> Tuple[List[str], List[str], List[str], float, float, Dict[str, Tuple[float, float, float]]]:
-    col_inner_w = BOX_W + SG_PAD * 2
-    row_unit = BOX_H + row_gap
+    col_inner_w = box_w + sg_pad * 2
+    row_unit = box_h + row_gap
     col_heights = [
-        SG_TITLE_H + SG_PAD + len(labels) * BOX_H + max(0, len(labels) - 1) * row_gap + SG_PAD
+        sg_title_h + sg_pad + len(labels) * box_h + max(0, len(labels) - 1) * row_gap + sg_pad
         for _, _, _, labels in columns
     ]
-    total_w = len(columns) * col_inner_w + max(0, len(columns) - 1) * COL_GAP
+    total_w = len(columns) * col_inner_w + max(0, len(columns) - 1) * col_gap
     backgrounds: List[str] = []
     arrows: List[str] = []
     shapes: List[str] = []
@@ -379,20 +514,31 @@ def _column_layout(
 
     for ci, (key, title, style, labels) in enumerate(columns):
         col_h = col_heights[ci]
-        cx = MARGIN + ci * (col_inner_w + COL_GAP) + SG_PAD
-        band_x = cx - SG_PAD
-        backgrounds.append(_sg_band(band_x, y0, col_inner_w, col_h, title))
-        node_y = y0 + SG_TITLE_H + SG_PAD
+        cx = MARGIN + ci * (col_inner_w + col_gap) + sg_pad
+        band_x = cx - sg_pad
+        backgrounds.append(
+            _sg_band(
+                band_x,
+                y0,
+                col_inner_w,
+                col_h,
+                title,
+                accent=(style == "lane" or _dri_accent_title(title)),
+                title_font=title_font,
+                title_band_h=sg_title_h,
+            )
+        )
+        node_y = y0 + sg_title_h + sg_pad
         prev_bottom: Optional[float] = None
-        mid_x = cx + BOX_W / 2
+        mid_x = cx + box_w / 2
         for label in labels:
-            shapes.append(_box_svg(cx, node_y, label, style))
-            anchors[f"{key}:{label}"] = (mid_x, node_y, node_y + BOX_H)
+            shapes.append(_box_svg(cx, node_y, label, style, box_w=box_w, box_h=box_h, font_size=font_size))
+            anchors[f"{key}:{label}"] = (mid_x, node_y, node_y + box_h)
             if prev_bottom is not None:
                 a = _v_connector(prev_bottom, node_y, mid_x)
                 if a:
                     arrows.append(a)
-            prev_bottom = node_y + BOX_H
+            prev_bottom = node_y + box_h
             node_y += row_unit
         col_bottoms.append(y0 + col_h)
         if deliverable_ci is not None and ci == deliverable_ci:
@@ -400,6 +546,61 @@ def _column_layout(
 
     layout_bottom = max(col_bottoms)
     return backgrounds, arrows, shapes, total_w + MARGIN, layout_bottom, anchors
+
+
+def _one_column(
+    key: str,
+    title: str,
+    style: str,
+    labels: Sequence[str],
+    x0: float,
+    y0: float,
+    *,
+    row_gap: float,
+    box_w: float,
+    box_h: float,
+    font_size: int,
+    sg_pad: float,
+    sg_title_h: float,
+    title_font: int,
+    lane_outline: bool = False,
+) -> Tuple[List[str], List[str], List[str], float, float, Dict[str, Tuple[float, float, float]]]:
+    col_inner_w = box_w + sg_pad * 2
+    row_unit = box_h + row_gap
+    col_h = sg_title_h + sg_pad + len(labels) * box_h + max(0, len(labels) - 1) * row_gap + sg_pad
+    backgrounds: List[str] = []
+    arrows: List[str] = []
+    shapes: List[str] = []
+    anchors: Dict[str, Tuple[float, float, float]] = {}
+    cx = x0 + sg_pad
+    band_x = x0
+    backgrounds.append(
+        _sg_band(
+            band_x,
+            y0,
+            col_inner_w,
+            col_h,
+            title,
+            accent=(style == "lane" or _dri_accent_title(title)),
+            title_font=title_font,
+            title_band_h=sg_title_h,
+        )
+    )
+    node_y = y0 + sg_title_h + sg_pad
+    prev_bottom: Optional[float] = None
+    mid_x = cx + box_w / 2
+    for label in labels:
+        shapes.append(_box_svg(cx, node_y, label, style, box_w=box_w, box_h=box_h, font_size=font_size))
+        anchors[f"{key}:{label}"] = (mid_x, node_y, node_y + box_h)
+        if prev_bottom is not None:
+            a = _v_connector(prev_bottom, node_y, mid_x)
+            if a:
+                arrows.append(a)
+        prev_bottom = node_y + box_h
+        node_y += row_unit
+    if lane_outline:
+        shapes.append(_lane_outline(band_x, y0, col_inner_w, col_h))
+    return backgrounds, arrows, shapes, col_inner_w, y0 + col_h, anchors
 
 
 def _diamond_parts(cx: float, cy: float, label: str) -> Tuple[str, List[str]]:
@@ -458,7 +659,7 @@ def _col_keys(n: int) -> List[str]:
     return (["bar", "lane", "peer", "col4"])[:n]
 
 
-def _compass_band(
+def _deliverable_bottom_line(
     band_title: str,
     nodes: Sequence[Tuple[str, str]],
     band_x: float,
@@ -466,61 +667,68 @@ def _compass_band(
     shapes: List[str],
     backgrounds: List[str],
 ) -> Tuple[float, float]:
-    """Four quadrant boxes inside one band — prefetch org framing (no N/E/W/S labels)."""
-    inner_w = COMPASS_BOX_W * 3 + COMPASS_ARM * 2
-    inner_h = COMPASS_BOX_H * 3 + COMPASS_ARM * 2
-    band_w = inner_w + COMPASS_BAND_PAD * 2
-    band_h = inner_h + SG_TITLE_H + COMPASS_BAND_PAD * 2
-    backgrounds.append(_sg_band(band_x, band_y, band_w, band_h, band_title))
-
-    cx = band_x + band_w / 2
-    cy = band_y + SG_TITLE_H + COMPASS_BAND_PAD + inner_h / 2
-    positions = {
-        "north": (cx - COMPASS_BOX_W / 2, cy - COMPASS_BOX_H - COMPASS_ARM),
-        "south": (cx - COMPASS_BOX_W / 2, cy + COMPASS_ARM),
-        "west": (cx - COMPASS_BOX_W - COMPASS_ARM, cy - COMPASS_BOX_H / 2),
-        "east": (cx + COMPASS_ARM, cy - COMPASS_BOX_H / 2),
-    }
-    for label, quadrant in nodes:
-        q = quadrant.strip().lower()
-        pos = positions.get(q)
-        if not pos:
-            continue
-        style = QUADRANT_STYLE.get(q, "program")
+    """Single bottom row inside a prominent orange bounding box — My deliverable."""
+    n = max(len(nodes), 1)
+    inner_w = n * DELIV_ROW_BOX_W + max(0, n - 1) * DELIV_ROW_GAP
+    band_w = inner_w + 2 * DELIV_BAND_PAD
+    band_h = DELIV_TITLE_H + DELIV_ROW_BOX_H + 2 * DELIV_BAND_PAD
+    backgrounds.append(
+        f"<rect x='{band_x:.1f}' y='{band_y:.1f}' width='{band_w:.1f}' height='{band_h:.1f}' "
+        f"rx='10' fill='#FFF8F1' stroke='#EF6C00' stroke-width='{DELIV_BAND_STROKE}'/>"
+    )
+    shapes.append(
+        f"<text x='{band_x + 14:.1f}' y='{band_y + 18:.1f}' font-family='{FONT}' "
+        f"font-size='{DELIV_FONT_SIZE}' font-weight='bold' fill='#EF6C00'>{_xml(band_title)}</text>"
+    )
+    row_y = band_y + DELIV_TITLE_H + DELIV_BAND_PAD
+    box_x = band_x + DELIV_BAND_PAD
+    for i, (label, quadrant) in enumerate(nodes):
+        style = _node_style(quadrant)
+        bx = box_x + i * (DELIV_ROW_BOX_W + DELIV_ROW_GAP)
         shapes.append(
             _box_svg(
-                pos[0],
-                pos[1],
+                bx,
+                row_y,
                 label,
                 style,
-                box_w=COMPASS_BOX_W,
-                box_h=COMPASS_BOX_H,
-                font_size=FONT_SIZE_SG,
+                box_w=DELIV_ROW_BOX_W,
+                box_h=DELIV_ROW_BOX_H,
+                font_size=DELIV_FONT_SIZE,
             )
         )
-        if q == "south":
-            pad = 4.0
-            shapes.append(
-                f"<rect x='{pos[0] - pad:.1f}' y='{pos[1] - pad:.1f}' "
-                f"width='{COMPASS_BOX_W + 2 * pad:.1f}' height='{COMPASS_BOX_H + 2 * pad:.1f}' "
-                f"rx='8' fill='none' stroke='#EF6C00' stroke-width='2'/>"
-            )
     return band_w, band_h
+
+
+def _flow_columns_to_outcome(
+    flow_cx: float,
+    col_bottom: float,
+    sources: Sequence[Tuple[float, float, bool]],
+    out_cx: float,
+    out_y: float,
+    arrows: List[str],
+) -> None:
+    """Three columns → outcome box (no gate diamond)."""
+    bus_y = col_bottom + 18
+    for sx, sy, dashed in sources:
+        arrows.append(_v_connector(sy, bus_y, sx, dashed=dashed))
+        if abs(sx - flow_cx) > 3:
+            arrows.append(_connector(sx, bus_y, flow_cx, bus_y, dashed=dashed))
+    arrows.append(_v_connector(bus_y, out_y, out_cx))
 
 
 def _slide02_read_guides(
     n_cols: int,
     y0: float,
     col_bottom: float,
-    gate_cx: float,
-    gate_top: float,
-    yes_cx: float,
-    split_y: float,
+    flow_cx: float,
     out_y: float,
     total_w: float,
+    *,
+    col_inner_w: float = BOX_W + SG_PAD * 2,
+    col_gap: float = COL_GAP,
+    sg_title_h: float = SG_TITLE_H,
 ) -> List[str]:
-    """Numbered arrows — columns L→R (1), down to Aligned (2), yes walk (3)."""
-    col_inner_w = BOX_W + SG_PAD * 2
+    """Numbered arrows — columns L→R (1), down to outcome walk (2)."""
     guides: List[str] = []
 
     guides.append(
@@ -528,26 +736,21 @@ def _slide02_read_guides(
         f"fill='{GUIDE_COLOR}' font-weight='bold'>Read order</text>"
     )
     guides.append(
-        f"<text x='{total_w - MARGIN - 168:.1f}' y='{y0 + 11:.1f}' font-family='{FONT}' "
-        f"font-size='{FONT_SIZE_NOTE}' fill='{GUIDE_COLOR}'>1 columns · 2 aligned · 3 walk</text>"
+        f"<text x='{total_w - MARGIN - 148:.1f}' y='{y0 + 11:.1f}' font-family='{FONT}' "
+        f"font-size='{FONT_SIZE_NOTE}' fill='{GUIDE_COLOR}'>1 columns · 2 walk</text>"
     )
 
-    flow_y = y0 + SG_TITLE_H + 6
-    first_col_right = MARGIN + col_inner_w
+    flow_y = y0 + sg_title_h + 6
     guides.append(_step_badge(MARGIN + col_inner_w / 2, flow_y - 22, "1"))
     for i in range(n_cols - 1):
-        x_left = MARGIN + i * (col_inner_w + COL_GAP) + col_inner_w - 10
-        x_right = MARGIN + (i + 1) * (col_inner_w + COL_GAP) + 10
+        x_left = MARGIN + i * (col_inner_w + col_gap) + col_inner_w - 10
+        x_right = MARGIN + (i + 1) * (col_inner_w + col_gap) + 10
         guides.append(_guided_arrow(x_left, flow_y, x_right, flow_y))
 
-    step2_mid = (col_bottom + gate_top) / 2
-    guides.append(_step_badge(gate_cx - 24, step2_mid, "2"))
-    guides.append(_guided_arrow(gate_cx, col_bottom + 4, gate_cx, gate_top - 4))
-
-    step3_mid_y = (split_y + out_y) / 2
-    step3_mid_x = (gate_cx + yes_cx) / 2
-    guides.append(_step_badge(step3_mid_x, step3_mid_y - 14, "3"))
-    guides.append(_guided_arrow(gate_cx, split_y + 8, yes_cx, out_y - 10))
+    bus_y = col_bottom + 18
+    step2_mid = (col_bottom + out_y) / 2
+    guides.append(_step_badge(flow_cx - 24, step2_mid, "2"))
+    guides.append(_guided_arrow(flow_cx, col_bottom + 4, flow_cx, out_y - 10))
 
     return guides
 
@@ -596,6 +799,78 @@ def _gate_tree(
         arrows.append(_v_connector(split_y, out_y, no_cx, dashed=True))
 
 
+def _gate_tree_yes_only(
+    gate_cx: float,
+    gate_cy: float,
+    gate_h: float,
+    sources: Sequence[Tuple[float, float, bool]],
+    yes_cx: float,
+    out_y: float,
+    arrows: List[str],
+) -> None:
+    """Aligned → yes walk only — no reframe / no branch (share-forward deck)."""
+    top_y = gate_cy - gate_h
+    left_x = gate_cx - gate_h
+    right_x = gate_cx + gate_h
+    bus_y = top_y - 16
+    join_pad = 6.0
+
+    for sx, sy, dashed in sources:
+        if abs(sx - gate_cx) < 3:
+            arrows.append(_v_connector(sy, top_y - join_pad, gate_cx, dashed=dashed))
+        elif sx < gate_cx:
+            arrows.append(_v_connector(sy, bus_y, sx, dashed=dashed))
+            arrows.append(_connector(sx, bus_y, left_x - join_pad, bus_y, dashed=dashed))
+            arrows.append(_connector(left_x - join_pad, bus_y, left_x - join_pad, gate_cy, dashed=dashed))
+        else:
+            arrows.append(_v_connector(sy, bus_y, sx, dashed=dashed))
+            arrows.append(_connector(sx, bus_y, right_x + join_pad, bus_y, dashed=dashed))
+            arrows.append(_connector(right_x + join_pad, bus_y, right_x + join_pad, gate_cy, dashed=dashed))
+
+    bot_y = gate_cy + gate_h
+    split_y = bot_y + 14
+    arrows.append(_v_connector(bot_y, split_y, gate_cx))
+    arrows.append(_v_connector(split_y, out_y, yes_cx))
+
+
+def _slide02_read_guides_stacked(
+    y0: float,
+    stack_bottom: float,
+    gate_cx: float,
+    gate_top: float,
+    yes_cx: float,
+    split_y: float,
+    out_y: float,
+    total_w: float,
+    *,
+    lane_right: float,
+    peer_x: float,
+    prog_y: float,
+) -> List[str]:
+    guides: List[str] = []
+    guides.append(
+        f"<text x='{MARGIN:.1f}' y='{y0 + 11:.1f}' font-family='{FONT}' font-size='{FONT_SIZE_NOTE}' "
+        f"fill='{GUIDE_COLOR}' font-weight='bold'>Read order</text>"
+    )
+    guides.append(
+        f"<text x='{total_w - MARGIN - 200:.1f}' y='{y0 + 11:.1f}' font-family='{FONT}' "
+        f"font-size='{FONT_SIZE_NOTE}' fill='{GUIDE_COLOR}'>1 wedge · 2 aligned · 3 walk</text>"
+    )
+    flow_y = y0 + S02_SG_TITLE_H + 6
+    guides.append(_step_badge(MARGIN + (lane_right - MARGIN) / 2, flow_y - 22, "1"))
+    guides.append(_guided_arrow(lane_right - 8, flow_y, peer_x + 10, flow_y))
+    col_inner = S02_BOX_W + S02_SG_PAD * 2
+    guides.append(_guided_arrow(peer_x + col_inner - 20, prog_y - 18, total_w - MARGIN - 40, prog_y - 18))
+
+    step2_mid = (stack_bottom + gate_top) / 2
+    guides.append(_step_badge(gate_cx - 24, step2_mid, "2"))
+    guides.append(_guided_arrow(gate_cx, stack_bottom + 4, gate_cx, gate_top - 4))
+    step3_mid_y = (split_y + out_y) / 2
+    guides.append(_step_badge(gate_cx - 12, step3_mid_y - 14, "3"))
+    guides.append(_guided_arrow(gate_cx, split_y + 8, yes_cx, out_y - 10))
+    return guides
+
+
 def render_slide02() -> str:
     slide = _a3().slide(2)
     cols = [
@@ -603,33 +878,46 @@ def render_slide02() -> str:
         for i, (title, style, labels) in enumerate(slide.columns)
     ]
     y0 = MARGIN
+    s02_col_inner = S02_BOX_W + S02_SG_PAD * 2
     backgrounds, arrows, shapes, w, col_bottom, anchors = _column_layout(
-        cols, row_gap=ROW_GAP_SLIDE2, deliverable_ci=1
+        cols,
+        row_gap=S02_ROW_GAP,
+        deliverable_ci=1,
+        box_w=S02_BOX_W,
+        box_h=S02_BOX_H,
+        font_size=S02_FONT,
+        col_gap=S02_COL_GAP,
+        sg_pad=S02_SG_PAD,
+        sg_title_h=S02_SG_TITLE_H,
+        title_font=S02_SG_FONT,
     )
 
-    gate_cx = MARGIN + (BOX_W + SG_PAD * 2) + COL_GAP + SG_PAD + BOX_W / 2
-    gate_cy = col_bottom + GATE_HALF + 16
-    gate_top = gate_cy - GATE_HALF
-    diamond_fill, _ = _diamond_parts(gate_cx, gate_cy, slide.gate or "Aligned")
-    foreground: List[str] = [diamond_fill]
+    flow_cx = MARGIN + s02_col_inner + S02_COL_GAP + S02_SG_PAD + S02_BOX_W / 2
+    foreground: List[str] = []
 
     tape_x, _, tape_bot = anchors["bar:Tape-out path"]
     bc_x, _, bc_bot = anchors["lane:Buffer carving"]
     peer_labels = slide.columns[2][2] if len(slide.columns) > 2 else []
-    peer_key = peer_labels[-1] if peer_labels else "ECMP"
+    peer_key = peer_labels[-1] if peer_labels else "Counters"
     ec_x, _, ec_bot = anchors[f"peer:{peer_key}"]
 
-    out_y = gate_cy + GATE_HALF + 40
-    yes_cx = gate_cx - 118
-    no_cx = gate_cx + 98
-    split_y = gate_cy + GATE_HALF + 14
+    out_y = col_bottom + 56
+    out_cx = flow_cx
     read_guides = _slide02_read_guides(
-        len(cols), y0, col_bottom, gate_cx, gate_top, yes_cx, split_y, out_y, w
+        len(cols),
+        y0,
+        col_bottom,
+        flow_cx,
+        out_y,
+        w,
+        col_inner_w=s02_col_inner,
+        col_gap=S02_COL_GAP,
+        sg_title_h=S02_SG_TITLE_H,
     )
 
     foreground.append(
         _box_svg(
-            yes_cx - YES_BOX_W / 2,
+            out_cx - YES_BOX_W / 2,
             out_y,
             slide.branch_yes or "QoS buffer carving arch",
             "act",
@@ -638,49 +926,42 @@ def render_slide02() -> str:
             font_size=FONT_SIZE,
         )
     )
-    foreground.append(
-        _box_svg(
-            no_cx - BOX_W / 2,
-            out_y,
-            slide.branch_no or "Reframe task",
-            "muted",
-        )
-    )
-    foreground.append(
-        f"<text x='{yes_cx - 36:.0f}' y='{out_y - 6:.0f}' font-family='{FONT}' "
-        f"font-size='{FONT_SIZE_NOTE}' fill='#556677'>yes</text>"
-    )
 
-    _gate_tree(
-        gate_cx,
-        gate_cy,
-        GATE_HALF,
+    _flow_columns_to_outcome(
+        flow_cx,
+        col_bottom,
         [(tape_x, tape_bot, False), (bc_x, bc_bot, False), (ec_x, ec_bot, True)],
-        yes_cx,
-        no_cx,
+        out_cx,
         out_y,
         arrows,
-        deemphasize_no=True,
     )
 
-    total_h = out_y + YES_BOX_H + MARGIN
-    total_w = w
+    main_h = out_y + YES_BOX_H + MARGIN
+    main_w = w
+    main_parts = _compose(arrows, shapes, backgrounds, [*foreground, *read_guides])
+
     if slide.compass and slide.deliverable_band:
-        inner_w = COMPASS_BOX_W * 3 + COMPASS_ARM * 2
-        band_w = inner_w + COMPASS_BAND_PAD * 2
-        band_h = inner_w + SG_TITLE_H + COMPASS_BAND_PAD * 2
-        band_x = max(MARGIN, (max(w, band_w + 2 * MARGIN) - band_w) / 2)
-        band_y = out_y + YES_BOX_H + COMPASS_BELOW_GATE
-        _compass_band(slide.deliverable_band, slide.compass, band_x, band_y, shapes, backgrounds)
-        total_h = band_y + band_h + MARGIN
-        total_w = max(w, band_w + 2 * MARGIN)
+        bot_bg: List[str] = []
+        bot_shapes: List[str] = []
+        band_w, band_h = _deliverable_bottom_line(
+            slide.deliverable_band,
+            slide.compass,
+            0.0,
+            0.0,
+            bot_shapes,
+            bot_bg,
+        )
+        bottom_parts = _compose([], bot_shapes, bot_bg)
+        return _frame_main_plus_bottom_strip(
+            main_parts,
+            main_w,
+            main_h,
+            bottom_parts,
+            band_w,
+            band_h,
+        )
 
-    return _frame(
-        _compose(arrows, shapes, backgrounds, [*foreground, *read_guides]),
-        total_w,
-        total_h,
-        fill_height=True,
-    )
+    return _frame_width_first(main_parts, main_w, main_h)
 
 
 def _spread_gap(n: int, box_w: float) -> Tuple[float, float]:
@@ -696,11 +977,16 @@ def _spread_gap(n: int, box_w: float) -> Tuple[float, float]:
     return box_w, MIN_SPREAD_GAP
 
 
-def _hstack_spread(nodes: Sequence[Tuple[str, str]]) -> str:
+def _hstack_spread(
+    nodes: Sequence[Tuple[str, str]],
+    *,
+    box_w_base: float = BOX_W_SPREAD,
+    box_h: float = BOX_H_SPREAD,
+    font_size: int = FONT_SIZE_SPREAD,
+) -> str:
     """Slides 3–4: larger boxes, gaps computed to fill width and vertical band."""
     n = len(nodes)
-    box_w, gap = _spread_gap(n, BOX_W_SPREAD)
-    box_h = BOX_H_SPREAD
+    box_w, gap = _spread_gap(n, box_w_base)
     content_h = box_h + 2 * SPREAD_V_PAD
     y = SPREAD_V_PAD
     arrows: List[str] = []
@@ -714,13 +1000,17 @@ def _hstack_spread(nodes: Sequence[Tuple[str, str]]) -> str:
         gap,
         box_w=box_w,
         box_h=box_h,
-        font_size=FONT_SIZE_SPREAD,
+        font_size=font_size,
     )
-    return _frame(_compose(arrows, shapes), FRAME_W, content_h, fill_height=True)
+    return _frame_width_first(_compose(arrows, shapes), FRAME_W, content_h)
 
 
 def render_slide03() -> str:
-    return _hstack_spread(_a3().slide(3).stack)
+    return _hstack_spread(
+        _a3().slide(3).stack,
+        box_h=SLIDE03_BOX_H,
+        font_size=SLIDE03_FONT_SIZE,
+    )
 
 
 def render_slide04() -> str:

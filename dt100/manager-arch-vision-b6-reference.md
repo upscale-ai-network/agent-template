@@ -25,6 +25,21 @@
 
 ---
 
+## Thippanna feedback backlog (B6 — spirit, not A3)
+
+Captured **directive**; refined for **B6** and share-forward to sponsor W / N·E. **A3 stays tactical** — see [plan.md](plan.md) §12.
+
+| Item | Spirit for B6 | Status |
+|------|----------------|--------|
+| Diwakar wedge **above**, program context **below** (external) | Owners slide + pipeline walk: **you first**, program bar as context band | **Passive** — next B6 regen |
+| Reword “done and validated” soup | Use **tape-out validation path** language in framework beats | **Passive** |
+| W DRI order: Shafi → Tippanna → Tilak → **Girish · L3** | §4 owners + pipeline caption | **Passive** |
+| Drop **Reframe** + **Aligned** diamond | A3 slide 2 direct flow (2026-06); B6 same on regen | **A3 done** · B6 on regen |
+| **Wedge redraw** slide 2 | Too made-up for Guru A3 | **Abeyance** |
+| Closing **publish-ready** for Guru forward | B6 defer + A3 slide 4 stays mandate ask; B6 does not homework-check sponsor | **Passive** |
+
+---
+
 ## 1. Transition (define task — after A3 slides 1–2)
 
 **Assumption:** **Situation** and **task** on A3 slides 1–2 are aligned (no “yes” presumed — we established context first).

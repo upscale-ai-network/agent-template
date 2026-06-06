@@ -18,6 +18,7 @@ COLOR_BODY = RGBColor(0x33, 0x33, 0x33)  # content body (not harsh #000 on white
 COLOR_LEAD = RGBColor(0x55, 0x66, 0x77)  # content optional subtitle line
 COLOR_FOOTER = RGBColor(0x66, 0x88, 0xAA)  # © line on cover
 COLOR_FOOTER_CONTENT = RGBColor(0x88, 0x88, 0x88)  # © line on content slides
+COLOR_DRI_ORANGE = RGBColor(0xEF, 0x6C, 0x00)  # Diwakar qos lane on cover meta (A3)
 
 RIGHT_PANEL_LEFT = 5_000_000  # EMU — shapes on navy background
 FOOTER_TOP = 4_800_000
@@ -198,7 +199,8 @@ def apply_cover_colors(slide) -> None:
         if shape.left >= RIGHT_PANEL_LEFT and shape.top < 2_500_000:
             color_all_paragraphs(shape.text_frame, COLOR_GOLD)
         elif shape.top > 3_000_000 and shape.top < 3_600_000:
-            color_all_paragraphs(shape.text_frame, COLOR_META)
+            rgb = COLOR_DRI_ORANGE if "Diwakar" in t else COLOR_META
+            color_all_paragraphs(shape.text_frame, rgb)
         elif shape.top > 3_600_000 and shape.top < 4_200_000:
             color_all_paragraphs(shape.text_frame, COLOR_TAG)
         elif shape.top > 1_500_000 and shape.top < 2_500_000 and shape.left < RIGHT_PANEL_LEFT:
@@ -255,7 +257,8 @@ def fill_cover_slide(slide, headline: str, subline: str, meta: str, tag: str) ->
             else:
                 set_shape_lines(shape, [subline], COLOR_GOLD, center=True)
         elif raw.strip().startswith("Authors:") or "[Subtitle line 2" in raw:
-            set_shape_single_line(shape, meta, COLOR_META)
+            author_rgb = COLOR_DRI_ORANGE if "Diwakar" in meta else COLOR_META
+            set_shape_single_line(shape, meta, author_rgb)
         elif "Hardware/Architecture" in raw or "[Tag /" in raw:
             set_shape_single_line(shape, tag, COLOR_TAG)
     apply_cover_colors(slide)

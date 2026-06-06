@@ -201,6 +201,8 @@ def load_deck_md(
                         cov.left_subtitle = val
                     elif key == "Right (navy, 3 lines)":
                         cov.right_lines = [p.strip() for p in re.split(r"\s*/\s*", val)]
+                    elif key == "Meta":
+                        cov.meta = val
                     elif key == "Tag":
                         cov.tag = val
                 else:
@@ -232,7 +234,7 @@ def load_deck_md(
                 current.caption = val
             elif key == "Gate":
                 current.gate = val
-            elif key == "Branch yes":
+            elif key in ("Branch yes", "Outcome"):
                 current.branch_yes = val
             elif key == "Branch no":
                 current.branch_no = val
@@ -246,7 +248,7 @@ def load_deck_md(
                 mode = "columns"
                 flush_group()
                 flush_column()
-            elif key == "On-slide (compass)":
+            elif key in ("On-slide (compass)", "On-slide (deliverable row)"):
                 mode = "compass"
                 flush_group()
                 flush_column()

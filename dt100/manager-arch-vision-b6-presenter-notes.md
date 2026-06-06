@@ -46,7 +46,7 @@ Prior roles: C-model + emulation before tape-out — adapt when Upscale models a
 
 - **Gururaj:** scope + company/OCP external (standards, customer-facing).
 - **Me:** validation program draft + QoS RM (QoSMAP, Queue, buffer carve at CSB).
-- **Shafi:** L2/L3/ACL · **Tippanna:** ECMP / LAG / Counters + AV methodology.
+- **Shafi:** L2/L3/Mirroring · **Tippanna:** ECMP/Stats · **Tilak:** L2 · **Girish:** L3 (Thippanna order — B6 owners, not A3 gate).
 - **Rupa:** datapath / OCP ESUN — weekly before vendor calls.
 - **Prasun:** program mesh — cadence only if asked.
 
@@ -108,4 +108,4 @@ Whiteboards: `assets/dt100-whiteboards.md` + `assets/pics/` — backup only.
 
 ## Close
 
-Return to **A3 slides 3–4**: sprint scope + alignment checkpoints. Fri outcome = mandate for 2–3 month sprint if trust lands.
+Return to **A3 slides 3–4**: near-term scope + alignment checkpoints. Guru expects **concrete draft in next few days** — tape-out remains north star.

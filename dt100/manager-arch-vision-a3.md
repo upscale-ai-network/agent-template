@@ -10,15 +10,16 @@
 
 ## Cover
 
-**Left title:** Architecture Vision  
+**Left title:** qos architecture  
 **Left subtitle:** End-to-end datapath hardware–software validation  
+**Meta:** Diwakar Tundlam - qos architect  
 **Right (navy, 3 lines):** Dynamic / Switch-Buffer / Management  
 **Tag:** Architecture review · Confidential — Upscale AI
 
 ```notes
 This deck sells me in the role — vision, draft plan, how I drive — not a document handoff.
 
-Left = your program bar (done and validated to tape-out). Right = my DRI wedge (DBM). Close = mandate + **concrete draft in next few days** (Guru steer post-meeting).
+Left = program bar (done and validated to tape-out). Right = Diwakar DRI wedge (DBM). Close = mandate + **concrete draft in next few days** (steer post-meeting).
 ```
 
 ---
@@ -32,7 +33,7 @@ I am Diwakar. You need someone you can trust to drive with little supervision �
 
 Two alignments: (1) your done-and-validated bar — product, mgmt plane, architecture validation, SDK/SAI, C-model → emulation → silicon; (2) my wedge — Dynamic Switch-Buffer Management (DBM) at CSB (QoSMAP, Queue, buffer carving).
 
-DBM (say once): ESUN-world pair to DLB — buffers/CSB layer, not ECMP/fabric. Rupa owns datapath architecture; I drive by understanding the pipe. Peer intersects: Shafi (L2/ACL), Tippanna (ECMP/AV), SDK leads, Rupa (datapath/OCP).
+DBM (say once): ESUN-world pair to DLB — buffers/CSB layer, not ECMP/fabric. **Datapath Architecture** (E-level lane; implicit owner — no name, no OCP on slide). W peers: Shafi (L2/L3/Mirroring), Tippanna (ECMP/Stats), Tilak (L2), SDK leads.
 
 Flow: slides 1–2 (situation + task) → QoS buffer carving arch walk → slides 3–4 (mandate + alignment).
 ```
@@ -47,24 +48,24 @@ Flow: slides 1–2 (situation + task) → QoS buffer carving arch walk → slide
 
 **On-slide (stack):**
 
-*Program — done and validated*
+*Validation path to tape-out*
 - Product | program
 - Management plane (FBOSS / SONiC) | program
 - Architecture validation | program
 - SDK / SAI | program
 - C-model → emulation → silicon | program
 
-*DRI — QoS RM at CSB*
+*Diwakar Tundlam - qos architect*
 - CSB | lane
 - QoSMAP | lane
 - Queue | lane
 - Buffer carving | lane
-- Scope align · Fri | act
+- Friday meeting · scope align | act
 
 ```notes
 What I will drive in your program bar — not owning product, mgmt, full AV, or SDK programs, but contributing with a clear wedge.
 
-Bottom band = my lane: QoS RM on QoSMAP, Queue, buffer carving at CSB. This is the draft scope I execute under your steer.
+Bottom band = function lane (not role title): QoSMAP, Queue, buffer carving at CSB. Bounded scope under steer.
 
 Selling: I have a bounded wedge and understand how it sits in the full tape-out path.
 ```
@@ -73,48 +74,49 @@ Selling: I have a bounded wedge and understand how it sits in the full tape-out 
 
 ## Slide 2
 
-**Title:** Done and validated before tape-out  
+**Title:** Validated to tape-out  
 **Diagram:** slide02-validated
 
-**Deliverable band:** My deliverable
+**Deliverable band:** Diwakar Tundlam - qos architect · deliverable
 
-**On-slide (compass):**
-- Gururaj · scope | north
-- Shafi · Tippanna | east
-- Rupa · datapath | west
-- QoS carve · pipeline walk | south
+**On-slide (deliverable row):**
+- Shafi · L2/L3/Mirroring | peer
+- Tippanna · ECMP/Stats | peer
+- Tilak · L2 | peer
+- Datapath Architecture | peer
+- Diwakar · buffer carve plan | lane
 
 **On-slide (columns):**
 
-**Column:** Done and validated · program
+**Column:** Tape-out validation · program
 - Product
 - Management plane
 - Architecture validation
 - SDK / SAI
 - Tape-out path
 
-**Column:** My lane (QoS RM) · lane
+**Column:** Diwakar Tundlam — qos architect · lane
 - QoSMAP
 - Queue
 - Buffer carving
 
 **Column:** Peer DRIs · peer
-- Layer 2 / 3
-- ECMP / LAG
-- Port-Mirroring
+- Shafi · L2/L3/Mirroring
+- Tippanna · ECMP/Stats
+- Tilak · L2
 - Counters
 
-**Gate:** Aligned
-**Branch yes:** QoS buffer carving arch
-**Branch no:** Reframe task
-**Read guide:** 1 columns left→right · 2 down to aligned · 3 yes walk
+**Outcome:** QoS buffer carving arch
+**Read guide:** 1 columns left→right · 2 walk
 
 ```notes
-Walk order: three columns **left → right**, then **down** to Aligned → QoS buffer carving arch. **Read order** on-slide: numbered arrows 1 → 2 → 3 (Guru: visual learner — how to read).
+Walk order: three columns **left → right**, then **down** to QoS buffer carving arch walk. **Read order** on-slide: 1 → 2.
 
-**Aligned · Wed 1:1** — not a re-ask. Middle column = my lane (QoS buffer carve). Bottom band = **My deliverable** — compass prefetch for org framing (no N-E-W-S label on wall).
+Col 1 = tape-out validation (program). Col 2 = Diwakar lane (orange). Col 3 = peer DRIs. **Bottom row** = W intersects + buffer carve plan.
 
-Yes → QoS buffer carving arch walk. No path grayed — closed at 1:1.
+**No gate diamond** — stand-alone / forward-safe (Thippanna Sr.W + Prabhu A). Alignment / reframe with sponsor — spoken at Friday meeting, not on-wall.
+
+*(Thippanna stacked layout → B6 backlog.)*
 ```
 
 ---
@@ -133,17 +135,17 @@ Pipeline walk is not a deliverable — it is how I show vision, draft plans, and
 **Diagram:** slide03-outcomes
 
 **On-slide (stack):**
-- Next few days · draft plan | step
+- Next few days · buffer carve plan | highlight
 - Software ↔ hardware · validated | step
-- AV · C-model / co-dev | step
 - SDK / SAI / mgmt → tape-out | step
+- AV · C-model / co-dev | step
 
 ```notes
-Guru redirect: 2–3 month window was too slow — he wants something concrete in the **next few days**.
+SharePoint timeline: 2–3 month window was too slow — concrete output in the **next few days** (yellow highlight on slide).
 
-Say: draft plan / validation gates v0 (format per his steer) — not another 50-pager. North star unchanged: tape-out with SDK, SAI, mgmt on silicon.
+Say: **buffer carve plan** + validation gates v0 (format per steer) — not another 50-pager. North star unchanged: tape-out with SDK, SAI, mgmt on silicon.
 
-Gururaj touch-in at gates; I drive day-to-day technical work.
+Sponsor touch-in at gates; Diwakar drives day-to-day technical work.
 ```
 
 ---
@@ -151,26 +153,26 @@ Gururaj touch-in at gates; I drive day-to-day technical work.
 ## After pipeline walk
 
 ```notes
-Slide 4: four engineering checkpoints before Fri close. Mandate = permission to drive the sprint. Pipeline plan co-evolved on the walk — alignment, not a doc handoff.
+Slide 4: four engineering checkpoints before Friday meeting close. Mandate = permission to drive the sprint. Pipeline plan co-evolved on the walk — alignment, not a doc handoff.
 ```
 
 ---
 
 ## Slide 4
 
-**Title:** Alignment · Fri close  
+**Title:** Alignment · Friday meeting  
 **Diagram:** slide04-sponsor
 
 **On-slide (stack):**
-- Scope · draft QoS slides | ask
-- QoS RM · lane boundary | ask
+- Scope · situation + task | ask
+- Diwakar Tundlam - qos architect scope | ask
 - QoS buffer carving arch | act
-- OCP · Rupa datapath | ask
+- Datapath Architecture | ask
 
 ```notes
 Four checkpoints — technical, not a sign-off deck.
 
-Scope: slides 1–2 — program bar + DBM at CSB framed correctly? Lane: QoSMAP, Queue, buffer carving vs peer DRIs. Pipeline walk: logical pipeline and draft validation path. OCP: I align with Rupa on datapath standards; Gururaj carries company position externally (standards body, customer-facing).
+Scope: slides 1–2 — program bar + DBM at CSB framed correctly? Lane: QoSMAP, Queue, buffer carving vs peer DRIs. Pipeline walk: logical pipeline and draft validation path. **Datapath Architecture** checkpoint — her lane; OCP implicit, not on slide.
 
-If aligned: mandate to ship **draft plan in next few days** — then iterate toward tape-out (AV/C-model, SDK/SAI/mgmt).
+If aligned: mandate to ship **buffer carve plan in next few days** → iterate toward tape-out (AV/C-model, SDK/SAI/mgmt).
 ```

@@ -58,10 +58,8 @@ def _validate_slide_layout(s: DeckSlide) -> List[str]:
     elif s.number == 2:
         if len(s.columns) < 3:
             errors.append(f"Slide {s.number}: diagram needs three Column blocks in {A3_MD.name}")
-        if not s.gate:
-            errors.append(f"Slide {s.number}: missing Gate field in {A3_MD.name}")
-        if not s.branch_yes or not s.branch_no:
-            errors.append(f"Slide {s.number}: missing Branch yes/no in {A3_MD.name}")
+        if not s.branch_yes:
+            errors.append(f"Slide {s.number}: missing Outcome in {A3_MD.name}")
     elif s.number in (3, 4):
         if not s.stack:
             errors.append(f"Slide {s.number}: diagram needs On-slide (stack) nodes in {A3_MD.name}")

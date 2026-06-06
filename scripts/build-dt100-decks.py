@@ -153,7 +153,7 @@ def build_a3() -> Path:
     deck.add_cover(
         cov.left_title,
         "\n".join(cov.right_lines),
-        cov.left_subtitle,
+        cov.meta or cov.left_subtitle,
         cov.tag,
         notes=cov.notes or None,
     )

@@ -75,6 +75,8 @@ Refine weights later as **P2** if needed — arbitrary is fine at hatch time.
 
 **Px applies across A–D.** P0 is whatever your **new boss timeline** says — not “whatever inbox is loudest.”
 
+**NEWAGIS** (internal): [CONSTITUTION.md](CONSTITUTION.md) — **G** = **Gluon** (chief-of-staff) · **A** = human alter-ego · **N** = sponsor north-line. **A·G·I** = **Artificial General Intelligence** pun (joke; Gluon/**G**eneral accidental). Chat + law layer only; **not** in deck/output heap. **Future:** NEWAGIS / EM → agent skills — **not RN**.
+
 ---
 
 ## diwakar-work in the META picture

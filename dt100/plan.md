@@ -155,3 +155,20 @@ When Gluon is active, you’re **fused** — don’t pretend parallel P1 work co
 ## 11. Layout
 
 See [README.md](README.md) in this directory.
+
+---
+
+## 12. Directive feedback → active / passive (W review)
+
+Peer feedback (e.g. Thippanna) often arrives **directive** — layout, owners, publish-ready close. **Refine before acting:**
+
+| Class | Meaning | Example (Thippanna 2026-06) |
+|-------|---------|------------------------------|
+| **Active · A3** | Ships on **Guru tactical** deck now | Peer labels (Shafi/Tippanna/Tilak), Datapath wording, buffer carve timeline |
+| **Passive · B6** | Spirit / structure for **pipeline walk** deck | Wedge layout, Girish L3, publish-ready close |
+| **Active · A3 (post-A)** | Stand-alone / forward-safe | Drop **Reframe** + **Aligned** diamond; **Friday meeting** not **Fri** |
+| **Abeyance** | Right idea; wrong time or too “made-up” | Full wedge redraw of slide 2 |
+
+**Rule:** A3 = short N-line reply (situation → gate → mandate). B6 = how/who/W publish path. When feedback mixes both, **split the list** — do not let B6 polish block A3 send.
+
+**Process:** capture verbatim → tag A3 / B6 / abeyance → active tasks in `TASKS.md` only for **A3 now**; B6 items in [manager-arch-vision-b6-reference.md](manager-arch-vision-b6-reference.md) backlog.

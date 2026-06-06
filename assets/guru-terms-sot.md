@@ -73,9 +73,9 @@ Avoid on slides: “validation bar”, “end-to-end HW-SW co-design” (not on 
 |-------|----------------|
 | **1** | **Dynamic Switch-Buffer Management** · sub: **Buffer carving at CSB** (internal **DBM**; **at** = location, not **for** datapath ownership) |
 | **1** bullets | **done and validated** · product · mgmt · **Architecture validation** · **SDK/SAI** · **C-model → emulation → silicon** · **QoSMAP** · **Queue** · carve at **CSB** — **Rupa** owns datapath arch (notes) |
-| **2** | **Done and validated** before tape-out (software↔hardware message on slide 3) |
-| **2** bullets | **My lane (QoS RM)** · bottom band **My deliverable** (compass prefetch → B6 org) · **QoS buffer carving arch** on yes branch |
-| **3** | **Near-term scope** — **next few days · draft plan** · **software↔hardware** validated · **AV · C-model / co-dev** · **SDK/SAI/mgmt → tape-out** (north star) |
-| **4** | **Alignment · Fri close** — scope · **draft QoS slides** · **QoS RM lane boundary** · **QoS buffer carving arch** · **OCP · Rupa datapath** (Gururaj: company/OCP external — notes only) |
+| **2** | **Validated to tape-out** — 3 columns · deliverable row · **QoS buffer carving arch** (no gate; alignment spoken) |
+| **Cover** | **qos architecture** · **Meta: Diwakar Tundlam - qos architect** (orange) · no sponsor name on slide |
+| **3** | **Near-term scope** — **buffer carve plan** (yellow) · **software↔hardware** · **SDK/SAI/mgmt → tape-out** · **AV · C-model / co-dev** |
+| **4** | **Alignment · Friday meeting** — scope · **qos architect scope** · **QoS buffer carving arch** · **Datapath Architecture** |
 
-**Cover tagline:** **Dynamic Switch-Buffer Management** — not **Logical Pipeline** as DRI label. **Switch-Buffer** is one compound term (hyphenated). **Selective acronyms:** expand **SW/HW** in titles and headline messages (**Software done and validated**, **software↔hardware**, **Software validation**); keep **QoS RM**, **DRI**, **AV**, **mgmt**, **CSB**, **SDK/SAI**, **QoSMAP**, **ECMP**, **OCP**, pipeline block names as on-wall labels.
+**Cover tagline:** **Dynamic Switch-Buffer Management** — not **Logical Pipeline** as DRI label. **Switch-Buffer** is one compound term (hyphenated). **On-wall brand:** **Diwakar Tundlam - qos architect** (lowercase). **Selective acronyms:** expand **SW/HW** in titles and headline messages; keep **DRI**, **AV**, **mgmt**, **CSB**, **SDK/SAI**, **QoSMAP**, **ECMP**, **OCP**, pipeline block names as on-wall labels.

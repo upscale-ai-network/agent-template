@@ -10,23 +10,23 @@
 
 ## Cover
 
-**Title:** Arch vision plan (B6)  
+**Title:** QoS buffer carving arch  
 **Subtitle (navy):** Walk: vision → draft plan → owners → pipeline  
-**Meta:** Open after Yes on A3 — role-play, not a handoff  
+**Meta:** Open after aligned on draft QoS slides — role-play, not a handoff  
 **Tag:** Confidential — Upscale AI
 
 ---
 
 ## Slide 1
 
-**Title:** Define task — after A3 slides 1–2  
+**Title:** Define task — after draft QoS slides  
 **Subtitle:** Beat 1 · ~1 min  
-**Lead:** Transition — A3 framed situation + task; this walk defines how.
+**Lead:** Transition — draft QoS slides framed situation + task; this walk defines how.
 
 **Bullets:**
-- Assumption: A3 slides 1–2 aligned on program bar + QoS RM wedge.
+- Assumption: draft QoS slides aligned on program bar + QoS RM wedge.
 - Show validation machine, owners, QoS on logical pipeline — co-evolve plan live.
-- Close on A3 slides 3–4 (sprint scope + alignment) — not repeated here.
+- Close on draft QoS slides (near-term scope + alignment) — not repeated here.
 
 ---
 
@@ -37,7 +37,7 @@
 **Lead:** Thin walk today; depth only if Gururaj redirects.
 
 **Bullets:**
-- Thu: A3 slides 1–2, then this deck (~6 beats).
+- Thu: draft QoS slides, then this deck (~6 beats).
 - Next: expand swimlanes / integrated validation plans — format and depth per your steer.
 - Not Thu: 50-page dump, full HW catalog.
 
@@ -51,9 +51,9 @@
 
 **Bullets:**
 - Product / customer use cases
-- Architecture validation (AV) ↔ datapath arch
+- AV ↔ datapath arch
 - Mgmt plane — SONiC / FBOSS lands
-- SW validation: C-models → emulation / FPGA → silicon
+- Software validation: C-models → emulation / FPGA → silicon
 - SDK + SAI done with explicit gates before tape-out
 - I socialize v0 “done” per gate; peers own slice proof.
 
@@ -77,8 +77,8 @@
 ## Slide 5
 
 **Title:** My wedge — QoS / RM (HWv1)  
-**Subtitle:** Beat 4 · before pipeline  
-**Lead:** DSCP/TOS → TC → queues → schedulers; carve at CSB.
+**Subtitle:** Beat 4 · reference only (historical)  
+**Lead:** Kept for reference — validation scope lives on slide 3 framework.
 
 **Bullets:**
 - VLAN-PRI, TOS/DSCP → queues → schedulers
@@ -101,7 +101,7 @@
 
 **Title:** On the picture — blocks and validation tie-in  
 **Subtitle:** Beat 4 · optional detail  
-**Lead:** Only if Gururaj asks — each block needs AV + SW proof before silicon.
+**Lead:** Only if Gururaj asks — each block needs AV + software proof before silicon.
 
 **Bullets:**
 - Ingress / Parser — parse correctness with Rupa before OCP/BCM calls
@@ -130,10 +130,10 @@
 **Lead:** Offer only if asked — who must be in the room.
 
 **Bullets:**
-- Expand B6: swimlanes, DRI depth, integrated AV / C-model / datapath / SDK / SAI validation
+- Expand QoS buffer carving arch: swimlanes, DRI depth, integrated AV / C-model / datapath / SDK / SAI validation
 - QoS RM HWv1 scope with HW datapath DRI (Rupa lane) — gates as we agree
 - Cadence: Shafi, Tippanna, Rupa, Prasun — if Gururaj redirects drive to me
-- Room list — offer here if you ask (not on A3)
+- Room list — offer here if you ask (not on draft QoS slides)
 
 ---
 
