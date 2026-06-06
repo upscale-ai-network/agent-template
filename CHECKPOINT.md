@@ -35,6 +35,6 @@
 
 ## Next autonomous queue (Gluon)
 
-1. B6 slide polish in `bugatti-qos-ccc.md` → regen pptx
-2. Human cold read → SharePoint + W note when complete
+1. **2A — Mermaid-aware slide upgrade** for `bugatti-qos-ccc.md` → regen pptx (pipeline + CSB + validation stack; restrained — see [ccc-strategy.md](dt100/ccc-strategy.md) §5)
+2. Human cold read → informal peer DRI huddle → SharePoint when ready
 3. Friday: A3 1–2 → B6 walk → A3 3–4
