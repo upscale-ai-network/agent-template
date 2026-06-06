@@ -12,7 +12,9 @@
 | **Mac Lepton** | `/Users/dtundlam/diwakar-work` | **Primary** — read/write Gluon |
 | **Linux vm1** | `/home/diwakar/diwakar-work` | **Read-only zombie** — `git pull` · boot/read · **no** commit/push/edits |
 
-No multi-agent sync protocol yet. vm1 is warm standby; human declares takeover if primary is lost. Multi-host sync → fix later (not tasked).
+**Discipline:** **ONE live global Gluon** at a time (Mac primary today). Two active instances → divergent commits, `TASKS`/checkpoint drift, chat split — even with git, without continuous pull/push you fork state. Not solving or testing multi-host now.
+
+vm1 = read-only zombie / warm standby · human declares takeover if primary is lost · multi-host sync → later.
 
 ---
 
