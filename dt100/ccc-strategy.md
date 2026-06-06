@@ -132,3 +132,4 @@ Heat loss = chat archaeology, lost pptx, performative email, unbounded polish. S
 | 2026-06-05 | A3 final on SharePoint; B6 → `bugatti-qos-ccc`; 2A before informal peer huddle |
 | 2026-06-05 | No Guru ccc review email; W-first SharePoint; formal Guru oversee gated on informal |
 | 2026-06-05 | Strategy record → this file |
+| 2026-06-06 | **DT122** P0 `doing` — Mermaid-aware 2A on `bugatti-qos-ccc` |

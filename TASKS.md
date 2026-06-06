@@ -16,6 +16,7 @@
 
 | DT | Priority | Status | Title | Due | Notes |
 |----|----------|--------|-------|-----|-------|
+| DT122 | P0 | doing | CCC 2A — Mermaid-aware B6 slide upgrade | 2026-06-06 | `bugatti-qos-ccc` · [ccc-strategy.md](dt100/ccc-strategy.md) §2–5 · A3 stays PyMuPDF |
 | DT102 | P1 | open | Cursor/doc use — HR / IT / mgmt OK | | Privacy Mode on; formal OK pending |
 | DT103 | P1 | open | Org git remote + push policy | | `origin` → `upscale-ai-network/agent-template` · push blocked until write access |
 | DT104 | P1 | open | Corp VPN from home + internal tools | | Browser check; no SSH host yet |
@@ -35,6 +36,24 @@
 | DT120 | P2 | open | Pensieve → `origin.md` for Gluon constitution | | No PII / past-employer leak · Pensieve/Gluon separate · see **DT120** |
 | DT121 | P3 | open | CLI toolbox — past tools list (loose) | | One task, many tools · see **DT121** |
 | DT117 | P3 | open | Monthly review — tune tasks + log | | ~4 weeks |
+
+### DT122 — CCC 2A — Mermaid-aware B6 slide upgrade
+
+**Strategy:** [dt100/ccc-strategy.md](dt100/ccc-strategy.md) · **Source:** [dt100/bugatti-qos-ccc.md](dt100/bugatti-qos-ccc.md) → `bugatti-qos-ccc.pptx`
+
+**2A scope (restrained — Guru scans for blocks, not bullets):**
+
+- [ ] Mermaid diagram blocks in `bugatti-qos-ccc.md` (pipeline annotate · CSB/buffer-carve inset · validation stack)
+- [ ] B6 render path: `assets/diagrams/b6/` + script (Mermaid → PNG); wire into `build-dt100-decks.py` / validate
+- [ ] Visual-first slide reorder in md (diagrams early; owners on picture)
+- [ ] `./scripts/run-deck-build.sh` — post-build checks pass
+- [ ] Human cold read — no “performed better” than peer CCC decks
+
+**Out of scope (abeyance):** swimlanes · template churn · HWv2 depth · informal peer huddle (follow-on after 2A ships)
+
+**Done when:** `bugatti-qos-ccc.pptx` regen’d with Mermaid-driven PNGs; ready for informal W DRI huddle.
+
+---
 
 ### DT120 — Pensieve `origin.md` → Gluon (close origin story)
 
