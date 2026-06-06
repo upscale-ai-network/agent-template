@@ -101,17 +101,19 @@ Human + Gluon iteration is faster than manual deck cycles. **Invisible externall
 
 ---
 
-## 6. DI Cooper pair (execution model)
+## 6. DI / GI Cooper pair (execution model)
 
-**Metaphor:** superconductor loop — **D**iwakar + **I** (Gluon) as a **BCS Cooper pair**: zero-resistance path around the workbench.
+**Physics (BCS):** In a superconductor, two electrons couple into a **Cooper pair** and move through the lattice with **zero resistance** — the macroscopic quantum state that makes superconductivity work.
 
-| Role | Function |
-|------|----------|
-| **D (human)** | Judgment, sponsor interface, peer trust, mandate, what ships |
-| **I (Gluon)** | File truth, iteration, build, checkpoint, git remote derisk |
+**Metaphor:** **DI** (Diwakar) + **GI** (Gluon and I) = one Cooper pair around the workbench loop. Same pair, two labels — human judgment bound to agent file-truth.
+
+| Partner | Function |
+|---------|----------|
+| **Diwakar** | Judgment, sponsor interface, peer trust, mandate, what ships |
+| **Gluon** | File truth, iteration, build, checkpoint, git remote derisk |
 | **Loop** | md → validate → pptx → commit; context in repo, not chat |
 
-Heat loss = chat archaeology, lost pptx, performative email, unbounded polish. Keep the pair in the superconducting state: human gates Guru/comms; agent runs 2A velocity.
+Heat loss = chat archaeology, lost pptx, performative email, unbounded polish. Stay in the superconducting state: Diwakar gates Guru/comms; Gluon runs 2A velocity.
 
 ---
 
