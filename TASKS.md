@@ -48,7 +48,16 @@
 2. **Activity bands:** human prompting/work · Gluon autonomous (commit/build) · task `doing`/`open` wall time · idle/unattributed — best-effort from artifacts, not a stopwatch.
 3. **Output:** per-task summary (md or script report) + lightweight log convention for new tasks so billing and retros don’t depend on chat memory.
 
-**Done when:** `./scripts/task-time-report.py DT100` (or equivalent) produces defensible hour bands; documented hook for future DT rows.
+**Gaps in DT100 retro recovery → requirements for forward capture:**
+
+| Gap (cannot recover cleanly today) | Forward requirement |
+|-----------------------------------|---------------------|
+| Human-only thinking (no commit) | Optional `TASKS-LOG` `note` or `time` row · manual burst tag · low friction |
+| Prompting vs reviewing vs meeting | Transcript/session ingest · band tag: `prompt` · `review` · `meeting` |
+| Gluon autonomous vs human driving each edit | Commit attribution (`Co-authored-by`) + agent shell log · split bands in report |
+| Open/idle between bursts | `doing`/`open` wall clock from TASKS-LOG + gap detection between attributed bursts |
+
+**Done when:** `./scripts/task-time-report.py DT100` produces defensible bands for what exists + documents what must be logged going forward; new tasks pick up the convention from task `created`.
 
 ---
 
