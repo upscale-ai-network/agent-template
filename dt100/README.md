@@ -7,11 +7,20 @@
 | File | → PPTX |
 |------|--------|
 | [bugatti-qos-architecture.md](bugatti-qos-architecture.md) | `bugatti-qos-architecture.pptx` — **DT100 input** · Fri meeting |
-| [manager-arch-vision-b6.md](manager-arch-vision-b6.md) | `manager-arch-vision-b6.pptx` — **DT100 input** · walk deck |
+| [bugatti-qos-ccc.md](bugatti-qos-ccc.md) | `bugatti-qos-ccc.pptx` — **DT100 input** · CCC walk deck |
 
 **DT100 = the decks (files). Fri outcome = mandate (not a doc).** See [plan.md](plan.md) §1.
 
-**Status:** `done` — SharePoint → Gururaj · git `445afec` on `origin/main` (2026-06-05).
+### Naming (legacy shorthand)
+
+| Shorthand | Artifact | Share name |
+|-----------|----------|------------|
+| **A3** | `bugatti-qos-architecture.*` | same — **final** (Guru SharePoint, 2026-06-05) |
+| **B6** | `bugatti-qos-ccc.*` | **`bugatti-qos-ccc`** — the **ccc doc**; no `draft-` prefix |
+
+**Workflow:** Edit `.md` → `./scripts/run-deck-build.sh` → `.pptx`. Refine slides in md (diagrams via `a3_aligned_render.py` for A3; B6 content/diagrams as needed). **Send for review when complete** — not interim draft filenames. Exception: literal **draft-board** (whiteboard), not file naming.
+
+**Status:** A3 `done` — SharePoint → Gururaj · git on `origin/main`. B6 — polish in progress, **not shared**.
 
 **Build:** `./scripts/run-deck-build.sh` (reads only the two `.md` files above; do not hand-edit pptx)
 
@@ -27,8 +36,8 @@
 
 | File | Role |
 |------|------|
-| [manager-arch-vision-b6-presenter-notes.md](manager-arch-vision-b6-presenter-notes.md) | B6 rehearse script — not in pptx (on-slide Subtitle + Lead cues only) |
-| [manager-arch-vision-b6-reference.md](manager-arch-vision-b6-reference.md) | B6 walk map, DRI tables, whiteboards — not parsed into pptx |
+| [bugatti-qos-ccc-presenter-notes.md](bugatti-qos-ccc-presenter-notes.md) | B6 rehearse script — not in pptx (on-slide Subtitle + Lead cues only) |
+| [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md) | B6 walk map, DRI tables, whiteboards — not parsed into pptx |
 | [../assets/dt100-whiteboards.md](../assets/dt100-whiteboards.md) | Photo annotations |
 | [../assets/guru-terms-sot.md](../assets/guru-terms-sot.md) | Guru vocabulary |
 | [plan.md](plan.md) | Meeting order + done checklist |
@@ -38,7 +47,7 @@
 
 | You | Gluon |
 |-----|--------|
-| Edit `bugatti-qos-architecture.md` or `manager-arch-vision-b6.md` | `./scripts/run-deck-build.sh` |
+| Edit `bugatti-qos-architecture.md` or `bugatti-qos-ccc.md` | `./scripts/run-deck-build.sh` |
 
 ---
 

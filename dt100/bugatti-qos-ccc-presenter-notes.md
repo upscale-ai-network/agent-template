@@ -1,4 +1,4 @@
-# B6 presenter notes — not exported to PPTX
+# CCC walk presenter notes (B6) — not exported to PPTX
 
 **Use:** Rehearse from this file; on-slide **Subtitle** + **Lead** lines are the walk cues in the deck.
 
@@ -8,7 +8,7 @@
 
 ## Cover
 
-Open only after **Yes** on A3 slide 2 gate. One line: *“I’ll define how — validation machine, owners, my QoS wedge on your pipeline slide.”*
+Open only after qos-architecture slides 1–2 land. One line: *“I’ll define how — validation machine, owners, my QoS wedge on your pipeline slide.”*
 
 ---
 
@@ -24,7 +24,7 @@ Do **not** re-close mandate here — that is A3 slides 3–4.
 
 ## Slide 2 — Document discipline
 
-Thu is thin by design. Peer L2/L3 already showed cost of 50-page dumps — you won’t get that from me.
+Friday walk stays thin by design. Peer L2/L3 already showed cost of 50-page dumps — you won’t get that from me.
 
 If you want swimlanes or integrated validation depth, say format — I expand in ~1–2 weeks after mandate.
 
@@ -42,13 +42,12 @@ Prior roles: C-model + emulation before tape-out — adapt when Upscale models a
 
 ## Slide 4 — Who owns what (~2 min)
 
-**Don’t read every row.** Point at names; move to pipeline slide.
+**Don’t read every row.** Wedge first, peers in W order, Gururaj scope last — then pipeline slide.
 
-- **Gururaj:** scope + company/OCP external (standards, customer-facing).
 - **Me:** validation program draft + QoS RM (QoSMAP, Queue, buffer carve at CSB).
-- **Shafi:** L2/L3/Mirroring · **Tippanna:** ECMP/Stats · **Tilak:** L2 · **Girish:** L3 (Thippanna order — B6 owners, not A3 gate).
-- **Rupa:** datapath / OCP ESUN — weekly before vendor calls.
-- **Prasun:** program mesh — cadence only if asked.
+- **Shafi → Tippanna → Tilak → Girish:** L2/L3/Mirroring · ECMP/LAG/Counters · L2 · L3.
+- **Rupa:** datapath / OCP ESUN — weekly before vendor calls · **Prasun:** program mesh if asked.
+- **Gururaj:** scope + company/OCP external — context band, not row-by-row read.
 
 ---
 
@@ -68,7 +67,7 @@ QoSMAP = DSCP/TOS (and ESUN-QoS where applicable) → internal TC; Queue = egres
 
 Point: **QoSMAP + Queue/carve** = my wedge; everything else = peer DRIs.
 
-Caption names: Shafi L2/ACL, Tippanna ECMP/LAG/Counters, Rupa parse/datapath.
+Caption names: Shafi L2/ACL, Tippanna ECMP/LAG/Counters, Tilak L2, Girish L3, Rupa parse/datapath.
 
 ---
 
@@ -82,7 +81,7 @@ Cross-block gates: I draft; block DRIs own C-model → emulation proof.
 
 ## Slide 8 — Defer (~1 min)
 
-Rupa SDK layout is **related, different plan** — weekly sync, no Thu merge.
+Rupa SDK layout is **related, different plan** — weekly sync, no Friday merge.
 
 OCP: SW-arch voice on QoS/TM/ESUN — **Gururaj** carries company position externally.
 
@@ -92,13 +91,13 @@ Prabu bs-1/bs-2 — round 2 unless redirected.
 
 ## Slide 9 — Next beats (if asked)
 
-Not committed Thu. Offer: expanded swimlanes, QoS HWv1 gates with Rupa, cadence forum with named DRIs.
+Not committed until mandate. Offer: expanded swimlanes, QoS HWv1 gates with Rupa, cadence forum with named DRIs.
 
 Room list: Shafi, Tippanna, Rupa, SDK lead, Prasun — only if he asks who must be in the room.
 
 ---
 
-## Slide 10 — What Thu is not
+## Slide 10 — What this walk is not
 
 Short boundary slide — use if conversation drifts to C40, AI policy, or full HW catalog.
 

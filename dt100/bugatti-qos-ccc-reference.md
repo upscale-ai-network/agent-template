@@ -1,6 +1,6 @@
 # Arch vision plan (B6) — reference (not the deck)
 
-**Deck source of truth:** [manager-arch-vision-b6.md](manager-arch-vision-b6.md) → `manager-arch-vision-b6.pptx`.
+**Deck source of truth:** [bugatti-qos-ccc.md](bugatti-qos-ccc.md) → `bugatti-qos-ccc.pptx`.
 
 **DT100 · P0 · Thu package** · **Reader:** Gururaj · **Confidential — Upscale AI, Inc.**
 
@@ -31,12 +31,12 @@ Captured **directive**; refined for **B6** and share-forward to sponsor W / N·E
 
 | Item | Spirit for B6 | Status |
 |------|----------------|--------|
-| Diwakar wedge **above**, program context **below** (external) | Owners slide + pipeline walk: **you first**, program bar as context band | **Passive** — next B6 regen |
-| Reword “done and validated” soup | Use **tape-out validation path** language in framework beats | **Passive** |
-| W DRI order: Shafi → Tippanna → Tilak → **Girish · L3** | §4 owners + pipeline caption | **Passive** |
-| Drop **Reframe** + **Aligned** diamond | A3 slide 2 direct flow (2026-06); B6 same on regen | **A3 done** · B6 on regen |
+| Diwakar wedge **above**, program context **below** (external) | Owners slide + pipeline walk: **you first**, program bar as context band | **Done** — slide 4 regen |
+| Reword “done and validated” soup | Use **tape-out validation path** language in framework beats | **Done** — slide 3 |
+| W DRI order: Shafi → Tippanna → Tilak → **Girish · L3** | §4 owners + pipeline caption | **Done** — slides 4, 6, 7 |
+| Drop **Reframe** + **Aligned** diamond | A3 slide 2 direct flow (2026-06); B6 N/A (no diamond) | **Done** |
 | **Wedge redraw** slide 2 | Too made-up for Guru A3 | **Abeyance** |
-| Closing **publish-ready** for Guru forward | B6 defer + A3 slide 4 stays mandate ask; B6 does not homework-check sponsor | **Passive** |
+| Closing **publish-ready** for Guru forward | B6 defer + A3 slide 4 stays mandate ask; B6 does not homework-check sponsor | **Done** — slide 10 |
 
 ---
 

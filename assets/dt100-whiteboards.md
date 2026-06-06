@@ -1,7 +1,7 @@
 # Whiteboard annotations — DT100 source material
 
 **Confidential — Upscale AI, Inc.**
-**Use:** Feed [dt100/manager-arch-vision-b6.md](../dt100/manager-arch-vision-b6.md); not on **A3** slides.
+**Use:** Feed [dt100/bugatti-qos-ccc.md](../dt100/bugatti-qos-ccc.md); not on **A3** slides.
 
 | File | Source | Thu use |
 |------|--------|---------|

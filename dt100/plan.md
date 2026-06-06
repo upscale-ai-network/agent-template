@@ -1,7 +1,7 @@
 # DT100 plan
 
 **Task:** DT100 · P0 · **`done`** · due **2026-06-05** · SharePoint → Gururaj · git `445afec` pushed
-**Deliverables:** [bugatti-qos-architecture.md](bugatti-qos-architecture.md) · [manager-arch-vision-b6.md](manager-arch-vision-b6.md) · slide export for Gururaj
+**Deliverables:** [bugatti-qos-architecture.md](bugatti-qos-architecture.md) · [bugatti-qos-ccc.md](bugatti-qos-ccc.md) · slide export for Gururaj
 
 **This file:** Decisions and meeting playbook only — **save the plan, not how we arrived at it.** Update here when the plan changes.
 
@@ -171,4 +171,4 @@ Peer feedback (e.g. Thippanna) often arrives **directive** — layout, owners, p
 
 **Rule:** A3 = short N-line reply (situation → gate → mandate). B6 = how/who/W publish path. When feedback mixes both, **split the list** — do not let B6 polish block A3 send.
 
-**Process:** capture verbatim → tag A3 / B6 / abeyance → active tasks in `TASKS.md` only for **A3 now**; B6 items in [manager-arch-vision-b6-reference.md](manager-arch-vision-b6-reference.md) backlog.
+**Process:** capture verbatim → tag A3 / B6 / abeyance → active tasks in `TASKS.md` only for **A3 now**; B6 items in [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md) backlog.

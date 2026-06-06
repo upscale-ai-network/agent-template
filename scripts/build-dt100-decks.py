@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Build DT100 A3/B6 PPTX from bugatti-qos-architecture.md and manager-arch-vision-b6.md.
+Build DT100 A3/B6 PPTX from bugatti-qos-architecture.md and bugatti-qos-ccc.md.
 """
 
 import shutil
@@ -185,7 +185,7 @@ def build_b6() -> Path:
     doc = load_b6_md()
     fail_on_errors(validate_b6_build(doc))
     slides = doc.ordered_slides()
-    out = DT100 / "manager-arch-vision-b6.pptx"
+    out = DT100 / "bugatti-qos-ccc.pptx"
     deck = StyledDeck(out, num_content_slides=len(slides))
 
     cov = doc.cover

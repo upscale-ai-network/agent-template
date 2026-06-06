@@ -1,4 +1,4 @@
-"""Parse dt100 manager-arch-vision-*.md deck files (shared slide / notes format)."""
+"""Parse dt100 bugatti-qos-*.md deck files (shared slide / notes format)."""
 
 from __future__ import annotations
 
@@ -292,7 +292,7 @@ def load_deck_md(
 
 
 A3_MD = ROOT / "dt100" / "bugatti-qos-architecture.md"
-B6_MD = ROOT / "dt100" / "manager-arch-vision-b6.md"
+B6_MD = ROOT / "dt100" / "bugatti-qos-ccc.md"
 
 
 def load_b6_md(path: Path = B6_MD) -> DeckDocument:
