@@ -36,8 +36,9 @@ from pptx_util import (  # noqa: E402
 PIPELINE_IMG = ROOT / "assets" / "logical-pipeline-boss-slide.png"
 A3_DIAGRAMS = ROOT / "assets" / "diagrams" / "a3"
 
+# Committed company template (git). Optional local seed: ~/Downloads/Mirror-*.pptx
 STYLE_DOWNLOAD = Path.home() / "Downloads" / "Mirror-Sflow-Bugatti-ASIC-CCC.pptx"
-STYLE_REF = ROOT / "assets/templates/upscale-ccc-style-reference.pptx"
+STYLE_REF = ROOT / "assets/templates/upscale-ccc-style-reference.pptx"  # future: JFrog artifact pin
 
 IDX_COVER = 0
 IDX_CONTENT = 2

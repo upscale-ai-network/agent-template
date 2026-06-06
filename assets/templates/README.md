@@ -29,15 +29,14 @@ Builds use atomic save + zip integrity checks — **Repair dialog should not app
 | `build-dt100-decks.py` | Regenerate A3 → `dt100/` · B6 → `dt122/` |
 | `extract-empty-template.py` | Masters-only extract (not litmus) |
 
-**Local only (gitignored):** `upscale-ccc-style-reference.pptx` (full CCC download)
-
 ---
 
 ## Files
 
 | File | In git? | Purpose |
 |------|---------|---------|
-| `upscale-company-template.pptx` | **Yes** | Standard company deck — **your default** |
+| `upscale-ccc-style-reference.pptx` | **Yes** | Full CCC company chrome — **deck build source** (`build-dt100-decks.py`) · portable Gluon template · future: JFrog/Artifactory |
+| `upscale-company-template.pptx` | **Yes** | 2-slide seed template — hand-edit / duplicate |
 | `upscale-exec-empty.pptx` | Yes | 0-slide theme shell — not for new exec decks |
 | `template-spec.md` | Yes | Hex/fonts from theme XML |
 | `TEMPLATE-VALIDATION.md` | Yes | Litmus + validation log |
