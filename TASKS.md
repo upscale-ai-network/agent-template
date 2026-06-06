@@ -54,14 +54,14 @@
 
 **Scope:**
 
-- [ ] `tests/fixtures/canary-deck.md` + `canary-flow.mmd` (or B6 diagram stub)
-- [ ] Render hook shared with DT122 B6 path (mermaid → PNG)
-- [ ] Minimal build to `tests/output/canary.pptx` (not `dt100/` / `dt122/`)
-- [ ] `tests/test_canary_build.py` — pytest; `uv add --dev pytest`
-- [ ] `uv run pytest tests/ -q`
-- [ ] README note: canary before touching production md
+- [x] `tests/fixtures/workflow-canary.md` + `diagrams/canary/*.mmd`
+- [x] `scripts/deck_render.py` + `workflow_testkit.py` (shared with B6 mmdc path)
+- [x] `tests/test_workflow_pipeline.py` — TC01–TC10 ([WORKFLOW-REGRESSION.md](tests/WORKFLOW-REGRESSION.md))
+- [x] `uv run pytest tests/ -m workflow` — full pipeline tier
+- [ ] Git gate (DT119): `pytest -m workflow` as pre-commit blocker
+- [ ] TC11+ from directed torture (watermark, reorder, overlay coords file)
 
-**Done when:** `uv run pytest` green after intentional break/fix on mermaid and pptx stages; documented vs DT124 in [scripts/DECK-ACCEPTANCE.md](scripts/DECK-ACCEPTANCE.md).
+**Done when:** `uv run pytest` green; workflow tier documented; gate wired in DT119.
 
 ---
 

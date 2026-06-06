@@ -129,9 +129,10 @@ uv run build-decks          # A3 + B6
 uv run build-decks-a3       # A3 only
 uv run check-decks          # litmus (md, PNGs, pptx)
 uv sync --group dev && uv run pytest tests/ -q
+uv run pytest tests/ -m workflow -q   # md→pptx regression (needs npx)
 ```
 
-Entry points live in `src/gluon_cli/` (`[project.scripts]` in `pyproject.toml`).
+See [tests/WORKFLOW-REGRESSION.md](tests/WORKFLOW-REGRESSION.md). Entry points live in `src/gluon_cli/` (`[project.scripts]` in `pyproject.toml`).
 
 **Zombie standby (Linux vm):** read-only · hatch once:
 

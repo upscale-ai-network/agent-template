@@ -95,7 +95,7 @@ class StyledDeck:
                 title,
                 diagram,
                 title_lines=title_lines,
-                lead_line=subtitle,
+                lead_line=lead or subtitle,
                 slide_width=self.prs.slide_width,
             )
         else:

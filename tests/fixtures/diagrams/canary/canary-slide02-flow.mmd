@@ -1,0 +1,9 @@
+%%{init: {'theme': 'base'}}%%
+flowchart TB
+  X["Ingress"] --> Y["QoSMAP"]
+  Y --> Z["Queue / carve"]
+
+  classDef program fill:#E3F2FD,stroke:#1565C0,color:#051830
+  classDef lane fill:#FFF3E0,stroke:#EF6C00,color:#051830
+  class X,Z program
+  class Y lane

@@ -115,14 +115,27 @@ def validate_a3_renderers(doc: DeckDocument | None = None) -> List[str]:
     return errors
 
 
-def validate_png(path: Path) -> List[str]:
+def _path_label(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
+def validate_png(
+    path: Path,
+    *,
+    min_width: int = 200,
+    min_height: int = 80,
+) -> List[str]:
     errors: List[str] = []
+    label = _path_label(path)
     if not path.is_file():
-        errors.append(f"Diagram PNG missing: {path.relative_to(ROOT)}")
+        errors.append(f"Diagram PNG missing: {label}")
         return errors
     size = path.stat().st_size
     if size < MIN_PNG_BYTES:
-        errors.append(f"Diagram PNG too small ({size} B): {path.relative_to(ROOT)}")
+        errors.append(f"Diagram PNG too small ({size} B): {label}")
         return errors
     try:
         from PIL import Image
@@ -131,12 +144,12 @@ def validate_png(path: Path) -> List[str]:
             img.verify()
         with Image.open(path) as img:
             w, h = img.size
-            if w < 200 or h < 80:
+            if w < min_width or h < min_height:
                 errors.append(
-                    f"Diagram PNG dimensions too small ({w}x{h}): {path.relative_to(ROOT)}"
+                    f"Diagram PNG dimensions too small ({w}x{h}): {label}"
                 )
     except Exception as exc:
-        errors.append(f"Diagram PNG unreadable ({path.relative_to(ROOT)}): {exc}")
+        errors.append(f"Diagram PNG unreadable ({label}): {exc}")
     return errors
 
 

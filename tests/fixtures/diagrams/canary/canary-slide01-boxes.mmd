@@ -1,0 +1,12 @@
+%%{init: {'theme': 'base'}}%%
+flowchart LR
+  A["Program"] --> B["Lane wedge"]
+  B --> C["Gate v0"]
+
+  classDef program fill:#E3F2FD,stroke:#1565C0,color:#051830
+  classDef lane fill:#FFF3E0,stroke:#EF6C00,color:#051830,stroke-width:2px
+  classDef act fill:#F3E5F5,stroke:#7B1FA2,color:#051830
+
+  class A program
+  class B lane
+  class C act
