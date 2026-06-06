@@ -28,6 +28,7 @@ Refine format later ([TASKS.md](TASKS.md) DT114).
 | 2026-05-30 | DT121 | created | CLI toolbox list (loose); seed: glow, mdcat, bat, mdless |
 | 2026-06-04 | DT100 | status | `doing` → `done` — A3 + B6 pptx uploaded SharePoint; link shared with Gururaj |
 | 2026-06-05 | DT100 | closed | Forward-safe A3 polish; `445afec` on `origin/main` — DT100 closed |
+| 2026-06-05 | — | note | B6 → `bugatti-qos-ccc` rename + polish; Guru final A3 on SharePoint; no de-risk email; B6 slide work next |
 
 **Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`
 **Status (vocabulary):** `open` | `doing` | `next` | `done` | `drop`
