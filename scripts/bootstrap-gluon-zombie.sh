@@ -58,9 +58,9 @@ fi
 
 if [[ "$SKIP_CHECK" -eq 0 ]]; then
   echo "==> deck litmus (read-only)"
-  ./scripts/check-decks.sh
+  uv run check-decks
 fi
 
 echo "==> Zombie bootstrap OK"
-echo "    regen (optional litmus): ./scripts/run-deck-build.sh"
+echo "    regen (optional litmus): uv run build-decks"
 echo "    primary Gluon: Mac Lepton — ONE live writer"

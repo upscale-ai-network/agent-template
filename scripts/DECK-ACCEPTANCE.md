@@ -6,7 +6,7 @@
 
 | Layer | Script | Proves |
 |-------|--------|--------|
-| **Build litmus** | `check-decks.sh` | md valid · PNGs exist · pptx opens · slide **count** |
+| **Build litmus** | `uv run check-decks` | md valid · PNGs exist · pptx opens · slide **count** |
 | **Zombie regen** | `zombie-pull-build.sh` | Toolchain works cross-host |
 | **Acceptance** | *missing* | pptx is **stakeholder-deliverable** |
 
@@ -28,6 +28,6 @@ Fast **falsifiable** `tests/fixtures/canary-deck.md` — md → mermaid → png 
 
 ## Done when (DT124)
 
-- `accept-decks.py` runs after `run-deck-build.sh`
+- `accept-decks.py` runs after `uv run build-decks`
 - Documented in `dt100/README.md` / `dt122/README.md` as delivery gate
 - Zombie may run acceptance read-only; only **primary** marks deliverable

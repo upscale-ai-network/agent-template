@@ -32,7 +32,7 @@ vm1 = read-only zombie / warm standby · sync+build: `./scripts/zombie-pull-buil
 | **B6 / DT122** | `dt122/bugatti-qos-ccc.md` → `.pptx` | **DT122** `doing` — Mermaid 2A next |
 | Share name | `bugatti-qos-ccc` | No `draft-` prefix — doc for review when complete |
 
-**Build:** `./scripts/run-deck-build.sh` · edit md only  
+**Build:** `uv run build-decks` · edit md only  
 **Strategy:** [dt122/ccc-strategy.md](dt122/ccc-strategy.md) — 2A → informal peer → gated formal
 
 ## Layout

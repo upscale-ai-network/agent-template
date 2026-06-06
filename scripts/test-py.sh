@@ -1,8 +1,7 @@
 #!/bin/sh
-# Unit tests — sample programs under src/py (DT125 wiring smoke).
+# Deprecated — use: uv sync --group dev && uv run pytest tests/ -q
 set -e
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-cd "$ROOT"
+cd "$(dirname "$0")/.."
 export PATH="${HOME}/.local/bin:${PATH}"
 uv sync --group dev
-uv run pytest tests/ -q
+exec uv run pytest tests/ "$@"

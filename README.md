@@ -106,7 +106,9 @@ Until org remote + PR/review workflow exists, **go slowly**. The human owns merg
 | `scratch/` | Chat scratch / mini tasks (not task-scoped) |
 | `archive/` | Portable snapshots (e.g. [zsh dotfiles](archive/zsh/)) |
 | `src/py/` | Sample programs (pytest wiring smoke) |
-| `tests/` | `uv run pytest` · `./scripts/test-py.sh` |
+| `src/gluon_cli/` | `uv run build-decks` / `check-decks` entry points |
+| `scripts/` | **PPTX pipeline** Python — see [scripts/PPTX-PIPELINE.md](scripts/PPTX-PIPELINE.md) |
+| `tests/` | `uv sync --group dev && uv run pytest tests/ -q` |
 | `assets/` | Shared pipeline slide, whiteboard photos, templates |
 
 **Removed (2026-06-04):** Apple Silicon MLX brief, demos, PDFs/HTML — history in git; future copy from archive repo if needed.
@@ -120,7 +122,16 @@ git clone https://github.com/upscale-ai-network/agent-template.git diwakar-work
 cd diwakar-work
 ```
 
-**Primary (Mac):** write Gluon · **`./scripts/run-deck-build.sh`** after `uv sync`
+**Primary (Mac):** write Gluon · after `uv sync`:
+
+```bash
+uv run build-decks          # A3 + B6
+uv run build-decks-a3       # A3 only
+uv run check-decks          # litmus (md, PNGs, pptx)
+uv sync --group dev && uv run pytest tests/ -q
+```
+
+Entry points live in `src/gluon_cli/` (`[project.scripts]` in `pyproject.toml`). Legacy `scripts/*.sh` wrappers only `exec uv run …`.
 
 **Zombie standby (Linux vm):** read-only · hatch once:
 
@@ -134,21 +145,19 @@ cd diwakar-work
 (
   set -e
   cd "${DIWAKAR_WORK:-$HOME/diwakar-work}"
-  git pull origin main
-  ./scripts/bootstrap-gluon-zombie.sh --full
-  ./scripts/run-deck-build.sh
+  git fetch origin main
+  git reset --hard origin/main
+  export PATH="$HOME/.local/bin:$PATH"
+  uv sync --group dev
+  uv run pytest tests/ -q
+  uv run build-decks
+  uv run check-decks
 )
 ```
 
-Or `sh -c` one-liner:
+Wrapper: `~/diwakar-work/scripts/zombie-pull-build.sh`
 
-```sh
-sh -c 'set -e; cd "${DIWAKAR_WORK:-$HOME/diwakar-work}"; git pull origin main; ./scripts/bootstrap-gluon-zombie.sh --full; ./scripts/run-deck-build.sh'
-```
-
-Wrapper script: `~/diwakar-work/scripts/zombie-pull-build.sh`
-
-Installs **uv**, `uv sync`, zsh dotfiles, `check-decks.sh` litmus, then regen pptx. No parallel writes — see [CHECKPOINT.md](CHECKPOINT.md).
+Installs **uv**, `uv sync`, zsh dotfiles, pytest, then regen + litmus. No parallel writes — see [CHECKPOINT.md](CHECKPOINT.md).
 
 ---
 

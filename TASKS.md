@@ -42,7 +42,9 @@
 
 ### DT125 — Canary deck — md / mermaid / pptx pipeline regression
 
-**When:** With **DT122** mermaid path landing · **not** week-2 delivery gate · complements **DT124** (canary = pipeline; DT124 = real deck stakeholder acceptance).
+**When:** Parallel with **DT122** · **not** week-2 delivery gate · complements **DT124** (canary = pipeline; DT124 = real deck stakeholder acceptance).
+
+**Layout policy:** Production PPTX code **stays in `scripts/`** until ccc ships. Canary starts as a **copy** into `src/py/` (or sibling) + fixtures — baby steps; migrate QoS/ccc to tested path only after canary is trusted.
 
 **Feature (3 lines):**
 
