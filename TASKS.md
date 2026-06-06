@@ -139,7 +139,7 @@
 | DT095 | — | done | `sonic-ztp` clone verified | | |
 | DT118 | P0 | done | Test-run Gluon (fresh boot + litmus) | | Litmus pass · template intent in CONSTITUTION + notes below |
 | DT113 | P1 | done | Prune Apple Silicon GPU / demos from repo | | Deleted from tree; recover from git history if needed |
-| DT100 | P0 | done | 2–3 slide arch vision for manager | 2026-06-05 | **A3** · **B6** · SharePoint → Gururaj · Fri meeting TBD |
+| DT100 | P0 | done | 2–3 slide arch vision for manager | 2026-06-05 | **A3** · **B6** · SharePoint → Gururaj · `445afec` pushed · Fri alignment TBD |
 
 ### DT118 (closed — template notes)
 

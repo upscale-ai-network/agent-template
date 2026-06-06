@@ -11,7 +11,7 @@
 
 **DT100 = the decks (files). Fri outcome = mandate (not a doc).** See [plan.md](plan.md) §1.
 
-**Status:** `done` — pptx on SharePoint, link shared with Gururaj (2026-06-04).
+**Status:** `done` — SharePoint → Gururaj · git `445afec` on `origin/main` (2026-06-05).
 
 **Build:** `./scripts/run-deck-build.sh` (reads only the two `.md` files above; do not hand-edit pptx)
 
