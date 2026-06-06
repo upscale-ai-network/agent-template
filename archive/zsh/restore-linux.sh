@@ -47,16 +47,7 @@ for f in .zshrc .zprofile .zshenv .p10k.zsh; do
   echo "==> Installed ~/$f"
 done
 
-# Linux: replace macOS Homebrew path if present
-if [[ "$(uname -s)" == Linux ]]; then
-  if [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
-    sed -i 's|/opt/homebrew/bin/brew|/home/linuxbrew/.linuxbrew/bin/brew|g' "$HOME/.zshrc" "$HOME/.zprofile" 2>/dev/null || \
-      sed -i '' 's|/opt/homebrew/bin/brew|/home/linuxbrew/.linuxbrew/bin/brew|g' "$HOME/.zshrc" "$HOME/.zprofile"
-    echo "==> Patched brew path for Linuxbrew"
-  else
-    echo "==> WARN: Linuxbrew not found — edit ~/.zshrc brew line or install Homebrew/Linuxbrew"
-  fi
-fi
+# Dotfiles use optional brew detection (macOS + Linuxbrew); no sed patch needed.
 
 # History (optional)
 if [[ -f "$SRC/zsh_history" ]]; then

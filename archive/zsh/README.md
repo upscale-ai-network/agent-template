@@ -1,7 +1,7 @@
 # Zsh config archive (macOS → Linux restore)
 
 **Captured from:** Lepton macOS · **User:** `dtundlam`  
-**Stack:** Oh My Zsh · Powerlevel10k · zsh-autosuggestions · zsh-syntax-highlighting · Homebrew `shellenv`
+**Stack:** Oh My Zsh · Powerlevel10k · zsh-autosuggestions · zsh-syntax-highlighting · **optional** Homebrew (macOS `/opt/homebrew` · Linuxbrew — skipped if absent)
 
 ## Contents (`macos/`)
 
