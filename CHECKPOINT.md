@@ -14,7 +14,7 @@
 
 **Discipline:** **ONE live global Gluon** at a time (Mac primary today). Two active instances → divergent commits, `TASKS`/checkpoint drift, chat split — even with git, without continuous pull/push you fork state. Not solving or testing multi-host now.
 
-vm1 = read-only zombie / warm standby · hatch: `./scripts/bootstrap-gluon-zombie.sh --full` · human declares takeover if primary is lost · multi-host sync → later.
+vm1 = read-only zombie / warm standby · sync+build: `./scripts/zombie-pull-build.sh` (subshell) · human declares takeover if primary is lost · multi-host sync → later.
 
 ---
 

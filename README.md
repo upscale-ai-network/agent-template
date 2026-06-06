@@ -126,7 +126,14 @@ cd diwakar-work
 ./scripts/bootstrap-gluon-zombie.sh --full
 ```
 
-Installs **uv**, `uv sync`, zsh dotfiles, `check-decks.sh` litmus. No parallel writes — see [CHECKPOINT.md](CHECKPOINT.md).
+**From any directory (subshell — caller `$PWD` unchanged):**
+
+```bash
+~/diwakar-work/scripts/zombie-pull-build.sh
+# or: DIWAKAR_WORK=/path/to/diwakar-work zombie-pull-build.sh
+```
+
+Installs **uv**, `uv sync`, zsh dotfiles, `check-decks.sh` litmus, then regen pptx. No parallel writes — see [CHECKPOINT.md](CHECKPOINT.md).
 
 ---
 
