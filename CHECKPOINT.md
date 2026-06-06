@@ -12,10 +12,11 @@
 | **Mac Lepton** | `/Users/dtundlam/diwakar-work` | **Live Gluon** — forward line; read/write; commit/push when human says |
 | **Linux vm1** | `/home/diwakar/diwakar-work` | **Zombie Gluon** — standby; `git fetch` + `reset --hard origin/main` only · **no** commit/push/edits |
 
-**Ratified (2026-06-06):** Active/standby sync is **good enough for now**. Standby exists; **failover is not declared and not ready** — readiness probes only. Live Mac moves the repo; Linux hatch-audits after sync (`bootstrap-gluon-zombie.sh`, `uv sync --group dev`, `check-decks`). Goal = **Linux vs Mac tool gaps**, not pytest green on standby. Out of scope for now: fresh-clone DR drill, workflow/`npx` on zombie, `build-decks` regen on Linux (cross-OS `.pptx` drift). Human declares takeover if primary is lost.
+**Ratified (2026-06-06):** Active/standby sync is **good enough for now**. Standby exists; **failover is not declared and not ready** — readiness probes only. Live Mac moves the repo; Linux runs **`./scripts/zombie-hatch-audit.sh`** after sync (bootstrap → `uv sync --group dev` → `check-decks`). Goal = **Linux vs Mac tool gaps**, not pytest green on standby. Out of scope: `node`/`npx`, workflow pytest, `build-decks` regen on Linux (cross-OS `.pptx` drift), fresh-clone DR drill. Human declares takeover if primary is lost.
 
 **Discipline:** **ONE live global Gluon** at a time (Mac today). Two writers → divergent commits and checkpoint drift.
 
+Zombie hatch audit (standby readiness): `./scripts/zombie-hatch-audit.sh`  
 Zombie sync+regen (optional, heavier): `./scripts/zombie-pull-build.sh` · `git restore dt100/*.pptx dt122/*.pptx` before leave · **DT124** acceptance before stakeholder delivery · hermetic builds / multi-host automation → later.
 
 ---

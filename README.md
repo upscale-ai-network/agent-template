@@ -134,31 +134,17 @@ uv run pytest tests/ -m workflow -q   # md→pptx regression (needs npx)
 
 See [tests/WORKFLOW-REGRESSION.md](tests/WORKFLOW-REGRESSION.md). Entry points live in `src/gluon_cli/` (`[project.scripts]` in `pyproject.toml`).
 
-**Zombie standby (Linux vm):** read-only · hatch once:
+**Zombie standby (Linux vm):** read-only · failover not declared — readiness probe only:
 
 ```bash
-./scripts/bootstrap-gluon-zombie.sh --full
+~/diwakar-work/scripts/zombie-hatch-audit.sh
 ```
 
-**From any directory (subshell lambda — caller `$PWD` unchanged):**
+Syncs `origin/main`, bootstraps `uv`, runs `check-decks` on committed artifacts. No `node`/`npx`, no pytest, no regen. See [CHECKPOINT.md](CHECKPOINT.md).
 
-```sh
-(
-  set -e
-  cd "${DIWAKAR_WORK:-$HOME/diwakar-work}"
-  git fetch origin main
-  git reset --hard origin/main
-  export PATH="$HOME/.local/bin:$PATH"
-  uv sync --group dev
-  uv run pytest tests/ -q
-  uv run build-decks
-  uv run check-decks
-)
-```
+First-time hatch (optional zsh dotfiles): `./scripts/bootstrap-gluon-zombie.sh --full`
 
-Wrapper: `~/diwakar-work/scripts/zombie-pull-build.sh`
-
-Installs **uv**, `uv sync`, zsh dotfiles, pytest, then regen + litmus. No parallel writes — see [CHECKPOINT.md](CHECKPOINT.md).
+Heavier regen+pytest (optional): `~/diwakar-work/scripts/zombie-pull-build.sh` — may dirty `.pptx`; `git restore dt100/*.pptx dt122/*.pptx` before leave.
 
 ---
 

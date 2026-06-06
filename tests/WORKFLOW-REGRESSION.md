@@ -42,7 +42,7 @@ Pre-commit / CI blocker target:
 uv run pytest tests/ -m workflow -q
 ```
 
-Zombie vm1: fast tier + `check-decks` only (PNG committed; no npx required).
+Zombie vm1: `./scripts/zombie-hatch-audit.sh` — `check-decks` only (committed PNGs; no `node`/`npx`/pytest). Fast tier is live-Gluon / optional.
 
 ## Change recipes
 
