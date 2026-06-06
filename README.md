@@ -126,12 +126,25 @@ cd diwakar-work
 ./scripts/bootstrap-gluon-zombie.sh --full
 ```
 
-**From any directory (subshell — caller `$PWD` unchanged):**
+**From any directory (subshell lambda — caller `$PWD` unchanged):**
 
-```bash
-~/diwakar-work/scripts/zombie-pull-build.sh
-# or: DIWAKAR_WORK=/path/to/diwakar-work zombie-pull-build.sh
+```sh
+(
+  set -e
+  cd "${DIWAKAR_WORK:-$HOME/diwakar-work}"
+  git pull origin main
+  ./scripts/bootstrap-gluon-zombie.sh --full
+  ./scripts/run-deck-build.sh
+)
 ```
+
+Or `sh -c` one-liner:
+
+```sh
+sh -c 'set -e; cd "${DIWAKAR_WORK:-$HOME/diwakar-work}"; git pull origin main; ./scripts/bootstrap-gluon-zombie.sh --full; ./scripts/run-deck-build.sh'
+```
+
+Wrapper script: `~/diwakar-work/scripts/zombie-pull-build.sh`
 
 Installs **uv**, `uv sync`, zsh dotfiles, `check-decks.sh` litmus, then regen pptx. No parallel writes — see [CHECKPOINT.md](CHECKPOINT.md).
 
