@@ -1,6 +1,6 @@
 # CHECKPOINT — session handoff
 
-**When:** 2026-06-06 · Linux vm1 hatched  
+**When:** 2026-06-06 · active/standby ratified (failover not declared)  
 **Authority:** git HEAD + this file · chat/canvas not authoritative
 
 ---
@@ -9,12 +9,14 @@
 
 | Host | Path | Role |
 |------|------|------|
-| **Mac Lepton** | `/Users/dtundlam/diwakar-work` | **Primary** — read/write Gluon |
-| **Linux vm1** | `/home/diwakar/diwakar-work` | **Read-only zombie** — `git pull` · boot/read · **no** commit/push/edits |
+| **Mac Lepton** | `/Users/dtundlam/diwakar-work` | **Live Gluon** — forward line; read/write; commit/push when human says |
+| **Linux vm1** | `/home/diwakar/diwakar-work` | **Zombie Gluon** — standby; `git fetch` + `reset --hard origin/main` only · **no** commit/push/edits |
 
-**Discipline:** **ONE live global Gluon** at a time (Mac primary today). Two active instances → divergent commits, `TASKS`/checkpoint drift, chat split — even with git, without continuous pull/push you fork state. Not solving or testing multi-host now.
+**Ratified (2026-06-06):** Active/standby sync is **good enough for now**. Standby exists; **failover is not declared and not ready** — readiness probes only. Live Mac moves the repo; Linux hatch-audits after sync (`bootstrap-gluon-zombie.sh`, `uv sync --group dev`, `check-decks`). Goal = **Linux vs Mac tool gaps**, not pytest green on standby. Out of scope for now: fresh-clone DR drill, workflow/`npx` on zombie, `build-decks` regen on Linux (cross-OS `.pptx` drift). Human declares takeover if primary is lost.
 
-vm1 = read-only zombie / warm standby · sync+build: `./scripts/zombie-pull-build.sh` (subshell) · regen litmus may dirty `.pptx` (cross-OS bytes differ — expected) · `git restore dt100/*.pptx dt122/*.pptx` before leave · **acceptance tests (DT124)** required before stakeholder delivery — build OK ≠ deliverable · hermetic builds → later · human declares takeover if primary is lost · multi-host sync → later.
+**Discipline:** **ONE live global Gluon** at a time (Mac today). Two writers → divergent commits and checkpoint drift.
+
+Zombie sync+regen (optional, heavier): `./scripts/zombie-pull-build.sh` · `git restore dt100/*.pptx dt122/*.pptx` before leave · **DT124** acceptance before stakeholder delivery · hermetic builds / multi-host automation → later.
 
 ---
 
