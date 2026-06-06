@@ -103,7 +103,7 @@ Production B6 (`dt122/bugatti-qos-ccc.pptx`) is validated by `check-decks` but *
 
 ### What we are not doing (yet)
 
-- No line-coverage collection (`pytest-cov` not wired)
+- No coverage gate — baseline recorded below; evolve as tests grow
 - No parallel pytest workers (`-n auto`) — would speed wall time but scramble subprocess logs
 - No shared session fixture for mmdc — each test gets clean tmp dirs for isolation
 - No git gate yet (DT119) — tests are advisory until pre-commit enforces `-m workflow`
@@ -129,3 +129,52 @@ uv run check-decks && uv run pytest tests/test_workflow_pipeline.py -m workflow 
 - Optional `--stem` render in workflow tests to share PNGs within a session
 - Session-scoped mmdc warm-up fixture (one diagram boot, then tests)
 - Split `test_uv_commands` into “litmus only” vs “full a3 build” markers
+
+---
+
+## Baseline metrics (v0)
+
+**Recorded:** 2026-06-06 · **Commit:** `d63490f` · **Host:** Lepton (mmdc cached)
+
+Starting point only — no gate thresholds. Re-measure after meaningful test changes.
+
+### How to reproduce
+
+```bash
+uv run pytest tests/ -q
+uv run pytest --cov=scripts tests/ -q   # optional; needs pytest-cov in venv
+```
+
+### Pass / runtime
+
+| Metric | Value |
+|--------|------:|
+| Tests passed | **16/16** (100%) |
+| Full suite wall time | **~15s** (cached mmdc) |
+| Workflow tier | **7/7** pass · ~14s |
+| Fast tier | **9/9** pass · includes `check-decks` + `build-decks-a3` subprocesses |
+
+### Functional coverage (test design)
+
+| Metric | Value | Notes |
+|--------|------:|-------|
+| Production deck litmus | **2/2** (100%) | A3 + B6 via `check-decks` |
+| Pipeline stage coverage | **9/12** (75%) | Missing: B6 full `build-decks`, DT124 text acceptance, subprocess line attribution |
+| Edit-class coverage | **5/9** (55.6%) | Covered: md edit, mmd color, duplicate slide, idempotent rebuild, missing `.mmd` fail-loud |
+
+### Line coverage — `scripts/` (`pytest --cov=scripts`, in-process only)
+
+| Scope | Lines | % |
+|-------|------:|--:|
+| All `scripts/` | 643/1659 | **38.8%** |
+| Hot path (6 modules) | 643/972 | **66.2%** |
+| `workflow_testkit.py` | 66/68 | 97.1% |
+| `deck_render.py` | 30/31 | 96.8% |
+| `pptx_util.py` | 267/292 | 91.4% |
+| `deck_from_md.py` | 171/253 | 67.6% |
+| `build-dt100-decks.py` | 61/156 | 39.1% |
+| `deck_validate.py` | 48/172 | 27.9% |
+
+**0% in this run** (subprocess / not imported): `check_decks.py`, `render_b6_diagrams.py`, `render_a3_diagrams.py`, `a3_aligned_render.py`.
+
+Subprocess entry points (`uv run check-decks`, `build-decks-a3`) execute in tests but do not add line credit under plain `pytest --cov`.

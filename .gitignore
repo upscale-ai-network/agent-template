@@ -7,3 +7,6 @@ assets/templates/~$*
 assets/previews/
 tests/output/
 *.pptx.tmp
+.coverage
+coverage.json
+htmlcov/
