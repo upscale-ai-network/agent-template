@@ -1,0 +1,21 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '12px'}}}%%
+flowchart LR
+  subgraph Gates["v0 gates — group review"]
+    G1["Validation framework"]
+    G2["QoS / buffer @ CSB"]
+    G3["L2 / L3 / ECMP slices"]
+    G4["SDK / SAI path"]
+  end
+
+  D1["Diwakar drafts"] --> G1
+  D1 --> G2
+  P1["Peer DRIs own slice proof"] --> G3
+  S1["SDK leads consult"] --> G4
+
+  classDef program fill:#E3F2FD,stroke:#1565C0,color:#051830
+  classDef lane fill:#FFF3E0,stroke:#EF6C00,color:#051830
+  classDef peer fill:#ECEFF1,stroke:#455A64,color:#051830
+
+  class G1,G2,G3,G4 program
+  class D1 lane
+  class P1,S1 peer

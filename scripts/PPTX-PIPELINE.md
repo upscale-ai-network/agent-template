@@ -159,7 +159,9 @@ Optional render extras: `uv sync --extra render` (cairosvg — not on A3 hot pat
 
 **Now — ship ccc (DT122 P0):** production pipeline stays in **`scripts/`** (legacy bespoke location). No move during delivery.
 
-**Parallel — gain trust (DT125):** toy with pytest on a **canary** only — copy slice of pipeline logic into `src/py/` (or sibling package), fixture md + mermaid → png → pptx, falsifiable markers. Does not touch `dt100/` / `dt122/` sources yet.
+**B6 live (DT122):** `assets/diagrams/b6/*.mmd` → `render_b6_diagrams.py` (npx mmdc + Pillow pipeline overlay) → `build_b6()`.
+
+**Parallel — gain trust (DT125):** canary pytest fixture still optional; B6 path is production in `scripts/`.
 
 **Later — migrate (after ccc + green canary):** move QoS (A3) and ccc (B6) slides onto the tested code path; retire or thin `scripts/` to bootstrap/docs only.
 

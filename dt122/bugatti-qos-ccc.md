@@ -2,7 +2,7 @@
 
 **B6** = shorthand for this deck · share as **`bugatti-qos-ccc.pptx`** (ccc doc) — no `draft-` prefix unless back on draft-board.
 
-**Single file for this deck:** slide titles, bullets, on-slide walk cues → `bugatti-qos-ccc.pptx` via `uv run build-decks`.
+**Single file for this deck:** slide titles, walk cues → `bugatti-qos-ccc.pptx` via `uv run build-decks`.
 
 **Presenter script (not in PPTX):** [bugatti-qos-ccc-presenter-notes.md](bugatti-qos-ccc-presenter-notes.md)
 
@@ -13,7 +13,7 @@
 ## Cover
 
 **Title:** QoS buffer carving arch  
-**Subtitle (navy):** Walk: vision → draft plan → owners → pipeline  
+**Subtitle (navy):** Walk: process → pipeline → alignment  
 **Meta:** Open after qos-architecture slides 1–2 — role-play, not a handoff  
 **Tag:** Confidential — Upscale AI
 
@@ -21,133 +21,80 @@
 
 ## Slide 1
 
-**Title:** Define task — after qos-architecture slides 1–2  
-**Subtitle:** Beat 1 · ~1 min  
-**Lead:** Transition — alignment deck framed situation + task; this walk defines how.
+**Title:** The walk — five beats (process)  
+**Subtitle:** Act I · broad strokes  
+**Lead:** A3 framed situation + task — this deck shows how we execute.  
+**Diagram:** b6-slide01-process-ribbon
 
 **Bullets:**
-- Assumption: **qos-architecture** aligned on tape-out program bar + QoS RM wedge at CSB.
-- Show validation machine, owners, QoS on logical pipeline — co-evolve plan live.
-- Close on qos-architecture slides 3–4 (near-term scope + Friday alignment) — not repeated here.
+- Not a 50-pager — scannable blocks, owners on the picture.
+- Co-evolve gates live; I drive technical detail day-to-day.
 
 ---
 
 ## Slide 2
 
-**Title:** Document discipline  
-**Subtitle:** Beat 2 · thin  
-**Lead:** Thin walk today; depth only if Gururaj redirects.
+**Title:** Validation machine — how we prove tape-out  
+**Subtitle:** Act II · focus  
+**Lead:** v0 gates for group review — not unilateral.  
+**Diagram:** b6-slide02-validation-stack
 
 **Bullets:**
-- Friday meeting: qos-architecture slides 1–2, then this walk (~6 beats).
-- Next: expand swimlanes / integrated validation plans — format and depth per your steer.
-- Not this walk: 50-page dump, full HW catalog.
+- I draft “done” per gate; Shafi, Tippanna, Rupa, SDK leads align on slices.
 
 ---
 
 ## Slide 3
 
-**Title:** Validation framework (I draft v0; peers align)  
-**Subtitle:** Beat 2 · ~3 min  
-**Lead:** Gates are v0 for group review — not unilateral.
+**Title:** Logical pipeline — my wedge on your slide  
+**Subtitle:** Act II · center of walk  
+**Lead:** QoSMAP + Queue / buffer carve = my lane; peers on their blocks.  
+**Diagram:** b6-slide03-pipeline-annotated
 
-**Bullets:**
-- Product / program use cases
-- Architecture validation ↔ datapath arch
-- Management plane — SONiC / FBOSS → SAI
-- Tape-out path: C-models → emulation / FPGA → silicon
-- SDK + SAI gates before tape-out
-- I socialize v0 gates for group review; peers own slice proof.
+**Caption:** Shafi · Tippanna · Tilak · Girish · Rupa — W order on the picture.
 
 ---
 
 ## Slide 4
 
-**Title:** Who owns what (don't read every row)  
-**Subtitle:** Beat 3 · ~2 min  
-**Lead:** My lane first; peer DRIs in W order — then point at pipeline slide.
-
-**Bullets:**
-- Validation program + QoS RM: Diwakar Tundlam · QoSMAP · Queue · buffer carve at CSB
-- Peer DRIs: Shafi Mohammad · L2/L3/Mirroring · Tippanna Hongal · ECMP/LAG/Counters · Tilak · L2 · Girish Kale · L3
-- HW datapath / OCP ESUN: Rupa Budhia · SDK / SAI: SDK leads — consult, not my R
-- Program mesh: Prasun Sinha · Scope / company external: Gururaj
+**Title:** Buffer carve @ CSB  
+**Subtitle:** Act II · egress wedge  
+**Lead:** Process outcome — carve plan + gate v0 in the next few days.  
+**Diagram:** b6-slide04-csb-inset
 
 ---
 
 ## Slide 5
 
-**Title:** My wedge — QoS / RM (HWv1)  
-**Subtitle:** Beat 4 · reference only (historical)  
-**Lead:** Kept for reference — validation scope lives on slide 3 framework.
+**Title:** Who aligns on which gate  
+**Subtitle:** Act III · review  
+**Lead:** Don’t read every row — point at the matrix.  
+**Diagram:** b6-slide05-gate-alignment
 
 **Bullets:**
-- VLAN-PRI, TOS/DSCP → queues → schedulers
-- Buffer management and carving (resource manager)
-- Port speed + queue/port policy coherence
-- ESUN — align buffer/TM with standardization (OCP)
-- HWv1: no MPLS EXP, no IPv6 priority mapping · HWv2: EXP + IPv6 pri
+- My lane: validation framework draft + QoS / buffer @ CSB.
+- Peer DRIs own slice proof (C-model → emulation).
 
 ---
 
 ## Slide 6
 
-**Title:** Your pipeline slide — my wedge (center of walk)  
-**Image:** logical-pipeline-boss-slide.png  
-**Caption:** Beat 4 · QoSMAP + Queue/buffer carve (me) · Shafi (L2/ACL) · Tippanna (ECMP/LAG/Counters) · Tilak (L2) · Girish (L3) · Rupa (parse/datapath)
+**Title:** Boundaries — in this walk vs not merged  
+**Subtitle:** Act III · defer  
+**Lead:** Weekly sync on adjacent threads — no Friday merge.  
+**Diagram:** b6-slide06-boundaries
 
 ---
 
 ## Slide 7
 
-**Title:** On the picture — blocks and validation tie-in  
-**Subtitle:** Beat 4 · optional detail  
-**Lead:** Only if Gururaj asks — each block needs AV + software proof before silicon.
+**Title:** Next steps — if you want me to drive  
+**Subtitle:** Act III · forward  
+**Lead:** Offer only if asked — peer huddle follows homework.  
+**Diagram:** b6-slide07-next-steps
 
 **Bullets:**
-- Ingress / Parser — parse correctness with Rupa before OCP/BCM calls
-- L2 — Shafi · Tilak · L3 — Girish · Forward: ECMP/LAG/Counters (Tippanna), QoSMAP (me) · Egress Queue/carve (me)
-- I draft cross-block tape-out gates; block DRIs own slice proof (C-model → emulation)
-
----
-
-## Slide 8
-
-**Title:** Explicit deferrals (do not merge)  
-**Subtitle:** Beat 5 · ~1 min  
-**Lead:** Out of this walk — weekly sync, not merged plans.
-
-**Bullets:**
-- Rupa SDK/SAI/datapath layout — related, different plan; weekly sync
-- OCP ESUN: coordinate with Rupa before vendor calls; company position through Gururaj
-- Prabu execution mesh / bs-2 — round 2 unless you redirect
-
----
-
-## Slide 9
-
-**Title:** If you want me to drive — next beats  
-**Subtitle:** Beat 6 · after mandate  
-**Lead:** Offer only if asked — who must be in the room.
-
-**Bullets:**
-- Expand QoS buffer carving arch: swimlanes, DRI depth, integrated AV / C-model / datapath / SDK / SAI validation
-- QoS RM HWv1 scope with HW datapath DRI (Rupa lane) — gates as we agree
-- Cadence: Shafi, Tippanna, Rupa, Prasun — if Gururaj redirects drive to me
-- Room list — offer here if you ask (not on qos-architecture slides)
-
----
-
-## Slide 10
-
-**Title:** What this walk is not  
-**Subtitle:** Beat 5–6  
-**Lead:** Boundaries — keeps Friday walkable.
-
-**Bullets:**
-- Not C40 / full HW digest · Not SDK program ownership day one
-- Not AI/token policy · Not sponsor homework-check — walkable backup only
-- Whiteboard backup: assets/dt100-whiteboards.md (only if asked)
+- Return to A3 slides 3–4 for mandate + alignment — not repeated here.
 
 ---
 

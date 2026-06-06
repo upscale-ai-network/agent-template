@@ -1,0 +1,18 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '13px'}}}%%
+flowchart LR
+  subgraph IN["In this walk"]
+    I1["Buffer carve plan + gate v0"]
+    I2["Peer lane alignment"]
+    I3["Friday-walkable scope"]
+  end
+  subgraph OUT["Not merged here"]
+    O1["Full swimlanes"]
+    O2["Rupa SDK layout thread"]
+    O3["50-page HW digest"]
+  end
+
+  classDef program fill:#E3F2FD,stroke:#1565C0,color:#051830
+  classDef muted fill:#F5F5F5,stroke:#BDBDBD,color:#9E9E9E
+
+  class I1,I2,I3 program
+  class O1,O2,O3 muted

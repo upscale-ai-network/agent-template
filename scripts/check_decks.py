@@ -16,6 +16,7 @@ from deck_validate import (  # noqa: E402
     validate_a3_build,
     validate_a3_diagram_pngs,
     validate_b6_build,
+    validate_b6_diagram_pngs,
     validate_built_pptx,
 )
 
@@ -30,6 +31,7 @@ def main() -> int:
     errors.extend(validate_a3_build(a3_doc))
     errors.extend(validate_a3_diagram_pngs(a3_doc))
     errors.extend(validate_b6_build(b6_doc))
+    errors.extend(validate_b6_diagram_pngs(b6_doc))
     if A3_PPTX.is_file():
         errors.extend(validate_built_pptx(A3_PPTX, expected_slides=1 + len(a3_doc.slides)))
     else:

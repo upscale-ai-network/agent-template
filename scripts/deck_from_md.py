@@ -226,7 +226,10 @@ def load_deck_md(
             elif key == "Lead":
                 current.lead = val
             elif key == "Diagram":
-                m = re.search(r"slide\d{2}-[\w-]+", val)
+                val = val.strip()
+                m = re.search(r"b6-slide\d{2}-[\w-]+", val)
+                if not m:
+                    m = re.search(r"slide\d{2}-[\w-]+", val)
                 current.diagram = m.group(0) if m else val.split()[0]
             elif key == "Image":
                 current.image = val.split("/")[-1].strip()

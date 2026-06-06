@@ -1,0 +1,14 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '13px'}}}%%
+flowchart TB
+  P["Product / program use cases"] --> AV["Arch validation ↔ datapath arch"]
+  AV --> M["Mgmt plane<br/>SONiC / FBOSS → SAI"]
+  M --> SW["C-model → emulation / FPGA → silicon"]
+  SW --> G["SDK + SAI gates before tape-out"]
+  N["I draft v0 gates · peers align per slice"] -.-> G
+
+  classDef program fill:#E3F2FD,stroke:#1565C0,color:#051830
+  classDef lane fill:#FFF3E0,stroke:#EF6C00,color:#051830
+  classDef note fill:#F5F5F5,stroke:#BDBDBD,color:#455A64
+
+  class P,AV,M,SW,G program
+  class N note

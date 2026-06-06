@@ -35,6 +35,7 @@ from pptx_util import (  # noqa: E402
 
 PIPELINE_IMG = ROOT / "assets" / "logical-pipeline-boss-slide.png"
 A3_DIAGRAMS = ROOT / "assets" / "diagrams" / "a3"
+B6_DIAGRAMS = ROOT / "assets" / "diagrams" / "b6"
 
 # Committed company template (git). Optional local seed: ~/Downloads/Mirror-*.pptx
 STYLE_DOWNLOAD = Path.home() / "Downloads" / "Mirror-Sflow-Bugatti-ASIC-CCC.pptx"
@@ -139,6 +140,22 @@ def _a3_png(name: str) -> Path:
     return A3_DIAGRAMS / f"{name}.png"
 
 
+def _b6_png(name: str) -> Path:
+    return B6_DIAGRAMS / f"{name}.png"
+
+
+def ensure_b6_diagrams(doc) -> None:
+    from render_b6_diagrams import render_all_b6_diagrams
+
+    stems = render_all_b6_diagrams(doc)
+    print(f"Rendered {len(stems)} B6 diagrams from {B6_MD.name}")
+    for stem in stems:
+        print(f"OK: {_b6_png(stem).relative_to(ROOT)}")
+    from deck_validate import validate_b6_diagram_pngs
+
+    fail_on_errors(validate_b6_diagram_pngs(doc))
+
+
 def _join_notes(*parts: str) -> Optional[str]:
     text = "\n\n".join(p.strip() for p in parts if p and p.strip())
     return text or None
@@ -186,6 +203,7 @@ def build_a3() -> Path:
 def build_b6() -> Path:
     doc = load_b6_md()
     fail_on_errors(validate_b6_build(doc))
+    ensure_b6_diagrams(doc)
     slides = doc.ordered_slides()
     out = DT122 / "bugatti-qos-ccc.pptx"
     deck = StyledDeck(out, num_content_slides=len(slides))
@@ -194,7 +212,15 @@ def build_b6() -> Path:
     deck.add_cover(cov.title, cov.subtitle, cov.meta, cov.tag)
 
     for s in slides:
-        if s.image:
+        if s.diagram:
+            deck.add_content(
+                s.title,
+                s.bullets,
+                subtitle=s.subtitle or None,
+                lead=s.lead or s.caption or None,
+                diagram=_b6_png(s.diagram),
+            )
+        elif s.image:
             img = PIPELINE_IMG if s.image == "logical-pipeline-boss-slide.png" else ROOT / "assets" / s.image
             deck.add_image_slide(s.title, img, caption=s.caption or None)
         else:

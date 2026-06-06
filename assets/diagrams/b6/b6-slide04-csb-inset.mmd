@@ -1,0 +1,16 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '13px'}}}%%
+flowchart TB
+  subgraph CSB["Buffer carve @ CSB — my wedge"]
+    B1["Port-speed tiers<br/>200G / 400G / 800G"]
+    B2["lossy / lossless → PFC → queues"]
+    B3["QoSMAP → TC → egress queues"]
+  end
+  OUT["Near-term: buffer carve plan + gate v0"]
+
+  B1 --> B2 --> B3 --> OUT
+
+  classDef lane fill:#FFF3E0,stroke:#EF6C00,color:#051830,stroke-width:2px
+  classDef act fill:#F3E5F5,stroke:#7B1FA2,color:#051830
+
+  class B1,B2,B3 lane
+  class OUT act

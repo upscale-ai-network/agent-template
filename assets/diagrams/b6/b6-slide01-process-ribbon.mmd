@@ -1,0 +1,14 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '13px'}}}%%
+flowchart LR
+  A["Program bar<br/>(A3 context)"] --> B["Validation machine"]
+  B --> C["Logical pipeline"]
+  C --> D["QoS wedge @ CSB"]
+  D --> E["Near-term output<br/>carve plan + gate v0"]
+
+  classDef program fill:#E3F2FD,stroke:#1565C0,color:#051830
+  classDef lane fill:#FFF3E0,stroke:#EF6C00,color:#051830,stroke-width:2px
+  classDef act fill:#F3E5F5,stroke:#7B1FA2,color:#051830
+
+  class A,B,C program
+  class D lane
+  class E act

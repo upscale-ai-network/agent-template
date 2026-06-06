@@ -12,6 +12,8 @@
 
 **Build:** `uv run build-decks` (A3 from `dt100/` + B6 from here; do not hand-edit pptx)
 
+**Diagrams:** `assets/diagrams/b6/` — Mermaid + pipeline overlay · `scripts/render_b6_diagrams.py`
+
 **Check:** `uv run check-decks`
 
 **Delivery:** SharePoint pptx upload — not auto-published to any team channel.

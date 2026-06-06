@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 A3_MD = ROOT / "dt100" / "bugatti-qos-architecture.md"
 B6_MD = ROOT / "dt122" / "bugatti-qos-ccc.md"
 A3_DIAGRAMS = ROOT / "assets" / "diagrams" / "a3"
+B6_DIAGRAMS = ROOT / "assets" / "diagrams" / "b6"
 PIPELINE_IMG = ROOT / "assets" / "logical-pipeline-boss-slide.png"
 STYLE_REF = ROOT / "assets/templates/upscale-ccc-style-reference.pptx"
 
@@ -37,6 +38,10 @@ def fail_on_errors(errors: Sequence[str]) -> None:
 
 def _a3_png(stem: str) -> Path:
     return A3_DIAGRAMS / f"{stem}.png"
+
+
+def _b6_png(stem: str) -> Path:
+    return B6_DIAGRAMS / f"{stem}.png"
 
 
 def validate_style_reference() -> List[str]:
@@ -167,9 +172,18 @@ def validate_b6_md(doc: DeckDocument | None = None) -> List[str]:
                 img = ROOT / "assets" / s.image
             if not img.is_file():
                 errors.append(f"B6 slide {s.number} image missing: {img.relative_to(ROOT)}")
-        elif not s.bullets:
-            errors.append(f"B6 slide {s.number} has no bullets and no image")
+        elif not s.diagram and not s.bullets:
+            errors.append(f"B6 slide {s.number} has no bullets, diagram, or image")
 
+    return errors
+
+
+def validate_b6_diagram_pngs(doc: DeckDocument | None = None) -> List[str]:
+    doc = doc or load_b6_md()
+    errors: List[str] = []
+    for s in doc.ordered_slides():
+        if s.diagram:
+            errors.extend(validate_png(_b6_png(s.diagram)))
     return errors
 
 
@@ -206,4 +220,7 @@ def validate_b6_build(doc: DeckDocument | None = None) -> List[str]:
     errors: List[str] = []
     errors.extend(validate_style_reference())
     errors.extend(validate_b6_md(doc))
+    stems = [s.diagram for s in doc.ordered_slides() if s.diagram]
+    if not stems:
+        errors.append("B6 deck must declare Diagram fields for visual-first slides")
     return errors

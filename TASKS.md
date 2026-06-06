@@ -108,10 +108,10 @@
 
 **2A scope (restrained — Guru scans for blocks, not bullets):**
 
-- [ ] Mermaid diagram blocks in `bugatti-qos-ccc.md` (pipeline annotate · CSB/buffer-carve inset · validation stack)
-- [ ] B6 render path: `assets/diagrams/b6/` + script (Mermaid → PNG); wire into `build-dt100-decks.py` / validate
-- [ ] Visual-first slide reorder in md (diagrams early; owners on picture)
-- [ ] `uv run build-decks` — post-build checks pass
+- [x] Mermaid diagram blocks in `bugatti-qos-ccc.md` (pipeline annotate · CSB/buffer-carve inset · validation stack)
+- [x] B6 render path: `assets/diagrams/b6/` + `render_b6_diagrams.py`; wired into `build-dt100-decks.py` / validate
+- [x] Visual-first slide reorder in md (7 slides · 3 acts · diagrams early; DRI on pipeline)
+- [x] `uv run build-decks` — post-build checks pass
 - [ ] Human cold read — no “performed better” than peer CCC decks
 
 **Out of scope (abeyance):** swimlanes · template churn · HWv2 depth · informal peer huddle (follow-on after 2A ships)
