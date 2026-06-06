@@ -134,13 +134,25 @@ uv run pytest tests/ -m workflow -q   # md→pptx regression (needs npx)
 
 See [tests/WORKFLOW-REGRESSION.md](tests/WORKFLOW-REGRESSION.md). Entry points live in `src/gluon_cli/` (`[project.scripts]` in `pyproject.toml`).
 
-**Zombie standby (Linux vm):** read-only · failover not declared — readiness probe only:
+**Zombie standby (Linux vm):** read-only · failover not declared — readiness probe only.
+
+Lambda (basic tools only — no dependency on scripts Mac hasn't pushed yet):
 
 ```bash
-~/diwakar-work/scripts/zombie-hatch-audit.sh
+(
+  set -e
+  cd "${DIWAKAR_WORK:-$HOME/diwakar-work}"
+  git fetch origin main && git reset --hard origin/main
+  export PATH="$HOME/.local/bin:$PATH"
+  command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
+  export PATH="$HOME/.local/bin:$PATH"
+  uv sync --group dev
+  uv run check-decks
+  echo "=== hatch audit OK ==="
+)
 ```
 
-Syncs `origin/main`, bootstraps `uv`, runs `check-decks` on committed artifacts. No `node`/`npx`, no pytest, no regen. See [CHECKPOINT.md](CHECKPOINT.md).
+After `origin/main` has it: `~/diwakar-work/scripts/zombie-hatch-audit.sh` (same steps). No `node`/`npx`, no pytest, no regen. See [CHECKPOINT.md](CHECKPOINT.md).
 
 First-time hatch (optional zsh dotfiles): `./scripts/bootstrap-gluon-zombie.sh --full`
 
