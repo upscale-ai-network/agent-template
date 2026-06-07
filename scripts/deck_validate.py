@@ -153,12 +153,15 @@ def validate_png(
     return errors
 
 
-def validate_a3_diagram_pngs(doc: DeckDocument | None = None) -> List[str]:
+def validate_a3_diagram_pngs(
+    doc: DeckDocument | None = None, diagram_dir: Path | None = None
+) -> List[str]:
     doc = doc or load_deck_md(A3_MD, a3_cover_fields=True)
+    base = diagram_dir or A3_DIAGRAMS
     errors: List[str] = []
     for s in doc.ordered_slides():
         if s.diagram:
-            errors.extend(validate_png(_a3_png(s.diagram)))
+            errors.extend(validate_png(base / f"{s.diagram}.png"))
     return errors
 
 

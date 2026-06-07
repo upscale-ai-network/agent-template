@@ -126,18 +126,20 @@ class StyledDeck:
         return self.path
 
 
-def ensure_a3_diagrams(doc) -> None:
+def ensure_a3_diagrams(doc, diagram_dir: Path | None = None) -> None:
     from render_a3_diagrams import render_all_a3_diagrams
 
-    stems = render_all_a3_diagrams(doc)
+    stems = render_all_a3_diagrams(doc, diagram_dir=diagram_dir)
     print(f"Rendered {len(stems)} A3 diagrams from {A3_MD.name} (PyMuPDF)")
     for stem in stems:
-        print(f"OK: {_a3_png(stem).relative_to(ROOT)}")
-    fail_on_errors(validate_a3_diagram_pngs(doc))
+        p = _a3_png(stem, diagram_dir)
+        label = p.relative_to(ROOT) if p.is_relative_to(ROOT) else p
+        print(f"OK: {label}")
+    fail_on_errors(validate_a3_diagram_pngs(doc, diagram_dir=diagram_dir))
 
 
-def _a3_png(name: str) -> Path:
-    return A3_DIAGRAMS / f"{name}.png"
+def _a3_png(name: str, diagram_dir: Path | None = None) -> Path:
+    return (diagram_dir or A3_DIAGRAMS) / f"{name}.png"
 
 
 def _b6_png(name: str) -> Path:
@@ -161,11 +163,13 @@ def _join_notes(*parts: str) -> Optional[str]:
     return text or None
 
 
-def build_a3() -> Path:
+def build_a3(
+    out_path: Path | None = None, diagram_dir: Path | None = None
+) -> Path:
     doc = load_deck_md(A3_MD, a3_cover_fields=True)
     fail_on_errors(validate_a3_build(doc))
-    ensure_a3_diagrams(doc)
-    out = DT100 / "bugatti-qos-architecture.pptx"
+    ensure_a3_diagrams(doc, diagram_dir=diagram_dir)
+    out = out_path or (DT100 / "bugatti-qos-architecture.pptx")
     deck = StyledDeck(out, num_content_slides=len(doc.slides))
 
     cov = doc.cover
@@ -194,7 +198,7 @@ def build_a3() -> Path:
             notes=notes,
         )
         if s.diagram:
-            kwargs["diagram"] = _a3_png(s.diagram)
+            kwargs["diagram"] = _a3_png(s.diagram, diagram_dir)
         deck.add_content(**kwargs)
 
     return deck.save()

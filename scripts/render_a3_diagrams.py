@@ -33,7 +33,7 @@ def _preflight_pymupdf() -> None:
         raise SystemExit("PyMuPDF required. Run: uv sync") from exc
 
 
-def render_all_a3_diagrams(doc=None) -> list[str]:
+def render_all_a3_diagrams(doc=None, diagram_dir: Path | None = None) -> list[str]:
     """Render every diagram declared in A3 md. Returns diagram stems rendered."""
     doc = doc or load_deck_md(A3_MD, a3_cover_fields=True)
     fail_on_errors(validate_a3_build(doc))
@@ -42,10 +42,11 @@ def render_all_a3_diagrams(doc=None) -> list[str]:
     if not stems:
         raise RuntimeError(f"No diagrams declared in {A3_MD.name}")
 
-    A3_DIR.mkdir(parents=True, exist_ok=True)
-    render_all_diagrams(A3_DIR, doc=doc)
+    out_dir = diagram_dir or A3_DIR
+    out_dir.mkdir(parents=True, exist_ok=True)
+    render_all_diagrams(out_dir, doc=doc)
     for stem in stems:
-        fail_on_errors(validate_png(A3_DIR / f"{stem}.png"))
+        fail_on_errors(validate_png(out_dir / f"{stem}.png"))
 
     return stems
 

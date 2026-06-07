@@ -16,23 +16,15 @@
 
 **Discipline:** **ONE live global Gluon** at a time (Mac today). Two writers → divergent commits and checkpoint drift.
 
-Zombie hatch audit (standby readiness) — **lambda first** (only `git` + `uv`; works before new scripts land on `origin/main`):
+Zombie hatch audit (standby readiness) — **lambda** (shell already at repo clone; you own PWD):
 
 ```bash
-(
-  set -e
-  cd "${DIWAKAR_WORK:-$HOME/diwakar-work}"
-  git fetch origin main && git reset --hard origin/main
-  export PATH="$HOME/.local/bin:$PATH"
-  command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
-  export PATH="$HOME/.local/bin:$PATH"
-  uv sync --group dev
-  uv run check-decks
-  echo "=== hatch audit OK ==="
-)
+git fetch origin main && git reset --hard origin/main
+uv sync --group dev
+uv run check-decks
 ```
 
-After pull: `./scripts/zombie-hatch-audit.sh` (same steps, recorded).  
+Optional wrapper (any cwd): `./scripts/zombie-hatch-audit.sh`  
 Zombie sync+regen (optional, heavier): `./scripts/zombie-pull-build.sh` · `git restore dt100/*.pptx dt122/*.pptx` before leave · **DT124** acceptance before stakeholder delivery · hermetic builds / multi-host automation → later.
 
 ---

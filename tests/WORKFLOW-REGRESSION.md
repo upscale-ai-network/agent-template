@@ -69,7 +69,7 @@ Six tests stay in-process: `hello` / `fib` (uv wiring smoke), **TC01** / **TC02*
 Three more “fast” tests are **not** cheap — they shell out to production entry points:
 
 - **`test_check_decks_uv_run`** — spawns `uv run check-decks`, which loads both production decks’ md, validates every committed A3/B6 diagram PNG, opens both pptx files, and checks slide counts. This is the same litmus you run before delivery.
-- **`test_build_decks_a3_uv_run`** — spawns `uv run build-decks-a3`, which runs **PyMuPDF** to rasterize four A3 diagrams from `dt100/bugatti-qos-architecture.md`, copies the company template, fills five slides, and writes `dt100/bugatti-qos-architecture.pptx`. That alone is several seconds of render + pptx zip work.
+- **`test_build_a3_isolated`** — in-process A3 build into `tmp_path` only (diagrams + pptx); **never** writes `dt100/` or `assets/diagrams/a3/`.
 
 So the “fast” tier is misnamed if you include `test_uv_commands` — only the workflow parse tests are truly sub-second.
 
@@ -96,7 +96,7 @@ Across the workflow tier you get **roughly 10–14 mmdc invocations** and **4–
 Running **everything** (`pytest tests/` without `-m`) executes fast + workflow sequentially. Overlap you pay for:
 
 - **`check-decks` runs twice** (`test_uv_commands` + TC09)
-- **`build-decks-a3` runs once** in fast tier (touches production A3 pptx bytes)
+- A3 build test uses isolated `tmp_path` (no production pptx/PNG writes)
 - **Canary builds never touch production B6** — tmp paths only
 
 Production B6 (`dt122/bugatti-qos-ccc.pptx`) is validated by `check-decks` but **not rebuilt** on every full pytest unless you also run `uv run build-decks` separately.
@@ -152,7 +152,7 @@ uv run pytest --cov=scripts tests/ -q   # optional; needs pytest-cov in venv
 | Tests passed | **16/16** (100%) |
 | Full suite wall time | **~15s** (cached mmdc) |
 | Workflow tier | **7/7** pass · ~14s |
-| Fast tier | **9/9** pass · includes `check-decks` + `build-decks-a3` subprocesses |
+| Fast tier | **9/9** pass · `check-decks` subprocess + isolated A3 build test |
 
 ### Functional coverage (test design)
 
