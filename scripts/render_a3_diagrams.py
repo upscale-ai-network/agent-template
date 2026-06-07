@@ -28,7 +28,9 @@ from deck_validate import (  # noqa: E402
 
 def _preflight_pymupdf() -> None:
     try:
-        import fitz  # noqa: F401 — PyMuPDF
+        from pymupdf_util import load_fitz
+
+        load_fitz()
     except ImportError as exc:
         raise SystemExit("PyMuPDF required. Run: uv sync") from exc
 

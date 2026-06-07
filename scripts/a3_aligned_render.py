@@ -1042,8 +1042,9 @@ def _render_for_stem(stem: str, doc=None) -> str:
 
 
 def _svg_to_png(svg: str, png: Path, scale: float = 2.5) -> None:
-    import fitz
+    from pymupdf_util import load_fitz
 
+    fitz = load_fitz()
     png.parent.mkdir(parents=True, exist_ok=True)
     doc = fitz.open(stream=svg.encode("utf-8"), filetype="svg")
     try:
