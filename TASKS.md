@@ -16,7 +16,8 @@
 
 | DT | Priority | Status | Title | Due | Notes |
 |----|----------|--------|-------|-----|-------|
-| DT122 | P0 | doing | CCC 2A — Mermaid-aware B6 slide upgrade | 2026-06-06 | `dt122/` · [ccc-strategy.md](dt122/ccc-strategy.md) §2–5 · A3 stays PyMuPDF in `dt100/` |
+| DT122 | P0 | doing | CCC 2A — B6 Hongal-ready · 3pm visual review | 2026-06-06 | `dt122/` · Datapath DRI on Guru XLS · SharePoint tonight if OK |
+| DT126 | P0 | next | Schedule Friday — N + W optional (post-review) | 2026-06-07 | Draft pending after Hongal 3pm + final pptx |
 | DT123 | P2 | open | Task time ledger — per-DT visibility | | After DT122 · see **DT123** |
 | DT124 | P2 | open | Deck acceptance test framework | | After DT122 · [DECK-ACCEPTANCE.md](scripts/DECK-ACCEPTANCE.md) |
 | DT125 | P2 | open | Canary deck — md/mermaid/pptx pipeline regression | | With DT122 mermaid · see **DT125** |
@@ -112,11 +113,14 @@
 - [x] B6 render path: `assets/diagrams/b6/` + `render_b6_diagrams.py`; wired into `build-dt100-decks.py` / validate
 - [x] Visual-first slide reorder in md (7 slides · 3 acts · diagrams early; DRI on pipeline)
 - [x] `uv run build-decks` — post-build checks pass
+- [x] Sharp Pillow flow diagrams (1800×720 · uniform boxes · min-width gate)
+- [ ] **Hongal 3pm** visual review — incorporate feedback
+- [ ] SharePoint `bugatti-qos-ccc` after review (human OK · tonight optional)
 - [ ] Human cold read — no “performed better” than peer CCC decks
 
-**Out of scope (abeyance):** swimlanes · template churn · HWv2 depth · informal peer huddle (follow-on after 2A ships)
+**Out of scope (abeyance):** swimlanes · template churn · HWv2 depth · informal peer huddle (after Hongal + SharePoint)
 
-**Done when:** `bugatti-qos-ccc.pptx` regen’d with Mermaid-driven PNGs; ready for informal W DRI huddle.
+**Done when:** Hongal feedback landed · pptx final · W-first share path clear · ready for Friday N+W optional ([DT126](TASKS.md)).
 
 ---
 

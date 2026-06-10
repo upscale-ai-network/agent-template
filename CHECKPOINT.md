@@ -1,7 +1,28 @@
 # CHECKPOINT — session handoff
 
-**When:** 2026-06-06 · active/standby ratified (failover not declared)  
+**When:** 2026-06-06 (eve) · active/standby ratified (failover not declared)  
 **Authority:** git HEAD + this file · chat/canvas not authoritative
+
+---
+
+## Mandate (Satish huddle · 2026-06-06)
+
+- **Guru tracking XLS:** Diwakar = **Datapath arch DRI** (program row — wider than qos wedge alone).
+- **Confirmed on Satish laptop:** name replaces **“New Hire — Starting soon”** → **N delivered his piece.**
+- **Pending:** Satish sends copy of **your row** (scope · peers · green) → add to Gluon when received · yap then.
+- **Execution unchanged:** B6 = first scoped walk; buffer-carving plan + Cap/Cap/Con tables + W alignment + reflect in XLS when copy lands.
+
+---
+
+## Today → tonight
+
+| When | What |
+|------|------|
+| **3pm** | **Hongal** — visual review `bugatti-qos-ccc.pptx` (local); incorporate feedback · regen |
+| **Tonight (optional)** | SharePoint `bugatti-qos-ccc` after Hongal OK — W-first · no Guru review email |
+| **Friday (TODO schedule)** | **N + W optional** — draft pending after final pptx + 3pm review |
+
+Deck flow **as planned:** A3 bookends · B6 walk · Architecture Documentation after W-aligned.
 
 ---
 
@@ -12,11 +33,9 @@
 | **Mac Lepton** | `/Users/dtundlam/diwakar-work` | **Live Gluon** — forward line; read/write; commit/push when human says |
 | **Linux vm1** | `/home/diwakar/diwakar-work` | **Zombie Gluon** — standby; `git fetch` + `reset --hard origin/main` only · **no** commit/push/edits |
 
-**Ratified (2026-06-06):** Active/standby sync is **good enough for now**. Standby exists; **failover is not declared and not ready** — readiness probes only. Live Mac moves the repo; Linux runs **`./scripts/zombie-hatch-audit.sh`** after sync (bootstrap → `uv sync --group dev` → `check-decks`). Goal = **Linux vs Mac tool gaps**, not pytest green on standby. Out of scope: `node`/`npx`, workflow pytest, `build-decks` regen on Linux (cross-OS `.pptx` drift), fresh-clone DR drill. Human declares takeover if primary is lost.
-
 **Discipline:** **ONE live global Gluon** at a time (Mac today). Two writers → divergent commits and checkpoint drift.
 
-Zombie hatch audit (standby readiness) — **lambda** (shell already at repo clone; you own PWD):
+Zombie hatch audit (standby readiness):
 
 ```bash
 git fetch origin main && git reset --hard origin/main
@@ -24,47 +43,41 @@ uv sync --group dev
 uv run check-decks
 ```
 
-Optional wrapper (any cwd): `./scripts/zombie-hatch-audit.sh`  
-Zombie sync+regen (optional, heavier): `./scripts/zombie-pull-build.sh` · `git restore dt100/*.pptx dt122/*.pptx` before leave · **DT124** acceptance before stakeholder delivery · hermetic builds / multi-host automation → later.
+Optional: `./scripts/zombie-hatch-audit.sh` · **DT124** acceptance before stakeholder delivery.
 
 ---
 
 ## Guru (closed loop)
 
-- **SharePoint:** `bugatti-qos-architecture` = **final** A3 (1pm draft review → evening minimal-diff share)
-- **Risk window:** open until Friday; **no de-risk email** unless he asks
-- **Language:** no Guru “review” — solo DE flight; Friday 1:1 = mandate / light touch-in at gates
-- **ccc delivery plan:** announce thin (if needed) → SharePoint `bugatti-qos-ccc` → **W team first** — no direct Guru review email
+- **SharePoint:** `bugatti-qos-architecture` = **final** A3
+- **Language:** no Guru “review” — walk / consensus; Friday = mandate touch-in at gates
+- **ccc:** SharePoint `bugatti-qos-ccc` → **W first** after Hongal + regen
 
-## B6 (in progress)
+## B6 / DT122
 
 | Shorthand | Files | Status |
 |-----------|-------|--------|
-| **B6 / DT122** | `dt122/bugatti-qos-ccc.md` → `.pptx` | **DT122** `doing` — **integrate** prior W qos-ccc (local read) → Rev 0.1 |
-| Share name | `bugatti-qos-ccc` | No `draft-` prefix · W alignment before publish |
-| Prior deck | SharePoint / laptop only | **Not in git** · Rev 0.0 credit unnamed |
+| **B6** | `dt122/bugatti-qos-ccc.md` → `.pptx` | **Hongal-ready** · sharp Pillow flow PNGs (1800×720) · Cap/Cap/Con walk |
+| Share name | `bugatti-qos-ccc` | Local until 3pm review · SharePoint tonight if OK |
+| Meta | `bugatti-qos-ccc-meta.md` | Verbal hooks (Guru pipeline · vault QoS · Architecture Documentation) |
 
-**Build:** `uv run build-decks` · edit md only · after local ingest + human OK  
-**Strategy:** [dt122/ccc-strategy.md](dt122/ccc-strategy.md) — integrate → 2A → informal peer → gated formal
+**Build:** `uv run build-decks` · edit md only  
+**Strategy:** [dt122/ccc-strategy.md](dt122/ccc-strategy.md)
 
 ## Layout
 
-- **`dt100/`** — DT100 **done** · A3 sources + regen
-- **`dt122/`** — DT122 **doing** · B6 / ccc sources
-
-## Git
-
-- **A3:** `dt100/` on `origin/main`
-- **B6:** `dt122/` — task-scoped dir (git tracks moves)
+- **`dt100/`** — DT100 **done** · A3
+- **`dt122/`** — DT122 **doing** · B6 / ccc
 
 ## Human — do not ask Gluon to
 
-- Commit/push without explicit OK (DT119 policy) — *exception: chief-of-staff may propose; human approves push to main*
+- Commit/push without explicit OK (DT119 policy)
 - Email Guru performatively
-- Open TASKS rows for tonight (credit-card debt accepted)
+- SharePoint before Hongal feedback incorporated (unless human overrides)
 
-## Next autonomous queue (Gluon)
+## Next queue (Gluon)
 
-1. **DT122** — local ingest (human path + **ingest now**) → merge into md as Rev 0.1 · no prior pptx in git
-2. Regen + cold read → informal W huddle → SharePoint when W-aligned
-3. Rev line on cover/appendix: 0.0 original author (W) · 0.1 Diwakar Tundlam
+1. Incorporate **Hongal 3pm** deltas → regen → cold read
+2. **SharePoint** `bugatti-qos-ccc` if human OK tonight
+3. **Schedule Friday** N + W optional ([DT126](TASKS.md))
+4. Ingest **Satish XLS row** when received → checkpoint + execution map

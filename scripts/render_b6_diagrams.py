@@ -21,18 +21,24 @@ PIPELINE_SRC = ROOT / "assets" / "logical-pipeline-boss-slide.png"
 MERMAID_CONFIG = B6_DIR / "mermaid-config.json"
 MMDC_PKG = "@mermaid-js/mermaid-cli@11.15.0"
 
-# stem → mmd filename (pipeline uses composite)
-MERMAID_STEMS: Dict[str, str] = {
-    "b6-slide04-qos-stitch": "b6-slide04-qos-stitch.mmd",
-    "b6-slide04-csb-inset": "b6-slide04-csb-inset.mmd",
-    "b6-slide06-boundaries": "b6-slide06-boundaries.mmd",
-    "b6-slide07-next-steps": "b6-slide07-next-steps.mmd",
-}
+# Fixed canvas — native resolution matches PPTX diagram band (no upscale blur).
+CANVAS_W, CANVAS_H = 1800, 720
+BOX_W, BOX_H = 280, 72
+BOX_R = 8
+BOX_GAP = 44
+ARROW_COLOR = (69, 90, 100, 255)
+
+# Legacy mermaid (unused by current deck — kept for ad-hoc .mmd experiments).
+MERMAID_STEMS: Dict[str, str] = {}
 
 COMPOSITE_STEMS = frozenset({
     "b6-slide02-pipeline-scope-pie",
     "b6-slide03-pipeline-annotated",
+    "b6-slide04-qos-stitch",
+    "b6-slide04-csb-inset",
     "b6-slide05-csb-ccc-tables",
+    "b6-slide06-boundaries",
+    "b6-slide07-next-steps",
 })
 
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -107,6 +113,189 @@ def _box(draw, xy: Tuple[int, int, int, int], fill, outline, width: int = 3) -> 
     draw.rectangle(xy, fill=fill, outline=outline, width=width)
 
 
+PEER_BOX = ((236, 239, 241, 255), (69, 90, 100, 255))
+LANE_BOX = ((227, 242, 253, 255), (21, 101, 192, 255))
+MUTED_BOX = ((245, 245, 245, 255), (144, 164, 174, 255))
+
+
+def _load_flow_font():
+    from PIL import ImageFont
+
+    for path in (
+        "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    ):
+        try:
+            return ImageFont.truetype(path, 14)
+        except OSError:
+            continue
+    return ImageFont.load_default()
+
+
+def _save_flow_canvas(img, out: Path) -> Path:
+    from PIL import Image
+
+    out.parent.mkdir(parents=True, exist_ok=True)
+    if img.size != (CANVAS_W, CANVAS_H):
+        canvas = Image.new("RGBA", (CANVAS_W, CANVAS_H), (255, 255, 255, 255))
+        ox = (CANVAS_W - img.width) // 2
+        oy = (CANVAS_H - img.height) // 2
+        canvas.paste(img, (ox, oy), img if img.mode == "RGBA" else None)
+        img = canvas
+    img.convert("RGB").save(out, "PNG", dpi=(192, 192))
+    return out
+
+
+def _draw_labeled_box(draw, x: int, y: int, lines: List[str], style: Tuple, font) -> None:
+    fill, stroke = style
+    draw.rounded_rectangle(
+        (x, y, x + BOX_W, y + BOX_H), radius=BOX_R, fill=fill, outline=stroke, width=2
+    )
+    line_h = 18
+    block_h = len(lines) * line_h
+    ty = y + (BOX_H - block_h) // 2
+    for line in lines:
+        tw = draw.textbbox((0, 0), line, font=font)[2]
+        draw.text((x + (BOX_W - tw) // 2, ty), line, fill=TEXT, font=font)
+        ty += line_h
+
+
+def _arrow_h(draw, x1: int, y: int, x2: int) -> None:
+    draw.line((x1, y, x2 - 10, y), fill=ARROW_COLOR, width=2)
+    draw.polygon([(x2, y), (x2 - 12, y - 6), (x2 - 12, y + 6)], fill=ARROW_COLOR)
+
+
+def _arrow_v(draw, x: int, y1: int, y2: int) -> None:
+    draw.line((x, y1, x, y2 - 10), fill=ARROW_COLOR, width=2)
+    draw.polygon([(x, y2), (x - 6, y2 - 12), (x + 6, y2 - 12)], fill=ARROW_COLOR)
+
+
+def _render_lr_chain(
+    items: List[Tuple[List[str], Tuple]],
+    out_name: str,
+) -> Path:
+    """Horizontal chain — uniform box size, fixed canvas."""
+    from PIL import Image, ImageDraw
+
+    img = Image.new("RGBA", (CANVAS_W, CANVAS_H), (255, 255, 255, 255))
+    draw = ImageDraw.Draw(img)
+    font = _load_flow_font()
+    n = len(items)
+    span = n * BOX_W + (n - 1) * BOX_GAP
+    x = (CANVAS_W - span) // 2
+    y = (CANVAS_H - BOX_H) // 2
+    xs: List[int] = []
+    for lines, style in items:
+        _draw_labeled_box(draw, x, y, lines, style, font)
+        xs.append(x)
+        x += BOX_W + BOX_GAP
+    mid_y = y + BOX_H // 2
+    for i in range(n - 1):
+        _arrow_h(draw, xs[i] + BOX_W, mid_y, xs[i + 1])
+    return _save_flow_canvas(img, B6_DIR / out_name)
+
+
+def render_qos_stitch() -> Path:
+    return _render_lr_chain(
+        [
+            (["Ingress", "VLAN · DSCP · ESUN · UFH"], PEER_BOX),
+            (["TC"], PEER_BOX),
+            (["Remark · policer · ECN"], PEER_BOX),
+            (["Queue · QoSMAP"], LANE_BOX),
+            (["Buffer-carving", "at CSB"], LANE_BOX),
+        ],
+        "b6-slide04-qos-stitch.png",
+    )
+
+
+def render_csb_inset() -> Path:
+    from PIL import Image, ImageDraw
+
+    img = Image.new("RGBA", (CANVAS_W, CANVAS_H), (255, 255, 255, 255))
+    draw = ImageDraw.Draw(img)
+    font = _load_flow_font()
+    inner_w = BOX_W + 80
+    inner_h = 3 * BOX_H + 2 * BOX_GAP + 48
+    ix = (CANVAS_W - inner_w) // 2
+    iy = (CANVAS_H - inner_h - BOX_H - BOX_GAP) // 2
+    draw.rounded_rectangle(
+        (ix - 20, iy - 36, ix + inner_w + 20, iy + inner_h + 12),
+        radius=12,
+        fill=(250, 250, 250, 255),
+        outline=(176, 190, 197, 255),
+        width=2,
+    )
+    title = "CSB — buffer-carving"
+    tw = draw.textbbox((0, 0), title, font=font)[2]
+    draw.text((CANVAS_W // 2 - tw // 2, iy - 28), title, fill=TEXT, font=font)
+    labels = [
+        ["Port-speed tiers", "200G · 400G · 800G"],
+        ["Lossy / lossless · PFC · queues"],
+        ["QoSMAP · TC · egress queues"],
+    ]
+    bx = ix + (inner_w - BOX_W) // 2
+    by = iy + 8
+    prev_bottom: Optional[int] = None
+    for lines in labels:
+        _draw_labeled_box(draw, bx, by, lines, LANE_BOX, font)
+        if prev_bottom is not None:
+            _arrow_v(draw, bx + BOX_W // 2, prev_bottom, by)
+        prev_bottom = by + BOX_H
+        by += BOX_H + BOX_GAP
+    out_y = iy + inner_h + BOX_GAP
+    _draw_labeled_box(
+        draw,
+        (CANVAS_W - BOX_W) // 2,
+        out_y,
+        ["Deliverable:", "buffer-carving plan"],
+        LANE_BOX,
+        font,
+    )
+    _arrow_v(draw, CANVAS_W // 2, iy + inner_h - 8, out_y)
+    return _save_flow_canvas(img, B6_DIR / "b6-slide04-csb-inset.png")
+
+
+def render_boundaries() -> Path:
+    from PIL import Image, ImageDraw
+
+    img = Image.new("RGBA", (CANVAS_W, CANVAS_H), (255, 255, 255, 255))
+    draw = ImageDraw.Draw(img)
+    font = _load_flow_font()
+    row_w = 3 * BOX_W + 2 * BOX_GAP
+    row_x = (CANVAS_W - row_w) // 2
+    root_y = (CANVAS_H - (BOX_H * 2 + BOX_GAP)) // 2
+    child_y = root_y + BOX_H + BOX_GAP
+    root_x = CANVAS_W // 2 - BOX_W // 2
+    _draw_labeled_box(draw, root_x, root_y, ["Buffer-carving CCC"], LANE_BOX, font)
+    children = ["Capabilities", "Capacities", "Constraints"]
+    cx = row_x
+    for label in children:
+        _draw_labeled_box(draw, cx, child_y, [label], LANE_BOX, font)
+        _arrow_v(draw, cx + BOX_W // 2, root_y + BOX_H, child_y)
+        cx += BOX_W + BOX_GAP
+    return _save_flow_canvas(img, B6_DIR / "b6-slide06-boundaries.png")
+
+
+def render_next_steps() -> Path:
+    from PIL import Image, ImageDraw
+
+    img = Image.new("RGBA", (CANVAS_W, CANVAS_H), (255, 255, 255, 255))
+    draw = ImageDraw.Draw(img)
+    font = _load_flow_font()
+    top_y = (CANVAS_H - (BOX_H * 2 + BOX_GAP * 2)) // 2
+    bot_y = top_y + BOX_H + BOX_GAP * 2
+    pair_w = 2 * BOX_W + BOX_GAP
+    left_x = CANVAS_W // 2 - pair_w // 2
+    right_x = left_x + BOX_W + BOX_GAP
+    _draw_labeled_box(draw, left_x, top_y, ["HW arch · pools · RTL"], MUTED_BOX, font)
+    _draw_labeled_box(draw, right_x, top_y, ["Prior QoS depth"], MUTED_BOX, font)
+    sink_x = CANVAS_W // 2 - BOX_W // 2
+    _draw_labeled_box(draw, sink_x, bot_y, ["Cap · Cap · Con tables"], LANE_BOX, font)
+    _arrow_v(draw, left_x + BOX_W // 2, top_y + BOX_H, bot_y)
+    _arrow_v(draw, right_x + BOX_W // 2, top_y + BOX_H, bot_y)
+    return _save_flow_canvas(img, B6_DIR / "b6-slide07-next-steps.png")
+
+
 def _label_lines(label: SliceLabel) -> List[str]:
     if isinstance(label, list):
         return label
@@ -169,11 +358,11 @@ def render_pipeline_scope_pie() -> Path:
 
     from PIL import Image, ImageDraw, ImageFont
 
-    w, h = 1800, 900
+    w, h = CANVAS_W, CANVAS_H
     img = Image.new("RGBA", (w, h), (255, 255, 255, 255))
     draw = ImageDraw.Draw(img)
-    cx, cy = w // 2, h // 2 + 20
-    outer, inner = 340, 118
+    cx, cy = w // 2, h // 2 + 12
+    outer, inner = 300, 104
 
     font_paths = [
         "/System/Library/Fonts/Supplemental/Arial.ttf",
@@ -271,7 +460,7 @@ def render_pipeline_scope_pie() -> Path:
 
     out = B6_DIR / "b6-slide02-pipeline-scope-pie.png"
     B6_DIR.mkdir(parents=True, exist_ok=True)
-    img.convert("RGB").save(out, "PNG")
+    img.convert("RGB").save(out, "PNG", dpi=(192, 192))
     return out
 
 
@@ -434,7 +623,7 @@ def render_csb_ccc_tables() -> Path:
 
     out = B6_DIR / "b6-slide05-csb-ccc-tables.png"
     B6_DIR.mkdir(parents=True, exist_ok=True)
-    img.convert("RGB").save(out, "PNG")
+    img.convert("RGB").save(out, "PNG", dpi=(192, 192))
     return out
 
 
@@ -513,14 +702,19 @@ def render_all_b6_diagrams(doc=None) -> List[str]:
 
     for stem in stems_for_doc(doc):
         if stem in COMPOSITE_STEMS:
-            if stem == "b6-slide02-pipeline-scope-pie":
-                render_pipeline_scope_pie()
-            elif stem == "b6-slide03-pipeline-annotated":
-                render_pipeline_annotated()
-            elif stem == "b6-slide05-csb-ccc-tables":
-                render_csb_ccc_tables()
-            else:
+            dispatch = {
+                "b6-slide02-pipeline-scope-pie": render_pipeline_scope_pie,
+                "b6-slide03-pipeline-annotated": render_pipeline_annotated,
+                "b6-slide04-qos-stitch": render_qos_stitch,
+                "b6-slide04-csb-inset": render_csb_inset,
+                "b6-slide05-csb-ccc-tables": render_csb_ccc_tables,
+                "b6-slide06-boundaries": render_boundaries,
+                "b6-slide07-next-steps": render_next_steps,
+            }
+            fn = dispatch.get(stem)
+            if fn is None:
                 raise RuntimeError(f"Unknown composite stem: {stem}")
+            fn()
         elif stem in MERMAID_STEMS:
             render_mermaid(stem, MERMAID_STEMS[stem])
         elif (B6_DIR / f"{stem}.mmd").is_file():

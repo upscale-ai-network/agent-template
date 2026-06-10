@@ -199,7 +199,9 @@ def validate_b6_diagram_pngs(doc: DeckDocument | None = None) -> List[str]:
     errors: List[str] = []
     for s in doc.ordered_slides():
         if s.diagram:
-            errors.extend(validate_png(_b6_png(s.diagram)))
+            errors.extend(
+                validate_png(_b6_png(s.diagram), min_width=1600, min_height=400)
+            )
     return errors
 
 

@@ -37,5 +37,10 @@ Refine format later ([TASKS.md](TASKS.md) DT114).
 | 2026-06-06 | DT124 | created | P2 deck acceptance framework — build litmus ≠ deliverable; after DT122 |
 | 2026-06-06 | DT125 | created | P2 canary deck pytest regression — md/mermaid/pptx pipeline; with DT122 |
 
+| 2026-06-06 | — | note | Satish huddle — Guru XLS Datapath arch DRI; name on row; XLS copy pending |
+| 2026-06-06 | DT126 | created | P0 schedule Fri N+W optional — after Hongal 3pm + final pptx |
+| 2026-06-06 | DT126 | status | `next` |
+| 2026-06-06 | DT122 | note | Sharp Pillow flow PNGs · Hongal 3pm · SharePoint tonight optional |
+
 **Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`
 **Status (vocabulary):** `open` | `doing` | `next` | `done` | `drop`
