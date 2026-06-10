@@ -1,30 +1,26 @@
 # CHECKPOINT — session handoff
 
-**When:** 2026-06-06 (eve) · active/standby ratified (failover not declared)  
+**When:** 2026-06-06 (post-ratify) · pick up **after Hongal 3pm**  
 **Authority:** git HEAD + this file · chat/canvas not authoritative
 
 ---
 
-## Mandate (Satish huddle · 2026-06-06)
+## Hold / priority (human · 2026-06-06 eve)
 
-- **Guru tracking XLS:** Diwakar = **Datapath arch DRI** (program row — wider than qos wedge alone).
-- **Confirmed on Satish laptop:** name replaces **“New Hire — Starting soon”** → **N delivered his piece.**
-- **Pending:** Satish sends copy of **your row** (scope · peers · green) → add to Gluon when received · yap then.
-- **Execution unchanged:** B6 = first scoped walk; buffer-carving plan + Cap/Cap/Con tables + W alignment + reflect in XLS when copy lands.
+| Priority | Item | When |
+|----------|------|------|
+| **1** | **Satish XLS row** (scope · peers · green) → ingest to Gluon | When received — **most important** |
+| **2** | **Hongal 3pm** W visual review → incorporate feedback · regen | Today |
+| **3** | **W review comments** (more expected **tomorrow**) → refine for **N Friday** | Thu → Fri |
+| **—** | **Zombie / standby flow** | **Paused until Friday meeting** — Mac-only forward line |
 
----
+**Ratified:** `bugatti-qos-ccc.pptx` locked for Hongal 3pm · ex-Apple flow thumbs-up · post-review edits only.
 
-## Today → tonight
+**Friday (TODO):** schedule **N + W optional** ([DT126](TASKS.md)) · draft pending final pptx + W refinement.
 
-**Ratified (2026-06-06):** `bugatti-qos-ccc.pptx` **locked for Hongal 3pm** — draft approved by human; incorporate feedback only after review.
+**SharePoint:** tonight optional after Hongal OK · W-first · no Guru review email.
 
-| When | What |
-|------|------|
-| **3pm** | **Hongal** — visual review `bugatti-qos-ccc.pptx` (local); incorporate feedback · regen |
-| **Tonight (optional)** | SharePoint `bugatti-qos-ccc` after Hongal OK — W-first · no Guru review email |
-| **Friday (TODO schedule)** | **N + W optional** — draft pending after final pptx + 3pm review |
-
-Deck flow **as planned:** A3 bookends · B6 walk · Architecture Documentation after W-aligned.
+**Gluon resumes:** after Hongal 3pm — feedback → md → `uv run build-decks`.
 
 ---
 
@@ -32,28 +28,24 @@ Deck flow **as planned:** A3 bookends · B6 walk · Architecture Documentation a
 
 | Host | Path | Role |
 |------|------|------|
-| **Mac Lepton** | `/Users/dtundlam/diwakar-work` | **Live Gluon** — forward line; read/write; commit/push when human says |
-| **Linux vm1** | `/home/diwakar/diwakar-work` | **Zombie Gluon** — standby; `git fetch` + `reset --hard origin/main` only · **no** commit/push/edits |
+| **Mac Lepton** | `/Users/dtundlam/diwakar-work` | **Live Gluon** — forward line until Friday |
+| **Linux vm1** | `/home/diwakar/diwakar-work` | **Standby — idle** · no zombie hatch/fetch until **Friday meeting** |
 
-**Discipline:** **ONE live global Gluon** at a time (Mac today). Two writers → divergent commits and checkpoint drift.
-
-Zombie hatch audit (standby readiness):
-
-```bash
-git fetch origin main && git reset --hard origin/main
-uv sync --group dev
-uv run check-decks
-```
-
-Optional: `./scripts/zombie-hatch-audit.sh` · **DT124** acceptance before stakeholder delivery.
+**Discipline:** **ONE live global Gluon** · Mac only through Fri · zombie flow resumes after Friday if human says.
 
 ---
+
+## Mandate (Satish huddle · 2026-06-06)
+
+- **Guru tracking XLS:** Diwakar = **Datapath arch DRI** — **Satish row copy pending** (top priority when it lands).
+- **N delivered:** name on row replaces “New Hire — Starting soon.”
+- **Execution:** B6 walk + buffer-carving plan + Cap/Cap/Con · map to XLS when copy arrives.
 
 ## Guru (closed loop)
 
 - **SharePoint:** `bugatti-qos-architecture` = **final** A3
-- **Language:** no Guru “review” — walk / consensus; Friday = mandate touch-in at gates
-- **ccc:** SharePoint `bugatti-qos-ccc` → **W first** after Hongal + regen
+- **Language:** no Guru “review” — walk / consensus; **Friday N** = touch-in at gates
+- **ccc:** SharePoint `bugatti-qos-ccc` → **W first** after Hongal + tomorrow W refinement
 
 ## B6 / DT122
 
@@ -77,9 +69,10 @@ Optional: `./scripts/zombie-hatch-audit.sh` · **DT124** acceptance before stake
 - Email Guru performatively
 - SharePoint before Hongal feedback incorporated (unless human overrides)
 
-## Next queue (Gluon)
+## Next queue (Gluon — after Hongal 3pm)
 
-1. Incorporate **Hongal 3pm** deltas → regen → cold read
-2. **SharePoint** `bugatti-qos-ccc` if human OK tonight
-3. **Schedule Friday** N + W optional ([DT126](TASKS.md))
-4. Ingest **Satish XLS row** when received → checkpoint + execution map
+1. **Hongal feedback** → md → `uv run build-decks`
+2. **Satish XLS row** when received → ingest · map scope/peers/green (**#1 when it lands**)
+3. **W comments tomorrow** → refine for **N Friday**
+4. SharePoint if human OK · schedule **DT126** Friday N+W optional
+5. Zombie flow — **hold until Friday meeting**
