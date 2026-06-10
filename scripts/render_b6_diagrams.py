@@ -60,7 +60,7 @@ PIPE_SCOPE_SLICES: List[PipeSlice] = [
     ("ACL-CCC", "Shrawan", False),
     ("ECMP-CCC", "Tippanna", False),
     ("Classify-CCC", "Shrawan", False),
-    (["QoSMAP", "→ buffer-carving →", "QoS-CCC"], "Diwakar", True),
+    (["QoSMAP", "CSB buffer-carving", "QoS-CCC"], "Diwakar", True),
     ("Mirror-CCC", "Shafi", False),
     ("Others", None, False),
 ]
@@ -124,6 +124,7 @@ def _draw_slice_label(
     peer_font=None,
     peer_fill=None,
     emphasis_font=None,
+    emphasis_fill=None,
     emphasis_indices: Optional[set] = None,
     line_gap: int = 2,
     peer_gap: int = 3,
@@ -154,7 +155,10 @@ def _draw_slice_label(
     for i, (tw, th, f, line) in enumerate(sizes):
         if peer and i == len(sizes) - 1 and i > 0:
             y += peer_gap - line_gap
-        line_fill = peer_fill if peer and i == len(sizes) - 1 else fill
+        if emphasis_fill is not None and i in emphasis_indices:
+            line_fill = emphasis_fill
+        else:
+            line_fill = peer_fill if peer and i == len(sizes) - 1 else fill
         draw.text((center[0] - tw / 2, y), line, fill=line_fill, font=f)
         y += th + line_gap
 
@@ -173,21 +177,34 @@ def render_pipeline_scope_pie() -> Path:
 
     font_paths = [
         "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
     ]
     font_label = font_label_sm = font_label_em = font_hub = None
+    font_label_bold = None
     for path in font_paths:
         try:
+            if "Bold" in path:
+                if font_label_bold is None:
+                    font_label_bold = ImageFont.truetype(path, 15)
+                continue
             font_label = ImageFont.truetype(path, 14)
             font_label_sm = ImageFont.truetype(path, 12)
             font_label_em = ImageFont.truetype(path, 16)
             font_hub = ImageFont.truetype(path, 18)
             font_title = ImageFont.truetype(path, 22)
+            if font_label_bold is None:
+                bold_path = path.replace("Arial.ttf", "Arial Bold.ttf")
+                if Path(bold_path).is_file():
+                    font_label_bold = ImageFont.truetype(bold_path, 15)
             break
         except OSError:
             continue
     if font_label is None:
         font_label = font_label_sm = font_label_em = font_hub = font_title = ImageFont.load_default()
+    if font_label_bold is None:
+        font_label_bold = font_label_em or font_label
 
     n = len(PIPE_SCOPE_SLICES)
     sweep = 360.0 / n
@@ -243,11 +260,12 @@ def render_pipeline_scope_pie() -> Path:
             peer=peer,
             peer_font=font_label_sm,
             peer_fill=TEXT,
-            emphasis_font=font_label_em,
+            emphasis_font=font_label_bold,
+            emphasis_fill=SLICE_HIGHLIGHT_EDGE,
             emphasis_indices=emphasis,
         )
 
-    title = "Highlighted slice · QoS-CCC scope"
+    title = "QoS-CCC scope"
     tt_w = draw.textbbox((0, 0), title, font=font_title)[2]
     draw.text((cx - tt_w // 2, 36), title, fill=TEXT, font=font_title)
 
@@ -341,6 +359,33 @@ def _draw_table(
     return y - y0 + (32 if title else 0)
 
 
+def _draw_sample_watermark(img, *, text: str = "SAMPLE") -> None:
+    """Light diagonal watermark — tables are placeholders pending HW alignment."""
+    from PIL import Image, ImageDraw, ImageFont
+
+    w, h = img.size
+    overlay = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
+    font_paths = [
+        "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    ]
+    font = None
+    for path in font_paths:
+        try:
+            font = ImageFont.truetype(path, 108)
+            break
+        except OSError:
+            continue
+    if font is None:
+        font = ImageFont.load_default()
+    tw = draw.textbbox((0, 0), text, font=font)[2]
+    th = draw.textbbox((0, 0), text, font=font)[3]
+    draw.text(((w - tw) // 2, (h - th) // 2 - 40), text, fill=(189, 189, 189, 72), font=font)
+    rotated = overlay.rotate(32, resample=Image.Resampling.BICUBIC, center=(w // 2, h // 2))
+    img.alpha_composite(rotated)
+
+
 def render_csb_ccc_tables() -> Path:
     """CCC Cap / Cap / Con tables for CSB buffer-carving — v0 placeholders."""
     from PIL import Image, ImageDraw
@@ -350,13 +395,9 @@ def render_csb_ccc_tables() -> Path:
     draw = ImageDraw.Draw(img)
     font_title, font_hdr, font_cell = _load_table_fonts()
 
-    note = "Placeholders — HW architecture · RTL · c-models · use-cases"
-    nw = draw.textbbox((0, 0), note, font=font_hdr)[2]
-    draw.text(((w - nw) // 2, 24), note, fill=TEXT, font=font_hdr)
-
     margin = 48
     gap = 28
-    top = 68
+    top = 52
     csb_w = [520, 420, 420]
     _draw_table(
         draw,
@@ -385,6 +426,11 @@ def render_csb_ccc_tables() -> Path:
         title="Fabric buffer pools (context)",
         highlight_rows={2},
     )
+
+    _draw_sample_watermark(img)
+    align = "ALIGN with HW arch"
+    aw = draw.textbbox((0, 0), align, font=font_hdr)[2]
+    draw.text(((w - aw) // 2, h - 44), align, fill=SLICE_HIGHLIGHT_EDGE, font=font_hdr)
 
     out = B6_DIR / "b6-slide05-csb-ccc-tables.png"
     B6_DIR.mkdir(parents=True, exist_ok=True)

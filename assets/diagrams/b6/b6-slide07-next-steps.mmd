@@ -1,9 +1,12 @@
-%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '16px'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '14px'}}}%%
 flowchart TB
-  N1["Share draft"]
-  N2["Buffer-carving plan"]
-  N3["Close · qos architecture"]
-  N1 --> N2 --> N3
+  HW["HW arch · pools · RTL"]
+  Q["Prior QoS depth"]
+  T["Cap · Cap · Con tables"]
+  HW --> T
+  Q --> T
 
-  classDef act fill:#E3F2FD,stroke:#1565C0,color:#051830,stroke-width:2px
-  class N1,N2,N3 act
+  classDef src fill:#F5F5F5,stroke:#90A4AE,color:#051830
+  classDef lane fill:#E3F2FD,stroke:#1565C0,color:#051830,stroke-width:2px
+  class HW,Q src
+  class T lane

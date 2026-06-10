@@ -1,18 +1,9 @@
-%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '13px'}}}%%
-flowchart LR
-  subgraph IN["In scope"]
-    I1["Buffer-carving plan + version 0 gate"]
-    I2["QoSMAP · Queue · CSB alignment"]
-    I3["Scope ready for group review"]
-  end
-  subgraph OUT["Deferred"]
-    O1["Full peer deck bodies"]
-    O2["SDK layout and swimlanes"]
-    O3["Hardware pool and RTL sizing"]
-  end
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '14px'}}}%%
+flowchart TB
+  R["Buffer-carving CCC"]
+  R --> C1["Capabilities"]
+  R --> C2["Capacities"]
+  R --> C3["Constraints"]
 
-  classDef program fill:#E3F2FD,stroke:#1565C0,color:#051830
-  classDef muted fill:#F5F5F5,stroke:#BDBDBD,color:#9E9E9E
-
-  class I1,I2,I3 program
-  class O1,O2,O3 muted
+  classDef program fill:#E3F2FD,stroke:#1565C0,color:#051830,stroke-width:2px
+  class R,C1,C2,C3 program

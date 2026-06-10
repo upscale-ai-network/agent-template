@@ -39,6 +39,8 @@ CONTENT_TITLE_BAND_BOTTOM = Inches(1.6)
 CONTENT_DIAGRAM_TOP = Inches(1.65)
 CONTENT_DIAGRAM_MAX_W = Inches(9.2)
 CONTENT_DIAGRAM_MAX_H = Inches(3.55)
+CONTENT_IMAGE_ONLY_TOP = Inches(0.35)
+CONTENT_IMAGE_ONLY_MAX_H = Inches(4.85)
 
 
 def delete_slide(prs: Presentation, index: int) -> None:
@@ -345,12 +347,31 @@ def hide_body_placeholder(slide) -> None:
             shape.height = 0
 
 
-def place_diagram(slide, image_path: Path, slide_width: Optional[int] = None) -> None:
+def hide_title_placeholder(slide) -> None:
+    """Hide title band — verbatim images that carry their own heading."""
+    for shape in slide.shapes:
+        if not shape.has_text_frame or is_footer(shape):
+            continue
+        if shape.top < TITLE_TOP_MAX:
+            shape.text_frame.clear()
+            shape.width = 0
+            shape.height = 0
+
+
+def place_diagram(
+    slide,
+    image_path: Path,
+    slide_width: Optional[int] = None,
+    *,
+    box_top: Optional[int] = None,
+    box_h: Optional[int] = None,
+    max_w: Optional[int] = None,
+) -> None:
     """Fit diagram in fixed box — same visual size on every slide."""
     slide_w = slide_width or int(Inches(13.333))
-    box_top = int(CONTENT_DIAGRAM_TOP)
-    box_h = int(CONTENT_DIAGRAM_MAX_H)
-    max_w = int(CONTENT_DIAGRAM_MAX_W)
+    box_top = int(box_top if box_top is not None else CONTENT_DIAGRAM_TOP)
+    box_h = int(box_h if box_h is not None else CONTENT_DIAGRAM_MAX_H)
+    max_w = int(max_w if max_w is not None else CONTENT_DIAGRAM_MAX_W)
     pic = slide.shapes.add_picture(str(image_path), 0, box_top)
     scale_w = max_w / pic.width
     scale_h = box_h / pic.height
@@ -363,7 +384,7 @@ def place_diagram(slide, image_path: Path, slide_width: Optional[int] = None) ->
 
 def fill_content_diagram_slide(
     slide,
-    title: str,
+    title: Optional[str],
     image_path: Path,
     *,
     title_lines: Optional[List[str]] = None,
@@ -374,6 +395,7 @@ def fill_content_diagram_slide(
     slide_width: Optional[int] = None,
 ) -> None:
     """Title band + act subtitle + lead + caption + bullets + diagram."""
+    has_title_band = bool(title_lines or (title and title.strip()))
     title_shape = None
     for shape in slide.shapes:
         if not shape.has_text_frame or is_footer(shape):
@@ -381,7 +403,7 @@ def fill_content_diagram_slide(
         if shape.top < TITLE_TOP_MAX:
             title_shape = shape
             break
-    if title_shape:
+    if has_title_band and title_shape:
         set_content_title_block(
             title_shape,
             title=title,
@@ -391,10 +413,21 @@ def fill_content_diagram_slide(
             caption_line=caption_line,
             bullet_lines=bullet_lines,
         )
+    elif title_shape:
+        hide_title_placeholder(slide)
     hide_body_placeholder(slide)
     if not image_path.is_file():
         raise FileNotFoundError(f"Diagram slide requires image: {image_path}")
-    place_diagram(slide, image_path, slide_width=slide_width)
+    if has_title_band:
+        place_diagram(slide, image_path, slide_width=slide_width)
+    else:
+        place_diagram(
+            slide,
+            image_path,
+            slide_width=slide_width,
+            box_top=int(CONTENT_IMAGE_ONLY_TOP),
+            box_h=int(CONTENT_IMAGE_ONLY_MAX_H),
+        )
     apply_content_colors(slide, skip_title_band=True)
 
 

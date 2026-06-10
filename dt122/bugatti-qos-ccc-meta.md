@@ -6,14 +6,22 @@ Speaker hints, flow, and build context — never in `bugatti-qos-ccc.pptx`.
 
 qos architecture slides 1–2 → **B6** → qos architecture slides 3–4.
 
+## Verbal hooks (not on slides)
+
+| Slide | Say |
+|-------|-----|
+| 2 · Logical pipeline | One-slider from Gururaj's kickoff vision — shared program context (W yes; not for N). |
+| 6 · Constraints tables | SAMPLE — align rows with HW arch; pull credible numbers from prior QoS depth / vault drafts with W guidance. |
+| 8 · Closing | Tables converge HW arch + peer QoS depth — doc follows when W-aligned (Architecture Documentation). |
+
 ## Review notes (Prabhu · 2026-06)
 
 | Slide | Note |
 |-------|------|
-| 2 | Guru kickoff image — unchanged; W may ask origin (not N). |
-| 3 | Pie — pause for W discussion; terminology on slide + diagram. |
-| 6 | CCC tables — pause; verbal; Friday feedback → N actions. |
-| 8 | Next steps — diagram only; you speak detail live. |
+| 2 | Guru kickoff image — no duplicate title; W may ask origin (not N). |
+| 3 | Pie — pause for W discussion; **CSB buffer-carving** bold on QoS slice. |
+| 6 | CCC tables — pause; SAMPLE watermark; Friday feedback → refine rows. |
+| 8 | Closing diagram only — you speak detail live. |
 
 ## Build
 

@@ -79,7 +79,7 @@ class StyledDeck:
 
     def add_content(
         self,
-        title,
+        title: Optional[str],
         bullets,
         subtitle=None,
         lead=None,
@@ -116,7 +116,7 @@ class StyledDeck:
 
     def add_image_slide(
         self,
-        title,
+        title: Optional[str],
         image_path: Path,
         *,
         subtitle=None,
@@ -247,7 +247,7 @@ def build_b6() -> Path:
         elif s.image:
             img = PIPELINE_IMG if s.image == "logical-pipeline-boss-slide.png" else ROOT / "assets" / s.image
             deck.add_image_slide(
-                s.title,
+                s.title or None,
                 img,
                 subtitle=s.subtitle or None,
                 lead=s.lead or None,

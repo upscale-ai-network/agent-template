@@ -179,7 +179,7 @@ def validate_b6_md(doc: DeckDocument | None = None) -> List[str]:
         errors.append("B6 deck has no content slides")
 
     for s in slides:
-        if not s.title.strip():
+        if not s.title.strip() and not s.image:
             errors.append(f"B6 slide {s.number} missing Title")
         if s.image:
             if s.image == "logical-pipeline-boss-slide.png":
