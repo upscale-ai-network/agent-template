@@ -45,8 +45,7 @@
 **Diagram:** b6-slide02-pipeline-scope-pie
 
 **Bullets:**
-- Center hub: Bugatti — Rupa · N · E org alignment (not slice owners).
-- Peers acknowledged in parentheses — schematic only.
+- Schematic only — equal slices, not sizing metrics.
 - Other pipeline blocks covered on peer architecture decks (SharePoint).
 
 ---

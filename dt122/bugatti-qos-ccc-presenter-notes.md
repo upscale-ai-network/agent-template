@@ -5,6 +5,6 @@
 | Slide | Hint |
 |-------|------|
 | Cover | Same DSBM / qos architecture thread. |
-| 2 | Orange slice = DBM scope; center = Rupa · N · E; peers in parens on slices. |
+| 2 | Orange slice = DBM scope; center = Bugatti ASIC. |
 | 5 | CCC tables are v0 placeholders — invite HW arch feedback. |
 | 7 | Closes loop to A3 slide 4 alignment checkpoints. |

@@ -65,8 +65,8 @@ PIPE_SCOPE_SLICES: List[PipeSlice] = [
     ("Others", None, False),
 ]
 PIPE_QOS_SLICE_INDEX = 5
-# Center hub — Bugatti ASIC; org alignment (Rupa · N · E), not slice owners.
-PIPE_HUB_LINES = ["Bugatti", "Rupa · N · E"]
+# Center hub — Bugatti ASIC program scope.
+PIPE_HUB_LINES = ["Bugatti"]
 
 
 def _require_npx() -> str:
@@ -212,16 +212,9 @@ def render_pipeline_scope_pie() -> Path:
         outline=CENTER_EDGE,
         width=3,
     )
-    hub_gap = 2
-    h1 = draw.textbbox((0, 0), PIPE_HUB_LINES[0], font=font_hub)[3]
-    h2 = draw.textbbox((0, 0), PIPE_HUB_LINES[1], font=font_hub_sm)[3]
-    hub_block = h1 + hub_gap + h2
-    hy = cy - hub_block / 2
-    tw1 = draw.textbbox((0, 0), PIPE_HUB_LINES[0], font=font_hub)[2]
-    draw.text((cx - tw1 / 2, hy), PIPE_HUB_LINES[0], fill=TEXT, font=font_hub)
-    hy += h1 + hub_gap
-    tw2 = draw.textbbox((0, 0), PIPE_HUB_LINES[1], font=font_hub_sm)[2]
-    draw.text((cx - tw2 / 2, hy), PIPE_HUB_LINES[1], fill=PEER, font=font_hub_sm)
+    hub = PIPE_HUB_LINES[0]
+    tw, th = draw.textbbox((0, 0), hub, font=font_hub)[2:]
+    draw.text((cx - tw / 2, cy - th / 2), hub, fill=TEXT, font=font_hub)
 
     mid_r = (outer + inner) / 2.0 + 8
     for i, (label, peer, _) in enumerate(PIPE_SCOPE_SLICES):
