@@ -436,6 +436,15 @@ def assert_pptx_valid(path) -> None:
     Presentation(str(path))
 
 
+def scrub_speaker_notes(prs: Presentation) -> None:
+    """Clear all speaker notes — metadata lives outside PPTX."""
+    for slide in prs.slides:
+        tf = slide.notes_slide.notes_text_frame
+        tf.clear()
+        if not tf.paragraphs:
+            tf.add_paragraph()
+
+
 def save_presentation(prs: Presentation, path) -> Path:
     """Atomic save + assert before replacing target (no corrupt file on disk)."""
     path = Path(path)

@@ -234,7 +234,7 @@ def render_pipeline_scope_pie() -> Path:
             peer_font=font_label_sm,
         )
 
-    title = "Orange slice = this walk"
+    title = "Orange slice = this CCC"
     tt_w = draw.textbbox((0, 0), title, font=font_title)[2]
     draw.text((cx - tt_w // 2, 36), title, fill=SLICE_ORANGE_EDGE, font=font_title)
 

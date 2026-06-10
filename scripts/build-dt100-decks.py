@@ -23,6 +23,7 @@ from deck_validate import (  # noqa: E402
     validate_a3_build,
     validate_a3_diagram_pngs,
     validate_b6_build,
+    validate_b6_pptx_no_speaker_notes,
     validate_built_pptx,
 )
 from pptx_util import (  # noqa: E402
@@ -30,6 +31,7 @@ from pptx_util import (  # noqa: E402
     fill_content_diagram_slide,
     fill_cover_slide,
     save_presentation,
+    scrub_speaker_notes,
     trim_to_slides,
 )
 
@@ -260,6 +262,7 @@ def build_b6() -> Path:
                 lead=getattr(s, "lead", None) or None,
             )
 
+    scrub_speaker_notes(deck.prs)
     return deck.save()
 
 
@@ -290,6 +293,7 @@ def main():
             b6 = build_b6()
             b6_slides = 1 + len(b6_doc.ordered_slides())
             checks += validate_built_pptx(b6, expected_slides=b6_slides)
+            checks += validate_b6_pptx_no_speaker_notes(b6)
             print(f"Wrote {b6} ({b6_slides} slides, company chrome)")
 
         fail_on_errors(checks)

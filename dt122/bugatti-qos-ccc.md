@@ -2,26 +2,26 @@
 
 **B6** = shorthand for this deck · share as **`bugatti-qos-ccc.pptx`**.
 
-**Single file for this deck:** slide titles, walk cues → `bugatti-qos-ccc.pptx` via `uv run build-decks`.
+**Single file for this deck:** slide titles → `bugatti-qos-ccc.pptx` via `uv run build-decks`.
 
-**Flow:** [../dt100/bugatti-qos-architecture.md](../dt100/bugatti-qos-architecture.md) slides 1–2 → **B6** → A3 slides 3–4 (mandate / alignment).
+**Flow:** [../dt100/bugatti-qos-architecture.md](../dt100/bugatti-qos-architecture.md) slides 1–2 → **B6** → A3 slides 3–4 (alignment).
 
-**Optional presenter hints (not in PPTX):** [bugatti-qos-ccc-presenter-notes.md](bugatti-qos-ccc-presenter-notes.md)
+**Metadata (not in PPTX):** [bugatti-qos-ccc-meta.md](bugatti-qos-ccc-meta.md)
 
-**Depth / walk map:** [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md).
+**Depth / reference:** [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md).
 
-**Revision (not exported — git / presenter only):**
+**Revision (not exported — git / meta only):**
 
 | Rev | Credit | Summary |
 |-----|--------|---------|
 | 0.0 | Original author | Prior qos-ccc skeleton — unnamed ([ccc-strategy.md](ccc-strategy.md)) |
-| 0.1 | Diwakar Tundlam | Buffer-carving walk · A3-aligned |
+| 0.1 | Diwakar Tundlam | Buffer-carving CCC · A3-aligned |
 
 ---
 
 ## Cover
 
-**Title:** Quality of Service (QoS) buffer-carving architecture  
+**Title:** Buffer-carving CCC  
 **Subtitle (navy):** Dynamic Switch-Buffer Management · logical pipeline  
 **Meta:** Follows qos architecture · Revision 0.1  
 **Tag:** Confidential — Upscale AI
@@ -31,16 +31,15 @@
 ## Slide 1
 
 **Title:** Logical pipeline  
-**Subtitle:** Validated to tape-out · datapath context  
-**Lead:** QoSMAP, Queue, and buffer-carving at Central Scheduler Block (CSB) — aligned with qos architecture.  
+**Subtitle:** Program kickoff slide — unchanged  
 **Image:** logical-pipeline-boss-slide.png
 
 ---
 
 ## Slide 2
 
-**Title:** Pipeline scope  
-**Subtitle:** Orange slice = Dynamic Switch-Buffer Management scope  
+**Title:** Datapath · CCC scope  
+**Subtitle:** Orange slice = buffer-carving scope  
 **Lead:** QoSMAP · CSB buffer-carving · QoS-CCC — aligned with qos architecture.  
 **Diagram:** b6-slide02-pipeline-scope-pie
 
@@ -85,15 +84,15 @@
 
 **Bullets:**
 - Orange rows: CSB buffer-carving and fabric pool context — values TBD.
-- Use-case-driven datapath may revise rows after qos-aware walk.
+- Use-case-driven datapath may revise rows.
 
 ---
 
 ## Slide 6
 
 **Title:** Scope and open items  
-**Subtitle:** In this walk versus deferred  
-**Lead:** What we cover today versus what stays on peer decks.  
+**Subtitle:** In scope versus deferred  
+**Lead:** What this CCC covers versus peer decks.  
 **Diagram:** b6-slide06-boundaries
 
 **Bullets:**
@@ -117,4 +116,4 @@
 
 ## Reference (not in deck)
 
-Full walk map, DRI tables, whiteboard annotations: [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md).
+Full map, DRI tables, whiteboard annotations: [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md).

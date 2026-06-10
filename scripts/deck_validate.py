@@ -203,6 +203,17 @@ def validate_b6_diagram_pngs(doc: DeckDocument | None = None) -> List[str]:
     return errors
 
 
+def validate_b6_pptx_no_speaker_notes(path: Path) -> List[str]:
+    from pptx import Presentation
+
+    errors: List[str] = []
+    prs = Presentation(str(path))
+    for i, slide in enumerate(prs.slides, start=1):
+        if slide.notes_slide.notes_text_frame.text.strip():
+            errors.append(f"{path.name}: slide {i} has speaker notes (must be in meta md only)")
+    return errors
+
+
 def validate_built_pptx(path: Path, *, expected_slides: int) -> List[str]:
     from pptx_util import assert_pptx_valid
 
