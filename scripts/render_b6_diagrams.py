@@ -12,7 +12,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 ROOT = Path(__file__).resolve().parents[1]
 B6_DIR = ROOT / "assets" / "diagrams" / "b6"
@@ -32,6 +32,7 @@ MERMAID_STEMS: Dict[str, str] = {
 COMPOSITE_STEMS = frozenset({
     "b6-slide02-pipeline-scope-pie",
     "b6-slide03-pipeline-annotated",
+    "b6-slide05-csb-ccc-tables",
 })
 
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -50,18 +51,22 @@ SLICE_ORANGE_EDGE = (239, 108, 0, 255)
 CENTER_FILL = (255, 255, 255, 255)
 CENTER_EDGE = (176, 190, 197, 255)
 
-# Equal slices; index 5 sits at bottom (6 o'clock). Others slice for follow-on blocks.
-PIPE_SCOPE_SLICES: List[Tuple[str, bool]] = [
-    ("Port · parse", False),
-    ("L2 · L3 · ESUN", False),
-    ("ACL", False),
-    ("ECMP · LAG", False),
-    ("QoS classify", False),
-    ("QoSMAP · Queue · buffer-carving", True),
-    ("Egress · Mirror", False),
-    ("Others", False),
+# Equal slices; index 5 sits at bottom (6 o'clock). (peer) = acknowledged W DRI, subtle 2nd line.
+SliceLabel = str | List[str]
+PipeSlice = Tuple[SliceLabel, Optional[str], bool]
+PIPE_SCOPE_SLICES: List[PipeSlice] = [
+    ("Port-CCC", None, False),
+    ("L2/L3-CCC", "Shafi · Tilak", False),
+    ("ACL-CCC", "Shrawan", False),
+    ("ECMP-CCC", "Tippanna", False),
+    ("Classify-CCC", "Shrawan", False),
+    (["QoSMAP", "CSB Buffer-carving", "QoS-CCC"], "Diwakar", True),
+    ("Mirror-CCC", "Shafi", False),
+    ("Others", None, False),
 ]
 PIPE_QOS_SLICE_INDEX = 5
+# Center hub — Bugatti ASIC; org alignment (Rupa · N · E), not wedge DRIs.
+PIPE_HUB_LINES = ["Bugatti", "Rupa · N · E"]
 
 
 def _require_npx() -> str:
@@ -102,6 +107,49 @@ def _box(draw, xy: Tuple[int, int, int, int], fill, outline, width: int = 3) -> 
     draw.rectangle(xy, fill=fill, outline=outline, width=width)
 
 
+def _label_lines(label: SliceLabel) -> List[str]:
+    if isinstance(label, list):
+        return label
+    return [label]
+
+
+def _draw_slice_label(
+    draw,
+    center: Tuple[float, float],
+    label: SliceLabel,
+    font,
+    fill,
+    *,
+    peer: Optional[str] = None,
+    peer_font=None,
+    peer_fill=PEER,
+    line_gap: int = 2,
+    peer_gap: int = 3,
+) -> None:
+    lines = _label_lines(label)
+    peer_font = peer_font or font
+    if peer:
+        peer_line = peer if peer.startswith("(") else f"({peer})"
+        lines = lines + [peer_line]
+    if not lines:
+        return
+    sizes = []
+    for i, line in enumerate(lines):
+        f = peer_font if peer and i == len(lines) - 1 else font
+        bb = draw.textbbox((0, 0), line, font=f)
+        sizes.append((bb[2], bb[3], f, line))
+    block_h = sum(s[1] for s in sizes) + line_gap * (len(sizes) - 1)
+    if peer and len(sizes) > 1:
+        block_h += peer_gap - line_gap
+    y = center[1] - block_h / 2
+    for i, (tw, th, f, line) in enumerate(sizes):
+        if peer and i == len(sizes) - 1 and i > 0:
+            y += peer_gap - line_gap
+        line_fill = peer_fill if peer and i == len(sizes) - 1 else fill
+        draw.text((center[0] - tw / 2, y), line, fill=line_fill, font=f)
+        y += th + line_gap
+
+
 def render_pipeline_scope_pie() -> Path:
     """Donut — equal slices, QoS at bottom, Bugatti hub (not mermaid)."""
     import math
@@ -118,24 +166,26 @@ def render_pipeline_scope_pie() -> Path:
         "/System/Library/Fonts/Supplemental/Arial.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
     ]
-    font_label = font_hub = None
+    font_label = font_label_sm = font_hub = font_hub_sm = None
     for path in font_paths:
         try:
-            font_label = ImageFont.truetype(path, 15)
-            font_hub = ImageFont.truetype(path, 20)
+            font_label = ImageFont.truetype(path, 14)
+            font_label_sm = ImageFont.truetype(path, 12)
+            font_hub = ImageFont.truetype(path, 18)
+            font_hub_sm = ImageFont.truetype(path, 12)
             font_title = ImageFont.truetype(path, 22)
             break
         except OSError:
             continue
     if font_label is None:
-        font_label = font_hub = font_title = ImageFont.load_default()
+        font_label = font_label_sm = font_hub = font_hub_sm = font_title = ImageFont.load_default()
 
     n = len(PIPE_SCOPE_SLICES)
     sweep = 360.0 / n
     # PIL: 0° = 3 o'clock, clockwise. Bottom (6 o'clock) = 90°.
     rot = 90.0 - PIPE_QOS_SLICE_INDEX * sweep - sweep / 2.0
 
-    for i, (label, highlight) in enumerate(PIPE_SCOPE_SLICES):
+    for i, (label, _peer, highlight) in enumerate(PIPE_SCOPE_SLICES):
         start = rot + i * sweep
         end = rot + (i + 1) * sweep
         fill = SLICE_ORANGE if highlight else SLICE_GRAY
@@ -162,24 +212,175 @@ def render_pipeline_scope_pie() -> Path:
         outline=CENTER_EDGE,
         width=3,
     )
-    hub = "Bugatti"
-    tw, th = draw.textbbox((0, 0), hub, font=font_hub)[2:]
-    draw.text((cx - tw // 2, cy - th // 2), hub, fill=TEXT, font=font_hub)
+    hub_gap = 2
+    h1 = draw.textbbox((0, 0), PIPE_HUB_LINES[0], font=font_hub)[3]
+    h2 = draw.textbbox((0, 0), PIPE_HUB_LINES[1], font=font_hub_sm)[3]
+    hub_block = h1 + hub_gap + h2
+    hy = cy - hub_block / 2
+    tw1 = draw.textbbox((0, 0), PIPE_HUB_LINES[0], font=font_hub)[2]
+    draw.text((cx - tw1 / 2, hy), PIPE_HUB_LINES[0], fill=TEXT, font=font_hub)
+    hy += h1 + hub_gap
+    tw2 = draw.textbbox((0, 0), PIPE_HUB_LINES[1], font=font_hub_sm)[2]
+    draw.text((cx - tw2 / 2, hy), PIPE_HUB_LINES[1], fill=PEER, font=font_hub_sm)
 
     mid_r = (outer + inner) / 2.0 + 8
-    for i, (label, _) in enumerate(PIPE_SCOPE_SLICES):
+    for i, (label, peer, _) in enumerate(PIPE_SCOPE_SLICES):
         mid_deg = rot + (i + 0.5) * sweep
         rad = mid_deg * 3.14159265 / 180.0
         tx = cx + mid_r * math.cos(rad)
         ty = cy + mid_r * math.sin(rad)
-        tw, th = draw.textbbox((0, 0), label, font=font_label)[2:]
-        draw.text((tx - tw / 2, ty - th / 2), label, fill=TEXT, font=font_label)
+        lines = _label_lines(label)
+        font = font_label_sm if len(lines) > 1 or max(len(line) for line in lines) > 16 else font_label
+        _draw_slice_label(
+            draw,
+            (tx, ty),
+            label,
+            font,
+            TEXT,
+            peer=peer,
+            peer_font=font_label_sm,
+        )
 
     title = "Orange slice = this walk"
     tt_w = draw.textbbox((0, 0), title, font=font_title)[2]
     draw.text((cx - tt_w // 2, 36), title, fill=SLICE_ORANGE_EDGE, font=font_title)
 
     out = B6_DIR / "b6-slide02-pipeline-scope-pie.png"
+    B6_DIR.mkdir(parents=True, exist_ok=True)
+    img.convert("RGB").save(out, "PNG")
+    return out
+
+
+TABLE_HEADER = (227, 242, 253, 255)
+TABLE_LANE = (255, 243, 224, 255)
+TABLE_GRID = (176, 190, 197, 255)
+TABLE_MUTED = (120, 144, 156, 255)
+
+# Version 0 placeholders — refine from HW arch, RTL, c-models, use-cases.
+CSB_CCC_HEADERS = ["Capabilities", "Capacities", "Constraints"]
+CSB_CCC_ROWS = [
+    ["Lossy / lossless pools · PFC", "CSB pool depth: TBD", "HWv1: VLAN-PRI + DSCP only"],
+    ["WRED · ECN · Pause", "Queues / port: TBD", "No MPLS EXP · no IPv6 pri (v1)"],
+    ["QoSMAP · TC → egress queues", "Port tiers: 200G / 400G / 800G", "Admission / headroom: TBD"],
+    ["Buffer-carving · admission", "Per-TC carve: TBD", "Peer pool boundaries: TBD"],
+]
+
+FABRIC_CCC_HEADERS = ["Block", "Capabilities", "Capacities", "Constraints"]
+FABRIC_CCC_ROWS = [
+    ["IFP", "Ingress parse · admit", "Pool cells: TBD", "RTL: TBD"],
+    ["ISB", "Ingress buffering", "Pool cells: TBD", "RTL: TBD"],
+    ["CSB", "Sched · buffer-carving", "Pool cells: TBD", "RTL: TBD"],
+    ["EFP", "Egress buffer · shaping", "Pool cells: TBD", "RTL: TBD"],
+]
+
+
+def _load_table_fonts():
+    from PIL import ImageFont
+
+    font_paths = [
+        "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    ]
+    for path in font_paths:
+        try:
+            return (
+                ImageFont.truetype(path, 20),
+                ImageFont.truetype(path, 13),
+                ImageFont.truetype(path, 14),
+            )
+        except OSError:
+            continue
+    default = ImageFont.load_default()
+    return default, default, default
+
+
+def _draw_table(
+    draw,
+    origin: Tuple[int, int],
+    headers: List[str],
+    rows: List[List[str]],
+    col_widths: List[int],
+    *,
+    row_h: int = 44,
+    header_h: int = 36,
+    font_title,
+    font_hdr,
+    font_cell,
+    title: Optional[str] = None,
+    highlight_rows: Optional[set] = None,
+) -> int:
+    x0, y0 = origin
+    highlight_rows = highlight_rows or set()
+    if title:
+        draw.text((x0, y0), title, fill=TEXT, font=font_title)
+        y0 += 32
+    table_w = sum(col_widths)
+    y = y0
+    # header
+    x = x0
+    for hdr, cw in zip(headers, col_widths):
+        _box(draw, (x, y, x + cw, y + header_h), TABLE_HEADER, TABLE_GRID, 1)
+        tw = draw.textbbox((0, 0), hdr, font=font_hdr)[2]
+        draw.text((x + (cw - tw) // 2, y + 10), hdr, fill=TEXT, font=font_hdr)
+        x += cw
+    y += header_h
+    for ri, row in enumerate(rows):
+        x = x0
+        fill = TABLE_LANE if ri in highlight_rows else (255, 255, 255, 255)
+        for cell, cw in zip(row, col_widths):
+            _box(draw, (x, y, x + cw, y + row_h), fill, TABLE_GRID, 1)
+            draw.text((x + 8, y + 12), cell, fill=TEXT, font=font_cell)
+            x += cw
+        y += row_h
+    return y - y0 + (32 if title else 0)
+
+
+def render_csb_ccc_tables() -> Path:
+    """CCC Cap / Cap / Con tables for CSB buffer-carving — v0 placeholders."""
+    from PIL import Image, ImageDraw
+
+    w, h = 1800, 900
+    img = Image.new("RGBA", (w, h), (255, 255, 255, 255))
+    draw = ImageDraw.Draw(img)
+    font_title, font_hdr, font_cell = _load_table_fonts()
+
+    note = "Version 0 placeholders — HW arch · RTL · c-models · use-cases"
+    nw = draw.textbbox((0, 0), note, font=font_hdr)[2]
+    draw.text(((w - nw) // 2, 24), note, fill=TABLE_MUTED, font=font_hdr)
+
+    margin = 48
+    gap = 28
+    top = 68
+    csb_w = [520, 420, 420]
+    _draw_table(
+        draw,
+        (margin, top),
+        CSB_CCC_HEADERS,
+        CSB_CCC_ROWS,
+        csb_w,
+        font_title=font_title,
+        font_hdr=font_hdr,
+        font_cell=font_cell,
+        title="CSB buffer-carving wedge",
+        highlight_rows={3},
+    )
+    fab_w = [100, 380, 320, 320]
+    fab_x = margin
+    fab_y = top + 32 + 36 + 44 * 4 + gap
+    _draw_table(
+        draw,
+        (fab_x, fab_y),
+        FABRIC_CCC_HEADERS,
+        FABRIC_CCC_ROWS,
+        fab_w,
+        font_title=font_title,
+        font_hdr=font_hdr,
+        font_cell=font_cell,
+        title="Fabric buffer pools (context)",
+        highlight_rows={2},
+    )
+
+    out = B6_DIR / "b6-slide05-csb-ccc-tables.png"
     B6_DIR.mkdir(parents=True, exist_ok=True)
     img.convert("RGB").save(out, "PNG")
     return out
@@ -198,15 +399,15 @@ def render_pipeline_annotated() -> Path:
 
     # Fractional regions on boss slide (1024×575 typical)
     highlights = [
-        (0.52, 0.38, 0.68, 0.62, "QoSMAP · Diwakar"),
-        (0.70, 0.35, 0.92, 0.68, "Queue · Diwakar"),
+        (0.52, 0.38, 0.68, 0.62, "QoSMAP"),
+        (0.70, 0.35, 0.92, 0.68, "Queue"),
     ]
     peer_labels = [
-        (0.06, 0.72, "L2 · Shafi"),
-        (0.22, 0.72, "ECMP/LAG · Tippanna"),
-        (0.38, 0.72, "L2 · Tilak"),
-        (0.54, 0.72, "L3 · Girish"),
-        (0.70, 0.72, "Parser · Rupa"),
+        (0.06, 0.72, "L2-CCC"),
+        (0.22, 0.72, "ECMP-CCC"),
+        (0.38, 0.72, "L2/L3-CCC"),
+        (0.54, 0.72, "L3-CCC"),
+        (0.70, 0.72, "Port-CCC"),
     ]
 
     font_paths = [
@@ -264,6 +465,8 @@ def render_all_b6_diagrams(doc=None) -> List[str]:
                 render_pipeline_scope_pie()
             elif stem == "b6-slide03-pipeline-annotated":
                 render_pipeline_annotated()
+            elif stem == "b6-slide05-csb-ccc-tables":
+                render_csb_ccc_tables()
             else:
                 raise RuntimeError(f"Unknown composite stem: {stem}")
         elif stem in MERMAID_STEMS:

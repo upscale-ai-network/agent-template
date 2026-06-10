@@ -41,11 +41,12 @@
 
 **Title:** Pipeline scope  
 **Subtitle:** Orange slice = Dynamic Switch-Buffer Management scope  
-**Lead:** QoSMAP · Queue · buffer-carving at Central Scheduler Block (CSB).  
+**Lead:** QoSMAP · CSB buffer-carving · QoS-CCC — same wedge as qos architecture.  
 **Diagram:** b6-slide02-pipeline-scope-pie
 
 **Bullets:**
-- Schematic only — equal slices, not sizing metrics.
+- Center hub: Bugatti — Rupa · N · E org alignment (not wedge owners).
+- Wedge peers acknowledged in parentheses — schematic, not RACI.
 - Other pipeline blocks covered on peer architecture decks (SharePoint).
 
 ---
@@ -78,6 +79,19 @@
 
 ## Slide 5
 
+**Title:** CSB buffer-carving · CCC  
+**Subtitle:** Capabilities · Capacities · Constraints  
+**Lead:** Version 0 placeholders — refine from HW architecture, RTL, and c-models.  
+**Diagram:** b6-slide05-csb-ccc-tables
+
+**Bullets:**
+- Orange rows: CSB wedge and fabric pool context — values TBD.
+- Use-case-driven datapath may revise rows after qos-aware walk.
+
+---
+
+## Slide 6
+
 **Title:** Scope and open items  
 **Subtitle:** In this walk versus deferred  
 **Lead:** What we cover today versus what stays on peer decks.  
@@ -89,7 +103,7 @@
 
 ---
 
-## Slide 6
+## Slide 7
 
 **Title:** Next steps  
 **Subtitle:** Back to alignment · mandate checkpoints  
@@ -97,7 +111,7 @@
 **Diagram:** b6-slide07-next-steps
 
 **Bullets:**
-- Revision 0.1 · Diwakar Tundlam.
+- Revision 0.1.
 - Publish to SharePoint after group review.
 
 ---
