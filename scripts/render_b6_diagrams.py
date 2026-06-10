@@ -65,7 +65,7 @@ PIPE_SCOPE_SLICES: List[PipeSlice] = [
     ("Others", None, False),
 ]
 PIPE_QOS_SLICE_INDEX = 5
-# Center hub — Bugatti ASIC; org alignment (Rupa · N · E), not wedge DRIs.
+# Center hub — Bugatti ASIC; org alignment (Rupa · N · E), not slice owners.
 PIPE_HUB_LINES = ["Bugatti", "Rupa · N · E"]
 
 
@@ -361,7 +361,7 @@ def render_csb_ccc_tables() -> Path:
         font_title=font_title,
         font_hdr=font_hdr,
         font_cell=font_cell,
-        title="CSB buffer-carving wedge",
+        title="CSB buffer-carving",
         highlight_rows={3},
     )
     fab_w = [100, 380, 320, 320]

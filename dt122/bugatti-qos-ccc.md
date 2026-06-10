@@ -32,7 +32,7 @@
 
 **Title:** Logical pipeline  
 **Subtitle:** Validated to tape-out · datapath context  
-**Lead:** QoSMAP, Queue, and buffer-carving at Central Scheduler Block (CSB) — same wedge as qos architecture.  
+**Lead:** QoSMAP, Queue, and buffer-carving at Central Scheduler Block (CSB) — aligned with qos architecture.  
 **Image:** logical-pipeline-boss-slide.png
 
 ---
@@ -41,12 +41,12 @@
 
 **Title:** Pipeline scope  
 **Subtitle:** Orange slice = Dynamic Switch-Buffer Management scope  
-**Lead:** QoSMAP · CSB buffer-carving · QoS-CCC — same wedge as qos architecture.  
+**Lead:** QoSMAP · CSB buffer-carving · QoS-CCC — aligned with qos architecture.  
 **Diagram:** b6-slide02-pipeline-scope-pie
 
 **Bullets:**
-- Center hub: Bugatti — Rupa · N · E org alignment (not wedge owners).
-- Wedge peers acknowledged in parentheses — schematic, not RACI.
+- Center hub: Bugatti — Rupa · N · E org alignment (not slice owners).
+- Peers acknowledged in parentheses — schematic only.
 - Other pipeline blocks covered on peer architecture decks (SharePoint).
 
 ---
@@ -85,7 +85,7 @@
 **Diagram:** b6-slide05-csb-ccc-tables
 
 **Bullets:**
-- Orange rows: CSB wedge and fabric pool context — values TBD.
+- Orange rows: CSB buffer-carving and fabric pool context — values TBD.
 - Use-case-driven datapath may revise rows after qos-aware walk.
 
 ---
@@ -106,8 +106,8 @@
 ## Slide 7
 
 **Title:** Next steps  
-**Subtitle:** Back to alignment · mandate checkpoints  
-**Lead:** Lock version 0 gates — resume qos architecture close.  
+**Subtitle:** Back to alignment · checkpoints  
+**Lead:** Lock version 0 gates — continue qos architecture close.  
 **Diagram:** b6-slide07-next-steps
 
 **Bullets:**
