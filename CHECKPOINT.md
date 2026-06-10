@@ -40,11 +40,12 @@ Zombie sync+regen (optional, heavier): `./scripts/zombie-pull-build.sh` · `git 
 
 | Shorthand | Files | Status |
 |-----------|-------|--------|
-| **B6 / DT122** | `dt122/bugatti-qos-ccc.md` → `.pptx` | **DT122** `doing` — Mermaid 2A next |
-| Share name | `bugatti-qos-ccc` | No `draft-` prefix — doc for review when complete |
+| **B6 / DT122** | `dt122/bugatti-qos-ccc.md` → `.pptx` | **DT122** `doing` — **integrate** prior W qos-ccc (local read) → Rev 0.1 |
+| Share name | `bugatti-qos-ccc` | No `draft-` prefix · W alignment before publish |
+| Prior deck | SharePoint / laptop only | **Not in git** · Rev 0.0 credit unnamed |
 
-**Build:** `uv run build-decks` · edit md only  
-**Strategy:** [dt122/ccc-strategy.md](dt122/ccc-strategy.md) — 2A → informal peer → gated formal
+**Build:** `uv run build-decks` · edit md only · after local ingest + human OK  
+**Strategy:** [dt122/ccc-strategy.md](dt122/ccc-strategy.md) — integrate → 2A → informal peer → gated formal
 
 ## Layout
 
@@ -64,6 +65,6 @@ Zombie sync+regen (optional, heavier): `./scripts/zombie-pull-build.sh` · `git 
 
 ## Next autonomous queue (Gluon)
 
-1. **DT122** — 2A Mermaid-aware slide upgrade · `dt122/bugatti-qos-ccc.md` → regen ([ccc-strategy.md](dt122/ccc-strategy.md) §5)
-2. Human cold read → informal peer DRI huddle → SharePoint when ready
-3. Friday: A3 1–2 → B6 walk → A3 3–4
+1. **DT122** — local ingest (human path + **ingest now**) → merge into md as Rev 0.1 · no prior pptx in git
+2. Regen + cold read → informal W huddle → SharePoint when W-aligned
+3. Rev line on cover/appendix: 0.0 original author (W) · 0.1 Diwakar Tundlam

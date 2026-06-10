@@ -19,12 +19,36 @@
 - **No Guru “review”** language — docs for walk / consensus, not homework grading.
 - md → `uv run build-decks` → pptx; do not hand-edit pptx.
 
+### Revision credit (deliberate, minimal)
+
+**Goal:** Credit W homework without genealogy noise — teach handoff by example, not policy deck.
+
+| Rev | Credit | Notes |
+|-----|--------|-------|
+| **0.0** | **Original author (W)** | Prior qos-ccc skeleton — name **not** on slide or in git (see below) |
+| **0.1** | **Diwakar Tundlam** | Integration + buffer-carve focus; W alignment before SharePoint |
+| **0.2+** | Peer deltas as needed | After informal huddle |
+
+**On-slide (cover or appendix):** short rev line + one sentence — *Rev 0.0 established the qos-ccc skeleton; Rev 0.1 continues under qos-architect ownership.*
+
+**Why original author stays unnamed:** Peers who were there know; future readers should stay on **company priorities**, not side quests (LinkedIn, where someone works now, career tangents). Acknowledge the **work**, not the résumé.
+
+**Why no “steward” / handoff theater:** Nimble startup — you **own qos-architect** (same role as A3). Initial slice: **buffer carving**; grow **down** into datapath/HW and **up** into configuration **organically**, with W respect — not a title upgrade narrative.
+
+### Prior W deck (local only)
+
+- SharePoint / laptop copy = **read privilege**, not a git artifact.
+- **No** prior pptx, extract, or ingest trail in repo — review locally, merge into **your** md, then commit as Rev 0.1.
+- W ratifies before check-in / SharePoint publish matters for peers — ownership transfer is **social + technical**, not archival archaeology.
+
 ---
 
 ## 2. Delivery sequence
 
 ```
-2A  Homework B6 (bounded — ~24hr)     visual-first, restrained
+Prior W qos-ccc (local read) → integrate into md as Rev 0.1
+      ↓
+2A  Homework B6 (bounded)              visual-first, restrained · CCC essence
       ↓
     Informal peer DRI huddle           Shafi, Tippanna, Shravan (+ tight set)
     (no Guru)
@@ -34,7 +58,7 @@
     Formal drive meeting (gated)       Guru may oversee — only after informal landed
 ```
 
-**2A before peer huddle:** Recon 1:1s already done (Shafi, Tippanna, SharePoint W slides, prior QoS depth). Next step is **credible homework**, not more listening tours.
+**2A before peer huddle:** Recon 1:1s already done (Shafi, Tippanna, SharePoint W slides, prior QoS depth). Next step is **integrate prior W skeleton + credible 0.1 delta** — not greenfield, not more listening tours.
 
 **Informal huddle success:** specific lane edits, no silent resentment.  
 **Formal Guru gate:** go only if peers nod on wedge boundaries; no open Shafi/Tippanna lane conflict.
@@ -134,3 +158,4 @@ Heat loss = chat archaeology, lost pptx, performative email, unbounded polish. S
 | 2026-06-05 | Strategy record → this file |
 | 2026-06-06 | **DT122** P0 `doing` — Mermaid-aware 2A on `bugatti-qos-ccc` |
 | 2026-06-06 | B6 sources → `dt122/`; `dt100/` retains A3 only (DT100 done) |
+| 2026-06-08 | Prior W qos-ccc: local read only · no prior deck in git · Rev 0.0 credit unnamed · Rev 0.1 = Diwakar · qos-architect owns buffer-carve slice first |

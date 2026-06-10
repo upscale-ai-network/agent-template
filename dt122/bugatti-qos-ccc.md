@@ -8,6 +8,15 @@
 
 **Companion:** [../dt100/bugatti-qos-architecture.md](../dt100/bugatti-qos-architecture.md) (slides 1–2, then 3–4 after this walk). **Depth / walk map:** [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md).
 
+**Revision (export to cover or appendix when integrated):**
+
+| Rev | Credit | Summary |
+|-----|--------|---------|
+| 0.0 | Original author (W) | Prior qos-ccc skeleton — unnamed on purpose ([ccc-strategy.md](ccc-strategy.md)) |
+| 0.1 | Diwakar Tundlam | qos-architect · buffer carving focus · W review TBD |
+
+**Role:** qos-architect — initial **buffer carving** slice; expand into datapath/HW and configuration layers over time.
+
 ---
 
 ## Cover
@@ -48,7 +57,7 @@
 
 **Title:** Logical pipeline — my wedge on your slide  
 **Subtitle:** Act II · center of walk  
-**Lead:** QoSMAP + Queue / buffer carve = my lane; peers on their blocks.  
+**Lead:** QoSMAP + Queue = my lane; peers on their blocks.  
 **Diagram:** b6-slide03-pipeline-annotated
 
 **Caption:** Shafi · Tippanna · Tilak · Girish · Rupa — W order on the picture.
@@ -81,7 +90,7 @@
 
 **Title:** Boundaries — in this walk vs not merged  
 **Subtitle:** Act III · defer  
-**Lead:** Weekly sync on adjacent threads — no Friday merge.  
+**Lead:** Weekly sync on adjacent threads — no scope merge this walk.  
 **Diagram:** b6-slide06-boundaries
 
 ---

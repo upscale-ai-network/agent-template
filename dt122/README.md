@@ -10,6 +10,8 @@
 
 **B6** = shorthand · share as **`bugatti-qos-ccc`** — no `draft-` prefix unless draft-board.
 
+**Lineage:** Rev **0.0** = original author (W), unnamed · Rev **0.1** = Diwakar Tundlam (qos-architect, buffer-carve first). Prior SharePoint deck stays **local** — not in git ([ccc-strategy.md](ccc-strategy.md)).
+
 **Build:** `uv run build-decks` (A3 from `dt100/` + B6 from here; do not hand-edit pptx)
 
 **Diagrams:** `assets/diagrams/b6/` — Mermaid + pipeline overlay · `scripts/render_b6_diagrams.py`
