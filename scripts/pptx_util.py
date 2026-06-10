@@ -113,9 +113,11 @@ def set_content_title_block(
     *,
     title: Optional[str] = None,
     title_lines: Optional[List[str]] = None,
+    subtitle_line: Optional[str] = None,
     lead_line: Optional[str] = None,
+    caption_line: Optional[str] = None,
 ) -> None:
-    """Fixed title band: navy title + optional lead (slide 1)."""
+    """Fixed title band: navy title + optional act subtitle + lead + caption."""
     tf = shape.text_frame
     tf.clear()
     tf.word_wrap = False  # keep title on one line (box is wider than text)
@@ -125,8 +127,12 @@ def set_content_title_block(
             entries.append((line, COLOR_NAVY_TITLE, FONT_TITLE_MULTI, FONT_TITLE_FACE))
     elif title:
         entries.append((title, COLOR_NAVY_TITLE, FONT_TITLE_SINGLE, FONT_TITLE_FACE))
+    if subtitle_line:
+        entries.append((subtitle_line, COLOR_GOLD, FONT_LEAD, FONT_BODY_FACE))
     if lead_line:
         entries.append((lead_line, COLOR_LEAD, FONT_LEAD, FONT_BODY_FACE))
+    if caption_line:
+        entries.append((caption_line, COLOR_BODY, Pt(11), FONT_BODY_FACE))
     for i, (text, rgb, size, face) in enumerate(entries):
         p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
         p.text = text
@@ -357,10 +363,12 @@ def fill_content_diagram_slide(
     image_path: Path,
     *,
     title_lines: Optional[List[str]] = None,
+    subtitle_line: Optional[str] = None,
     lead_line: Optional[str] = None,
+    caption_line: Optional[str] = None,
     slide_width: Optional[int] = None,
 ) -> None:
-    """Title band + optional lead + diagram in aligned box; no bullet body."""
+    """Title band + act subtitle + lead + optional caption + diagram; no bullet body."""
     title_shape = None
     for shape in slide.shapes:
         if not shape.has_text_frame or is_footer(shape):
@@ -373,17 +381,15 @@ def fill_content_diagram_slide(
             title_shape,
             title=title,
             title_lines=title_lines,
+            subtitle_line=subtitle_line,
             lead_line=lead_line,
+            caption_line=caption_line,
         )
     hide_body_placeholder(slide)
     if not image_path.is_file():
         raise FileNotFoundError(f"Diagram slide requires image: {image_path}")
     place_diagram(slide, image_path, slide_width=slide_width)
     apply_content_colors(slide, skip_title_band=True)
-    if lead_line and title_shape and title_shape.text_frame.paragraphs:
-        p = title_shape.text_frame.paragraphs[-1]
-        for run in p.runs:
-            _style_run(run, COLOR_LEAD, FONT_BODY_FACE, FONT_LEAD)
 
 
 def check_zip_duplicates(path) -> list:

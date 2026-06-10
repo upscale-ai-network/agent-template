@@ -84,6 +84,7 @@ class StyledDeck:
         notes=None,
         diagram: Optional[Path] = None,
         title_lines: Optional[List[str]] = None,
+        caption: Optional[str] = None,
     ):
         slide = self.prs.slides[self._slide_i]
         self._slide_i += 1
@@ -95,7 +96,9 @@ class StyledDeck:
                 title,
                 diagram,
                 title_lines=title_lines,
-                lead_line=lead or subtitle,
+                subtitle_line=subtitle,
+                lead_line=lead,
+                caption_line=caption,
                 slide_width=self.prs.slide_width,
             )
         else:
@@ -221,7 +224,8 @@ def build_b6() -> Path:
                 s.title,
                 s.bullets,
                 subtitle=s.subtitle or None,
-                lead=s.lead or s.caption or None,
+                lead=s.lead or None,
+                caption=s.caption or None,
                 diagram=_b6_png(s.diagram),
             )
         elif s.image:

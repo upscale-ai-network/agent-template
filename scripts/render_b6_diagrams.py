@@ -97,19 +97,29 @@ def render_pipeline_annotated() -> Path:
     # Fractional regions on boss slide (1024×575 typical)
     highlights = [
         (0.52, 0.38, 0.68, 0.62, "QoSMAP · Diwakar"),
-        (0.70, 0.35, 0.92, 0.68, "Queue / carve · Diwakar"),
+        (0.70, 0.35, 0.92, 0.68, "Queue · Diwakar"),
     ]
     peer_labels = [
-        (0.08, 0.72, "Parser · Rupa"),
-        (0.22, 0.72, "L2 · Shafi / Tilak"),
-        (0.38, 0.72, "L3 · Girish"),
-        (0.52, 0.72, "ECMP/LAG · Tippanna"),
+        (0.06, 0.72, "L2 · Shafi"),
+        (0.22, 0.72, "ECMP/LAG · Tippanna"),
+        (0.38, 0.72, "L2 · Tilak"),
+        (0.54, 0.72, "L3 · Girish"),
+        (0.70, 0.72, "Parser · Rupa"),
     ]
 
-    try:
-        font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 14)
-        font_sm = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 12)
-    except OSError:
+    font_paths = [
+        "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    ]
+    font = font_sm = None
+    for path in font_paths:
+        try:
+            font = ImageFont.truetype(path, 14)
+            font_sm = ImageFont.truetype(path, 12)
+            break
+        except OSError:
+            continue
+    if font is None:
         font = ImageFont.load_default()
         font_sm = font
 
