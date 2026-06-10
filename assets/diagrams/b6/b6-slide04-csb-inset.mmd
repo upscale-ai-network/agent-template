@@ -5,12 +5,12 @@ flowchart TB
     B2["Lossy / lossless · PFC · queues"]
     B3["QoSMAP · TC · egress queues"]
   end
-  OUT["Deliverable: buffer-carving plan + version 0 gate"]
+  OUT["Deliverable: buffer-carving plan"]
 
   B1 --> B2 --> B3 --> OUT
 
-  classDef lane fill:#FFF3E0,stroke:#EF6C00,color:#051830,stroke-width:2px
-  classDef act fill:#F3E5F5,stroke:#7B1FA2,color:#051830
+  classDef lane fill:#E3F2FD,stroke:#1565C0,color:#051830,stroke-width:2px
+  classDef act fill:#E3F2FD,stroke:#1565C0,color:#051830
 
   class B1,B2,B3 lane
   class OUT act

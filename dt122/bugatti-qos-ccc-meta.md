@@ -1,20 +1,19 @@
 # Buffer-carving CCC (B6) — metadata · not exported to PPTX
 
-Speaker hints, flow, and build context live here — never in `bugatti-qos-ccc.pptx`.
+Speaker hints, flow, and build context — never in `bugatti-qos-ccc.pptx`.
 
 ## Flow
 
-qos architecture slides 1–2 → **B6** → qos architecture slides 3–4 (alignment).
+qos architecture slides 1–2 → **B6** → qos architecture slides 3–4.
 
-## Slide hints
+## Review notes (Prabhu · 2026-06)
 
-| PPTX | Hint |
-|------|------|
-| Cover | Buffer-carving CCC — Capabilities · Capacities · Constraints frame. |
-| 2 | Gururaj kickoff image — **verbatim export**; do not redraw. |
-| 3 | Orange slice = buffer-carving scope; center = Bugatti ASIC. |
-| 6 | CCC tables v0 — invite HW arch feedback on Cap/Cap/Con rows. |
-| 8 | Closes loop to qos architecture alignment checkpoints. |
+| Slide | Note |
+|-------|------|
+| 2 | Guru kickoff image — unchanged; W may ask origin (not N). |
+| 3 | Pie — pause for W discussion; terminology on slide + diagram. |
+| 6 | CCC tables — pause; verbal; Friday feedback → N actions. |
+| 8 | Next steps — diagram only; you speak detail live. |
 
 ## Build
 
@@ -22,4 +21,4 @@ qos architecture slides 1–2 → **B6** → qos architecture slides 3–4 (alig
 uv run build-decks
 ```
 
-PPTX is speaker-notes-free by policy — scrubbed on every B6 build.
+B6 PPTX: no speaker notes (scrubbed every build).

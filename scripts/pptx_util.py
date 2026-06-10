@@ -129,9 +129,9 @@ def set_content_title_block(
     elif title:
         entries.append((title, COLOR_NAVY_TITLE, FONT_TITLE_SINGLE, FONT_TITLE_FACE))
     if subtitle_line:
-        entries.append((subtitle_line, COLOR_GOLD, FONT_LEAD, FONT_BODY_FACE))
+        entries.append((subtitle_line, COLOR_NAVY_TITLE, FONT_LEAD, FONT_BODY_FACE))
     if lead_line:
-        entries.append((lead_line, COLOR_LEAD, FONT_LEAD, FONT_BODY_FACE))
+        entries.append((lead_line, COLOR_BODY, FONT_BODY, FONT_BODY_FACE))
     if caption_line:
         entries.append((caption_line, COLOR_BODY, Pt(11), FONT_BODY_FACE))
     for line in bullet_lines or []:

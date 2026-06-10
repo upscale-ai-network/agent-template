@@ -38,9 +38,9 @@
 
 ## Slide 2
 
-**Title:** Datapath · CCC scope  
-**Subtitle:** Orange slice = buffer-carving scope  
-**Lead:** QoSMAP · CSB buffer-carving · QoS-CCC — aligned with qos architecture.  
+**Title:** QoS CCC scope  
+**Subtitle:** Highlighted slice = buffer-carving scope  
+**Lead:** QoSMAP → CSB buffer-carving → QoS-CCC  
 **Diagram:** b6-slide02-pipeline-scope-pie
 
 **Bullets:**
@@ -65,12 +65,12 @@
 ## Slide 4
 
 **Title:** Buffer-carving at Central Scheduler Block (CSB)  
-**Subtitle:** Egress buffer policy · version 0  
+**Subtitle:** Egress buffer policy  
 **Lead:** Pool modes, buffer-carving sizes, admission, Priority Flow Control (PFC), port-speed coherence.  
 **Diagram:** b6-slide04-csb-inset
 
 **Bullets:**
-- Near-term deliverable: buffer-carving plan and gate version 0 · next few days.
+- Near-term deliverable: buffer-carving plan · next few days.
 - Hardware pool and register-transfer-level (RTL) sizing — in progress with architecture.
 
 ---
@@ -79,11 +79,11 @@
 
 **Title:** CSB buffer-carving · CCC  
 **Subtitle:** Capabilities · Capacities · Constraints  
-**Lead:** Version 0 placeholders — refine from HW architecture, RTL, and c-models.  
+**Lead:** Placeholders — refine from HW architecture, RTL, and c-models.  
 **Diagram:** b6-slide05-csb-ccc-tables
 
 **Bullets:**
-- Orange rows: CSB buffer-carving and fabric pool context — values TBD.
+- Highlighted rows: CSB buffer-carving and fabric pool context — values TBD.
 - Use-case-driven datapath may revise rows.
 
 ---
@@ -104,12 +104,9 @@
 ## Slide 7
 
 **Title:** Next steps  
-**Subtitle:** Back to alignment · checkpoints  
-**Lead:** Lock version 0 gates — continue qos architecture close.  
 **Diagram:** b6-slide07-next-steps
 
 **Bullets:**
-- Revision 0.1.
 - Publish to SharePoint after group review.
 
 ---

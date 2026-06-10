@@ -1,9 +1,9 @@
-%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '13px'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '16px'}}}%%
 flowchart TB
-  N1["1 · Publish version 0 gates<br/>for group review"]
-  N2["2 · Finalize buffer-carving plan at CSB"]
-  N3["3 · Alignment · peer and sponsor<br/>checkpoints (qos architecture)"]
+  N1["Share draft"]
+  N2["Buffer-carving plan"]
+  N3["Close · qos architecture"]
   N1 --> N2 --> N3
 
-  classDef act fill:#F3E5F5,stroke:#7B1FA2,color:#051830
+  classDef act fill:#E3F2FD,stroke:#1565C0,color:#051830,stroke-width:2px
   class N1,N2,N3 act

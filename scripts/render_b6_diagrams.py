@@ -46,8 +46,8 @@ LABEL_BG = (255, 243, 224, 220)
 TEXT = (5, 24, 48, 255)
 PEER = (69, 90, 100, 255)
 SLICE_GRAY = (207, 216, 220, 255)
-SLICE_ORANGE = (255, 183, 77, 255)
-SLICE_ORANGE_EDGE = (239, 108, 0, 255)
+SLICE_HIGHLIGHT = (227, 242, 253, 255)
+SLICE_HIGHLIGHT_EDGE = (21, 101, 192, 255)
 CENTER_FILL = (255, 255, 255, 255)
 CENTER_EDGE = (176, 190, 197, 255)
 
@@ -60,7 +60,7 @@ PIPE_SCOPE_SLICES: List[PipeSlice] = [
     ("ACL-CCC", "Shrawan", False),
     ("ECMP-CCC", "Tippanna", False),
     ("Classify-CCC", "Shrawan", False),
-    (["QoSMAP", "CSB Buffer-carving", "QoS-CCC"], "Diwakar", True),
+    (["QoSMAP", "→ buffer-carving →", "QoS-CCC"], "Diwakar", True),
     ("Mirror-CCC", "Shafi", False),
     ("Others", None, False),
 ]
@@ -122,12 +122,16 @@ def _draw_slice_label(
     *,
     peer: Optional[str] = None,
     peer_font=None,
-    peer_fill=PEER,
+    peer_fill=None,
+    emphasis_font=None,
+    emphasis_indices: Optional[set] = None,
     line_gap: int = 2,
     peer_gap: int = 3,
 ) -> None:
     lines = _label_lines(label)
     peer_font = peer_font or font
+    peer_fill = peer_fill if peer_fill is not None else fill
+    emphasis_indices = emphasis_indices or set()
     if peer:
         peer_line = peer if peer.startswith("(") else f"({peer})"
         lines = lines + [peer_line]
@@ -135,7 +139,12 @@ def _draw_slice_label(
         return
     sizes = []
     for i, line in enumerate(lines):
-        f = peer_font if peer and i == len(lines) - 1 else font
+        if peer and i == len(lines) - 1:
+            f = peer_font
+        elif i in emphasis_indices and emphasis_font is not None:
+            f = emphasis_font
+        else:
+            f = font
         bb = draw.textbbox((0, 0), line, font=f)
         sizes.append((bb[2], bb[3], f, line))
     block_h = sum(s[1] for s in sizes) + line_gap * (len(sizes) - 1)
@@ -166,19 +175,19 @@ def render_pipeline_scope_pie() -> Path:
         "/System/Library/Fonts/Supplemental/Arial.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
     ]
-    font_label = font_label_sm = font_hub = font_hub_sm = None
+    font_label = font_label_sm = font_label_em = font_hub = None
     for path in font_paths:
         try:
             font_label = ImageFont.truetype(path, 14)
             font_label_sm = ImageFont.truetype(path, 12)
+            font_label_em = ImageFont.truetype(path, 16)
             font_hub = ImageFont.truetype(path, 18)
-            font_hub_sm = ImageFont.truetype(path, 12)
             font_title = ImageFont.truetype(path, 22)
             break
         except OSError:
             continue
     if font_label is None:
-        font_label = font_label_sm = font_hub = font_hub_sm = font_title = ImageFont.load_default()
+        font_label = font_label_sm = font_label_em = font_hub = font_title = ImageFont.load_default()
 
     n = len(PIPE_SCOPE_SLICES)
     sweep = 360.0 / n
@@ -188,8 +197,8 @@ def render_pipeline_scope_pie() -> Path:
     for i, (label, _peer, highlight) in enumerate(PIPE_SCOPE_SLICES):
         start = rot + i * sweep
         end = rot + (i + 1) * sweep
-        fill = SLICE_ORANGE if highlight else SLICE_GRAY
-        outline = SLICE_ORANGE_EDGE if highlight else (120, 144, 156, 255)
+        fill = SLICE_HIGHLIGHT if highlight else SLICE_GRAY
+        outline = SLICE_HIGHLIGHT_EDGE if highlight else (120, 144, 156, 255)
         draw.pieslice(
             (cx - outer, cy - outer, cx + outer, cy + outer),
             start,
@@ -224,6 +233,7 @@ def render_pipeline_scope_pie() -> Path:
         ty = cy + mid_r * math.sin(rad)
         lines = _label_lines(label)
         font = font_label_sm if len(lines) > 1 or max(len(line) for line in lines) > 16 else font_label
+        emphasis = {1} if i == PIPE_QOS_SLICE_INDEX else set()
         _draw_slice_label(
             draw,
             (tx, ty),
@@ -232,11 +242,14 @@ def render_pipeline_scope_pie() -> Path:
             TEXT,
             peer=peer,
             peer_font=font_label_sm,
+            peer_fill=TEXT,
+            emphasis_font=font_label_em,
+            emphasis_indices=emphasis,
         )
 
-    title = "Orange slice = this CCC"
+    title = "Highlighted slice · QoS-CCC scope"
     tt_w = draw.textbbox((0, 0), title, font=font_title)[2]
-    draw.text((cx - tt_w // 2, 36), title, fill=SLICE_ORANGE_EDGE, font=font_title)
+    draw.text((cx - tt_w // 2, 36), title, fill=TEXT, font=font_title)
 
     out = B6_DIR / "b6-slide02-pipeline-scope-pie.png"
     B6_DIR.mkdir(parents=True, exist_ok=True)
@@ -245,7 +258,7 @@ def render_pipeline_scope_pie() -> Path:
 
 
 TABLE_HEADER = (227, 242, 253, 255)
-TABLE_LANE = (255, 243, 224, 255)
+TABLE_LANE = (227, 242, 253, 255)
 TABLE_GRID = (176, 190, 197, 255)
 TABLE_MUTED = (120, 144, 156, 255)
 
@@ -337,9 +350,9 @@ def render_csb_ccc_tables() -> Path:
     draw = ImageDraw.Draw(img)
     font_title, font_hdr, font_cell = _load_table_fonts()
 
-    note = "Version 0 placeholders — HW arch · RTL · c-models · use-cases"
+    note = "Placeholders — HW architecture · RTL · c-models · use-cases"
     nw = draw.textbbox((0, 0), note, font=font_hdr)[2]
-    draw.text(((w - nw) // 2, 24), note, fill=TABLE_MUTED, font=font_hdr)
+    draw.text(((w - nw) // 2, 24), note, fill=TEXT, font=font_hdr)
 
     margin = 48
     gap = 28
