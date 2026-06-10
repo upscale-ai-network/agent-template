@@ -1,0 +1,20 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '13px'}}}%%
+flowchart TB
+  TLV["Header / metadata<br/>VLAN · DSCP · ESUN · UFH"]
+  subgraph CCC["CCC — each datapath resource"]
+    CAP["Capability<br/>what it can do"]
+    CAPY["Capacity<br/>how many"]
+    CON["Constraint<br/>how used"]
+  end
+  WEDGE["QoS wedge example<br/>CSB buffer pools"]
+  TLV --> CAP
+  CAP --> CAPY --> CON
+  CON -.-> WEDGE
+
+  classDef program fill:#E3F2FD,stroke:#1565C0,color:#051830
+  classDef lane fill:#FFF3E0,stroke:#EF6C00,color:#051830,stroke-width:2px
+  classDef muted fill:#F5F5F5,stroke:#BDBDBD,color:#455A64
+
+  class TLV program
+  class CAP,CAPY,CON program
+  class WEDGE lane

@@ -1,65 +1,55 @@
 # CCC walk presenter notes (B6) — not exported to PPTX
 
-**Use:** Rehearse from this file; on-slide **Subtitle** + **Lead** lines are walk cues.
-
-**Flow:** A3 slides 1–2 → B6 (this deck, 3 acts) → A3 slides 3–4.
+**Flow:** A3 slides 1–2 → B6 (Rev 0.1 rubber band) → A3 slides 3–4.
 
 ---
 
 ## Cover
 
-Open only after qos-architecture slides 1–2. One line: *“I’ll define how — process, pipeline, who aligns on gates.”*
+Rev 0.1 draft · opens after A3 1–2. One line: *CCC view of qos-arch — buffer carve wedge on the W log.*
 
 ---
 
-## Act I — Broad strokes
+## Slide 1 — CCC vocabulary (~2 min)
 
-### Slide 1 — Five beats (~1 min)
+Cap / Cap / Con + TLV hook. Point at WEDGE example — CSB is where you spend time later.
 
-Point at the ribbon left → right. A3 already framed situation + task; this is **how we execute**.
-
-Do not re-close mandate — that is A3 slides 3–4.
+Peer decks use same shape — don't read their tables aloud.
 
 ---
 
-## Act II — Focus (~8 min)
+## Slide 2 — Pipeline + W hooks (~4 min)
 
-### Slide 2 — Validation machine (~3 min)
+**Center of walk.** Orange = QoSMAP · Queue · carve. Caption = peer order; don't read every name unless asked.
 
-Walk the stack once top-to-bottom. Emphasize **v0 gates for group review**.
-
-Mgmt plane is adjacent — not my program ownership.
-
-### Slide 3 — Pipeline (~4 min)
-
-**Spend most time here.** Orange = my wedge (QoSMAP, Queue / carve). Gray labels = peer DRIs in W order.
-
-Do not read caption aloud unless he asks.
-
-### Slide 4 — CSB inset (~1 min)
-
-Buffer carve is the **process outcome** — plan + gate v0 in the next few days. Not API deep-dive unless redirected.
+Cross-deck refs: ECMP capacity lives in ECMP CCC, etc.
 
 ---
 
-## Act III — Review + forward (~5 min)
+## Slide 3 — Classify / remark interface (~2 min)
 
-### Slide 5 — Gate alignment (~2 min)
+Shrawan's lane — interface only. Detail in QoS Classification CCC on SharePoint. Handoff line: **TC → queues → CSB**.
 
-Point at matrix — don’t read every cell. I draft framework + QoS gates; peers own slice proof.
+---
 
-### Slide 6 — Boundaries (~1 min)
+## Slide 4 — CSB wedge (~3 min)
 
-Rupa SDK thread, swimlanes, HW digest — explicitly out of this walk.
+Your Cap/Cap/Con v0 in spoken form. Near-term carve plan + gate v0. Numbers wait for Rupa/E (slide 5).
 
-### Slide 7 — Next steps (~1 min)
+---
 
-Offer only if asked. Natural follow-on: **informal W peer huddle** — *what breaks your lane on this picture?*
+## Slide 5 — Boundaries + HW TODO (~1 min)
+
+TODO slide is honest — not pretending HW numbers without HW arch. Peer CCC bodies stay on SharePoint.
+
+---
+
+## Slide 6 — Rev + next (~1 min)
+
+0.0 credit unnamed · 0.1 you. Peer deltas invited. A3 3–4 for mandate — not here.
 
 ---
 
 ## Close
 
-Return to **A3 slides 3–4**: near-term scope + alignment. Guru expects **concrete draft in next few days**.
-
-**Backup only:** whiteboards `assets/dt100-whiteboards.md` + `assets/pics/`.
+Draft for steer — not final sign-off. Shafi critical on prior skeleton if Gururaj pulls W steel.

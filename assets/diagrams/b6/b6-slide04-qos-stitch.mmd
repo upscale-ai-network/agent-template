@@ -1,0 +1,15 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '13px'}}}%%
+flowchart LR
+  IN["Ingress<br/>VLAN .1p · DSCP · ESUN · UFH"]
+  TC["TC classify<br/>Shrawan lane"]
+  REM["Remark / policer / ECN<br/>peer QoS CCC"]
+  Q["Queue · QoSMAP"]
+  CSB["Buffer carve @ CSB<br/>Diwakar wedge"]
+
+  IN --> TC --> REM --> Q --> CSB
+
+  classDef peer fill:#ECEFF1,stroke:#455A64,color:#051830
+  classDef lane fill:#FFF3E0,stroke:#EF6C00,color:#051830,stroke-width:2px
+
+  class IN,TC,REM peer
+  class Q,CSB lane

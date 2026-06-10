@@ -23,10 +23,9 @@ MMDC_PKG = "@mermaid-js/mermaid-cli@11.15.0"
 
 # stem → mmd filename (pipeline uses composite)
 MERMAID_STEMS: Dict[str, str] = {
-    "b6-slide01-process-ribbon": "b6-slide01-process-ribbon.mmd",
-    "b6-slide02-validation-stack": "b6-slide02-validation-stack.mmd",
+    "b6-slide01-ccc-framework": "b6-slide01-ccc-framework.mmd",
+    "b6-slide04-qos-stitch": "b6-slide04-qos-stitch.mmd",
     "b6-slide04-csb-inset": "b6-slide04-csb-inset.mmd",
-    "b6-slide05-gate-alignment": "b6-slide05-gate-alignment.mmd",
     "b6-slide06-boundaries": "b6-slide06-boundaries.mmd",
     "b6-slide07-next-steps": "b6-slide07-next-steps.mmd",
 }
