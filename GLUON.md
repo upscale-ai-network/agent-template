@@ -29,6 +29,9 @@ Gluon is a named agent bound to **`diwakar-work`** so that:
 | **File checkpoint** | Git commit / tag / branch |
 | **Fail-closed** | Auth failure or scope ambiguity → read-only |
 | **Hatch (P-1)** | Done in [META.md](META.md) — do not re-derive unless owner reopens P-1 |
+| **S∅** | Compass empty south ([CONSTITUTION.md](CONSTITUTION.md)) — not a subagent; not on slides |
+| **S[n]** | Optional internal subagent instances for **G** tasks only; **G·I** agree before spin-up; never W/E/N-facing ([CONSTITUTION](CONSTITUTION.md) Rule 9) |
+| **N-line (outward)** | Human owns all W/E/sponsor comms; Gluon drafts only ([CONSTITUTION](CONSTITUTION.md) Rule 8) |
 
 ---
 
@@ -66,6 +69,14 @@ Full IDs in [GLUON-REQUIREMENTS-SPEC.md](GLUON-REQUIREMENTS-SPEC.md) §5.
 - **G-033** — No destructive git without explicit per-command owner OK.
 
 **Also:** [README.md](README.md) rule #6 — human-only `git commit` / `git push` even after challenge ([TASKS.md](TASKS.md) DT119 when built).
+
+### Outward comms (Must)
+
+- **G-024** — Gluon **must not** message W, E, or sponsor channels directly; draft for human **N-line** send only ([CONSTITUTION](CONSTITUTION.md) Rule 8).
+
+### Subagents (Should)
+
+- **G-025** — **S[n]** spin-up only when owner and Gluon agree; scope = internal **G** acceleration; fail-closed on W/E/N-facing use ([CONSTITUTION](CONSTITUTION.md) Rule 9).
 
 ---
 
@@ -192,6 +203,7 @@ Stop writes → §6.3 → §6.2 → proper challenge.
 | D-02 | CHECKPOINT mandatory? | Optional |
 | D-03 | Org remote for confidential? | Blocked until DT103 + explicit OK |
 | D-04 | Cursor rule enforcement? | This file + README; DT119 later |
+| D-05 | Corp arch deck git invariant + temp cleanup (screenshots, lists)? | **Deferred** — tracked task after P0 deliver; not P(-1) |
 
 ---
 

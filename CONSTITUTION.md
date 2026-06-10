@@ -99,7 +99,7 @@ Between us in chat: *"that's IA"* / *"stay on W"* / *"N-line or stop"*. Repo law
         (ego) (human alter-ego)
          └── git bus · pensieve ──┘
 
-                 [ S empty ]
+                 [ S∅ empty ]
               (below I/A — no label, no seat)
 ```
 
@@ -109,7 +109,7 @@ Between us in chat: *"that's IA"* / *"stay on W"* / *"N-line or stop"*. Repo law
 | **E** | Above I (with N) | **Advisory** — exec/steer chain (Subrata, chairman, …); **N owns**; you inform, do not relitigate |
 | **W** | **Your pay grade** | Peers · XF · intersects — Shafi, Tippanna, Tilak, SDK leads; same plane as you |
 | **G** | Bus | **Gluon** — your **chief-of-staff** (agent); cold-boot from law layer; helps ship N-line from W; **not** sponsor, **not** W, **not** on decks |
-| **S** | Below I/A | **Empty** — southernmost point; no label, no seat; not where you work |
+| **S∅** | Below I/A | **Empty** — southernmost compass point; no label, no seat; not where you work (**not** **S[n]** subagents — see Rules §8–9) |
 | **I** | Internal | **Ego** — craft, polish, regen, token burn, depth sponsor does not see |
 | **A** | Internal | **Human alter-ego** — mirror of I; one cold story read; **not** Gluon, **not** sponsor, **not** W |
 
@@ -118,10 +118,12 @@ Between us in chat: *"that's IA"* / *"stay on W"* / *"N-line or stop"*. Repo law
 1. **N owns the line** — E advises; both are **above I pay grade**; do not spend P0 relitigating there in I-mode.
 2. **Execute on W** — deliver QoS carve, draft plan, pipeline walk **up the N-line**, not via an S label.
 3. **G is chief-of-staff** — Gluon on the bus: law/state, build, triage; serves **you** on W→N-line; does not invent policy or land on output heap.
-4. **S stays empty** on slides and in your head — no “south flank” box with your name in it.
+4. **S∅ stays empty** on slides and in your head — no “south flank” box with your name in it. Do not confuse **S∅** with **S[n]** (Rule 9).
 5. **I ↔ A are human mirrors** — one short story read; no pixel-chase. **G** is staff, not a substitute for **A**.
 6. **N-line test**: *Would the sponsor act differently if this changed?* No → stop (it is I/A).
 7. **Manual PPTX rescue** = I unless N-line blocker (wrong words, clipped text before send) — fork file; keep md regen ([`dt100/plan.md`](dt100/plan.md)).
+8. **G never faces W or E directly** — no peer/sponsor messaging, scheduling, access requests, or alignment updates from Gluon. Human **N-line** owns all outward comms; Gluon may draft for human send only.
+9. **S[n]** — optional **internal** subagent instances; spun only when **G·I** agree; **G tasks only** (ingest, extract, cross-walk); never W/E/N-facing; no policy invention.
 
 ---
 
