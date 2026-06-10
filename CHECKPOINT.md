@@ -16,6 +16,8 @@
 
 ## Today → tonight
 
+**Ratified (2026-06-06):** `bugatti-qos-ccc.pptx` **locked for Hongal 3pm** — draft approved by human; incorporate feedback only after review.
+
 | When | What |
 |------|------|
 | **3pm** | **Hongal** — visual review `bugatti-qos-ccc.pptx` (local); incorporate feedback · regen |

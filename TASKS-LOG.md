@@ -41,6 +41,7 @@ Refine format later ([TASKS.md](TASKS.md) DT114).
 | 2026-06-06 | DT126 | created | P0 schedule Fri N+W optional — after Hongal 3pm + final pptx |
 | 2026-06-06 | DT126 | status | `next` |
 | 2026-06-06 | DT122 | note | Sharp Pillow flow PNGs · Hongal 3pm · SharePoint tonight optional |
+| 2026-06-06 | DT122 | note | Human ratified draft for Hongal 3pm · ex-Apple flow thumbs-up · lattice cools |
 
 **Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`
 **Status (vocabulary):** `open` | `doing` | `next` | `done` | `drop`
