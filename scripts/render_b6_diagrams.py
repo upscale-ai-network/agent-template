@@ -23,14 +23,16 @@ MMDC_PKG = "@mermaid-js/mermaid-cli@11.15.0"
 
 # stem → mmd filename (pipeline uses composite)
 MERMAID_STEMS: Dict[str, str] = {
-    "b6-slide01-ccc-framework": "b6-slide01-ccc-framework.mmd",
     "b6-slide04-qos-stitch": "b6-slide04-qos-stitch.mmd",
     "b6-slide04-csb-inset": "b6-slide04-csb-inset.mmd",
     "b6-slide06-boundaries": "b6-slide06-boundaries.mmd",
     "b6-slide07-next-steps": "b6-slide07-next-steps.mmd",
 }
 
-COMPOSITE_STEMS = frozenset({"b6-slide03-pipeline-annotated"})
+COMPOSITE_STEMS = frozenset({
+    "b6-slide02-pipeline-scope-pie",
+    "b6-slide03-pipeline-annotated",
+})
 
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -42,6 +44,24 @@ DRI_STROKE = (239, 108, 0, 255)
 LABEL_BG = (255, 243, 224, 220)
 TEXT = (5, 24, 48, 255)
 PEER = (69, 90, 100, 255)
+SLICE_GRAY = (207, 216, 220, 255)
+SLICE_ORANGE = (255, 183, 77, 255)
+SLICE_ORANGE_EDGE = (239, 108, 0, 255)
+CENTER_FILL = (255, 255, 255, 255)
+CENTER_EDGE = (176, 190, 197, 255)
+
+# Equal slices; index 5 sits at bottom (6 o'clock). Others slice for follow-on blocks.
+PIPE_SCOPE_SLICES: List[Tuple[str, bool]] = [
+    ("Port · parse", False),
+    ("L2 · L3 · ESUN", False),
+    ("ACL", False),
+    ("ECMP · LAG", False),
+    ("QoS classify", False),
+    ("QoSMAP · Queue · buffer-carving", True),
+    ("Egress · Mirror", False),
+    ("Others", False),
+]
+PIPE_QOS_SLICE_INDEX = 5
 
 
 def _require_npx() -> str:
@@ -80,6 +100,89 @@ def render_mermaid(stem: str, mmd_name: str) -> Path:
 
 def _box(draw, xy: Tuple[int, int, int, int], fill, outline, width: int = 3) -> None:
     draw.rectangle(xy, fill=fill, outline=outline, width=width)
+
+
+def render_pipeline_scope_pie() -> Path:
+    """Donut — equal slices, QoS at bottom, Bugatti hub (not mermaid)."""
+    import math
+
+    from PIL import Image, ImageDraw, ImageFont
+
+    w, h = 1800, 900
+    img = Image.new("RGBA", (w, h), (255, 255, 255, 255))
+    draw = ImageDraw.Draw(img)
+    cx, cy = w // 2, h // 2 + 20
+    outer, inner = 340, 118
+
+    font_paths = [
+        "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    ]
+    font_label = font_hub = None
+    for path in font_paths:
+        try:
+            font_label = ImageFont.truetype(path, 15)
+            font_hub = ImageFont.truetype(path, 20)
+            font_title = ImageFont.truetype(path, 22)
+            break
+        except OSError:
+            continue
+    if font_label is None:
+        font_label = font_hub = font_title = ImageFont.load_default()
+
+    n = len(PIPE_SCOPE_SLICES)
+    sweep = 360.0 / n
+    # PIL: 0° = 3 o'clock, clockwise. Bottom (6 o'clock) = 90°.
+    rot = 90.0 - PIPE_QOS_SLICE_INDEX * sweep - sweep / 2.0
+
+    for i, (label, highlight) in enumerate(PIPE_SCOPE_SLICES):
+        start = rot + i * sweep
+        end = rot + (i + 1) * sweep
+        fill = SLICE_ORANGE if highlight else SLICE_GRAY
+        outline = SLICE_ORANGE_EDGE if highlight else (120, 144, 156, 255)
+        draw.pieslice(
+            (cx - outer, cy - outer, cx + outer, cy + outer),
+            start,
+            end,
+            fill=fill,
+            outline=outline,
+            width=3,
+        )
+        draw.pieslice(
+            (cx - inner, cy - inner, cx + inner, cy + inner),
+            start,
+            end,
+            fill=(0, 0, 0, 0),
+            outline=(0, 0, 0, 0),
+        )
+
+    draw.ellipse(
+        (cx - inner, cy - inner, cx + inner, cy + inner),
+        fill=CENTER_FILL,
+        outline=CENTER_EDGE,
+        width=3,
+    )
+    hub = "Bugatti"
+    tw, th = draw.textbbox((0, 0), hub, font=font_hub)[2:]
+    draw.text((cx - tw // 2, cy - th // 2), hub, fill=TEXT, font=font_hub)
+
+    mid_r = (outer + inner) / 2.0 + 8
+    for i, (label, _) in enumerate(PIPE_SCOPE_SLICES):
+        mid_deg = rot + (i + 0.5) * sweep
+        rad = mid_deg * 3.14159265 / 180.0
+        tx = cx + mid_r * math.cos(rad)
+        ty = cy + mid_r * math.sin(rad)
+        tw, th = draw.textbbox((0, 0), label, font=font_label)[2:]
+        draw.text((tx - tw / 2, ty - th / 2), label, fill=TEXT, font=font_label)
+
+    title = "Orange slice = this walk"
+    tt_w = draw.textbbox((0, 0), title, font=font_title)[2]
+    draw.text((cx - tt_w // 2, 36), title, fill=SLICE_ORANGE_EDGE, font=font_title)
+
+    out = B6_DIR / "b6-slide02-pipeline-scope-pie.png"
+    B6_DIR.mkdir(parents=True, exist_ok=True)
+    img.convert("RGB").save(out, "PNG")
+    return out
 
 
 def render_pipeline_annotated() -> Path:
@@ -157,7 +260,12 @@ def render_all_b6_diagrams(doc=None) -> List[str]:
 
     for stem in stems_for_doc(doc):
         if stem in COMPOSITE_STEMS:
-            render_pipeline_annotated()
+            if stem == "b6-slide02-pipeline-scope-pie":
+                render_pipeline_scope_pie()
+            elif stem == "b6-slide03-pipeline-annotated":
+                render_pipeline_annotated()
+            else:
+                raise RuntimeError(f"Unknown composite stem: {stem}")
         elif stem in MERMAID_STEMS:
             render_mermaid(stem, MERMAID_STEMS[stem])
         elif (B6_DIR / f"{stem}.mmd").is_file():

@@ -99,6 +99,7 @@ class StyledDeck:
                 subtitle_line=subtitle,
                 lead_line=lead,
                 caption_line=caption,
+                bullet_lines=bullets or None,
                 slide_width=self.prs.slide_width,
             )
         else:
@@ -111,12 +112,25 @@ class StyledDeck:
             slide.notes_slide.notes_text_frame.text = notes
         return slide
 
-    def add_image_slide(self, title, image_path: Path, caption: Optional[str] = None, notes=None):
+    def add_image_slide(
+        self,
+        title,
+        image_path: Path,
+        *,
+        subtitle=None,
+        lead=None,
+        caption: Optional[str] = None,
+        bullets=None,
+        notes=None,
+    ):
         if not image_path.is_file():
             raise FileNotFoundError(f"Slide {title!r} requires image: {image_path}")
         slide = self.add_content(
             title,
-            [caption] if caption else [],
+            bullets or [],
+            subtitle=subtitle,
+            lead=lead,
+            caption=caption,
             diagram=image_path,
             notes=notes,
         )
@@ -230,7 +244,14 @@ def build_b6() -> Path:
             )
         elif s.image:
             img = PIPELINE_IMG if s.image == "logical-pipeline-boss-slide.png" else ROOT / "assets" / s.image
-            deck.add_image_slide(s.title, img, caption=s.caption or None)
+            deck.add_image_slide(
+                s.title,
+                img,
+                subtitle=s.subtitle or None,
+                lead=s.lead or None,
+                caption=s.caption or None,
+                bullets=s.bullets,
+            )
         else:
             deck.add_content(
                 s.title,

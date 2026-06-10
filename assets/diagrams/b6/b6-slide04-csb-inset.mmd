@@ -1,11 +1,11 @@
 %%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '13px'}}}%%
 flowchart TB
-  subgraph CSB["Buffer carve @ CSB — my wedge"]
-    B1["Port-speed tiers<br/>200G / 400G / 800G"]
-    B2["lossy / lossless → PFC → queues"]
-    B3["QoSMAP → TC → egress queues"]
+  subgraph CSB["Central Scheduler Block (CSB) — buffer-carving"]
+    B1["Port-speed tiers<br/>200G · 400G · 800G"]
+    B2["Lossy / lossless · PFC · queues"]
+    B3["QoSMAP · TC · egress queues"]
   end
-  OUT["Near-term: buffer carve plan + gate v0"]
+  OUT["Deliverable: buffer-carving plan + version 0 gate"]
 
   B1 --> B2 --> B3 --> OUT
 

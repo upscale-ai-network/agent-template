@@ -1,107 +1,104 @@
 # CCC walk (B6) — source of truth
 
-**B6** = shorthand for this deck · share as **`bugatti-qos-ccc.pptx`** (ccc doc) — no `draft-` prefix unless back on draft-board.
+**B6** = shorthand for this deck · share as **`bugatti-qos-ccc.pptx`**.
 
 **Single file for this deck:** slide titles, walk cues → `bugatti-qos-ccc.pptx` via `uv run build-decks`.
 
-**Presenter script (not in PPTX):** [bugatti-qos-ccc-presenter-notes.md](bugatti-qos-ccc-presenter-notes.md)
+**Flow:** [../dt100/bugatti-qos-architecture.md](../dt100/bugatti-qos-architecture.md) slides 1–2 → **B6** → A3 slides 3–4 (mandate / alignment).
 
-**Companion:** [../dt100/bugatti-qos-architecture.md](../dt100/bugatti-qos-architecture.md) (slides 1–2, then 3–4 after this walk). **Depth / walk map:** [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md).
+**Optional presenter hints (not in PPTX):** [bugatti-qos-ccc-presenter-notes.md](bugatti-qos-ccc-presenter-notes.md)
 
-**Revision (cover or appendix):**
+**Depth / walk map:** [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md).
+
+**Revision (not exported — git / presenter only):**
 
 | Rev | Credit | Summary |
 |-----|--------|---------|
-| 0.0 | Original author (W) | Prior qos-ccc skeleton — unnamed ([ccc-strategy.md](ccc-strategy.md)) |
-| 0.1 | Diwakar Tundlam | qos-architect · buffer carving wedge · W CCC hooks · Rev 0.1 draft |
-
-**Role:** qos-architect — **buffer carving** wedge on the pipeline log; classify/remark = Shrawan lane; Cap/Cap/Con numbers for HW pools = **TODO** with Rupa + E.
+| 0.0 | Original author | Prior qos-ccc skeleton — unnamed ([ccc-strategy.md](ccc-strategy.md)) |
+| 0.1 | Diwakar Tundlam | Buffer-carving walk · A3-aligned |
 
 ---
 
 ## Cover
 
-**Title:** QoS buffer carving arch  
-**Subtitle (navy):** CCC walk — Capabilities · Capacities · Constraints  
-**Meta:** Open after qos-architecture slides 1–2 · Rev 0.1 draft  
+**Title:** Quality of Service (QoS) buffer-carving architecture  
+**Subtitle (navy):** Dynamic Switch-Buffer Management · logical pipeline  
+**Meta:** Follows qos architecture · Revision 0.1  
 **Tag:** Confidential — Upscale AI
 
 ---
 
 ## Slide 1
 
-**Title:** CCC — datapath vocabulary  
-**Subtitle:** Act I · one framework  
-**Lead:** **Capability** = what · **Capacity** = how many · **Constraint** = how used — maps to header fields → TC → resources.  
-**Diagram:** b6-slide01-ccc-framework
-
-**Bullets:**
-- Same framework as peer W CCC decks (ACL, ECMP, L2/L3, Mirror, QoS classify).
-- Wedge deck — not a 50-pager; essence for qos-arch, starting at buffer carve.
+**Title:** Logical pipeline  
+**Subtitle:** Validated to tape-out · datapath context  
+**Lead:** QoSMAP, Queue, and buffer-carving at Central Scheduler Block (CSB) — same wedge as qos architecture.  
+**Image:** logical-pipeline-boss-slide.png
 
 ---
 
 ## Slide 2
 
-**Title:** Logical pipeline — W hooks on the log  
-**Subtitle:** Act I · stitch story  
-**Lead:** Packet path picks which CCC applies — peer DRIs on their blocks; I own QoSMAP · Queue · CSB carve.  
-**Diagram:** b6-slide03-pipeline-annotated
+**Title:** Pipeline scope  
+**Subtitle:** Orange slice = Dynamic Switch-Buffer Management scope  
+**Lead:** QoSMAP · Queue · buffer-carving at Central Scheduler Block (CSB).  
+**Diagram:** b6-slide02-pipeline-scope-pie
 
-**Caption:** L2 Tilak · L3/ESUN Girish · ACL Shrawan · ECMP Hongal · QoS classify Shrawan · carve Diwakar · Mirror Shafi.
+**Bullets:**
+- Schematic only — equal slices, not sizing metrics.
+- Other pipeline blocks covered on peer architecture decks (SharePoint).
 
 ---
 
 ## Slide 3
 
-**Title:** QoS classify & remark — W lane (interface)  
-**Subtitle:** Act II · upstream of carve  
-**Lead:** TC from VLAN .1p · DSCP · ESUN CoS · UFH DSCP — remark on egress; ACL can override. Detail in peer QoS Classification CCC.  
+**Title:** QoS classify and remark  
+**Subtitle:** Upstream of buffer-carving  
+**Lead:** VLAN priority, Differentiated Services Code Point (DSCP), ESUN class of service, and Unified Forwarding Header (UFH) → Traffic Class (TC) on egress.  
 **Diagram:** b6-slide04-qos-stitch
 
 **Bullets:**
-- Shrawan DRI — full Cap/Cap/Con in QoS-Pkt-Classification & Remarking CCC.
-- ECN · policer · WRED — same deck; not re-litigated here.
-- Handoff to my wedge: **TC → queues → buffer @ CSB**.
+- Access Control List (ACL) can override remark policy.
+- Handoff: classify → remark → Queue → buffer-carving at CSB.
 
 ---
 
 ## Slide 4
 
-**Title:** Buffer carve @ CSB — my wedge  
-**Subtitle:** Act II · qos-arch focus  
-**Lead:** **Capability:** pool modes · sharing · lossy/lossless · **Capacity:** carve sizes · port tiers · **Constraint:** admission · PFC · speed coherence — v0 draft.  
+**Title:** Buffer-carving at Central Scheduler Block (CSB)  
+**Subtitle:** Egress buffer policy · version 0  
+**Lead:** Pool modes, buffer-carving sizes, admission, Priority Flow Control (PFC), port-speed coherence.  
 **Diagram:** b6-slide04-csb-inset
 
 **Bullets:**
-- Near-term: buffer carve plan + gate v0 for W review.
-- HW pool / RTL numbers — slide 5 TODO; sync Rupa + E.
+- Near-term deliverable: buffer-carving plan and gate version 0 · next few days.
+- Hardware pool and register-transfer-level (RTL) sizing — in progress with architecture.
 
 ---
 
 ## Slide 5
 
-**Title:** Scope · HW TODO · peer CCC refs  
-**Subtitle:** Act III · boundaries  
-**Lead:** In this walk vs deferred; cross-decks by reference (ECMP capacity in ECMP CCC, etc.).  
+**Title:** Scope and open items  
+**Subtitle:** In this walk versus deferred  
+**Lead:** What we cover today versus what stays on peer decks.  
 **Diagram:** b6-slide06-boundaries
 
 **Bullets:**
-- **TODO:** Cap/Cap/Con cells for IFP/ISB/CSB/EFP pools — owner HW arch / RTL · sync **Rupa** + E.
-- Not merged: full SDK swimlanes · 50-page digest · peer CCC bodies (on SharePoint Arch–CCC).
+- Open: Ingress Fabric Port (IFP), Ingress Switch Buffer (ISB), CSB, and Egress Fabric Port (EFP) pool sizing.
+- Deferred: software development kit (SDK) swimlanes and duplicating full peer deck bodies.
 
 ---
 
 ## Slide 6
 
-**Title:** Rev 0.1 · next steps  
-**Subtitle:** Act III · forward  
-**Lead:** Draft for steer — peer lane edits welcome; Friday walk if aligned.  
+**Title:** Next steps  
+**Subtitle:** Back to alignment · mandate checkpoints  
+**Lead:** Lock version 0 gates — resume qos architecture close.  
 **Diagram:** b6-slide07-next-steps
 
 **Bullets:**
-- Rev 0.0 original author (W) · Rev 0.1 Diwakar Tundlam — qos-architect.
-- Return to A3 slides 3–4 after this walk for mandate · alignment.
+- Revision 0.1 · Diwakar Tundlam.
+- Publish to SharePoint after group review.
 
 ---
 

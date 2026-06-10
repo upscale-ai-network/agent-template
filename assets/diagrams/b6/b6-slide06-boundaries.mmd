@@ -1,14 +1,14 @@
 %%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '13px'}}}%%
 flowchart LR
   subgraph IN["In this walk"]
-    I1["Buffer carve plan + gate v0"]
-    I2["Peer lane alignment"]
-    I3["Walk-ready scope"]
+    I1["Buffer-carving plan + version 0 gate"]
+    I2["QoSMAP · Queue · CSB alignment"]
+    I3["Walk-ready scope for review"]
   end
-  subgraph OUT["Deferred / peer CCC"]
-    O1["Full peer deck bodies — Arch–CCC SharePoint"]
-    O2["Rupa SDK layout thread"]
-    O3["HW pool / RTL Cap-Cap-Con numbers — TODO"]
+  subgraph OUT["Deferred"]
+    O1["Full peer deck bodies"]
+    O2["SDK layout and swimlanes"]
+    O3["Hardware pool and RTL sizing"]
   end
 
   classDef program fill:#E3F2FD,stroke:#1565C0,color:#051830

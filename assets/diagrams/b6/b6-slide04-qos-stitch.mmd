@@ -1,10 +1,10 @@
 %%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '13px'}}}%%
 flowchart LR
-  IN["Ingress<br/>VLAN .1p · DSCP · ESUN · UFH"]
-  TC["TC classify<br/>Shrawan lane"]
-  REM["Remark / policer / ECN<br/>peer QoS CCC"]
+  IN["Ingress<br/>VLAN · DSCP · ESUN · UFH"]
+  TC["Traffic Class (TC)"]
+  REM["Remark · policer · ECN"]
   Q["Queue · QoSMAP"]
-  CSB["Buffer carve @ CSB<br/>Diwakar wedge"]
+  CSB["Buffer-carving at CSB"]
 
   IN --> TC --> REM --> Q --> CSB
 

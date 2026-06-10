@@ -116,11 +116,12 @@ def set_content_title_block(
     subtitle_line: Optional[str] = None,
     lead_line: Optional[str] = None,
     caption_line: Optional[str] = None,
+    bullet_lines: Optional[List[str]] = None,
 ) -> None:
-    """Fixed title band: navy title + optional act subtitle + lead + caption."""
+    """Fixed title band: navy title + optional act subtitle + lead + caption + bullets."""
     tf = shape.text_frame
     tf.clear()
-    tf.word_wrap = False  # keep title on one line (box is wider than text)
+    tf.word_wrap = True
     entries: List[tuple[str, RGBColor, Pt, str]] = []
     if title_lines:
         for line in title_lines:
@@ -133,11 +134,14 @@ def set_content_title_block(
         entries.append((lead_line, COLOR_LEAD, FONT_LEAD, FONT_BODY_FACE))
     if caption_line:
         entries.append((caption_line, COLOR_BODY, Pt(11), FONT_BODY_FACE))
+    for line in bullet_lines or []:
+        text = line if line.startswith("•") else f"• {line}"
+        entries.append((text, COLOR_BODY, Pt(11), FONT_BODY_FACE))
     for i, (text, rgb, size, face) in enumerate(entries):
         p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
         p.text = text
         p.level = 0
-        p.space_after = Pt(3)
+        p.space_after = Pt(2)
         for run in p.runs:
             _style_run(run, rgb, face, size)
 
@@ -366,9 +370,10 @@ def fill_content_diagram_slide(
     subtitle_line: Optional[str] = None,
     lead_line: Optional[str] = None,
     caption_line: Optional[str] = None,
+    bullet_lines: Optional[List[str]] = None,
     slide_width: Optional[int] = None,
 ) -> None:
-    """Title band + act subtitle + lead + optional caption + diagram; no bullet body."""
+    """Title band + act subtitle + lead + caption + bullets + diagram."""
     title_shape = None
     for shape in slide.shapes:
         if not shape.has_text_frame or is_footer(shape):
@@ -384,6 +389,7 @@ def fill_content_diagram_slide(
             subtitle_line=subtitle_line,
             lead_line=lead_line,
             caption_line=caption_line,
+            bullet_lines=bullet_lines,
         )
     hide_body_placeholder(slide)
     if not image_path.is_file():
