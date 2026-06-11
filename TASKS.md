@@ -16,8 +16,8 @@
 
 | DT | Priority | Status | Title | Due | Notes |
 |----|----------|--------|-------|-----|-------|
-| DT122 | P0 | doing | CCC 2A — B6 Hongal-ready · 3pm visual review | 2026-06-06 | `dt122/` · Datapath DRI on Guru XLS · SharePoint tonight if OK |
-| DT126 | P0 | next | Schedule Friday — N + W optional (post-review) | 2026-06-07 | Draft pending after Hongal 3pm + final pptx |
+| DT122 | P0 | doing | B6 launch-ready · Fri W+N walk | 2026-06-07 | [friday-launch.md](dt122/friday-launch.md) · W brief · SharePoint after regen |
+| DT126 | P0 | doing | Schedule Fri 11am — N + W on NW calendar | 2026-06-06 | N OOTO today · draft in friday-launch.md |
 | DT123 | P2 | open | Task time ledger — per-DT visibility | | After DT122 · see **DT123** |
 | DT124 | P2 | open | Deck acceptance test framework | | After DT122 · [DECK-ACCEPTANCE.md](scripts/DECK-ACCEPTANCE.md) |
 | DT125 | P2 | open | Canary deck — md/mermaid/pptx pipeline regression | | With DT122 mermaid · see **DT125** |
@@ -114,9 +114,11 @@
 - [x] Visual-first slide reorder in md (7 slides · 3 acts · diagrams early; DRI on pipeline)
 - [x] `uv run build-decks` — post-build checks pass
 - [x] Sharp Pillow flow diagrams (1800×720 · uniform boxes · min-width gate)
-- [ ] **Hongal 3pm** visual review — incorporate feedback
-- [ ] SharePoint `bugatti-qos-ccc` after review (human OK · tonight optional)
-- [ ] Human cold read — no “performed better” than peer CCC decks
+- [x] Hongal 3pm visual review — log in [hongal-review-2026-06-06.md](dt122/hongal-review-2026-06-06.md)
+- [ ] **W pre-read** — [w-review-brief.md](dt122/w-review-brief.md) to peers
+- [ ] **Fri hold** — NW calendar ([DT126](TASKS.md) · [friday-launch.md](dt122/friday-launch.md))
+- [ ] Regen pptx · SharePoint · dry run A3→B6→A3
+- [ ] Human cold read — peer CCC bar
 
 **Out of scope (abeyance):** swimlanes · template churn · HWv2 depth · informal peer huddle (after Hongal + SharePoint)
 
