@@ -10,18 +10,19 @@ qos architecture slides 1–2 → **B6** → qos architecture slides 3–4.
 
 | Slide | Say |
 |-------|-----|
-| 2 · Logical pipeline | One-slider from Gururaj's kickoff vision — shared program context (W yes; not for N). |
+| 2 · Scope pie | **Star slide** — pause for W; **CSB buffer-carving** bold on QoS wedge. |
+| 3 · Logical pipeline | Guru kickoff image — shared program context (W yes; not for N). Rework deferred. |
 | 6 · Constraints tables | SAMPLE — align rows with HW arch; pull credible numbers from prior QoS depth / vault drafts with W guidance. |
-| 8 · Closing | Tables converge HW arch + peer QoS depth — doc follows when W-aligned (Architecture Documentation). |
+| 7 · Scope · deliverable | Top = bugatti-qos-ccc wedge; bottom = **qos-arch-ccc** artifact; **full Datapath** band = program context — speak live. |
 
-## Review notes (Prabhu · 2026-06)
+## Review notes (Prabhu · Hongal · 2026-06)
 
 | Slide | Note |
 |-------|------|
-| 2 | Guru kickoff image — no duplicate title; W may ask origin (not N). |
-| 3 | Pie — pause for W discussion; **CSB buffer-carving** bold on QoS slice. |
+| 2 | Pie is the star — vision first; peers on slice labels are context only. |
+| 3 | Guru kickoff image — no duplicate title; pipeline rework deferred. |
 | 6 | CCC tables — pause; SAMPLE watermark; Friday feedback → refine rows. |
-| 8 | Closing diagram only — you speak detail live. |
+| 7 | Closing diagram only — you speak detail live. |
 
 ## Build
 

@@ -15,70 +15,74 @@
 | Rev | Credit | Summary |
 |-----|--------|---------|
 | 0.0 | Original author | Prior qos-ccc skeleton — unnamed ([ccc-strategy.md](ccc-strategy.md)) |
-| 0.1 | Diwakar Tundlam | Buffer-carving CCC |
+| 0.1 | Diwakar Tundlam | bugatti-qos-ccc |
 
 ---
 
 ## Cover
 
-**Title:** Buffer-carving CCC  
+**Title:** bugatti-qos-ccc  
 **Subtitle (navy):** Dynamic Switch-Buffer Management · logical pipeline  
-**Meta:** Diwakar Tundlam · 5 Jun 2026  
+**Meta:** Diwakar Tundlam · 10 Jun 2026  
 **Tag:** Confidential — Upscale AI
 
 ---
 
 ## Slide 1
 
-**Image:** logical-pipeline-boss-slide.png
+**Title:** bugatti-qos-ccc scope  
+**Lead:** QoSMAP → CSB buffer-carving → bugatti-qos-ccc  
+**Diagram:** b6-slide02-pipeline-scope-pie
 
 ---
 
 ## Slide 2
 
-**Title:** QoS CCC scope  
-**Lead:** QoSMAP → CSB buffer-carving → QoS-CCC  
-**Diagram:** b6-slide02-pipeline-scope-pie
+**Image:** logical-pipeline-boss-slide.png
 
 ---
 
 ## Slide 3
 
-**Title:** Capabilities · QoS classify and remark  
-**Lead:** VLAN · DSCP · ESUN · UFH → TC on egress.  
+**Title:** Capabilities · classify and remark  
+**Layout:** split  
 **Diagram:** b6-slide04-qos-stitch
 
 **Bullets:**
-- ACL can override remark policy.
+- VLAN · DSCP · ESUN · UFH → TC
+- Remark on egress
+- ACL override
+- Policer · ECN
+- Queue · QoSMAP → CSB
 
 ---
 
 ## Slide 4
 
-**Title:** Capacities · Buffer-carving at CSB  
-**Lead:** Pool modes, carve sizes, admission, PFC — HW arch limits.  
+**Title:** Capacities · buffer-carving at CSB  
+**Layout:** split  
 **Diagram:** b6-slide04-csb-inset
+
+**Bullets:**
+- Lossy / lossless pools
+- Port tiers: 200G · 400G · 800G
+- Carve sizes · admission
+- PFC · pause · headroom
+- Per-TC · egress queues
 
 ---
 
 ## Slide 5
 
-**Title:** Constraints · CSB buffer-carving  
+**Title:** Constraints · CSB tables  
 **Diagram:** b6-slide05-csb-ccc-tables
 
 ---
 
 ## Slide 6
 
-**Title:** Scope  
-**Diagram:** b6-slide06-boundaries
-
----
-
-## Slide 7
-
-**Title:** Closing  
-**Diagram:** b6-slide07-next-steps
+**Title:** Scope · deliverable  
+**Diagram:** b6-slide06-scope-deliverable
 
 ---
 
