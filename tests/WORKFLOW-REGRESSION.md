@@ -15,9 +15,12 @@
 | TC06 | workflow | Duplicate slide in md → slide count +1 |
 | TC07 | workflow | Mmd color change → PNG bytes change |
 | TC10 | workflow | Idempotent rebuild — stable slide count |
-| TC09 | workflow | Production `check-decks` still passes |
+| TC11 | fast | PPTX compare ignores docProps-only byte drift |
+| TC12 | workflow | Canary idempotent regen — identical pptx content fingerprint |
+| TC09 | artifact_parity | Production `check-decks` (opt-in; `-m artifact_parity`) |
+| TC14–15 | artifact_parity | Prod md→pptx matches git pptx (opt-in) |
 
-**Planned (your directed torture):** watermark, arrow style, box resize, slide reorder — add TC11+ as you request changes.
+**Planned (your directed torture):** watermark, arrow style, box resize, slide reorder — add TC16+ as you request changes.
 
 ## Run
 
@@ -30,7 +33,13 @@ uv run pytest tests/test_workflow_pipeline.py -m "not workflow" -q
 # Full pipeline (needs npx; ~30–60s first mmdc pull)
 uv run pytest tests/test_workflow_pipeline.py -m workflow -q
 
-# Everything
+# PPTX compare + canary idempotent regen (TC11–TC12)
+uv run pytest tests/test_deck_pptx_regression.py -q
+
+# Production artifact parity (opt-in; skipped when md ahead of pptx/png)
+uv run pytest tests/ -m artifact_parity -q
+
+# Everything except artifact parity (default)
 uv run pytest tests/ -q
 ```
 
