@@ -35,8 +35,10 @@ dev = [
 [tool.pytest.ini_options]
 pythonpath = ["src/py", "tests"]
 testpaths = ["tests"]
+addopts = "-m 'not artifact_parity'"
 markers = [
     "workflow: full md→mermaid→png→pptx path (requires npx)",
+    "artifact_parity: production md/png/pptx sync gate (opt-in; excluded from default pytest)",
 ]
 filterwarnings = [
     "error",
