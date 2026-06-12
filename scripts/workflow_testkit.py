@@ -102,6 +102,22 @@ def build_deck_from_md(
     return doc
 
 
+def build_production_b6_isolated(tmp_dir: Path) -> Path:
+    """Full md→diagram→pptx for B6 into tmp_dir; never writes dt122/ or assets/diagrams/b6/."""
+    build = _load_build_module()
+    diagram_dir = tmp_dir / "diagrams" / "b6"
+    out_pptx = tmp_dir / "bugatti-qos-ccc.pptx"
+    return build.build_b6(out_path=out_pptx, diagram_dir=diagram_dir)
+
+
+def build_production_a3_isolated(tmp_dir: Path) -> Path:
+    """Full md→diagram→pptx for A3 into tmp_dir; never writes dt100/ or assets/diagrams/a3/."""
+    build = _load_build_module()
+    diagram_dir = tmp_dir / "diagrams" / "a3"
+    out_pptx = tmp_dir / "bugatti-qos-architecture.pptx"
+    return build.build_a3(out_path=out_pptx, diagram_dir=diagram_dir)
+
+
 def build_canary(
     md_path: Path = CANARY_MD,
     diagram_dir: Path = CANARY_DIAGRAMS,

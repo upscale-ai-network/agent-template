@@ -31,7 +31,7 @@ from workflow_testkit import (  # noqa: E402
     slide_count,
 )
 
-from conftest import requires_npx, requires_uv, workflow  # noqa: E402
+from conftest import artifact_parity, requires_npx, requires_uv, workflow  # noqa: E402
 
 FIXTURES = ROOT / "tests" / "fixtures"
 CANARY_DIAGRAMS = FIXTURES / "diagrams" / "canary"
@@ -169,7 +169,7 @@ def test_tc10_idempotent_build_same_slide_count(canary_paths):
     assert n1 == n2 == 4
 
 
-@workflow
+@artifact_parity
 @requires_uv
 def test_tc09_production_check_decks_subprocess():
     subprocess.run(["uv", "run", "check-decks"], check=True, timeout=120, cwd=ROOT)

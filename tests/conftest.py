@@ -19,6 +19,7 @@ def has_uv() -> bool:
 
 
 workflow = pytest.mark.workflow
+artifact_parity = pytest.mark.artifact_parity
 requires_npx = pytest.mark.skipif(not has_npx(), reason="npx required for mermaid render")
 requires_uv = pytest.mark.skipif(not has_uv(), reason="uv required")
 
