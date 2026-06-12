@@ -1,28 +1,28 @@
 # CCC walk (B6) — source of truth
 
-**B6** = shorthand for this deck · share as **`bugatti-qos-ccc.pptx`**.
+**B6** = shorthand for this deck · share as **`csb-buffer-carving-ccc.pptx`**.
 
-**Single file for this deck:** slide titles → `bugatti-qos-ccc.pptx` via `uv run build-decks`.
+**Single file for this deck:** slide titles → `csb-buffer-carving-ccc.pptx` via `uv run build-decks`.
 
-**Flow:** [../dt100/bugatti-qos-architecture.md](../dt100/bugatti-qos-architecture.md) slides 1–2 → **B6** → A3 slides 3–4.
+**Flow:** [../dt100/csb-buffer-carving-architecture.md](../dt100/csb-buffer-carving-architecture.md) slides 1–2 → **B6** → A3 slides 3–4.
 
-**Metadata (not in PPTX):** [bugatti-qos-ccc-meta.md](bugatti-qos-ccc-meta.md)
+**Metadata (not in PPTX):** [csb-buffer-carving-ccc-meta.md](csb-buffer-carving-ccc-meta.md)
 
-**Depth / reference:** [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md).
+**Depth / reference:** [csb-buffer-carving-ccc-reference.md](csb-buffer-carving-ccc-reference.md).
 
 **Revision (not exported — git / meta only):**
 
 | Rev | Credit | Summary |
 |-----|--------|---------|
 | 0.0 | Original author | Prior qos-ccc skeleton — unnamed ([ccc-strategy.md](ccc-strategy.md)) |
-| 0.1 | Diwakar Tundlam | bugatti-qos-ccc |
+| 0.1 | Diwakar Tundlam | csb-buffer-carving-ccc |
 
 ---
 
 ## Cover
 
-**Title:** bugatti-qos-ccc
-**Subtitle (navy):** Dynamic Switch-Buffer Management · logical pipeline  
+**Title:** csb-buffer-carving-ccc
+**Subtitle (navy):** Static and Dynamic CSB Buffer-Carving · logical pipeline  
 **Meta:** Diwakar Tundlam · 11 Jun 2026  
 **Tag:** Confidential — Upscale AI
 
@@ -30,8 +30,8 @@
 
 ## Slide 1
 
-**Title:** bugatti-qos-ccc scope  
-**Lead:** QoSMAP → CSB buffer-carving → bugatti-qos-ccc  
+**Title:** csb-buffer-carving-ccc scope  
+**Lead:** QoSMAP → CSB buffer-carving → csb-buffer-carving-ccc  
 **Diagram:** b6-slide02-pipeline-scope-pie
 
 ---
@@ -105,5 +105,5 @@
 
 ## References (not in deck)
 
-Whiteboard pictures, review comments, full map, DRI tables: [bugatti-qos-ccc-reference.md](bugatti-qos-ccc-reference.md - not completely captured).
+Whiteboard pictures, review comments, full map, DRI tables: [csb-buffer-carving-ccc-reference.md](csb-buffer-carving-ccc-reference.md - not completely captured).
 All changes committed in git for traceabilty and restore previous state and forensics
