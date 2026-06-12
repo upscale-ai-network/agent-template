@@ -1,0 +1,6 @@
+# Published deck content regression (stable SHA256 of slide text + media + XML).
+# Raw zip MD5 differs on every rebuild; CI compares content_sha256 only.
+# Refresh: uv run python scripts/pptx_compare.py --update-published-hashes
+
+a3	dt100/bugatti-qos-architecture.md	506ac768892c13a6f706a898291bf55994f20ac1d7b95094351ab0ee78d8d5b1	ec039b5ae43e3ac642855a683586de0e
+b6	dt122/bugatti-qos-ccc.md	a1861c3a3e0cac2611ab51856340d60740f7bcc63e00015432ed35b7fad3371b	15b80c91fdc28cba22aab4f209a3bfbf
