@@ -2,5 +2,5 @@
 # Raw zip MD5 differs on every rebuild; CI compares content_sha256 only.
 # Refresh: uv run python scripts/pptx_compare.py --update-published-hashes
 
-a3	dt100/bugatti-qos-architecture.md	506ac768892c13a6f706a898291bf55994f20ac1d7b95094351ab0ee78d8d5b1	52fe2e36dbe9dfce7931dd63901035d7
-b6	dt122/bugatti-qos-ccc.md	190264ffbf22ddc756f98a00260bd41572c40df8201986041e11a7721a5a195b	38b9f365cb8bf58ae81c488cbf7dbcf1
+a3	dt100/bugatti-qos-architecture.md	506ac768892c13a6f706a898291bf55994f20ac1d7b95094351ab0ee78d8d5b1	242debcc4d78d6ecb80e9b751a1ababf
+b6	dt122/bugatti-qos-ccc.md	84af6fc7b8e1cbdec5cb753c48c950766492b90d2818424cdb0f2301d6568b35	536476d367eb5bcd0d0b5ada7311ba3d

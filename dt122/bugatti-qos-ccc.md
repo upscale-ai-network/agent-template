@@ -22,7 +22,7 @@
 ## Cover
 
 **Title:** csb-buffer-carving-ccc
-**Subtitle (navy):** Static and Dynamic CSB Buffer-Carving · logical pipeline  
+**Subtitle (navy):** Static and dynamic buffer carving at Central Scheduler Block (CSB)
 **Meta:** Diwakar Tundlam · 11 Jun 2026  
 **Tag:** Confidential — Upscale AI
 
@@ -31,7 +31,7 @@
 ## Slide 1
 
 **Title:** csb-buffer-carving-ccc scope  
-**Lead:** QoSMAP → CSB buffer-carving → csb-buffer-carving-ccc  
+**Lead:** QoSMAP → buffer carving at CSB → csb-buffer-carving-ccc  
 **Diagram:** b6-slide02-pipeline-scope-pie
 
 ---
@@ -49,49 +49,51 @@
 **Diagram:** b6-slide04-qos-stitch
 
 **Bullets:**
-- (draft in progress ... )
-- Buffer-carving path (CSB)
-  - Port-speed bifurcation → static carve in CSB
-  - QoSMAP · queues · egress scheduler · per-port queue
+- (draft in progress ... RFC)
+- Buffer-carving (CSB)
+  - Port-speed bifurcation → static carve → scheduler configuration
+  - TC → QoSMAP · queues · egress scheduler · per-port queue
 - Classify · enqueue · remark
   - ESUN-UFH → TC (4 or 3-bit=8) — different MAC layer
   - AFH → (BCM: SUE) → vTC → VLAN · L3/DSCP → TC
   - EFH → VLAN · PRI → L3/DSCP → TC
-- L2/L3 datapath · ACL · policer · ECN · PFC · pause (802.3x)
-- Peer context (not this wedge)
-  - Dual-die Sky-Hammer · UCIe D2D
-  - UA-Link (descoped) — same PHY/PMD, different PCS/PMA
-  - ECMP · mirror · stats · sFlow · CPU punt
+- L2/L3 datapath · ACL · police · ECN · PFC · global pause (802.3x) control
+- Other peer contexts
+  - Dual-die Sky-Hammer · UCIe D2D · logical port mapping and X-connect verification
+  - ECMP · Mirroring · Counters/Stats · sFlow · CPU punt · Control / Management plane handling
+  - UA-Link (**descoped) — same PHY/PMD, different PCS/PMA
 
 ---
 
 ## Slide 4
 
-**Title:** Capacities · buffer-carving at CSB  
+**Title:** Capacities · CSB Resource Management
 **Layout:** split
 **Diagram:** b6-slide04-csb-inset
 
 **Bullets:**
-- (draft in progress ...)
-- Port tiers · bifurcation
+- (draft in progress ... RFC)
+- Port tiers · bifurcation table setup
   - 200G · 400G · 800G modes and rate mapping
+  - Validating line-rate matching serdes and standard, optics tuning, etc.
 - Buffer pools at CSB
-  - Lossless pools — pause / PFC · headroom
-  - Lossy pools — ECN · WRED
+  - Lossless pools — pause / PFC · with headroom / guarantees
+  - Lossy pools — ECN · WRED controlled with qos-mapping
 - Carve control
   - Static and dynamic pool sizing
-  - Traffic-aware congestion management
-- Egress scheduling (context)
-  - Per-TC queues · WFQ/SPQ · port bandwidth
-- Out of wedge (peer / defer)
-  - ECMP DLB · entropy / dynamic readjust
+  - Traffic-aware congestion management (WRED? Tail-drop, packet-id retire/drops)
+- Egress bandwidth scheduling (EBS)
+  - Per-TC queues · WFQ/SPQ · Total port bandwidth
+  - ECMP DLB · entropy / dynamic readjust / re-write / encap size adjusting
+- Other considerations (ideas..)
   - AI/XPU workload rebalance · SDN/controller alignment
 
 ---
 
 ## Slide 5
 
-**Title:** Constraints · CSB table sizes, limits, combinations (samples only - review with HW arch and publish)
+**Title:** Constraints · CSB table sizes, limits, combinations
+**Title:** (samples only - review with HW arch and publish)
 **Diagram:** b6-slide05-csb-ccc-tables
 
 ---

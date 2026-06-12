@@ -16,9 +16,5 @@ dt100/preview/
 dt122/preview/
 dt122/.preview-test/
 
-# build-decks deliverables (SoT = md + assets; regen via uv run build-decks)
-dt100/*.pptx
-dt122/*.pptx
-
 # one-off submit worktree helper (local /tmp snapshots)
 scripts/setup-submit-worktrees.sh

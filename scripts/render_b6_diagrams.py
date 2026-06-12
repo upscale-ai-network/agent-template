@@ -77,7 +77,7 @@ PIPE_SCOPE_SLICES: List[PipeSlice] = [
     ("ACL-CCC", "Shrawan", False),
     ("ECMP-CCC", "Tippanna", False),
     ("Classify-CCC", "Shrawan", False),
-    (["QoSMAP", "CSB buffer-carving", "bugatti-qos-ccc"], "Diwakar", True),
+    (["QoSMAP", "CSB Buffer Carving", "csb-buffer-carving-ccc"], "Diwakar", True),
     ("Mirror-CCC", "Shafi", False),
     ("Others", None, False),
 ]
@@ -483,7 +483,7 @@ def render_scope_deliverable() -> Path:
         )
         _arrow_v(draw, x + cap_w // 2, scope_y + scope_h, cap_y)
 
-    scope_sub = "QoSMAP → CSB buffer-carving"
+    scope_sub = "QoSMAP → CSB Buffer Carving"
     stw = draw.textbbox((0, 0), scope_sub, font=font_qos)[2]
     draw.text(
         (W // 2 - stw // 2, cap_y + cap_h + sc(12)),
