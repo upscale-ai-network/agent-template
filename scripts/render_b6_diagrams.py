@@ -33,12 +33,12 @@ MERMAID_STEMS: Dict[str, str] = {}
 
 COMPOSITE_STEMS = frozenset({
     "b6-slide02-pipeline-scope-pie",
+    "b6-slide03-pipeline-blocks",
     "b6-slide03-pipeline-annotated",
     "b6-slide04-qos-stitch",
     "b6-slide04-csb-inset",
     "b6-slide05-csb-ccc-tables",
-    "b6-slide06-boundaries",
-    "b6-slide07-next-steps",
+    "b6-slide06-scope-deliverable",
 })
 
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -54,8 +54,19 @@ PEER = (69, 90, 100, 255)
 SLICE_GRAY = (207, 216, 220, 255)
 SLICE_HIGHLIGHT = (227, 242, 253, 255)
 SLICE_HIGHLIGHT_EDGE = (21, 101, 192, 255)
+QOS_ORANGE_FILL = (255, 224, 178, 255)
+QOS_ORANGE_STROKE = (239, 108, 0, 255)
+QOS_DETACH_GAP_DEG = 5.0
+QOS_EXPLODE_PX = 44
+PIE_CENTER_Y_OFFSET = -28
+PIE_OUTER_R = 318
+PIE_INNER_R = 108
+QOS_LABEL_R_EXTRA = 20
+SHADOW_FILL = (176, 190, 197, 90)
+SHADOW_OFFSET = (5, 6)
 CENTER_FILL = (255, 255, 255, 255)
 CENTER_EDGE = (176, 190, 197, 255)
+LANE_GLOW = (255, 243, 224, 180)
 
 # Equal slices; index 5 sits at bottom (6 o'clock). (peer) = acknowledged W DRI, subtle 2nd line.
 SliceLabel = str | List[str]
@@ -66,7 +77,7 @@ PIPE_SCOPE_SLICES: List[PipeSlice] = [
     ("ACL-CCC", "Shrawan", False),
     ("ECMP-CCC", "Tippanna", False),
     ("Classify-CCC", "Shrawan", False),
-    (["QoSMAP", "CSB buffer-carving", "QoS-CCC"], "Diwakar", True),
+    (["QoSMAP", "CSB buffer-carving", "bugatti-qos-ccc"], "Diwakar", True),
     ("Mirror-CCC", "Shafi", False),
     ("Others", None, False),
 ]
@@ -115,10 +126,11 @@ def _box(draw, xy: Tuple[int, int, int, int], fill, outline, width: int = 3) -> 
 
 PEER_BOX = ((236, 239, 241, 255), (69, 90, 100, 255))
 LANE_BOX = ((227, 242, 253, 255), (21, 101, 192, 255))
+QOS_BLOCK = (QOS_ORANGE_FILL, QOS_ORANGE_STROKE)
 MUTED_BOX = ((245, 245, 245, 255), (144, 164, 174, 255))
 
 
-def _load_flow_font():
+def _load_flow_font(size: int = 14):
     from PIL import ImageFont
 
     for path in (
@@ -126,10 +138,24 @@ def _load_flow_font():
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
     ):
         try:
-            return ImageFont.truetype(path, 14)
+            return ImageFont.truetype(path, size)
         except OSError:
             continue
     return ImageFont.load_default()
+
+
+def _load_flow_font_bold(size: int = 14):
+    from PIL import ImageFont
+
+    for path in (
+        "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    ):
+        try:
+            return ImageFont.truetype(path, size)
+        except OSError:
+            continue
+    return _load_flow_font(size)
 
 
 def _save_flow_canvas(img, out: Path) -> Path:
@@ -146,18 +172,53 @@ def _save_flow_canvas(img, out: Path) -> Path:
     return out
 
 
-def _draw_labeled_box(draw, x: int, y: int, lines: List[str], style: Tuple, font) -> None:
+def _draw_labeled_box(
+    draw,
+    x: int,
+    y: int,
+    lines: List[str],
+    style: Tuple,
+    font,
+    *,
+    box_w: Optional[int] = None,
+    box_h: Optional[int] = None,
+    shadow: bool = False,
+    glow: bool = False,
+    line_h: Optional[int] = None,
+    sub_font=None,
+    sub_fill=None,
+    stroke_w: int = 2,
+) -> None:
     fill, stroke = style
+    bw = box_w or BOX_W
+    bh = box_h or BOX_H
+    if glow:
+        draw.rounded_rectangle(
+            (x - 4, y - 4, x + bw + 4, y + bh + 4),
+            radius=BOX_R + 2,
+            fill=LANE_GLOW,
+            outline=None,
+        )
+    if shadow:
+        ox, oy = SHADOW_OFFSET
+        draw.rounded_rectangle(
+            (x + ox, y + oy, x + bw + ox, y + bh + oy),
+            radius=BOX_R,
+            fill=SHADOW_FILL,
+            outline=None,
+        )
     draw.rounded_rectangle(
-        (x, y, x + BOX_W, y + BOX_H), radius=BOX_R, fill=fill, outline=stroke, width=2
+        (x, y, x + bw, y + bh), radius=BOX_R, fill=fill, outline=stroke, width=stroke_w
     )
-    line_h = 18
-    block_h = len(lines) * line_h
-    ty = y + (BOX_H - block_h) // 2
-    for line in lines:
-        tw = draw.textbbox((0, 0), line, font=font)[2]
-        draw.text((x + (BOX_W - tw) // 2, ty), line, fill=TEXT, font=font)
-        ty += line_h
+    lh = line_h or 18
+    block_h = len(lines) * lh
+    ty = y + (bh - block_h) // 2
+    for i, line in enumerate(lines):
+        f = sub_font if sub_font is not None and i > 0 else font
+        line_fill = sub_fill if sub_fill is not None and i > 0 else TEXT
+        tw = draw.textbbox((0, 0), line, font=f)[2]
+        draw.text((x + (bw - tw) // 2, ty), line, fill=line_fill, font=f)
+        ty += lh
 
 
 def _arrow_h(draw, x1: int, y: int, x2: int) -> None:
@@ -208,6 +269,100 @@ def render_qos_stitch() -> Path:
     )
 
 
+# Guru kickoff blocks — same names, deck-native styling (shadows · QoS highlight).
+PIPE_LOOKUP_BLOCKS = [
+    "Port",
+    "Parser",
+    "MyMAC",
+    "VLAN",
+    "L2-FBD",
+    "UFH",
+    "VRF",
+    "L3-FIB",
+    "ESUN FDB",
+]
+PIPE_FWD_BLOCKS = [
+    "ECMP",
+    "QoSMAP",
+    "NH",
+    "LAG",
+    "IACL",
+    "Queue",
+    "Egress",
+    "EgrNH",
+    "EACL",
+]
+PIPE_QOS_HIGHLIGHT = frozenset({"QoSMAP", "Queue"})
+
+
+def render_pipeline_blocks() -> Path:
+    """Guru logical pipeline — block diagram with shadows; QoS blocks highlighted."""
+    from PIL import Image, ImageDraw
+
+    img = Image.new("RGBA", (CANVAS_W, CANVAS_H), (255, 255, 255, 255))
+    draw = ImageDraw.Draw(img)
+    font = _load_flow_font(11)
+    font_lane = _load_flow_font_bold(12)
+
+    sm_w, sm_h = 108, 48
+    gap = 16
+    lane_pad = 28
+    lane_h = sm_h + lane_pad * 2
+    row1_y = 118
+    row2_y = row1_y + lane_h + 56
+
+    def _row_span(n: int) -> int:
+        return n * sm_w + (n - 1) * gap
+
+    def _draw_lane_band(y: int, label: str, blocks: List[str]) -> List[int]:
+        span = _row_span(len(blocks))
+        band_x = (CANVAS_W - span - 120) // 2 + 100
+        band_w = span + 24
+        band_y = y - lane_pad
+        draw.rounded_rectangle(
+            (band_x - 12, band_y, band_x + band_w, band_y + lane_h),
+            radius=12,
+            fill=(248, 250, 252, 255),
+            outline=(207, 216, 220, 255),
+            width=1,
+        )
+        draw.text((48, y + sm_h // 2 - 8), label, fill=PEER, font=font_lane)
+        xs: List[int] = []
+        x = band_x
+        for name in blocks:
+            style = QOS_BLOCK if name in PIPE_QOS_HIGHLIGHT else PEER_BOX
+            highlight = name in PIPE_QOS_HIGHLIGHT
+            _draw_labeled_box(
+                draw,
+                x,
+                y,
+                [name],
+                style,
+                font,
+                box_w=sm_w,
+                box_h=sm_h,
+                shadow=True,
+                glow=highlight,
+            )
+            xs.append(x)
+            x += sm_w + gap
+        mid_y = y + sm_h // 2
+        for i in range(len(xs) - 1):
+            _arrow_h(draw, xs[i] + sm_w, mid_y, xs[i + 1])
+        return xs
+
+    xs1 = _draw_lane_band(row1_y, "Ingress · lookup", PIPE_LOOKUP_BLOCKS)
+    xs2 = _draw_lane_band(row2_y, "Forward · egress", PIPE_FWD_BLOCKS)
+    _arrow_v(draw, xs1[-1] + sm_w // 2, row1_y + sm_h, row2_y)
+
+    callout = "QoSMAP · Queue = bugatti-qos-ccc scope"
+    font_callout = _load_flow_font(12)
+    tw = draw.textbbox((0, 0), callout, font=font_callout)[2]
+    draw.text((CANVAS_W // 2 - tw // 2, row2_y + sm_h + lane_pad + 8), callout, fill=QOS_ORANGE_STROKE, font=font_callout)
+
+    return _save_flow_canvas(img, B6_DIR / "b6-slide03-pipeline-blocks.png")
+
+
 def render_csb_inset() -> Path:
     from PIL import Image, ImageDraw
 
@@ -225,9 +380,9 @@ def render_csb_inset() -> Path:
         outline=(176, 190, 197, 255),
         width=2,
     )
-    title = "CSB — buffer-carving"
-    tw = draw.textbbox((0, 0), title, font=font)[2]
-    draw.text((CANVAS_W // 2 - tw // 2, iy - 28), title, fill=TEXT, font=font)
+    title = "CSB buffer-carving"
+    tw = draw.textbbox((0, 0), title, font=_load_flow_font_bold())[2]
+    draw.text((CANVAS_W // 2 - tw // 2, iy - 28), title, fill=TEXT, font=_load_flow_font_bold())
     labels = [
         ["Port-speed tiers", "200G · 400G · 800G"],
         ["Lossy / lossless · PFC · queues"],
@@ -247,7 +402,7 @@ def render_csb_inset() -> Path:
         draw,
         (CANVAS_W - BOX_W) // 2,
         out_y,
-        ["Deliverable:", "buffer-carving plan"],
+        ["buffer-carving plan"],
         LANE_BOX,
         font,
     )
@@ -255,45 +410,172 @@ def render_csb_inset() -> Path:
     return _save_flow_canvas(img, B6_DIR / "b6-slide04-csb-inset.png")
 
 
-def render_boundaries() -> Path:
+def render_scope_deliverable() -> Path:
+    """Closing — Scope (top half) · Deliverable qos-arch-ccc · full Datapath band."""
     from PIL import Image, ImageDraw
 
-    img = Image.new("RGBA", (CANVAS_W, CANVAS_H), (255, 255, 255, 255))
+    # 2× supersample → downscale for crisp type and edges in PPTX
+    scale = 2
+    W, H = CANVAS_W * scale, CANVAS_H * scale
+
+    def sc(v: float) -> int:
+        return int(round(v * scale))
+
+    img = Image.new("RGBA", (W, H), (255, 255, 255, 255))
     draw = ImageDraw.Draw(img)
-    font = _load_flow_font()
-    row_w = 3 * BOX_W + 2 * BOX_GAP
-    row_x = (CANVAS_W - row_w) // 2
-    root_y = (CANVAS_H - (BOX_H * 2 + BOX_GAP)) // 2
-    child_y = root_y + BOX_H + BOX_GAP
-    root_x = CANVAS_W // 2 - BOX_W // 2
-    _draw_labeled_box(draw, root_x, root_y, ["Buffer-carving CCC"], LANE_BOX, font)
-    children = ["Capabilities", "Capacities", "Constraints"]
-    cx = row_x
-    for label in children:
-        _draw_labeled_box(draw, cx, child_y, [label], LANE_BOX, font)
-        _arrow_v(draw, cx + BOX_W // 2, root_y + BOX_H, child_y)
-        cx += BOX_W + BOX_GAP
-    return _save_flow_canvas(img, B6_DIR / "b6-slide06-boundaries.png")
 
+    font_section = _load_flow_font_bold(sc(20))
+    font_title = _load_flow_font_bold(sc(17))
+    font_cap = _load_flow_font(sc(15))
+    font_det_title = _load_flow_font_bold(sc(14))
+    font_det_sub = _load_flow_font(sc(13))
+    font_plan = _load_flow_font(sc(13))
+    font_dp = _load_flow_font_bold(sc(16))
+    font_qos = _load_flow_font_bold(sc(14))
 
-def render_next_steps() -> Path:
-    from PIL import Image, ImageDraw
+    margin = sc(52)
+    mid_y = sc(328)
+    stroke = 3 if scale >= 2 else 2
 
-    img = Image.new("RGBA", (CANVAS_W, CANVAS_H), (255, 255, 255, 255))
-    draw = ImageDraw.Draw(img)
-    font = _load_flow_font()
-    top_y = (CANVAS_H - (BOX_H * 2 + BOX_GAP * 2)) // 2
-    bot_y = top_y + BOX_H + BOX_GAP * 2
-    pair_w = 2 * BOX_W + BOX_GAP
-    left_x = CANVAS_W // 2 - pair_w // 2
-    right_x = left_x + BOX_W + BOX_GAP
-    _draw_labeled_box(draw, left_x, top_y, ["HW arch · pools · RTL"], MUTED_BOX, font)
-    _draw_labeled_box(draw, right_x, top_y, ["Prior QoS depth"], MUTED_BOX, font)
-    sink_x = CANVAS_W // 2 - BOX_W // 2
-    _draw_labeled_box(draw, sink_x, bot_y, ["Cap · Cap · Con tables"], LANE_BOX, font)
-    _arrow_v(draw, left_x + BOX_W // 2, top_y + BOX_H, bot_y)
-    _arrow_v(draw, right_x + BOX_W // 2, top_y + BOX_H, bot_y)
-    return _save_flow_canvas(img, B6_DIR / "b6-slide07-next-steps.png")
+    draw.rounded_rectangle(
+        (margin - sc(8), sc(8), W - margin + sc(8), mid_y - sc(10)),
+        radius=sc(10),
+        fill=(248, 250, 252, 255),
+        outline=(176, 190, 197, 255),
+        width=stroke,
+    )
+    draw.rounded_rectangle(
+        (margin - sc(8), mid_y + sc(6), W - margin + sc(8), H - sc(12)),
+        radius=sc(10),
+        fill=(252, 252, 252, 255),
+        outline=(176, 190, 197, 255),
+        width=stroke,
+    )
+    draw.line((margin, mid_y, W - margin, mid_y), fill=(120, 144, 156, 255), width=stroke)
+
+    draw.text((margin, sc(16)), "Scope", fill=TEXT, font=font_section)
+    scope_y = sc(46)
+    scope_w, scope_h = sc(400), sc(56)
+    scope_x = W // 2 - scope_w // 2
+    _draw_labeled_box(
+        draw,
+        scope_x,
+        scope_y,
+        ["bugatti-qos-ccc"],
+        LANE_BOX,
+        font_title,
+        box_w=scope_w,
+        box_h=scope_h,
+        shadow=True,
+        stroke_w=stroke,
+    )
+
+    cap_w, cap_h = sc(228), sc(52)
+    cap_gap = sc(34)
+    cap_row = 3 * cap_w + 2 * cap_gap
+    cap_x0 = (W - cap_row) // 2
+    cap_y = scope_y + scope_h + sc(24)
+    for i, label in enumerate(["Capabilities", "Capacities", "Constraints"]):
+        x = cap_x0 + i * (cap_w + cap_gap)
+        _draw_labeled_box(
+            draw, x, cap_y, [label], LANE_BOX, font_cap,
+            box_w=cap_w, box_h=cap_h, stroke_w=stroke,
+        )
+        _arrow_v(draw, x + cap_w // 2, scope_y + scope_h, cap_y)
+
+    scope_sub = "QoSMAP → CSB buffer-carving"
+    stw = draw.textbbox((0, 0), scope_sub, font=font_qos)[2]
+    draw.text(
+        (W // 2 - stw // 2, cap_y + cap_h + sc(12)),
+        scope_sub,
+        fill=TEXT,
+        font=font_qos,
+    )
+
+    draw.text((margin, mid_y + sc(14)), "Deliverable", fill=TEXT, font=font_section)
+    del_y = mid_y + sc(44)
+    del_w, del_h = sc(440), sc(58)
+    del_x = W // 2 - del_w // 2
+    _draw_labeled_box(
+        draw,
+        del_x,
+        del_y,
+        ["qos-arch-ccc"],
+        LANE_BOX,
+        font_title,
+        box_w=del_w,
+        box_h=del_h,
+        shadow=True,
+        glow=True,
+        stroke_w=stroke,
+    )
+
+    det_w, det_h = sc(268), sc(66)
+    det_gap = sc(28)
+    det_row = 3 * det_w + 2 * det_gap
+    det_x0 = (W - det_row) // 2
+    det_y = del_y + del_h + sc(20)
+    details = [
+        ["Capabilities", "classify · remark · policer"],
+        ["Capacities", "CSB carve · pools · tiers"],
+        ["Constraints", "CSB tables · gates v0"],
+    ]
+    for i, lines in enumerate(details):
+        x = det_x0 + i * (det_w + det_gap)
+        _draw_labeled_box(
+            draw,
+            x,
+            det_y,
+            lines,
+            PEER_BOX,
+            font_det_title,
+            box_w=det_w,
+            box_h=det_h,
+            shadow=True,
+            line_h=sc(20),
+            sub_font=font_det_sub,
+            sub_fill=PEER,
+            stroke_w=stroke,
+        )
+        _arrow_v(draw, del_x + del_w // 2, del_y + del_h, det_y)
+
+    plan_y = det_y + det_h + sc(16)
+    plan_items = ["buffer-carving plan", "validation gates v0", "Architecture docs"]
+    plan_w, plan_h = sc(210), sc(48)
+    plan_gap = sc(22)
+    plan_row = 3 * plan_w + 2 * plan_gap
+    plan_x0 = (W - plan_row) // 2
+    for i, label in enumerate(plan_items):
+        x = plan_x0 + i * (plan_w + plan_gap)
+        _draw_labeled_box(
+            draw, x, plan_y, [label], MUTED_BOX, font_plan,
+            box_w=plan_w, box_h=plan_h, stroke_w=stroke,
+        )
+
+    _arrow_v(draw, W // 2, cap_y + cap_h + sc(34), mid_y + sc(4))
+
+    dp_y = plan_y + plan_h + sc(18)
+    dp_h = sc(48)
+    dp_w = W - 2 * margin
+    _draw_labeled_box(
+        draw,
+        margin,
+        dp_y,
+        ["full Datapath"],
+        MUTED_BOX,
+        font_dp,
+        box_w=dp_w,
+        box_h=dp_h,
+        shadow=True,
+        stroke_w=stroke,
+    )
+    _arrow_v(draw, W // 2, plan_y + plan_h, dp_y)
+
+    sharp = img.resize((CANVAS_W, CANVAS_H), Image.Resampling.LANCZOS)
+    out = B6_DIR / "b6-slide06-scope-deliverable.png"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    sharp.convert("RGB").save(out, "PNG", dpi=(192, 192))
+    return out
 
 
 def _label_lines(label: SliceLabel) -> List[str]:
@@ -352,8 +634,122 @@ def _draw_slice_label(
         y += th + line_gap
 
 
+def _draw_donut_slice(
+    draw,
+    cx: float,
+    cy: float,
+    outer: float,
+    inner: float,
+    start: float,
+    end: float,
+    fill,
+    outline,
+    *,
+    width: int = 3,
+    inner_fill=(0, 0, 0, 0),
+) -> None:
+    draw.pieslice(
+        (cx - outer, cy - outer, cx + outer, cy + outer),
+        start,
+        end,
+        fill=fill,
+        outline=outline,
+        width=width,
+    )
+    if inner > 0:
+        draw.pieslice(
+            (cx - inner, cy - inner, cx + inner, cy + inner),
+            start,
+            end,
+            fill=inner_fill,
+            outline=(0, 0, 0, 0),
+        )
+
+
+def _fill_annulus_sector(
+    draw,
+    cx: float,
+    cy: float,
+    inner: float,
+    outer: float,
+    start: float,
+    end: float,
+    fill,
+    *,
+    steps: int = 24,
+) -> None:
+    import math
+
+    def _arc(cx, cy, r, a0, a1, reverse=False):
+        pts = []
+        for i in range(steps + 1):
+            t = i / steps
+            a = math.radians(a0 + (a1 - a0) * t)
+            pts.append((cx + r * math.cos(a), cy + r * math.sin(a)))
+        return list(reversed(pts)) if reverse else pts
+
+    outer_pts = _arc(cx, cy, outer, start, end)
+    inner_pts = _arc(cx, cy, inner, start, end, reverse=True)
+    draw.polygon(outer_pts + inner_pts, fill=fill)
+
+
+def _exploded_slice_points(
+    arc_cx: float,
+    arc_cy: float,
+    outer: float,
+    inner: float,
+    start: float,
+    end: float,
+    *,
+    steps: int = 40,
+) -> Tuple[List[Tuple[float, float]], List[Tuple[float, float]]]:
+    import math
+
+    def _arc(cx, cy, r, a0, a1, n, reverse=False):
+        pts = []
+        for i in range(n + 1):
+            t = i / n
+            a = math.radians(a0 + (a1 - a0) * t)
+            pts.append((cx + r * math.cos(a), cy + r * math.sin(a)))
+        return list(reversed(pts)) if reverse else pts
+
+    outer_pts = _arc(arc_cx, arc_cy, outer, start, end, steps)
+    inner_pts = _arc(arc_cx, arc_cy, inner, start, end, steps, reverse=True)
+    return outer_pts, inner_pts
+
+
+def _draw_exploded_donut_slice(
+    draw,
+    arc_cx: float,
+    arc_cy: float,
+    outer: float,
+    inner: float,
+    start: float,
+    end: float,
+    fill,
+    outline,
+    *,
+    steps: int = 40,
+    stroke_w: int = 3,
+    shadow: bool = False,
+) -> None:
+    """Exploded ring segment — inner and outer arcs share exploded center."""
+    outer_pts, inner_pts = _exploded_slice_points(
+        arc_cx, arc_cy, outer, inner, start, end, steps=steps
+    )
+    if shadow:
+        ox, oy = SHADOW_OFFSET
+        shadow_pts = [(x + ox, y + oy) for x, y in outer_pts + inner_pts]
+        draw.polygon(shadow_pts, fill=SHADOW_FILL)
+    draw.polygon(outer_pts + inner_pts, fill=fill)
+    for i in range(len(outer_pts) - 1):
+        draw.line([outer_pts[i], outer_pts[i + 1]], fill=outline, width=stroke_w)
+    for i in range(len(inner_pts) - 1):
+        draw.line([inner_pts[i], inner_pts[i + 1]], fill=outline, width=stroke_w)
+
+
 def render_pipeline_scope_pie() -> Path:
-    """Donut — equal slices, QoS at bottom, Bugatti hub (not mermaid)."""
+    """Donut — equal slices, QoS exploded at bottom (6 o'clock), Bugatti hub."""
     import math
 
     from PIL import Image, ImageDraw, ImageFont
@@ -361,8 +757,8 @@ def render_pipeline_scope_pie() -> Path:
     w, h = CANVAS_W, CANVAS_H
     img = Image.new("RGBA", (w, h), (255, 255, 255, 255))
     draw = ImageDraw.Draw(img)
-    cx, cy = w // 2, h // 2 + 12
-    outer, inner = 300, 104
+    cx, cy = w // 2, h // 2 + PIE_CENTER_Y_OFFSET
+    outer, inner = PIE_OUTER_R, PIE_INNER_R
 
     font_paths = [
         "/System/Library/Fonts/Supplemental/Arial.ttf",
@@ -370,73 +766,123 @@ def render_pipeline_scope_pie() -> Path:
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
     ]
-    font_label = font_label_sm = font_label_em = font_hub = None
+    font_label = font_label_sm = font_label_em = font_hub = font_hub_sub = None
     font_label_bold = None
     for path in font_paths:
         try:
             if "Bold" in path:
                 if font_label_bold is None:
-                    font_label_bold = ImageFont.truetype(path, 15)
+                    font_label_bold = ImageFont.truetype(path, 17)
                 continue
             font_label = ImageFont.truetype(path, 14)
-            font_label_sm = ImageFont.truetype(path, 12)
+            font_label_sm = ImageFont.truetype(path, 11)
             font_label_em = ImageFont.truetype(path, 16)
-            font_hub = ImageFont.truetype(path, 18)
+            font_hub = ImageFont.truetype(path, 22)
+            font_hub_sub = ImageFont.truetype(path, 11)
             font_title = ImageFont.truetype(path, 22)
             if font_label_bold is None:
                 bold_path = path.replace("Arial.ttf", "Arial Bold.ttf")
                 if Path(bold_path).is_file():
-                    font_label_bold = ImageFont.truetype(bold_path, 15)
+                    font_label_bold = ImageFont.truetype(bold_path, 17)
             break
         except OSError:
             continue
     if font_label is None:
-        font_label = font_label_sm = font_label_em = font_hub = font_title = ImageFont.load_default()
+        font_label = font_label_sm = font_label_em = font_hub = font_hub_sub = font_title = ImageFont.load_default()
     if font_label_bold is None:
         font_label_bold = font_label_em or font_label
+
+    # Soft plate behind donut
+    draw.ellipse(
+        (cx - outer - 36, cy - outer - 36, cx + outer + 36, cy + outer + 36),
+        fill=(248, 250, 252, 255),
+        outline=(224, 230, 234, 255),
+        width=1,
+    )
 
     n = len(PIPE_SCOPE_SLICES)
     sweep = 360.0 / n
     # PIL: 0° = 3 o'clock, clockwise. Bottom (6 o'clock) = 90°.
     rot = 90.0 - PIPE_QOS_SLICE_INDEX * sweep - sweep / 2.0
+    gap = QOS_DETACH_GAP_DEG
+    qos_i = PIPE_QOS_SLICE_INDEX
+    qos_start = rot + qos_i * sweep + gap / 2.0
+    qos_end = rot + (qos_i + 1) * sweep - gap / 2.0
+    qos_mid_deg = rot + (qos_i + 0.5) * sweep
+    qos_rad = qos_mid_deg * math.pi / 180.0
+    qos_cx = cx + QOS_EXPLODE_PX * math.cos(qos_rad)
+    qos_cy = cy + QOS_EXPLODE_PX * math.sin(qos_rad)
 
-    for i, (label, _peer, highlight) in enumerate(PIPE_SCOPE_SLICES):
+    gray_outline = (120, 144, 156, 255)
+    for i, (_label, _peer, highlight) in enumerate(PIPE_SCOPE_SLICES):
+        if highlight:
+            continue
         start = rot + i * sweep
         end = rot + (i + 1) * sweep
-        fill = SLICE_HIGHLIGHT if highlight else SLICE_GRAY
-        outline = SLICE_HIGHLIGHT_EDGE if highlight else (120, 144, 156, 255)
-        draw.pieslice(
-            (cx - outer, cy - outer, cx + outer, cy + outer),
-            start,
-            end,
-            fill=fill,
-            outline=outline,
-            width=3,
+        if i == qos_i - 1:
+            end -= gap / 2.0
+        elif i == (qos_i + 1) % n:
+            start += gap / 2.0
+        _draw_donut_slice(
+            draw, cx, cy, outer, inner, start, end, SLICE_GRAY, gray_outline,
+            inner_fill=(0, 0, 0, 0),
         )
-        draw.pieslice(
-            (cx - inner, cy - inner, cx + inner, cy + inner),
-            start,
-            end,
-            fill=(0, 0, 0, 0),
-            outline=(0, 0, 0, 0),
-        )
+
+    # White out detach gaps before orange wedge (clears inner-ring stroke artifacts)
+    gap_a = gap
+    for gs, ge in (
+        (rot + qos_i * sweep - gap_a / 2, rot + qos_i * sweep + gap_a / 2),
+        (rot + (qos_i + 1) * sweep - gap_a / 2, rot + (qos_i + 1) * sweep + gap_a / 2),
+    ):
+        _fill_annulus_sector(draw, cx, cy, inner - 2, outer + 2, gs, ge, CENTER_FILL)
+
+    _draw_exploded_donut_slice(
+        draw,
+        qos_cx,
+        qos_cy,
+        outer,
+        inner,
+        qos_start,
+        qos_end,
+        QOS_ORANGE_FILL,
+        QOS_ORANGE_STROKE,
+        shadow=True,
+    )
 
     draw.ellipse(
         (cx - inner, cy - inner, cx + inner, cy + inner),
         fill=CENTER_FILL,
-        outline=CENTER_EDGE,
-        width=3,
+        outline=None,
     )
-    hub = PIPE_HUB_LINES[0]
-    tw, th = draw.textbbox((0, 0), hub, font=font_hub)[2:]
-    draw.text((cx - tw / 2, cy - th / 2), hub, fill=TEXT, font=font_hub)
+    # Hub ring stroke — skip QoS detach slot so gray arc doesn't read as a black spot
+    hub_bb = (cx - inner, cy - inner, cx + inner, cy + inner)
+    skip_start = rot + qos_i * sweep - gap
+    skip_end = rot + (qos_i + 1) * sweep + gap
+    draw.arc(hub_bb, skip_end, skip_start, fill=CENTER_EDGE, width=3)
+    hub_lines = PIPE_HUB_LINES + ["program scope"]
+    block_h = 0
+    sizes = []
+    for i, line in enumerate(hub_lines):
+        f = font_hub if i == 0 else font_hub_sub
+        bb = draw.textbbox((0, 0), line, font=f)
+        sizes.append((bb[2], bb[3], f, line, PEER if i else TEXT))
+        block_h += bb[3] + (2 if i == 0 else 0)
+    hy = cy - block_h / 2
+    for tw, th, f, line, fill in sizes:
+        draw.text((cx - tw / 2, hy), line, fill=fill, font=f)
+        hy += th + 2
 
     mid_r = (outer + inner) / 2.0 + 8
-    for i, (label, peer, _) in enumerate(PIPE_SCOPE_SLICES):
+    for i, (label, peer, highlight) in enumerate(PIPE_SCOPE_SLICES):
         mid_deg = rot + (i + 0.5) * sweep
-        rad = mid_deg * 3.14159265 / 180.0
-        tx = cx + mid_r * math.cos(rad)
-        ty = cy + mid_r * math.sin(rad)
+        rad = mid_deg * math.pi / 180.0
+        r = mid_r + (QOS_LABEL_R_EXTRA if highlight else 0)
+        if highlight:
+            tx = qos_cx + r * math.cos(rad)
+            ty = qos_cy + r * math.sin(rad)
+        else:
+            tx = cx + r * math.cos(rad)
+            ty = cy + r * math.sin(rad)
         lines = _label_lines(label)
         font = font_label_sm if len(lines) > 1 or max(len(line) for line in lines) > 16 else font_label
         emphasis = {1} if i == PIPE_QOS_SLICE_INDEX else set()
@@ -445,18 +891,14 @@ def render_pipeline_scope_pie() -> Path:
             (tx, ty),
             label,
             font,
-            TEXT,
+            TEXT if highlight else (84, 110, 122, 255),
             peer=peer,
             peer_font=font_label_sm,
-            peer_fill=TEXT,
+            peer_fill=PEER,
             emphasis_font=font_label_bold,
-            emphasis_fill=SLICE_HIGHLIGHT_EDGE,
+            emphasis_fill=TEXT,
             emphasis_indices=emphasis,
         )
-
-    title = "QoS-CCC scope"
-    tt_w = draw.textbbox((0, 0), title, font=font_title)[2]
-    draw.text((cx - tt_w // 2, 36), title, fill=TEXT, font=font_title)
 
     out = B6_DIR / "b6-slide02-pipeline-scope-pie.png"
     B6_DIR.mkdir(parents=True, exist_ok=True)
@@ -490,21 +932,33 @@ FABRIC_CCC_ROWS = [
 def _load_table_fonts():
     from PIL import ImageFont
 
-    font_paths = [
+    regular_paths = [
         "/System/Library/Fonts/Supplemental/Arial.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
     ]
-    for path in font_paths:
+    bold_paths = [
+        "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    ]
+    font_title = font_hdr = font_cell = font_title_bold = None
+    for path in regular_paths:
         try:
-            return (
-                ImageFont.truetype(path, 20),
-                ImageFont.truetype(path, 13),
-                ImageFont.truetype(path, 14),
-            )
+            font_title = ImageFont.truetype(path, 20)
+            font_hdr = ImageFont.truetype(path, 13)
+            font_cell = ImageFont.truetype(path, 14)
+            break
         except OSError:
             continue
-    default = ImageFont.load_default()
-    return default, default, default
+    for path in bold_paths:
+        try:
+            font_title_bold = ImageFont.truetype(path, 20)
+            break
+        except OSError:
+            continue
+    if font_title is None:
+        default = ImageFont.load_default()
+        return default, default, default, default
+    return font_title, font_hdr, font_cell, font_title_bold or font_title
 
 
 def _draw_table(
@@ -521,11 +975,13 @@ def _draw_table(
     font_cell,
     title: Optional[str] = None,
     highlight_rows: Optional[set] = None,
+    title_font=None,
 ) -> int:
     x0, y0 = origin
     highlight_rows = highlight_rows or set()
+    tfont = title_font or font_title
     if title:
-        draw.text((x0, y0), title, fill=TEXT, font=font_title)
+        draw.text((x0, y0), title, fill=TEXT, font=tfont)
         y0 += 32
     table_w = sum(col_widths)
     y = y0
@@ -582,7 +1038,7 @@ def render_csb_ccc_tables() -> Path:
     w, h = 1800, 900
     img = Image.new("RGBA", (w, h), (255, 255, 255, 255))
     draw = ImageDraw.Draw(img)
-    font_title, font_hdr, font_cell = _load_table_fonts()
+    font_title, font_hdr, font_cell, font_title_bold = _load_table_fonts()
 
     margin = 48
     gap = 28
@@ -599,6 +1055,7 @@ def render_csb_ccc_tables() -> Path:
         font_cell=font_cell,
         title="CSB buffer-carving",
         highlight_rows={3},
+        title_font=font_title_bold,
     )
     fab_w = [100, 380, 320, 320]
     fab_x = margin
@@ -612,14 +1069,11 @@ def render_csb_ccc_tables() -> Path:
         font_title=font_title,
         font_hdr=font_hdr,
         font_cell=font_cell,
-        title="Fabric buffer pools (context)",
+        title="Fabric pools",
         highlight_rows={2},
     )
 
     _draw_sample_watermark(img)
-    align = "ALIGN with HW arch"
-    aw = draw.textbbox((0, 0), align, font=font_hdr)[2]
-    draw.text(((w - aw) // 2, h - 44), align, fill=SLICE_HIGHLIGHT_EDGE, font=font_hdr)
 
     out = B6_DIR / "b6-slide05-csb-ccc-tables.png"
     B6_DIR.mkdir(parents=True, exist_ok=True)
@@ -704,12 +1158,12 @@ def render_all_b6_diagrams(doc=None) -> List[str]:
         if stem in COMPOSITE_STEMS:
             dispatch = {
                 "b6-slide02-pipeline-scope-pie": render_pipeline_scope_pie,
+                "b6-slide03-pipeline-blocks": render_pipeline_blocks,
                 "b6-slide03-pipeline-annotated": render_pipeline_annotated,
                 "b6-slide04-qos-stitch": render_qos_stitch,
                 "b6-slide04-csb-inset": render_csb_inset,
                 "b6-slide05-csb-ccc-tables": render_csb_ccc_tables,
-                "b6-slide06-boundaries": render_boundaries,
-                "b6-slide07-next-steps": render_next_steps,
+                "b6-slide06-scope-deliverable": render_scope_deliverable,
             }
             fn = dispatch.get(stem)
             if fn is None:

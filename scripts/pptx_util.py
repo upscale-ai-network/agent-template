@@ -1,7 +1,7 @@
 """Safe PPTX helpers — avoid duplicate layout parts; preserve Upscale text colors."""
 
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Tuple, Union
 
 from pptx import Presentation
 from pptx.dml.color import RGBColor
@@ -31,7 +31,11 @@ FONT_TITLE_SINGLE = Pt(26)
 FONT_TITLE_MULTI = Pt(19)
 FONT_LEAD = Pt(13)
 FONT_BODY = Pt(13)
+FONT_SPLIT_L0 = Pt(8)
+FONT_SPLIT_L1 = Pt(7)
 FONT_COVER_DSBM = Pt(22)
+
+BulletInput = Union[str, Tuple[int, str]]
 
 # Content slide layout — fixed bands on slides 1–4.
 # Slide is 10in x 5.625in (16:9); title ~top 0.22, footer top ~5.34.
@@ -39,6 +43,11 @@ CONTENT_TITLE_BAND_BOTTOM = Inches(1.6)
 CONTENT_DIAGRAM_TOP = Inches(1.65)
 CONTENT_DIAGRAM_MAX_W = Inches(9.2)
 CONTENT_DIAGRAM_MAX_H = Inches(3.55)
+CONTENT_DIAGRAM_TOP_TITLE_ONLY = Inches(1.82)
+CONTENT_SPLIT_BULLET_LEFT = Inches(0.35)
+CONTENT_SPLIT_BULLET_W = Inches(5.15)
+CONTENT_SPLIT_DIAGRAM_LEFT = Inches(5.55)
+CONTENT_SPLIT_DIAGRAM_MAX_W = Inches(7.55)
 CONTENT_IMAGE_ONLY_TOP = Inches(0.35)
 CONTENT_IMAGE_ONLY_MAX_H = Inches(4.85)
 
@@ -110,6 +119,34 @@ def _title_font_size(lines: List[str]) -> Pt:
     return FONT_TITLE_SINGLE if len(lines) == 1 else FONT_TITLE_MULTI
 
 
+def _normalize_bullets(bullets: Optional[List[BulletInput]]) -> List[Tuple[int, str]]:
+    items: List[Tuple[int, str]] = []
+    for entry in bullets or []:
+        if isinstance(entry, tuple):
+            level, text = entry
+            items.append((max(0, min(int(level), 1)), str(text).strip()))
+        else:
+            items.append((0, str(entry).strip()))
+    return [it for it in items if it[1]]
+
+
+def fill_split_bullets(text_frame, bullets: Optional[List[BulletInput]]) -> None:
+    """Compact two-level bullets for Cap/Cap split slides — small type, no wrap."""
+    items = _normalize_bullets(bullets)
+    text_frame.clear()
+    text_frame.word_wrap = False
+    for i, (level, text) in enumerate(items):
+        p = text_frame.paragraphs[0] if i == 0 else text_frame.add_paragraph()
+        p.level = 0
+        p.space_after = Pt(0)
+        p.space_before = Pt(0)
+        prefix = "    ◦ " if level else "• "
+        p.text = f"{prefix}{text}"
+        size = FONT_SPLIT_L1 if level else FONT_SPLIT_L0
+        for run in p.runs:
+            _style_run(run, COLOR_BODY, FONT_BODY_FACE, size)
+
+
 def set_content_title_block(
     shape,
     *,
@@ -136,9 +173,10 @@ def set_content_title_block(
         entries.append((lead_line, COLOR_BODY, FONT_BODY, FONT_BODY_FACE))
     if caption_line:
         entries.append((caption_line, COLOR_BODY, Pt(11), FONT_BODY_FACE))
-    for line in bullet_lines or []:
-        text = line if line.startswith("•") else f"• {line}"
-        entries.append((text, COLOR_BODY, Pt(11), FONT_BODY_FACE))
+    for line in _normalize_bullets(bullet_lines):
+        level, text = line
+        prefix = "    ◦ " if level else "• "
+        entries.append((f"{prefix}{text}", COLOR_BODY, Pt(11), FONT_BODY_FACE))
     for i, (text, rgb, size, face) in enumerate(entries):
         p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
         p.text = text
@@ -366,6 +404,7 @@ def place_diagram(
     box_top: Optional[int] = None,
     box_h: Optional[int] = None,
     max_w: Optional[int] = None,
+    box_left: Optional[int] = None,
 ) -> None:
     """Fit diagram in fixed box — same visual size on every slide."""
     slide_w = slide_width or int(Inches(13.333))
@@ -378,7 +417,11 @@ def place_diagram(
     scale = scale_w if pic.height * scale_w <= box_h else min(scale_w, scale_h)
     pic.width = int(pic.width * scale)
     pic.height = int(pic.height * scale)
-    pic.left = int((slide_w - pic.width) / 2)
+    if box_left is not None:
+        col_w = max_w
+        pic.left = int(box_left + (col_w - pic.width) / 2)
+    else:
+        pic.left = int((slide_w - pic.width) / 2)
     pic.top = box_top + (box_h - pic.height) // 2
 
 
@@ -391,18 +434,24 @@ def fill_content_diagram_slide(
     subtitle_line: Optional[str] = None,
     lead_line: Optional[str] = None,
     caption_line: Optional[str] = None,
-    bullet_lines: Optional[List[str]] = None,
+    bullet_lines: Optional[List[BulletInput]] = None,
     slide_width: Optional[int] = None,
+    layout: Optional[str] = None,
 ) -> None:
     """Title band + act subtitle + lead + caption + bullets + diagram."""
+    bullet_items = _normalize_bullets(bullet_lines)
+    split = (layout or "").lower() == "split" and bool(bullet_items)
     has_title_band = bool(title_lines or (title and title.strip()))
     title_shape = None
+    body_shape = None
     for shape in slide.shapes:
         if not shape.has_text_frame or is_footer(shape):
             continue
         if shape.top < TITLE_TOP_MAX:
             title_shape = shape
-            break
+        elif body_shape is None:
+            body_shape = shape
+    title_bullets = None if split else bullet_lines
     if has_title_band and title_shape:
         set_content_title_block(
             title_shape,
@@ -411,22 +460,46 @@ def fill_content_diagram_slide(
             subtitle_line=subtitle_line,
             lead_line=lead_line,
             caption_line=caption_line,
-            bullet_lines=bullet_lines,
+            bullet_lines=title_bullets,
         )
     elif title_shape:
         hide_title_placeholder(slide)
-    hide_body_placeholder(slide)
+    if split and body_shape and bullet_items:
+        body_shape.left = int(CONTENT_SPLIT_BULLET_LEFT)
+        body_shape.width = int(CONTENT_SPLIT_BULLET_W)
+        body_shape.top = int(CONTENT_DIAGRAM_TOP)
+        body_shape.height = int(CONTENT_DIAGRAM_MAX_H)
+        fill_split_bullets(body_shape.text_frame, bullet_items)
+    else:
+        hide_body_placeholder(slide)
     if not image_path.is_file():
         raise FileNotFoundError(f"Diagram slide requires image: {image_path}")
-    if has_title_band:
-        place_diagram(slide, image_path, slide_width=slide_width)
-    else:
+    if not has_title_band:
         place_diagram(
             slide,
             image_path,
             slide_width=slide_width,
             box_top=int(CONTENT_IMAGE_ONLY_TOP),
             box_h=int(CONTENT_IMAGE_ONLY_MAX_H),
+        )
+    elif split:
+        place_diagram(
+            slide,
+            image_path,
+            slide_width=slide_width,
+            box_top=int(CONTENT_DIAGRAM_TOP),
+            box_h=int(CONTENT_DIAGRAM_MAX_H),
+            max_w=int(CONTENT_SPLIT_DIAGRAM_MAX_W),
+            box_left=int(CONTENT_SPLIT_DIAGRAM_LEFT),
+        )
+    elif bullet_items:
+        place_diagram(slide, image_path, slide_width=slide_width)
+    else:
+        place_diagram(
+            slide,
+            image_path,
+            slide_width=slide_width,
+            box_top=int(CONTENT_DIAGRAM_TOP_TITLE_ONLY),
         )
     apply_content_colors(slide, skip_title_band=True)
 

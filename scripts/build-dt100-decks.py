@@ -87,6 +87,7 @@ class StyledDeck:
         diagram: Optional[Path] = None,
         title_lines: Optional[List[str]] = None,
         caption: Optional[str] = None,
+        layout: Optional[str] = None,
     ):
         slide = self.prs.slides[self._slide_i]
         self._slide_i += 1
@@ -103,6 +104,7 @@ class StyledDeck:
                 caption_line=caption,
                 bullet_lines=bullets or None,
                 slide_width=self.prs.slide_width,
+                layout=layout,
             )
         else:
             from pptx_util import fill_content_slide
@@ -161,20 +163,39 @@ def _a3_png(name: str, diagram_dir: Path | None = None) -> Path:
     return (diagram_dir or A3_DIAGRAMS) / f"{name}.png"
 
 
-def _b6_png(name: str) -> Path:
-    return B6_DIAGRAMS / f"{name}.png"
+def _b6_png(name: str, diagram_dir: Path | None = None) -> Path:
+    return (diagram_dir or B6_DIAGRAMS) / f"{name}.png"
 
 
-def ensure_b6_diagrams(doc) -> None:
+def ensure_b6_diagrams(doc, diagram_dir: Path | None = None) -> None:
     from render_b6_diagrams import render_all_b6_diagrams
 
-    stems = render_all_b6_diagrams(doc)
+    override = diagram_dir
+    if override is not None:
+        override.mkdir(parents=True, exist_ok=True)
+        import render_b6_diagrams as r6
+
+        prev = r6.B6_DIR
+        r6.B6_DIR = override
+        try:
+            stems = render_all_b6_diagrams(doc)
+        finally:
+            r6.B6_DIR = prev
+    else:
+        stems = render_all_b6_diagrams(doc)
+
+    base = override or B6_DIAGRAMS
     print(f"Rendered {len(stems)} B6 diagrams from {B6_MD.name}")
     for stem in stems:
-        print(f"OK: {_b6_png(stem).relative_to(ROOT)}")
+        png = base / f"{stem}.png"
+        try:
+            label = png.relative_to(ROOT)
+        except ValueError:
+            label = png
+        print(f"OK: {label}")
     from deck_validate import validate_b6_diagram_pngs
 
-    fail_on_errors(validate_b6_diagram_pngs(doc))
+    fail_on_errors(validate_b6_diagram_pngs(doc, diagram_dir=base))
 
 
 def _join_notes(*parts: str) -> Optional[str]:
@@ -223,12 +244,15 @@ def build_a3(
     return deck.save()
 
 
-def build_b6() -> Path:
+def build_b6(
+    out_path: Path | None = None,
+    diagram_dir: Path | None = None,
+) -> Path:
     doc = load_b6_md()
     fail_on_errors(validate_b6_build(doc))
-    ensure_b6_diagrams(doc)
+    ensure_b6_diagrams(doc, diagram_dir=diagram_dir)
     slides = doc.ordered_slides()
-    out = DT122 / "bugatti-qos-ccc.pptx"
+    out = out_path or (DT122 / "bugatti-qos-ccc.pptx")
     deck = StyledDeck(out, num_content_slides=len(slides))
 
     cov = doc.cover
@@ -242,7 +266,8 @@ def build_b6() -> Path:
                 subtitle=s.subtitle or None,
                 lead=s.lead or None,
                 caption=s.caption or None,
-                diagram=_b6_png(s.diagram),
+                diagram=_b6_png(s.diagram, diagram_dir),
+                layout=s.layout or None,
             )
         elif s.image:
             img = PIPELINE_IMG if s.image == "logical-pipeline-boss-slide.png" else ROOT / "assets" / s.image
@@ -298,6 +323,15 @@ def main():
 
         fail_on_errors(checks)
         print("Post-build checks: OK")
+
+        from pptx_preview import export_pptx_previews
+
+        for deck_path in (a3,) if args.a3_only else (a3, b6):
+            previews = export_pptx_previews(deck_path)
+            print(f"Preview: {deck_path.parent / 'preview'} ({len(previews)} PNGs)")
+            for p in previews:
+                label = p.relative_to(ROOT) if p.is_relative_to(ROOT) else p
+                print(f"  OK: {label}")
     except DeckBuildError as exc:
         print(exc, file=sys.stderr)
         raise SystemExit(1) from exc

@@ -9,6 +9,9 @@ from typing import Dict, List, Optional, Tuple
 
 ROOT = Path(__file__).resolve().parents[1]
 
+# (level, text) — level 0 = top bullet, 1 = sub-bullet (split Cap/Cap slides).
+BulletItem = Tuple[int, str]
+
 
 @dataclass
 class CoverSlide:
@@ -29,11 +32,12 @@ class DeckSlide:
     title: str = ""
     subtitle: str = ""
     lead: str = ""
-    bullets: List[str] = field(default_factory=list)
+    bullets: List[BulletItem] = field(default_factory=list)
     notes: str = ""
     diagram: str = ""
     image: str = ""
     caption: str = ""
+    layout: str = ""
     # A3 diagram layout (optional)
     stack: List[Tuple[str, str]] = field(default_factory=list)
     stack_groups: List[Tuple[str, List[Tuple[str, str]]]] = field(default_factory=list)
@@ -94,6 +98,16 @@ def _parse_node(line: str) -> Optional[Tuple[str, str]]:
         label, style = [p.strip() for p in body.split("|", 1)]
         return label, style
     return body, "program"
+
+
+def _parse_bullet(raw: str) -> Optional[BulletItem]:
+    """Markdown list item with optional 2-space indent for sub-bullets."""
+    m = re.match(r"^(\s*)- (.+)$", raw.rstrip())
+    if not m:
+        return None
+    indent = len(m.group(1).expandtabs(4))
+    level = 1 if indent >= 2 else 0
+    return level, m.group(2).strip()
 
 
 def load_deck_md(
@@ -242,6 +256,8 @@ def load_deck_md(
                 current.image = val.split("/")[-1].strip()
             elif key == "Caption":
                 current.caption = val
+            elif key == "Layout":
+                current.layout = val.strip().lower()
             elif key == "Gate":
                 current.gate = val
             elif key in ("Branch yes", "Outcome"):
@@ -290,7 +306,9 @@ def load_deck_md(
             elif mode == "columns" and col_title:
                 col_labels.append(node[0])
             elif mode == "bullets":
-                current.bullets.append(node[0])
+                item = _parse_bullet(line)
+                if item:
+                    current.bullets.append(item)
             elif mode == "compass":
                 current.compass.append(node)
             continue

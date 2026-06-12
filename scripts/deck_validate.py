@@ -194,13 +194,16 @@ def validate_b6_md(doc: DeckDocument | None = None) -> List[str]:
     return errors
 
 
-def validate_b6_diagram_pngs(doc: DeckDocument | None = None) -> List[str]:
+def validate_b6_diagram_pngs(
+    doc: DeckDocument | None = None, diagram_dir: Path | None = None
+) -> List[str]:
     doc = doc or load_b6_md()
+    base = diagram_dir or B6_DIAGRAMS
     errors: List[str] = []
     for s in doc.ordered_slides():
         if s.diagram:
             errors.extend(
-                validate_png(_b6_png(s.diagram), min_width=1600, min_height=400)
+                validate_png(base / f"{s.diagram}.png", min_width=1600, min_height=400)
             )
     return errors
 
