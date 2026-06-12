@@ -26,6 +26,7 @@ from deck_validate import (  # noqa: E402
     validate_b6_pptx_no_speaker_notes,
     validate_built_pptx,
 )
+from pptx_compare import published_hash_errors  # noqa: E402
 from pptx_util import (  # noqa: E402
     assert_pptx_valid,
     fill_content_diagram_slide,
@@ -38,6 +39,7 @@ from pptx_util import (  # noqa: E402
 PIPELINE_IMG = ROOT / "assets" / "logical-pipeline-boss-slide.png"
 A3_DIAGRAMS = ROOT / "assets" / "diagrams" / "a3"
 B6_DIAGRAMS = ROOT / "assets" / "diagrams" / "b6"
+PUBLISHED_HASHES = ROOT / "tests" / "fixtures" / "published-deck-hashes.txt"
 
 # Committed company template (git). Optional local seed: ~/Downloads/Mirror-*.pptx
 STYLE_DOWNLOAD = Path.home() / "Downloads" / "Mirror-Sflow-Bugatti-ASIC-CCC.pptx"
@@ -323,6 +325,17 @@ def main():
 
         fail_on_errors(checks)
         print("Post-build checks: OK")
+
+        built = {"a3": a3}
+        if not args.a3_only:
+            built["b6"] = b6
+        hash_errors = published_hash_errors(built, PUBLISHED_HASHES)
+        fail_on_errors(hash_errors)
+        print(
+            "Published content SHA256: OK ("
+            + ", ".join(sorted(built))
+            + ")"
+        )
 
         from pptx_preview import export_pptx_previews
 

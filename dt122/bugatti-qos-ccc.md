@@ -44,21 +44,24 @@
 
 ## Slide 3
 
-**Title:** Capabilities · Classify and Remark
+**Title:** Capabilities · Classify, Enqueue and Remark
 **Layout:** split  
 **Diagram:** b6-slide04-qos-stitch
 
 **Bullets:**
-- ... incomplete+review: Bugatti datapath features
-- Port-Speed Bifurcation -> Static Buffer Carving in CSB
-- Dual-Die Sky-Hammer Support - 2x115Tbps - w/UCIE D2D
-- UA-Link (descoped..) - (same PHY/PMD, different PCS/PMA)
-- ESUN-UFH -> TC (4 _or_ [3-bit=8]) - different MAC layer
--   AFH -> (BCM: SUE) -> vTC -> VLAN · L3/DSCP -> QoS
--   EFH -> VLAN · PRI -> L3/DSCP -> QoS
-- L2 /L3 L3 Datapath and ACL, Policer · ECN, PFC, Pause (.3x), flow-control?
-- Queues · QoSMAP · Egress Scheduler · Per-Port Queue, Egress remap (egress ACL?)
-- ECMP / Mirroring / Fine-grain stats / SFlow? / CPU punt-path / slow-path (DPI?)
+- (draft in progress ... )
+- Buffer-carving path (CSB)
+  - Port-speed bifurcation → static carve in CSB
+  - QoSMAP · queues · egress scheduler · per-port queue
+- Classify · enqueue · remark
+  - ESUN-UFH → TC (4 or 3-bit=8) — different MAC layer
+  - AFH → (BCM: SUE) → vTC → VLAN · L3/DSCP → TC
+  - EFH → VLAN · PRI → L3/DSCP → TC
+- L2/L3 datapath · ACL · policer · ECN · PFC · pause (802.3x)
+- Peer context (not this wedge)
+  - Dual-die Sky-Hammer · UCIe D2D
+  - UA-Link (descoped) — same PHY/PMD, different PCS/PMA
+  - ECMP · mirror · stats · sFlow · CPU punt
 
 ---
 
@@ -69,17 +72,20 @@
 **Diagram:** b6-slide04-csb-inset
 
 **Bullets:**
-- ... incomplete+review: Bugatti capacifies
-- Port tiers: 200G · 400G · 800G Bifurcation modes / speeds rate mapping
-- Lossless buffer pools (Pause / PFC)
-- Lossy buffer pools (ECN)
-- Carve sizes · Static and Dynamic control of buffer-pools.
-- PFC · pause · headroom
-- Traffic aware congestion management and control
-- ECMP based DLB(?), Entropy seed logic, dynamic re-adjust?
-- Per-TC · Egress Queues, Egress QoS, Scheduler, WFQ/SPQ, Port-BW configuration, etc.
-- AI / XPU workload based dynamic rebalacing?
-- SDN / Controller / Orchestrator / Operator alignment (in scope?)
+- (draft in progress ...)
+- Port tiers · bifurcation
+  - 200G · 400G · 800G modes and rate mapping
+- Buffer pools at CSB
+  - Lossless pools — pause / PFC · headroom
+  - Lossy pools — ECN · WRED
+- Carve control
+  - Static and dynamic pool sizing
+  - Traffic-aware congestion management
+- Egress scheduling (context)
+  - Per-TC queues · WFQ/SPQ · port bandwidth
+- Out of wedge (peer / defer)
+  - ECMP DLB · entropy / dynamic readjust
+  - AI/XPU workload rebalance · SDN/controller alignment
 
 ---
 

@@ -14,7 +14,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from deck_from_md import load_deck_md  # noqa: E402
-from pptx_compare import assert_pptx_content_equal, diff_pptx_content  # noqa: E402
+from pptx_compare import (  # noqa: E402
+    assert_pptx_content_equal,
+    content_sha256,
+    diff_pptx_content,
+    load_published_hashes,
+)
 from workflow_testkit import (  # noqa: E402
     build_deck_from_md,
     build_production_a3_isolated,
@@ -26,6 +31,7 @@ from conftest import artifact_parity, requires_npx, workflow  # noqa: E402
 
 B6_PPTX = ROOT / "dt122" / "bugatti-qos-ccc.pptx"
 A3_PPTX = ROOT / "dt100" / "bugatti-qos-architecture.pptx"
+PUBLISHED_HASHES = ROOT / "tests" / "fixtures" / "published-deck-hashes.txt"
 B6_DIAGRAMS = ROOT / "assets" / "diagrams" / "b6"
 A3_DIAGRAMS = ROOT / "assets" / "diagrams" / "a3"
 SCOPE_DELIVERABLE_PNG = B6_DIAGRAMS / "b6-slide06-scope-deliverable.png"
@@ -97,6 +103,31 @@ def test_tc15_a3_regen_matches_committed_pptx(tmp_path, production_artifact_mtim
             + diffs[0]
         )
     assert_pptx_content_equal(A3_PPTX, regenerated, label="A3 bugatti-qos-architecture")
+
+
+@workflow
+@pytest.mark.parametrize(
+    ("deck_key", "builder"),
+    [
+        ("a3", build_production_a3_isolated),
+        ("b6", build_production_b6_isolated),
+    ],
+)
+def test_tc16_published_deck_content_hash(tmp_path, deck_key, builder):
+    """Published snapshot — regen from md must match golden content SHA256 (not raw zip bytes)."""
+    golden = load_published_hashes(PUBLISHED_HASHES)[deck_key]
+    md_path = ROOT / golden.md_source
+    assert md_path.is_file(), f"missing md source: {md_path}"
+
+    regenerated = builder(tmp_path / deck_key)
+    actual = content_sha256(regenerated)
+    assert actual == golden.content_sha256, (
+        f"{deck_key} content drift vs published snapshot ({golden.md_source}):\n"
+        f"  expected: {golden.content_sha256}\n"
+        f"  actual:   {actual}\n"
+        "Hint: if intentional publish, run "
+        "`uv run python scripts/pptx_compare.py --update-published-hashes`"
+    )
 
 
 @artifact_parity

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 import zipfile
 from dataclasses import dataclass
@@ -118,3 +119,152 @@ def assert_pptx_content_equal(
             "or fix the build pipeline."
         )
         raise AssertionError("\n".join(lines))
+
+
+def content_sha256(path: Path) -> str:
+    """Stable SHA256 over slide text, embedded media, and non-volatile XML."""
+    fp = fingerprint_pptx(path)
+    payload = json.dumps(fp.as_tuple(), sort_keys=True, separators=(",", ":")).encode()
+    return hashlib.sha256(payload).hexdigest()
+
+
+def file_md5(path: Path) -> str:
+    """Raw file MD5 — informational only; zip timestamps make this unstable across regen."""
+    return hashlib.md5(path.read_bytes()).hexdigest()
+
+
+@dataclass(frozen=True)
+class PublishedDeckHash:
+    deck_key: str
+    md_source: str
+    content_sha256: str
+    bytes_md5: str = ""
+
+
+def load_published_hashes(path: Path) -> Dict[str, PublishedDeckHash]:
+    """Parse tests/fixtures/published-deck-hashes.txt."""
+    entries: Dict[str, PublishedDeckHash] = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = line.split("\t")
+        if len(parts) < 3:
+            raise ValueError(f"invalid published hash line: {line!r}")
+        deck_key, md_source, digest = parts[:3]
+        bytes_md5 = parts[3] if len(parts) > 3 else ""
+        entries[deck_key] = PublishedDeckHash(
+            deck_key=deck_key,
+            md_source=md_source,
+            content_sha256=digest,
+            bytes_md5=bytes_md5,
+        )
+    return entries
+
+
+def write_published_hashes(path: Path, entries: List[PublishedDeckHash]) -> None:
+    lines = [
+        "# Published deck content regression (stable SHA256 of slide text + media + XML).",
+        "# Raw zip MD5 differs on every rebuild; CI compares content_sha256 only.",
+        "# Refresh: uv run python scripts/pptx_compare.py --update-published-hashes",
+        "",
+    ]
+    for e in entries:
+        row = f"{e.deck_key}\t{e.md_source}\t{e.content_sha256}"
+        if e.bytes_md5:
+            row += f"\t{e.bytes_md5}"
+        lines.append(row)
+    lines.append("")
+    path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def published_hash_errors(
+    built: Dict[str, Path],
+    hashes_file: Path,
+) -> List[str]:
+    """Return validation errors when built pptx content SHA256 drifts from golden file."""
+    if not hashes_file.is_file():
+        return [f"Missing published hash fixture: {hashes_file}"]
+
+    golden = load_published_hashes(hashes_file)
+    errors: List[str] = []
+    for deck_key, path in built.items():
+        if deck_key not in golden:
+            errors.append(f"No golden content hash for deck {deck_key!r}")
+            continue
+        if not path.is_file():
+            errors.append(f"Built deck missing for hash check: {path}")
+            continue
+        expected = golden[deck_key]
+        actual = content_sha256(path)
+        if actual != expected.content_sha256:
+            errors.append(
+                f"{deck_key} content SHA256 drift ({expected.md_source}): "
+                f"expected {expected.content_sha256}, got {actual}. "
+                "If intentional publish: "
+                "`uv run python scripts/pptx_compare.py --update-published-hashes`"
+            )
+    return errors
+
+
+def _main() -> int:
+    import argparse
+
+    root = Path(__file__).resolve().parents[1]
+    default_hashes = root / "tests" / "fixtures" / "published-deck-hashes.txt"
+    parser = argparse.ArgumentParser(description="Compare or fingerprint PPTX decks.")
+    parser.add_argument("reference", nargs="?", type=Path, help="Reference pptx")
+    parser.add_argument("candidate", nargs="?", type=Path, help="Candidate pptx")
+    parser.add_argument(
+        "--update-published-hashes",
+        action="store_true",
+        help="Regen A3/B6 from md and rewrite published-deck-hashes.txt",
+    )
+    parser.add_argument("--hashes-file", type=Path, default=default_hashes)
+    args = parser.parse_args()
+
+    if args.update_published_hashes:
+        import sys
+
+        sys.path.insert(0, str(root / "scripts"))
+        from workflow_testkit import build_production_a3_isolated, build_production_b6_isolated
+
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as td:
+            td_path = Path(td)
+            specs = [
+                ("a3", "dt100/bugatti-qos-architecture.md", build_production_a3_isolated),
+                ("b6", "dt122/bugatti-qos-ccc.md", build_production_b6_isolated),
+            ]
+            entries: List[PublishedDeckHash] = []
+            for deck_key, md_source, builder in specs:
+                pptx = builder(td_path / deck_key)
+                entries.append(
+                    PublishedDeckHash(
+                        deck_key=deck_key,
+                        md_source=md_source,
+                        content_sha256=content_sha256(pptx),
+                        bytes_md5=file_md5(pptx),
+                    )
+                )
+        write_published_hashes(args.hashes_file, entries)
+        for e in entries:
+            print(f"{e.deck_key}\t{e.content_sha256}\tbytes_md5={e.bytes_md5}")
+        print(f"Wrote {args.hashes_file}")
+        return 0
+
+    if not args.reference or not args.candidate:
+        parser.error("reference and candidate pptx required unless --update-published-hashes")
+
+    diffs = diff_pptx_content(args.reference, args.candidate)
+    if diffs:
+        for d in diffs:
+            print(d)
+        return 1
+    print("content match")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(_main())
