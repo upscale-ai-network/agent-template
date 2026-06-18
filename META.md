@@ -116,7 +116,9 @@ Workbench = **egg container**. META + Px = **how you decide what to put in the c
 - [ ] First push to `upscale-ai-network/agent-template` — **P1** DT103 (write access pending)
 - [ ] **TRIAGE:** `triage-offboard` in TASKS.md — audit for anything lost from canvas/chat
 
-**Run phase:** P0 arch vision (Thu EOD) → P1 access → P2 digest/repos.
+**Run phase:** P0 SDK static carve + W SDK-CCC ([TASKS.md](TASKS.md) DT127–DT131) → P1 access → P2 digest/repos.
+
+**Launch closed (2026-06-12):** DT100 · DT122 · Guru walk · mandate set — execute on W; Guru = gate sync only.
 
 **Do not re-tune Px/WFQ** — treat friction as **P2** tweak only.
 
