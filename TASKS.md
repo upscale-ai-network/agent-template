@@ -16,34 +16,120 @@
 
 | DT | Priority | Status | Title | Due | Notes |
 |----|----------|--------|-------|-----|-------|
-| DT122 | P0 | doing | B6 launch-ready · Fri W+N walk | 2026-06-07 | [friday-launch.md](dt122/friday-launch.md) · W brief · SharePoint after regen |
-| DT126 | P0 | doing | Schedule Fri 11am — N + W on NW calendar | 2026-06-06 | N OOTO today · draft in friday-launch.md |
-| DT123 | P2 | open | Task time ledger — per-DT visibility | | After DT122 · see **DT123** |
-| DT124 | P2 | open | Deck acceptance test framework | | After DT122 · [DECK-ACCEPTANCE.md](scripts/DECK-ACCEPTANCE.md) |
-| DT125 | P2 | open | Canary deck — md/mermaid/pptx pipeline regression | | With DT122 mermaid · see **DT125** |
+| DT132 | P0 | doing | Create + track own JIRAs (Guru mandate) | **EOD today** | Queuing epic + **Prabhu epic** · Guru 1:35 PM · emulation focus |
+| DT127 | P0 | doing | Static buffer carve design doc v0 | | Queuing · port speed bifurcation · TDM · HW baseline |
+| DT128 | P0 | next | static-buffer-carving-ccc deck (L2-SDK-CCC) | | W co-build · review next week · HW arch aligned |
+| DT129 | P0 | open | SDK/SAI static carve path + DV parity | | With Shafi · HW-validated config → SAI/USDK |
+| DT130 | P1 | open | Srikanth qos-CCC arch — upstream req handoff | | After carve doc v0 · downstream of SDK |
+| DT131 | P1 | open | Guru interface — gate sync only | | No unsolicited detail status |
 | DT102 | P1 | open | Cursor/doc use — HR / IT / mgmt OK | | Privacy Mode on; formal OK pending |
-| DT103 | P1 | open | Org git remote + push policy | | `origin` → `upscale-ai-network/agent-template` · push blocked until write access |
-| DT104 | P1 | open | Corp VPN from home + internal tools | | Browser check; no SSH host yet |
-| DT105 | P1 | open | UNIX login + SSH to build servers | | Blocked — IT/team |
-| DT106 | P1 | open | SSH jump hosts + `~/.ssh/config` | | Template from team |
+| DT103 | P1 | open | Org git remote + push policy | | `origin` → `upscale-ai-network/agent-template` |
+| DT104 | P1 | open | Corp VPN from home + internal tools | | Required for `sw-hq-runner4` from home |
+| DT105 | P1 | next | UNIX login + SSH to build servers | | **sw-hq-runner4** · fix `vtundlam` → `dtundlam` |
+| DT106 | P1 | next | SSH jump hosts + `~/.ssh/config` | | `sw-hq-runner4` · multi-host keys in authorized_keys |
 | DT107 | P1 | open | GCP + AWS VM access | | Office account · **Proton** later |
-| DT108 | P1 | open | `bugatti-model` repo access + clone | | Not in org list yet |
+| DT108 | P1 | open | `bugatti-model` repo access + clone | | GitHub auth on runner TBD · urgent for SDK work |
 | DT101 | TRIAGE | open | Offboard audit: canvas + chat → git | | Anything lost? Add rows + log entry |
-| DT109 | P2 | open | Remote workspace + toolchain on build servers | | After DT105–DT106 |
+| DT123 | P2 | open | Task time ledger — per-DT visibility | | After SDK P0 stabilizes |
+| DT124 | P2 | open | Deck acceptance test framework | | Lower priority — quasi-manual pptx OK for now |
+| DT125 | P2 | open | Canary deck — md/mermaid/pptx pipeline regression | | Mostly done · DT119 gate open |
+| DT109 | P2 | next | Remote workspace + toolchain on build servers | | **sw-hq-runner4** ready · clone + build TBD |
 | DT110 | P2 | open | Cursor remote agents — policy + setup | | After DT102 |
 | DT111 | P2 | open | Tech arch digest: OCP ESUN + Ultra Ethernet | | Public specs only until DT102 |
 | DT112 | P2 | open | Explore `sonic-ztp` codebase | | `~/Projects/sonic-ztp` |
 | DT114 | P2 | open | Evolve `TASKS.md` + `TASKS-LOG.md` format | | After ~1 week use |
 | DT115 | P2 | open | Weekly manager report — format + cadence | | |
 | DT116 | P2 | open | Plan lightweight MD export for new agents | | Optional |
-| DT119 | P2 | open | Git hooks: pre-commit / pre-push / agent commit gate | | Enforce rules in tooling, not trust · see **DT119** |
-| DT120 | P2 | open | Pensieve → `origin.md` for Gluon constitution | | No PII / past-employer leak · Pensieve/Gluon separate · see **DT120** |
-| DT121 | P3 | open | CLI toolbox — past tools list (loose) | | One task, many tools · see **DT121** |
+| DT119 | P2 | open | Git hooks: pre-commit / pre-push / agent commit gate | | Enforce rules in tooling, not trust |
+| DT120 | P2 | open | Pensieve → `origin.md` for Gluon constitution | | No PII / past-employer leak |
+| DT121 | P3 | open | CLI toolbox — past tools list (loose) | | One task, many tools |
 | DT117 | P3 | open | Monthly review — tune tasks + log | | ~4 weeks |
+
+### DT132 — Create + track own JIRAs (Guru mandate)
+
+**When:** **P0 · doing** — **EOD today** · **Guru 1:1 @ 1:35 PM** (verbal request).
+
+**Why:** Scale-up meeting — no JIRAs assigned · Guru: **create your own and track them**.
+
+**EOD deliverables (committed to Guru):**
+
+1. **Queuing epic** — first-cut task breakdown · **DV-aligned** (Vinesh/Ranjit status) · focused on **emulation goal**
+2. **Prabhu epic** — customer / SAI layer · align in office with Prabhu
+
+**1:35 PM walk-through inputs:** DV (Vinesh, Ranjit) · Sampath chip overview · Shafi · **Thippanna** guidance.
+
+**Map to:** DT127 doc · DT128 deck · DT129 SDK/DV path.
+
+**Done when:** both epics filed in JIRA · visible to team · first-cut stories under queuing epic.
+
+---
+
+### DT127 — Static buffer carve design doc v0
+
+**When:** **P0 · doing** — first execution artifact after Guru mandate.
+
+**Scope:** static carving · port speed · TDM calendar · HW-validated baseline · open issues · non-goals · **HW arch alignment**.
+
+**W co-build (design detail):** Shafi · Shrawan · Hongal · others — code · SDK · testing framework · fill gaps you don't own solo. Doc must match **Ranjit** HW baseline.
+
+**Stakeholders:**
+
+- **Customer (API consumer):** **Prabhu** — static carve · port-speed SDK API (YAML, etc.) · service-provider · **subscribed**
+- **Upstream (HW DV):** **Ranjit Parmar** \<rparmar@upscaleai.com\> — **Accepted** Teams invite · subject *sync about DV \<-\> SDK* · static mapping start · **datetime: fill from Outlook**
+
+**Done when:** v0 peer-reviewable with W + Ranjit baseline · Prabhu consumer path clear · HW arch sign-off path clear · inputs DT128 + DT129.
+
+**Doc references:**
+- **Template:** `~/Downloads/Upscale AI Software Team Template - Copy and Use.docx` (2026-06-16) — blank basis for v0 draft
+- **Alignment:** `~/Downloads/SDK Architecture for Bugatti.docx` (2026-06-16) — integrate carve section with other verticals
+
+---
+
+### DT128 — static-buffer-carving-ccc deck (L2-SDK-CCC shape)
+
+**When:** **P0 · next** — W review next week · Tilak L2-SDK-CCC template.
+
+**Scope:** **static-buffer-carving-ccc** — SDK-specific CCC · design + details matching HW arch · **W co-build** (not solo deck).
+
+**W peers:** Shrawan · Shafi · Hongal · Tilak (shape) · Srikanth (downstream note) · SharePoint after peer review.
+
+**Delivery:** `bugatti-csb-buffer-carving.pptx` · quasi-manual OK.
+
+**Done when:** W review complete · peers helped validate SDK/code/test sections · SharePoint updated.
+
+---
+
+### DT129 — SDK/SAI static carve path + DV parity
+
+**When:** **P0 · open** — with DT127 interface scope.
+
+**Scope:** SDK/SAI/USDK — **build with W** (esp. **Shafi**) · test framework with peer help · DV parity vs **Ranjit Parmar** HW-validated config · **Prabhu** API consumer.
+
+**Done when:** demonstrable config + test · W-reviewed · HW-validated baseline works through SDK/SAI/YAML path.
+
+---
+
+### DT130 — Srikanth qos-CCC arch — upstream req handoff
+
+**When:** **P1 · open** — after carve doc v0.
+
+**Scope:** collaborate · define downstream reqs for Srikanth's qos-CCC arch lane.
+
+**Done when:** written SDK static carve → qos-CCC arch handoff.
+
+---
+
+### DT131 — Guru interface — gate sync only
+
+**When:** **P1 · open** — active policy.
+
+**Rules:** no unsolicited detail status · high-level sync at gates · execute on W.
+
+---
 
 ### DT125 — Canary deck — md / mermaid / pptx pipeline regression
 
-**When:** Parallel with **DT122** · **not** week-2 delivery gate · complements **DT124** (canary = pipeline; DT124 = real deck stakeholder acceptance).
+**When:** Parallel with delivery · **not** week-2 delivery gate · complements **DT124** (canary = pipeline; DT124 = real deck stakeholder acceptance).
 
 **Layout policy:** Production PPTX code **stays in `scripts/`** until ccc ships. Canary starts as a **copy** into `src/py/` (or sibling) + fixtures — baby steps; migrate QoS/ccc to tested path only after canary is trusted.
 
@@ -68,7 +154,7 @@
 
 ### DT124 — Deck acceptance test framework
 
-**When:** After **DT122** · build litmus ≠ stakeholder delivery proof.
+**When:** After launch · build litmus ≠ stakeholder delivery proof.
 
 **Feature (3 lines):**
 
@@ -82,7 +168,7 @@
 
 ### DT123 — Task time ledger (per-DT visibility)
 
-**When:** After **DT122** ccc slides ship · **not** credit-card — proper task.
+**When:** After SDK P0 stabilizes · **not** credit-card — proper task.
 
 **Feature (3 lines):**
 
@@ -103,26 +189,23 @@
 
 ---
 
-### DT122 — CCC 2A — Mermaid-aware B6 slide upgrade
+### DT122 — CCC 2A — Mermaid-aware B6 slide upgrade — **done**
 
-**Strategy:** [dt122/ccc-strategy.md](dt122/ccc-strategy.md) · **Source:** [dt122/bugatti-qos-ccc.md](dt122/bugatti-qos-ccc.md) → `bugatti-qos-ccc.pptx`
+**Closed:** 2026-06-12 · Guru walk complete · mandate set · `bugatti-csb-buffer-carving.pptx` on SharePoint.
 
-**2A scope (restrained — Guru scans for blocks, not bullets):**
+**Strategy:** [dt122/ccc-strategy.md](dt122/ccc-strategy.md) · **Source:** [dt122/bugatti-qos-ccc.md](dt122/bugatti-qos-ccc.md)
 
-- [x] Mermaid diagram blocks in `bugatti-qos-ccc.md` (pipeline annotate · CSB/buffer-carve inset · validation stack)
-- [x] B6 render path: `assets/diagrams/b6/` + `render_b6_diagrams.py`; wired into `build-dt100-decks.py` / validate
-- [x] Visual-first slide reorder in md (7 slides · 3 acts · diagrams early; DRI on pipeline)
-- [x] `uv run build-decks` — post-build checks pass
-- [x] Sharp Pillow flow diagrams (1800×720 · uniform boxes · min-width gate)
-- [x] Hongal 3pm visual review — log in [hongal-review-2026-06-06.md](dt122/hongal-review-2026-06-06.md)
-- [ ] **W pre-read** — [w-review-brief.md](dt122/w-review-brief.md) to peers
-- [ ] **Fri hold** — NW calendar ([DT126](TASKS.md) · [friday-launch.md](dt122/friday-launch.md))
-- [ ] Regen pptx · SharePoint · dry run A3→B6→A3
-- [ ] Human cold read — peer CCC bar
+**Carry-forward:** SDK CCC shape → **DT128** · static carve doc → **DT127** · not more launch polish.
 
-**Out of scope (abeyance):** swimlanes · template churn · HWv2 depth · informal peer huddle (after Hongal + SharePoint)
+<details>
+<summary>Launch checklist (archived)</summary>
 
-**Done when:** Hongal feedback landed · pptx final · W-first share path clear · ready for Friday N+W optional ([DT126](TASKS.md)).
+- [x] Mermaid / Pillow B6 path · `uv run build-decks`
+- [x] Hongal · Shrawan · Shafi · peer feedback cycles
+- [x] Guru review · alignment · static carve + SDK deliverable mandate
+- [x] SharePoint delivery · W verbal sync
+
+</details>
 
 ---
 
@@ -230,6 +313,8 @@
 | DT118 | P0 | done | Test-run Gluon (fresh boot + litmus) | | Litmus pass · template intent in CONSTITUTION + notes below |
 | DT113 | P1 | done | Prune Apple Silicon GPU / demos from repo | | Deleted from tree; recover from git history if needed |
 | DT100 | P0 | done | 2–3 slide arch vision for manager | 2026-06-05 | **A3** · **B6** · SharePoint → Gururaj · `445afec` pushed · Fri alignment TBD |
+| DT122 | P0 | done | B6 launch · Guru walk · mandate | 2026-06-12 | SharePoint `bugatti-csb-buffer-carving.pptx` · → DT127–DT131 |
+| DT126 | P0 | done | Guru meeting · calendar + invite | 2026-06-12 | Unicast N + conf room · no solicited feedback |
 
 ### DT118 (closed — template notes)
 

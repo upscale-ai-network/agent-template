@@ -46,5 +46,44 @@ Refine format later ([TASKS.md](TASKS.md) DT114).
 | 2026-06-07 | DT126 | status | `doing` — NW calendar hold (N OOTO) |
 | 2026-06-07 | — | policy | Worktree/test detangle abeyance until post-Fri launch |
 
+| 2026-06-12 | DT122 | closed | Guru walk complete · mandate · SharePoint `bugatti-csb-buffer-carving.pptx` |
+| 2026-06-12 | DT126 | closed | Guru meeting held · unicast invite · conf room |
+| 2026-06-12 | DT127 | created | P0 static buffer carve design doc v0 |
+| 2026-06-12 | DT127 | status | `doing` |
+| 2026-06-12 | DT128 | created | P0 SDK buffer-carve-CCC · L2-SDK-CCC shape · W review next week |
+| 2026-06-12 | DT128 | status | `next` |
+| 2026-06-12 | DT129 | created | P0 SDK/SAI static carve + DV parity · Shafi |
+| 2026-06-12 | DT130 | created | P1 Srikanth qos-CCC arch req handoff |
+| 2026-06-12 | DT131 | created | P1 Guru gate-sync-only policy |
+| 2026-06-12 | — | note | Launch closed · Houston mode · execute on W · SDK = hard deliverable |
+| 2026-06-12 | — | system | CHECKPOINT · TASKS · META · GLUON refreshed post-Guru |
+| 2026-06-12 | — | note | Static carve layers: **Prabhu** = SDK API customer (subscribed) · **Ranjit Paramar** = HW DV provider (intro pending) |
+| 2026-06-12 | — | note | W **co-build** model — DRI drives static-buffer-carving-ccc · W helps code · SDK · test framework · HW arch detail |
+| 2026-06-13 | — | note | Ranjit Parmar — F2F nod · invite Accepted · Teams DV↔SDK sync · static mapping · meeting ID 239750612616132 |
+| 2026-06-13 | — | note | Sampath Krishna — conf room 1:30 PM · ~15 min · Hongal referral · listen/learn · DV↔SDK positioning · prep for Ranjit |
+| 2026-06-13 | — | note | Sampath debrief OK — chip block diagram · specs POC · photo to digest · Ranjit = independent DV baseline (scripts/carve logic) · not Sampath-linked |
+| 2026-06-13 | — | note | Ranjit alignment **done** — sketch accepted · matches Guru intent · names to chase · **need checkout + runnable loop** (DT108/129) |
+| 2026-06-13 | — | note | **Vinesh/Vignesh Ambarish** sync **moved to tomorrow** · Venkatesh stop-by tomorrow |
+| 2026-06-13 | — | note | **DV pod:** Ranjit · Vinesh · **Venkatesh** (OOTO) · mgr **Dharmendra Patel** · co-located |
+| 2026-06-13 | — | note | **Hongal N′** — W sets github clone/build to layer parity · insert port-speed + buffer carve · **not in HW/C sim** · design doc: port speed mgmt → static carve arch |
+| 2026-06-13 | — | policy | Gluon **steady phase** — user navigates parallel lanes · Cursor = coding agent · governance lower cadence |
+| 2026-06-14 | — | note | **Vinesh 1:1 done** — aligned · fixed configs incoming · whiteboard screenshot → digest after lunch |
+| 2026-06-14 | — | note | Homework: Sampath diagram · **Varsha intern** G-test docs · Vinesh whiteboard |
+| 2026-06-14 | — | note | **Guru Teams Qk update sent** — W/DV homework · slides Shrawan/Shafi/Girish early next week · align/steer ask |
+| 2026-06-14 | — | note | Shafi → verbal likely in team meeting · Teams note = preview for Guru (5 min · complete · avoid surprise/back-and-forth) |
+| 2026-06-14 | — | note | **Prabhu walk** — not blocked on you · parallel Girish vertical · leg work for N · doc spec unblocked |
+| 2026-06-14 | — | note | **docx template** → add to repo · basis for buffer-carving spec draft · Shafi review early next week |
+| 2026-06-16 | — | note | **SDK Architecture for Bugatti.docx** in `~/Downloads/` (5.8MB) — align carve spec · integrate verticals · blank template search continues |
+| 2026-06-16 | — | note | **Upscale AI Software Team Template - Copy and Use.docx** in `~/Downloads/` (2.5MB) — blank template · basis for DT127 draft |
+| 2026-06-16 | DT132 | created | Guru scale-up 9 PM — create own JIRAs · queuing mandate · **Srikanth** QoS DRI (not Karthik — corrected) |
+| 2026-06-17 | — | note | **Correction:** QoS DRI = **Srikanth** · Karthik was erroneous |
+| 2026-06-16 | — | note | First full scale-up team · verbal update (short) · twice-weekly cadence · in orbit |
+| 2026-06-17 | — | note | **Guru 1:1 @ 1:35 PM** — DV/Sampath/Shafi/Thippanna learnings · EOD: queuing epic + Prabhu epic in JIRA |
+| 2026-06-17 | DT132 | status | `next` → `doing` — EOD JIRA commit · emulation goal · DV alignment |
+| 2026-06-17 | — | note | Guru 1:1 prep: whiteboard only · listen for pain point · hypothesis: emulation + SDK queuing · Verilator-adjacent · leg-work not nose |
+| 2026-06-17 | — | note | **VM sw-hq-runner4** — Girish · `vtundlam` · podman/git/cmake · passwordless sudo · creds **not in git** |
+| 2026-06-17 | DT105 | status | `open` → `next` — SSH host live |
+| 2026-06-17 | — | note | VM tools manually verified: podman cmake make git git-lfs emacs vim aptitude · crawl/walk/run |
+
 **Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`
 **Status (vocabulary):** `open` | `doing` | `next` | `done` | `drop`

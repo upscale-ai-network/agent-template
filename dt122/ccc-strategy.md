@@ -1,10 +1,10 @@
 # CCC / B6 delivery strategy
 
-**Status:** Adopted 2026-06-05 · amend by judgment; commit changes  
-**Scope:** `bugatti-qos-ccc` (B6), peer W collaboration, Guru interface  
+**Status:** Adopted 2026-06-05 · **Phase 2 (2026-06-12):** SDK execution — **W co-build** static-buffer-carving-ccc · design doc · code · tests  
+**Scope:** you DRI · W fills SDK/code/test/HW-arch detail · Prabhu consumes API · Ranjit = HW DV baseline  
 **Not on slides.** Internal operating record.
 
-**Related:** [../dt100/plan.md](../dt100/plan.md) · [bugatti-qos-ccc.md](bugatti-qos-ccc.md) · [CHECKPOINT.md](../CHECKPOINT.md) · [GLUON.md](../GLUON.md) · **Task:** [../TASKS.md](../TASKS.md) DT122
+**Related:** [../dt100/plan.md](../dt100/plan.md) · [bugatti-qos-ccc.md](bugatti-qos-ccc.md) · [CHECKPOINT.md](../CHECKPOINT.md) · **Tasks:** [../TASKS.md](../TASKS.md) DT127–DT131 (DT122 closed)
 
 ---
 
