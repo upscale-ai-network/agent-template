@@ -60,6 +60,7 @@ def production_artifact_mtimes():
     _assert_mtimes_unchanged(before)
 
 
+@pytest.mark.breadth
 def test_tc11_pptx_compare_ignores_docprops_only(tmp_path):
     """Sanity — byte drift from docProps alone must not fail content compare."""
     if not B6_PPTX.is_file():

@@ -1,0 +1,12 @@
+# Test layers — SoT for breadth (Q1–Q5): one blocking test per category.
+# See docs/TEST-LAYERS.md
+
+layers:
+  breadth:
+    description: Basic acceptance — 5/30 default tests, one per category.
+    tests:
+      - auth_ledger/test_ledger_file.py::test_ledger_loads_two_hosts
+      - test_workflow_pipeline.py::test_tc01_parse_canary_md_structure
+      - test_workflow_pipeline.py::test_tc03_render_produces_valid_pngs
+      - test_deck_pptx_regression.py::test_tc11_pptx_compare_ignores_docprops_only
+      - test_fib.py::test_fib_base_values

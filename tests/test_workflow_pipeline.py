@@ -31,7 +31,7 @@ from workflow_testkit import (  # noqa: E402
     slide_count,
 )
 
-from conftest import artifact_parity, requires_npx, requires_uv, workflow  # noqa: E402
+from conftest import artifact_parity, breadth, requires_npx, requires_uv, workflow  # noqa: E402
 
 FIXTURES = ROOT / "tests" / "fixtures"
 CANARY_DIAGRAMS = FIXTURES / "diagrams" / "canary"
@@ -40,6 +40,7 @@ CANARY_DIAGRAMS = FIXTURES / "diagrams" / "canary"
 # --- Fast tier (no npx) ---
 
 
+@pytest.mark.breadth
 def test_tc01_parse_canary_md_structure():
     doc = load_deck_md(CANARY_MD)
     assert doc.cover.title == "Workflow canary"
@@ -65,6 +66,7 @@ def test_tc08_missing_mmd_fails_loud(tmp_path):
 # --- Full workflow tier (npx) ---
 
 
+@breadth
 @workflow
 @requires_npx
 def test_tc03_render_produces_valid_pngs(canary_paths):

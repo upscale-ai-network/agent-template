@@ -3,6 +3,7 @@ import pytest
 from fib import fib, fib_sequence
 
 
+@pytest.mark.breadth
 def test_fib_base_values():
     assert fib(0) == 0
     assert fib(1) == 1

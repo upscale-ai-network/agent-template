@@ -20,8 +20,28 @@ def has_uv() -> bool:
 
 workflow = pytest.mark.workflow
 artifact_parity = pytest.mark.artifact_parity
+breadth = pytest.mark.breadth
 requires_npx = pytest.mark.skipif(not has_npx(), reason="npx required for mermaid render")
 requires_uv = pytest.mark.skipif(not has_uv(), reason="uv required")
+
+
+def pytest_addoption(parser):
+    parser.addoption(
+        "--basic-acceptance",
+        action="store_true",
+        default=False,
+        help="Breadth layer only (same as -m breadth)",
+    )
+
+
+def pytest_collection_modifyitems(config, items):
+    if not config.getoption("--basic-acceptance"):
+        return
+    selected = [i for i in items if "breadth" in i.keywords]
+    deselected = [i for i in items if "breadth" not in i.keywords]
+    items[:] = selected
+    if deselected:
+        config.hook.pytest_deselected(items=deselected)
 
 
 @pytest.fixture

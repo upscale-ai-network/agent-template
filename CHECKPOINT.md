@@ -220,7 +220,9 @@ Walk-through of learnings:
 
 **VM notes:** crawl → walk → run · explore/digest later if needed · else sits in git like `.bash_history`.
 
-**Unblocks:** DT105 (SSH) · DT109 (remote workspace) · path to DT108 clone on runner.
+**Local linux VM (macOS):** `ssh diwakar@192.168.64.3` — key-based from iTerm2 · e.g. `ssh diwakar@192.168.64.3 date` · **ntpd-rs** · TZ `America/Los_Angeles`
+
+**Corp runner:** `sw-hq-runner4` — see above · `dtundlam` account fix in progress
 
 **Next on VM:** ~~SSH key~~ **authorized_keys** from macOS + linux-vm · password rotated · **GitHub** access for clone/push (later) · git identity · **bugatti-model** URL from Shafi/Hongal (DT108).
 

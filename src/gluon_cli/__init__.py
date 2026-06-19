@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import runpy
+import subprocess
 import sys
 from pathlib import Path
 
@@ -25,3 +26,15 @@ def build_decks_a3() -> None:
 
 def check_decks() -> None:
     _run_script("check_decks.py")
+
+
+def pytest_breadth() -> None:
+    """Breadth layer (Q1–Q5): pytest -m breadth."""
+    extra = sys.argv[1:] if len(sys.argv) > 1 else ["-v", "--tb=line"]
+    raise SystemExit(
+        subprocess.run(
+            ["pytest", "-m", "breadth", *extra],
+            cwd=ROOT,
+            check=False,
+        ).returncode
+    )

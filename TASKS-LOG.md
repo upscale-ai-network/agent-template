@@ -83,7 +83,9 @@ Refine format later ([TASKS.md](TASKS.md) DT114).
 | 2026-06-17 | — | note | Guru 1:1 prep: whiteboard only · listen for pain point · hypothesis: emulation + SDK queuing · Verilator-adjacent · leg-work not nose |
 | 2026-06-17 | — | note | **VM sw-hq-runner4** — Girish · `vtundlam` · podman/git/cmake · passwordless sudo · creds **not in git** |
 | 2026-06-17 | DT105 | status | `open` → `next` — SSH host live |
-| 2026-06-17 | — | note | VM tools manually verified: podman cmake make git git-lfs emacs vim aptitude · crawl/walk/run |
+| 2026-06-19 | — | policy | **AUTH-LEDGER plan approved** — `docs/AUTH-LEDGER-PLAN.md` · names-only · await Phase A execute |
+| 2026-06-19 | — | system | **quickpass layer** — `tests/layers.yaml` · `pytest -b` · replaces flawed breadth |
+| 2026-06-19 | — | note | **AUTH-LEDGER exec report** — BUG-E1 execution bug (ssh flag) · BUG-E2 env · no inline fix during exec |
 
 **Actions (vocabulary):** `created` | `status` | `closed` | `reopened` | `due-set` | `note` | `policy` | `system`
 **Status (vocabulary):** `open` | `doing` | `next` | `done` | `drop`

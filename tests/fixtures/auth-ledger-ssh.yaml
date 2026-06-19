@@ -1,0 +1,10 @@
+# Test harness only — maps AUTH-LEDGER names → SSH target for pytest.
+# Authentication: ~/.ssh keys / authorized_keys (not stored here).
+
+hosts:
+  linux-vm:
+    ssh: diwakar@192.168.64.3
+    expect_user: diwakar
+  sw-hq-runner4:
+    ssh: dtundlam@sw-hq-runner4
+    expect_user: dtundlam

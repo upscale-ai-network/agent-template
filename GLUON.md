@@ -204,6 +204,7 @@ Stop writes → §6.3 → §6.2 → proper challenge.
 | D-03 | Org remote for confidential? | Blocked until DT103 + explicit OK |
 | D-04 | Cursor rule enforcement? | This file + README; DT119 later |
 | D-05 | Corp arch deck git invariant + temp cleanup (screenshots, lists)? | **Deferred** — tracked task after P0 deliver; not P(-1) |
+| D-06 | AUTH-LEDGER remote hosts | **Approved** — [docs/AUTH-LEDGER-PLAN.md](docs/AUTH-LEDGER-PLAN.md) · Phase A not started |
 
 ---
 
