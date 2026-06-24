@@ -13,7 +13,15 @@ def load_layers(path: Path | None = None) -> dict:
     return yaml.safe_load((path or _LAYERS).read_text(encoding="utf-8"))
 
 
-def breadth_nodeids(path: Path | None = None) -> list[str]:
+def _nodeids(layer: str, path: Path | None = None) -> list[str]:
     data = load_layers(path)
-    raw = data["layers"]["breadth"]["tests"]
+    raw = data["layers"][layer]["tests"]
     return [f"tests/{node}" if not node.startswith("tests/") else node for node in raw]
+
+
+def breadth_nodeids(path: Path | None = None) -> list[str]:
+    return _nodeids("breadth", path)
+
+
+def p1_verify_nodeids(path: Path | None = None) -> list[str]:
+    return _nodeids("p1_verify", path)

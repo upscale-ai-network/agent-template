@@ -10,3 +10,9 @@ layers:
       - test_workflow_pipeline.py::test_tc03_render_produces_valid_pngs
       - test_deck_pptx_regression.py::test_tc11_pptx_compare_ignores_docprops_only
       - test_fib.py::test_fib_base_values
+
+  p1_verify:
+    description: P1 lock-down — exactly 2 tests; only these gate fill_content_slide fix.
+    tests:
+      - test_pptx_util.py::test_fill_content_slide_accepts_deck_from_md_bullet_tuples
+      - test_workflow_pipeline.py::test_tc04_build_pptx_slide_count

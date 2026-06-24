@@ -31,7 +31,7 @@ from workflow_testkit import (  # noqa: E402
     slide_count,
 )
 
-from conftest import artifact_parity, breadth, requires_npx, requires_uv, workflow  # noqa: E402
+from conftest import artifact_parity, breadth, p1_verify, requires_npx, requires_uv, workflow  # noqa: E402
 
 FIXTURES = ROOT / "tests" / "fixtures"
 CANARY_DIAGRAMS = FIXTURES / "diagrams" / "canary"
@@ -80,6 +80,7 @@ def test_tc03_render_produces_valid_pngs(canary_paths):
         )
 
 
+@p1_verify
 @workflow
 @requires_npx
 def test_tc04_build_pptx_slide_count(canary_paths):

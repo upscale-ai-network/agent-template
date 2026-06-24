@@ -317,7 +317,7 @@ def fill_cover_slide(slide, headline: str, subline: str, meta: str, tag: str) ->
 def fill_content_slide(
     slide,
     title: str,
-    bullets: List[str],
+    bullets: Optional[List[BulletInput]] = None,
     subtitle: Optional[str] = None,
     lead: Optional[str] = None,
     title_lines: Optional[List[str]] = None,
@@ -363,7 +363,9 @@ def fill_content_slide(
             lead_count += 1
         if lead_count:
             lines.append("")
-        lines.extend(bullets)
+        for level, text in _normalize_bullets(bullets):
+            prefix = "    ◦ " if level else "• "
+            lines.append(f"{prefix}{text}")
         fill_text_frame_lines(
             body_shape.text_frame,
             lines,

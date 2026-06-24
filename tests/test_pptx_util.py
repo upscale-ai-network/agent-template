@@ -62,6 +62,8 @@ from pathlib import Path
 import pytest
 from pptx import Presentation
 
+from conftest import p1_verify  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -70,6 +72,7 @@ from pptx_util import fill_content_slide  # noqa: E402
 STYLE_REF = ROOT / "assets/templates/upscale-ccc-style-reference.pptx"
 
 
+@p1_verify
 @pytest.mark.skipif(not STYLE_REF.is_file(), reason="company style template missing")
 def test_fill_content_slide_accepts_deck_from_md_bullet_tuples():
     """P1 contra-test: tuples from deck_from_md must not crash text-only slides."""

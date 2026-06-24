@@ -38,3 +38,15 @@ def pytest_breadth() -> None:
             check=False,
         ).returncode
     )
+
+
+def pytest_p1_verify() -> None:
+    """P1 lock-down gate: pytest -m p1_verify (exactly 2 tests)."""
+    extra = sys.argv[1:] if len(sys.argv) > 1 else ["-v", "--tb=line"]
+    raise SystemExit(
+        subprocess.run(
+            ["pytest", "-m", "p1_verify", *extra],
+            cwd=ROOT,
+            check=False,
+        ).returncode
+    )

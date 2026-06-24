@@ -15,6 +15,7 @@ build-decks = "gluon_cli:build_decks"
 build-decks-a3 = "gluon_cli:build_decks_a3"
 check-decks = "gluon_cli:check_decks"
 pytest-breadth = "gluon_cli:pytest_breadth"
+pytest-p1-verify = "gluon_cli:pytest_p1_verify"
 
 [build-system]
 requires = ["hatchling"]
@@ -43,6 +44,7 @@ markers = [
     "artifact_parity: production md/png/pptx sync gate (opt-in; excluded from default pytest)",
     "auth_ledger: AUTH-LEDGER SSH smoke + ntp-date skew tests (requires network + keys)",
     "breadth: basic acceptance — 5 tests, one per category; run: uv run pytest -m breadth",
+    "p1_verify: P1 lock-down pair (2 tests) — fill_content_slide tuple fix gate",
 ]
 filterwarnings = [
     "error",
